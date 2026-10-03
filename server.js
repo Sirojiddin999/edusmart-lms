@@ -174,9 +174,11 @@ app.get('/api/student/lessons/:id', auth, onlyStudent, (req, res) => {
       min_score: lesson.min_score,
       is_completed: completedIds.includes(lesson.id),
       my_score: scoresMap[lesson.id] ?? null,
-      // Quiz questions WITHOUT answers
-      quiz: quiz.map((q, i) => ({ index: i, q: q.q, opts: q.opts })),
-      question_count: quiz.length,
+      // 15 tadan 5 tasini tasodifiy tanlab olamiz
+      quiz: quiz.map((q, i) => ({ originalIndex: i, q: q.q, opts: q.opts }))
+                .sort(() => 0.5 - Math.random())
+                .slice(0, 5),
+      question_count: 5,
     });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
@@ -190,16 +192,19 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
     const quiz = jsonParse(lesson.quiz_json, []);
     if (!quiz.length) return res.status(400).json({ error: "Bu darsda test mavjud emas" });
 
-    const { answers } = req.body; // array of chosen indices
+    const { answers } = req.body; // [{ originalIndex, ans }, ...]
     if (!Array.isArray(answers)) return res.status(400).json({ error: "answers massivi kerak" });
 
-    // Calculate score
-    const results = quiz.map((q, i) => answers[i] === q.a);
+    // Calculate score using originalIndex
+    const results = answers.map(item => {
+      const q = quiz[item.originalIndex];
+      return q && q.a === item.ans;
+    });
     const score = results.filter(Boolean).length;
-    const total = quiz.length;
-    const percent = Math.round((score / total) * 100);
-    // Talab: Har bir darsga 5 tadan test 100% yechgandan keyin keyingi dars ochilsin
-    const passed = (score === total);
+    const total = answers.length;
+    const percent = total > 0 ? Math.round((score / total) * 100) : 0;
+    // Talab: 100% yechgandan keyin keyingi dars ochilsin
+    const passed = (score === 5 && total === 5);
 
     const p = getProgress(req.user.id);
     let completedIds = jsonParse(p.completed_lesson_ids, []);
@@ -235,7 +240,7 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
       next_lesson_id: passed ? nextLessonId : null,
       message: passed
         ? `🎉 Tabriklaymiz! ${score}/${total} (100%) to'g'ri yechdingiz. Dars to'liq o'zlashtirildi va keyingi dars ochildi!`
-        : `❌ Natijangiz: ${score}/${total} (${percent}%). Keyingi darsni ochish uchun testni 100% (${total}/${total}) to'g'ri yechishingiz shart. Xatolarni tekshirib, qayta urinib ko'ring!`,
+        : `❌ Imtihondan yiqildiz! Natijangiz: ${score}/${total} (${percent}%). 100% to'g'ri yechish shart. Qayta urinib ko'ring!`,
     });
   } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
 });
@@ -484,6 +489,25 @@ app.post('/api/teacher/students/:id/reset', auth, onlyTeacher, (req, res) => {
       .run(firstId, req.params.id);
     res.json({ success: true });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
+});
+
+// Update teacher settings (login/password)
+app.put('/api/teacher/settings', auth, onlyTeacher, (req, res) => {
+  try {
+    const { username, password } = req.body;
+    if (!username?.trim()) return res.status(400).json({ error: "Login bo'sh bo'lishi mumkin emas" });
+
+    const exist = db.prepare("SELECT id FROM users WHERE username=? AND id!=?").get(username.trim(), req.user.id);
+    if (exist) return res.status(409).json({ error: "Bu login band" });
+
+    if (password && password.trim().length > 0) {
+      const hash = bcrypt.hashSync(password.trim(), 10);
+      db.prepare("UPDATE users SET username=?, password_hash=? WHERE id=?").run(username.trim(), hash, req.user.id);
+    } else {
+      db.prepare("UPDATE users SET username=? WHERE id=?").run(username.trim(), req.user.id);
+    }
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
 });
 
 // ─── START ────────────────────────────────────────────────────────────────────

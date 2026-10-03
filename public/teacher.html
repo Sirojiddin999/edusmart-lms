@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="uz">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,155 +8,482 @@
   <link rel="stylesheet" href="/css/style.css">
   <style>
     /* ─── TEACHER MODERN WHITE LAYOUT ───────────────────────────── */
-    * { box-sizing: border-box; }
-    .t-root { display: flex; min-height: 100vh; background: var(--bg-base); }
+    * {
+      box-sizing: border-box;
+    }
+
+    .t-root {
+      display: flex;
+      min-height: 100vh;
+      background: var(--bg-base);
+    }
 
     /* SIDEBAR */
     .t-sidebar {
-      width: 280px; flex-shrink: 0;
+      width: 280px;
+      flex-shrink: 0;
       background: #ffffff;
       border-right: 1px solid var(--border);
-      display: flex; flex-direction: column;
-      position: sticky; top: 0; height: 100vh; overflow-y: auto;
-      box-shadow: 1px 0 3px rgba(0,0,0,0.02);
+      display: flex;
+      flex-direction: column;
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      box-shadow: 1px 0 3px rgba(0, 0, 0, 0.02);
     }
 
     .t-brand {
       padding: 22px 20px 18px;
       border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
     }
+
     .t-brand-logo {
-      width: 42px; height: 42px; border-radius: var(--r-sm);
+      width: 42px;
+      height: 42px;
+      border-radius: var(--r-sm);
       background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
-      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
-      box-shadow: 0 4px 14px rgba(79,70,229,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
     }
 
     /* Login form in sidebar */
-    .t-login-section { padding: 22px 20px; flex: 1; }
-    .t-login-title { font-size: 0.95rem; font-weight: 800; color: var(--text-primary); margin-bottom: 16px; }
+    .t-login-section {
+      padding: 22px 20px;
+      flex: 1;
+    }
+
+    .t-login-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
 
     /* Nav menu (after login) */
-    .t-nav { padding: 14px 12px; display: flex; flex-direction: column; gap: 6px; }
-    .t-nav-item {
-      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
-      border-radius: var(--r-md); cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
-      border: 1px solid transparent; background: transparent;
-      color: var(--text-secondary); font-size: 0.9rem; font-weight: 700; font-family: var(--font-heading);
-      width: 100%; text-align: left;
+    .t-nav {
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
-    .t-nav-item:hover { background: #f8fafc; color: var(--text-primary); }
+
+    .t-nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      border-radius: var(--r-md);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-weight: 700;
+      font-family: var(--font-heading);
+      width: 100%;
+      text-align: left;
+    }
+
+    .t-nav-item:hover {
+      background: #f8fafc;
+      color: var(--text-primary);
+    }
+
     .t-nav-item.active {
-      background: var(--primary-subtle); border-color: rgba(79, 70, 229, 0.25); color: var(--primary);
+      background: var(--primary-subtle);
+      border-color: rgba(79, 70, 229, 0.25);
+      color: var(--primary);
       box-shadow: 0 2px 6px rgba(79, 70, 229, 0.06);
     }
-    .t-nav-item .nav-icon { font-size: 1.15rem; flex-shrink: 0; }
+
+    .t-nav-item .nav-icon {
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+
     .t-nav-item .nav-badge {
-      margin-left: auto; font-size: 0.72rem; font-weight: 800;
-      background: #e0e7ff; color: var(--primary-dark);
-      padding: 2px 8px; border-radius: var(--r-full);
+      margin-left: auto;
+      font-size: 0.72rem;
+      font-weight: 800;
+      background: #e0e7ff;
+      color: var(--primary-dark);
+      padding: 2px 8px;
+      border-radius: var(--r-full);
     }
 
     .t-user-footer {
-      padding: 16px 18px; border-top: 1px solid var(--border);
-      display: flex; align-items: center; gap: 10px; background: #ffffff;
+      padding: 16px 18px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #ffffff;
     }
+
     .t-user-av {
-      width: 36px; height: 36px; border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
       background: linear-gradient(135deg, var(--primary), var(--purple));
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.85rem; font-weight: 800; color: #fff; flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
     }
-    .t-user-name  { font-size: 0.86rem; font-weight: 800; color: var(--text-primary); }
-    .t-user-role  { font-size: 0.72rem; color: var(--text-muted); }
+
+    .t-user-name {
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+
+    .t-user-role {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
 
     /* MAIN CONTENT */
     .t-main {
-      flex: 1; overflow-y: auto;
+      flex: 1;
+      overflow-y: auto;
       background: var(--bg-base);
-      display: flex; flex-direction: column;
+      display: flex;
+      flex-direction: column;
     }
 
     .t-topbar {
       padding: 16px 32px;
       background: #ffffff;
       border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 50; gap: 16px;
-      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      gap: 16px;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
     }
-    .t-page-title { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.4px; color: var(--text-primary); }
-    .t-page-sub   { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
 
-    .t-content { padding: 32px; max-width: 1280px; width: 100%; margin: 0 auto; }
+    .t-page-title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      letter-spacing: -0.4px;
+      color: var(--text-primary);
+    }
+
+    .t-page-sub {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .t-content {
+      padding: 32px;
+      max-width: 1280px;
+      width: 100%;
+      margin: 0 auto;
+    }
 
     /* STAT STRIP */
-    .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .stat-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
     .s-tile {
-      background: #ffffff; border: 1px solid var(--border); border-radius: var(--r-xl);
-      padding: 20px 22px; position: relative; overflow: hidden; transition: all 0.2s;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 20px 22px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s;
       box-shadow: var(--shadow-sm);
     }
-    .s-tile:hover { border-color: var(--border-hover); box-shadow: var(--shadow-md); transform: translateY(-1px); }
-    .s-tile-icon { width: 44px; height: 44px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 12px; }
-    .s-tile-val { font-family: var(--font-heading); font-size: 2.1rem; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-bottom: 4px; color: var(--text-primary); }
-    .s-tile-lbl { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+
+    .s-tile:hover {
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    .s-tile-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--r-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 12px;
+    }
+
+    .s-tile-val {
+      font-family: var(--font-heading);
+      font-size: 2.1rem;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1;
+      margin-bottom: 4px;
+      color: var(--text-primary);
+    }
+
+    .s-tile-lbl {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      font-weight: 600;
+    }
 
     /* Table */
-    .tbl-wrap { overflow-x: auto; border-radius: var(--r-xl); border: 1px solid var(--border); background: #ffffff; box-shadow: var(--shadow-sm); }
+    .tbl-wrap {
+      overflow-x: auto;
+      border-radius: var(--r-xl);
+      border: 1px solid var(--border);
+      background: #ffffff;
+      box-shadow: var(--shadow-sm);
+    }
 
     /* Lesson Cards */
-    .l-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
-    .l-card {
-      background: #ffffff; border: 1px solid var(--border); border-radius: var(--r-xl);
-      padding: 22px; position: relative; overflow: hidden; transition: all 0.2s;
-      box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+    .l-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 18px;
     }
-    .l-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
-    .l-card-order { font-size: 0.74rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
-    .l-card-title { font-size: 1.08rem; font-weight: 800; margin-bottom: 6px; line-height: 1.35; color: var(--text-primary); }
-    .l-card-desc  { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; flex: 1; }
-    .l-card-tags  { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
-    .l-card-tag   { font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: var(--r-full); background: var(--primary-subtle); color: var(--primary); border: 1px solid rgba(79,70,229,0.2); }
-    .l-card-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 14px; border-top: 1px solid var(--border); }
+
+    .l-card {
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: var(--r-xl);
+      padding: 22px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .l-card:hover {
+      border-color: var(--border-hover);
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .l-card-order {
+      font-size: 0.74rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 6px;
+    }
+
+    .l-card-title {
+      font-size: 1.08rem;
+      font-weight: 800;
+      margin-bottom: 6px;
+      line-height: 1.35;
+      color: var(--text-primary);
+    }
+
+    .l-card-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      line-height: 1.5;
+      flex: 1;
+    }
+
+    .l-card-tags {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .l-card-tag {
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: var(--r-full);
+      background: var(--primary-subtle);
+      color: var(--primary);
+      border: 1px solid rgba(79, 70, 229, 0.2);
+    }
+
+    .l-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
 
     /* Leaderboard rank */
-    .rank-1 { background: #fffdf5; }
-    .rank-2 { background: #f8fafc; }
-    .rank-3 { background: #fffaf5; }
-    .rank-badge {
-      display: inline-flex; align-items: center; justify-content: center;
-      width: 30px; height: 30px; border-radius: 50%; font-size: 0.85rem; font-weight: 900; font-family: var(--font-heading);
+    .rank-1 {
+      background: #fffdf5;
     }
-    .rb-1 { background: linear-gradient(135deg, #fbbf24, #d97706); color: #fff; box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35); }
-    .rb-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #fff; }
-    .rb-3 { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; }
-    .rb-n { background: #f1f5f9; color: var(--text-muted); border: 1px solid var(--border); }
+
+    .rank-2 {
+      background: #f8fafc;
+    }
+
+    .rank-3 {
+      background: #fffaf5;
+    }
+
+    .rank-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      font-size: 0.85rem;
+      font-weight: 900;
+      font-family: var(--font-heading);
+    }
+
+    .rb-1 {
+      background: linear-gradient(135deg, #fbbf24, #d97706);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35);
+    }
+
+    .rb-2 {
+      background: linear-gradient(135deg, #94a3b8, #64748b);
+      color: #fff;
+    }
+
+    .rb-3 {
+      background: linear-gradient(135deg, #f59e0b, #b45309);
+      color: #fff;
+    }
+
+    .rb-n {
+      background: #f1f5f9;
+      color: var(--text-muted);
+      border: 1px solid var(--border);
+    }
 
     /* Quiz rows modal */
-    .q-row { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
-    .q-row:last-child { border-bottom: none; }
-    .q-row-num { font-size: 0.78rem; font-weight: 800; color: var(--primary); flex-shrink: 0; min-width: 24px; padding-top: 2px; }
-    .q-row-body { flex: 1; }
-    .q-row-q { font-size: 0.94rem; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
-    .q-row-opts { font-size: 0.86rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px; }
-    .q-row-opts .correct-opt { color: #047857; font-weight: 800; background: #ecfdf5; padding: 3px 8px; border-radius: 4px; display: inline-block; width: fit-content; }
+    .q-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .q-row:last-child {
+      border-bottom: none;
+    }
+
+    .q-row-num {
+      font-size: 0.78rem;
+      font-weight: 800;
+      color: var(--primary);
+      flex-shrink: 0;
+      min-width: 24px;
+      padding-top: 2px;
+    }
+
+    .q-row-body {
+      flex: 1;
+    }
+
+    .tbl-wrap {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      width: 100%;
+    }
+
+    .q-row-q {
+      font-size: 0.94rem;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-primary);
+    }
+
+    .q-row-opts {
+      font-size: 0.86rem;
+      color: var(--text-secondary);
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .q-row-opts .correct-opt {
+      color: #047857;
+      font-weight: 800;
+      background: #ecfdf5;
+      padding: 3px 8px;
+      border-radius: 4px;
+      display: inline-block;
+      width: fit-content;
+    }
 
     /* Mini input */
-    .mini-input { padding: 8px 12px; border-radius: var(--r-sm); font-size: 0.88rem; }
+    .mini-input {
+      padding: 8px 12px;
+      border-radius: var(--r-sm);
+      font-size: 0.88rem;
+    }
 
     @media (max-width: 960px) {
-      .t-root { flex-direction: column; }
-      .t-sidebar { width: 100%; height: auto; position: relative; }
-      .t-nav { flex-direction: row; flex-wrap: wrap; padding: 8px; }
-      .t-nav-item { flex: 1; min-width: 130px; justify-content: center; }
-      .stat-strip { grid-template-columns: repeat(2, 1fr); }
-      .t-content { padding: 18px 16px; }
-      .t-topbar { padding: 14px 16px; }
+      .t-root {
+        flex-direction: column;
+      }
+
+      .t-sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+      }
+
+      .t-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        padding: 8px;
+      }
+
+      .t-nav-item {
+        flex: 1;
+        min-width: 130px;
+        justify-content: center;
+      }
+
+      .stat-strip {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .t-content {
+        padding: 18px 16px;
+      }
+
+      .t-topbar {
+        padding: 14px 16px;
+      }
     }
   </style>
 </head>
+
 <body>
   <div class="glow-orb glow-orb-1" style="opacity: 0.15;"></div>
   <div class="glow-orb glow-orb-2" style="opacity: 0.12;"></div>
@@ -223,6 +551,7 @@
             <div class="t-user-name" id="sideUserName">—</div>
             <div class="t-user-role">Bosh O'qituvchi</div>
           </div>
+          <button class="btn btn-ghost btn-xs" onclick="openSettingsModal()" title="Sozlamalar">⚙️</button>
           <button class="btn btn-ghost btn-xs" onclick="doLogout()" title="Chiqish">🚪</button>
         </div>
       </div>
@@ -235,7 +564,7 @@
       <div class="t-topbar">
         <div>
           <div class="t-page-title" id="pageTitle">O'qituvchi Paneli</div>
-          <div class="t-page-sub"  id="pageSub">Platforma statistikasi va boshqaruvi</div>
+          <div class="t-page-sub" id="pageSub">Platforma statistikasi va boshqaruvi</div>
         </div>
         <div id="topBarActions" style="display: flex; gap: 10px; align-items: center;"></div>
       </div>
@@ -270,20 +599,25 @@
         <!-- KIRISH OLDIDAGI XUSH KELIBSIZ EKRANI -->
         <div id="secWelcome" style="text-align: center; padding: 70px 20px;">
           <div style="font-size: 4.5rem; margin-bottom: 20px;">👨‍🏫</div>
-          <h2 style="font-size: 2rem; margin-bottom: 12px; color: var(--text-primary);">EduSmart LMS Boshqaruv Markazi</h2>
+          <h2 style="font-size: 2rem; margin-bottom: 12px; color: var(--text-primary);">EduSmart LMS Boshqaruv Markazi
+          </h2>
           <p style="color: var(--text-muted); max-width: 520px; margin: 0 auto; line-height: 1.7; font-size: 0.95rem;">
-            Darslarni boshqarish, 5 ta test savollarini tahrirlash, o'quvchilar reytingini kuzatish va individual natijalarini ko'rish uchun chap tarafdagi formadan kiring.
+            Darslarni boshqarish, 5 ta test savollarini tahrirlash, o'quvchilar reytingini kuzatish va individual
+            natijalarini ko'rish uchun chap tarafdagi formadan kiring.
           </p>
-          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; max-width: 660px; margin-left: auto; margin-right: auto;">
+          <div
+            style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; max-width: 660px; margin-left: auto; margin-right: auto;">
             <div class="card card-body" style="text-align: center; padding: 22px;">
               <div style="font-size: 2rem; margin-bottom: 8px;">📊</div>
               <div style="font-size: 0.88rem; font-weight: 800;">To'liq Nazorat</div>
-              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">100% test yechilishini kuzatish</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">100% test yechilishini
+                kuzatish</div>
             </div>
             <div class="card card-body" style="text-align: center; padding: 22px;">
               <div style="font-size: 2rem; margin-bottom: 8px;">📚</div>
               <div style="font-size: 0.88rem; font-weight: 800;">Dars & Test</div>
-              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">5 ta testli darslar qo'shish</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">5 ta testli darslar qo'shish
+              </div>
             </div>
             <div class="card card-body" style="text-align: center; padding: 22px;">
               <div style="font-size: 2rem; margin-bottom: 8px;">🏆</div>
@@ -297,15 +631,18 @@
         <div id="secOverview" style="display: none;">
           <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px;">
             <div class="card card-body">
-              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+              <h3
+                style="font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
                 <span>🎯</span> Ta'lim Oqimi Holati
               </h3>
               <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 18px;">
-                Platforma tizimi: har bir darsda <strong>5 ta test savoli</strong> mavjud. O'quvchi barcha 5 ta savolga <strong>100% to'g'ri</strong> javob bermaguncha keyingi dars ochilmaydi.
+                Platforma tizimi: har bir darsda <strong>5 ta test savoli</strong> mavjud. O'quvchi barcha 5 ta savolga
+                <strong>100% to'g'ri</strong> javob bermaguncha keyingi dars ochilmaydi.
               </p>
               <div style="display: flex; gap: 12px; flex-wrap: wrap;">
                 <button class="btn btn-primary btn-sm" onclick="switchSection('lessons')">📚 Darslarni Ko'rish</button>
-                <button class="btn btn-ghost btn-sm" onclick="switchSection('students')">👥 O'quvchilarni Ko'rish</button>
+                <button class="btn btn-ghost btn-sm" onclick="switchSection('students')">👥 O'quvchilarni
+                  Ko'rish</button>
                 <button class="btn btn-ghost btn-sm" onclick="openAddModal()">➕ Yangi Dars Qo'shish</button>
               </div>
             </div>
@@ -323,7 +660,8 @@
 
           <!-- Darslar ro'yxatining qisqacha ko'rinishi -->
           <div class="card card-body">
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 14px;">📚 Darslar va Ularning Testlari Holati</h3>
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 14px;">📚 Darslar va Ularning Testlari
+              Holati</h3>
             <div class="tbl-wrap">
               <table class="data-table">
                 <thead>
@@ -337,7 +675,10 @@
                   </tr>
                 </thead>
                 <tbody id="overviewLessonsBody">
-                  <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">Yuklanmoqda...</td></tr>
+                  <tr>
+                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">Yuklanmoqda...
+                    </td>
+                  </tr>
                 </tbody>
               </table>
             </div>
@@ -346,7 +687,8 @@
 
         <!-- 2. REYTING / LEADERBOARD BO'LIMI -->
         <div id="secLeaderboard" style="display: none;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <div
+            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
             <div>
               <div style="font-size: 1.25rem; font-weight: 900;">🏆 O'quvchilar Reytingi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
@@ -370,7 +712,10 @@
                 </tr>
               </thead>
               <tbody id="lbBody">
-                <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...</td></tr>
+                <tr>
+                  <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -378,7 +723,8 @@
 
         <!-- 3. DARSLAR BO'LIMI -->
         <div id="secLessons" style="display: none;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+          <div
+            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
               <div style="font-size: 1.25rem; font-weight: 900;">📚 Darslar Boshqaruvi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
@@ -388,20 +734,23 @@
             <button class="btn btn-primary" onclick="openAddModal()">➕ Yangi Dars Qo'shish</button>
           </div>
           <div class="l-cards" id="lessonCards">
-            <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
+            <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...
+            </div>
           </div>
         </div>
 
         <!-- 4. O'QUVCHILAR NAZORATI BO'LIMI -->
         <div id="secStudents" style="display: none;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+          <div
+            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
               <div style="font-size: 1.25rem; font-weight: 900;">👥 O'quvchilar Nazorati</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
                 Har bir o'quvchining har bir darsdagi test ballari va faolligini nazorat qiling
               </div>
             </div>
-            <input type="text" class="form-input" id="stuSearch" style="max-width: 260px;" placeholder="🔍 Ism yoki login bo'yicha..." oninput="filterStudents()">
+            <input type="text" class="form-input" id="stuSearch" style="max-width: 260px;"
+              placeholder="🔍 Ism yoki login bo'yicha..." oninput="filterStudents()">
           </div>
           <div class="tbl-wrap">
             <table class="data-table">
@@ -417,7 +766,10 @@
                 </tr>
               </thead>
               <tbody id="stuBody">
-                <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...</td></tr>
+                <tr>
+                  <td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -442,7 +794,8 @@
         </div>
         <div class="form-group">
           <label class="form-label">Qisqacha Tavsif</label>
-          <input id="al-desc" type="text" class="form-input" placeholder="Ushbu darsda o'rganiladigan asosiy tushunchalar...">
+          <input id="al-desc" type="text" class="form-input"
+            placeholder="Ushbu darsda o'rganiladigan asosiy tushunchalar...">
         </div>
         <div class="form-group">
           <label class="form-label">YouTube Embed URL</label>
@@ -450,7 +803,8 @@
         </div>
         <div class="form-group">
           <label class="form-label">Dars Matni / Konspekt</label>
-          <textarea id="al-content" class="form-input" rows="4" placeholder="Dars konspekti, asosiy formulalar, eslatmalar..."></textarea>
+          <textarea id="al-content" class="form-input" rows="4"
+            placeholder="Dars konspekti, asosiy formulalar, eslatmalar..."></textarea>
         </div>
         <div class="form-group">
           <label class="form-label">Hashteglar (vergul bilan ajrating)</label>
@@ -463,16 +817,19 @@
           </div>
           <div>
             <label class="form-label">Talab etiladigan ball (5 dan)</label>
-            <input id="al-min" type="number" class="form-input" value="5" min="5" max="5" readonly style="background:#f1f5f9; cursor:not-allowed;" title="Talab: 100% (5/5)">
+            <input id="al-min" type="number" class="form-input" value="5" min="5" max="5" readonly
+              style="background:#f1f5f9; cursor:not-allowed;" title="Talab: 100% (5/5)">
           </div>
         </div>
 
         <!-- 5 ta Test Savoli Quruvchisi -->
-        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; margin-bottom: 22px;">
+        <div
+          style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; margin-bottom: 22px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <div>
               <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary);">✍️ 5 ta Test Savoli</div>
-              <div style="font-size: 0.76rem; color: var(--text-muted);">Har bir savol uchun 4 ta variant kiriting va to'g'risini belgilang</div>
+              <div style="font-size: 0.76rem; color: var(--text-muted);">Har bir savol uchun 4 ta variant kiriting va
+                to'g'risini belgilang</div>
             </div>
             <button type="button" class="btn btn-ghost btn-xs" onclick="addQuizRow()">+ Savol qo'shish</button>
           </div>
@@ -502,7 +859,9 @@
     <div class="modal-box" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
       <button class="modal-close-btn" onclick="closeModal('studentDetailModal')">✕</button>
       <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
-        <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; font-weight: 800;" id="sdAvatar">?</div>
+        <div
+          style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; font-weight: 800;"
+          id="sdAvatar">?</div>
         <div>
           <h2 style="font-size: 1.25rem; font-weight: 800; line-height: 1.2;" id="sdName">—</h2>
           <div style="font-size: 0.8rem; color: var(--text-muted);" id="sdLogin">—</div>
@@ -520,7 +879,8 @@
         </div>
       </div>
 
-      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 10px;">📋 Har bir dars bo'yicha test natijalari:</h3>
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 10px;">📋 Har bir dars bo'yicha test natijalari:
+      </h3>
       <div class="tbl-wrap" style="margin-bottom: 20px;">
         <table class="data-table">
           <thead>
@@ -533,7 +893,9 @@
             </tr>
           </thead>
           <tbody id="sdLessonsBody">
-            <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">Yuklanmoqda...</td></tr>
+            <tr>
+              <td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">Yuklanmoqda...</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -544,11 +906,69 @@
     </div>
   </div>
 
+  <!-- ⚙️ SETTINGS MODAL -->
+  <div class="modal-overlay" id="settingsModal" onclick="if(event.target===this) closeModal('settingsModal')">
+    <div class="modal-box" style="max-width: 400px;">
+      <button class="modal-close-btn" onclick="closeModal('settingsModal')">✕</button>
+      <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;">⚙️ Sozlamalar</h2>
+      <form onsubmit="saveTeacherSettings(event)">
+        <div class="form-group">
+          <label class="form-label">Yangi Login (Username)</label>
+          <input type="text" id="set-username" class="form-input" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Yangi Parol</label>
+          <input type="password" id="set-password" class="form-input" placeholder="O'zgartirish uchun kiriting (majburiy emas)">
+        </div>
+        <button type="submit" id="btnSaveSettings" class="btn btn-primary btn-block">Saqlash</button>
+      </form>
+    </div>
+  </div>
+
   <div id="toast-root"></div>
   <script src="/js/utils.js"></script>
   <script>
     let ALL_STUDENTS = [], ALL_LESSONS = [], TEACHER_USER = null;
     let quizRowCount = 0;
+
+    // ─── SETTINGS LOGIC ──────────────────────────────────────────────────────
+    function openSettingsModal() {
+      if (!TEACHER_USER) return;
+      document.getElementById('set-username').value = TEACHER_USER.username || '';
+      document.getElementById('set-password').value = '';
+      openModal('settingsModal');
+    }
+
+    async function saveTeacherSettings(e) {
+      e.preventDefault();
+      const newUsername = document.getElementById('set-username').value.trim();
+      const newPassword = document.getElementById('set-password').value.trim();
+      if (!newUsername) return;
+      
+      const btn = document.getElementById('btnSaveSettings');
+      const oldText = btn.innerText;
+      btn.disabled = true; btn.innerText = 'Saqlanmoqda...';
+
+      try {
+        const r = await fetch('/api/teacher/settings', {
+          method: 'PUT',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({ username: newUsername, password: newPassword })
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("Sozlamalar yangilandi! Tizimga qaytadan kiring.", 'success');
+          closeModal('settingsModal');
+          setTimeout(() => doLogout(), 1500);
+        } else {
+          showToast(d.error || 'Xatolik', 'error');
+        }
+      } catch {
+        showToast('Server bilan ulanishda xatolik', 'error');
+      } finally {
+        btn.disabled = false; btn.innerText = oldText;
+      }
+    }
 
     // ─── AUTH TEKSHIRUVI ─────────────────────────────────────────────────────
     window.addEventListener('DOMContentLoaded', () => {
@@ -593,11 +1013,11 @@
     function afterLogin(usr) {
       TEACHER_USER = usr;
       document.getElementById('sideLoginSection').style.display = 'none';
-      document.getElementById('sideNavSection').style.display   = 'flex';
-      document.getElementById('sideUserFooter').style.display   = 'block';
-      document.getElementById('statStrip').style.display        = 'grid';
-      document.getElementById('secWelcome').style.display       = 'none';
-      document.getElementById('sideUserName').innerText         = usr.full_name || 'O\'qituvchi';
+      document.getElementById('sideNavSection').style.display = 'flex';
+      document.getElementById('sideUserFooter').style.display = 'block';
+      document.getElementById('statStrip').style.display = 'grid';
+      document.getElementById('secWelcome').style.display = 'none';
+      document.getElementById('sideUserName').innerText = usr.full_name || 'O\'qituvchi';
       switchSection('overview');
     }
 
@@ -616,15 +1036,15 @@
       });
 
       const titles = {
-        overview:    ['📊 Platforma Tahlili va Boshqaruvi', 'Umumiy o\'quv jarayoni va darslar statistikasi'],
+        overview: ['📊 Platforma Tahlili va Boshqaruvi', 'Umumiy o\'quv jarayoni va darslar statistikasi'],
         leaderboard: ['🏆 O\'quvchilar Reytingi', '100% bilan eng ko\'p dars yakunlagan peshqadamlar'],
-        lessons:     ['📚 Darslar va Testlar Boshqaruvi', 'Darslar qo\'shish, tahrirlash va 5 ta test savollari'],
-        students:    ['👥 O\'quvchilar Nazorati', 'Har bir o\'quvchining shaxsiy progressi va test ballari']
+        lessons: ['📚 Darslar va Testlar Boshqaruvi', 'Darslar qo\'shish, tahrirlash va 5 ta test savollari'],
+        students: ['👥 O\'quvchilar Nazorati', 'Har bir o\'quvchining shaxsiy progressi va test ballari']
       };
 
       if (titles[sec]) {
         document.getElementById('pageTitle').innerText = titles[sec][0];
-        document.getElementById('pageSub').innerText   = titles[sec][1];
+        document.getElementById('pageSub').innerText = titles[sec][1];
       }
 
       const actions = document.getElementById('topBarActions');
@@ -632,10 +1052,10 @@
         ? '<button class="btn btn-primary btn-sm" onclick="openAddModal()">➕ Yangi Dars Qo\'shish</button>'
         : '<button class="btn btn-ghost btn-sm" onclick="loadAll()">🔄 Yangilash</button>';
 
-      if (sec === 'overview')    renderOverview();
+      if (sec === 'overview') renderOverview();
       if (sec === 'leaderboard') loadLeaderboard();
-      if (sec === 'lessons')     loadLessons();
-      if (sec === 'students')    loadStudents();
+      if (sec === 'lessons') loadLessons();
+      if (sec === 'students') loadStudents();
     }
 
     function capitalize(s) {
@@ -647,17 +1067,17 @@
       try {
         const [sr, lr] = await Promise.all([
           fetch('/api/teacher/students', { headers: Auth.getHeaders() }),
-          fetch('/api/teacher/lessons',  { headers: Auth.getHeaders() })
+          fetch('/api/teacher/lessons', { headers: Auth.getHeaders() })
         ]);
         const sd = await sr.json(), ld = await lr.json();
         ALL_STUDENTS = sd.students || [];
-        ALL_LESSONS  = ld || [];
+        ALL_LESSONS = ld || [];
 
-        document.getElementById('stTotal').innerText   = ALL_STUDENTS.length;
-        document.getElementById('stActive').innerText  = sd.stats?.active_today ?? 0;
+        document.getElementById('stTotal').innerText = ALL_STUDENTS.length;
+        document.getElementById('stActive').innerText = sd.stats?.active_today ?? 0;
         document.getElementById('stLessons').innerText = ALL_LESSONS.length;
         document.getElementById('studentsBadge').innerText = ALL_STUDENTS.length;
-        document.getElementById('lessonsBadge').innerText  = ALL_LESSONS.length;
+        document.getElementById('lessonsBadge').innerText = ALL_LESSONS.length;
 
         const avg = ALL_STUDENTS.length
           ? Math.round(ALL_STUDENTS.reduce((a, s) => a + (s.progress_percent || 0), 0) / ALL_STUDENTS.length)
@@ -708,8 +1128,8 @@
 
         tbody.innerHTML = d.leaderboard.map(s => {
           const rowClass = s.rank <= 3 ? `rank-${s.rank}` : '';
-          const rbClass  = s.rank <= 3 ? `rb-${s.rank}` : 'rb-n';
-          const medal    = s.rank === 1 ? '🥇' : s.rank === 2 ? '🥈' : s.rank === 3 ? '🥉' : '';
+          const rbClass = s.rank <= 3 ? `rb-${s.rank}` : 'rb-n';
+          const medal = s.rank === 1 ? '🥇' : s.rank === 2 ? '🥈' : s.rank === 3 ? '🥉' : '';
           const ini = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
           const date = s.last_active ? new Date(s.last_active).toLocaleDateString('uz-UZ') : '—';
           const pct = s.progress_percent || 0;
@@ -752,9 +1172,9 @@
         const r = await fetch('/api/teacher/lessons', { headers: Auth.getHeaders() });
         ALL_LESSONS = await r.json();
         document.getElementById('lessonsBadge').innerText = ALL_LESSONS.length;
-        document.getElementById('stLessons').innerText    = ALL_LESSONS.length;
+        document.getElementById('stLessons').innerText = ALL_LESSONS.length;
         renderLessons(ALL_LESSONS);
-      } catch {}
+      } catch { }
     }
 
     function renderLessons(lessons) {
@@ -792,7 +1212,7 @@
       if (!l) return;
       const quiz = Array.isArray(l.quiz) ? l.quiz : [];
       document.getElementById('vqTitle').innerText = l.title + ' — Test Savollari';
-      document.getElementById('vqSub').innerText   = `${quiz.length} ta savol • O'tish talabi: 100% (barcha savollarga to'g'ri javob)`;
+      document.getElementById('vqSub').innerText = `${quiz.length} ta savol • O'tish talabi: 100% (barcha savollarga to'g'ri javob)`;
       const letters = ['A', 'B', 'C', 'D'];
 
       document.getElementById('vqBody').innerHTML = quiz.length
@@ -835,10 +1255,10 @@
         const d = await r.json();
         ALL_STUDENTS = d.students || [];
         document.getElementById('studentsBadge').innerText = ALL_STUDENTS.length;
-        document.getElementById('stTotal').innerText       = ALL_STUDENTS.length;
-        document.getElementById('stActive').innerText      = d.stats?.active_today ?? 0;
+        document.getElementById('stTotal').innerText = ALL_STUDENTS.length;
+        document.getElementById('stActive').innerText = d.stats?.active_today ?? 0;
         renderStudents(ALL_STUDENTS);
-      } catch {}
+      } catch { }
     }
 
     function renderStudents(list) {
@@ -849,11 +1269,11 @@
       }
 
       tbody.innerHTML = list.map(s => {
-        const ini  = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-        const pct  = s.progress_percent || 0;
+        const ini = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        const pct = s.progress_percent || 0;
         const pColor = pct >= 70 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--text-muted)';
         const date = s.last_active ? new Date(s.last_active).toLocaleString('uz-UZ') : '—';
-        const avg  = s.avg_score ? s.avg_score + '%' : '—';
+        const avg = s.avg_score ? s.avg_score + '%' : '—';
 
         return `<tr>
           <td><div style="display:flex; align-items:center; gap:10px;">
@@ -907,10 +1327,10 @@
         if (!r.ok) return showToast(d.error || 'Yuklashda xatolik', 'error');
 
         document.getElementById('sdAvatar').innerText = (d.student.full_name || 'O').slice(0, 2).toUpperCase();
-        document.getElementById('sdName').innerText   = d.student.full_name;
-        document.getElementById('sdLogin').innerText  = '@' + d.student.username + ` • Ro'yxatdan o'tgan: ${new Date(d.student.registered_at).toLocaleDateString('uz-UZ')}`;
+        document.getElementById('sdName').innerText = d.student.full_name;
+        document.getElementById('sdLogin').innerText = '@' + d.student.username + ` • Ro'yxatdan o'tgan: ${new Date(d.student.registered_at).toLocaleDateString('uz-UZ')}`;
         document.getElementById('sdCompleted').innerText = `${d.progress.completed_count}/${d.progress.total_lessons} dars (100%)`;
-        document.getElementById('sdPercent').innerText   = `${d.progress.progress_percent}%`;
+        document.getElementById('sdPercent').innerText = `${d.progress.progress_percent}%`;
 
         const tbody = document.getElementById('sdLessonsBody');
         tbody.innerHTML = d.lessons.map(l => {
@@ -1053,8 +1473,9 @@
       }
     }
 
-    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function openModal(id) { document.getElementById(id).classList.add('open'); }
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
   </script>
 </body>
+
 </html>

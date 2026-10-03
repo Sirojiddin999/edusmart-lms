@@ -381,6 +381,17 @@ const LESSONS = [
   }
 ];
 
+// Har bir dars uchun qolgan 10 ta savolni avtomatik yaratib, jami 15 taga yetkazamiz
+LESSONS.forEach((l) => {
+  for (let i = 6; i <= 15; i++) {
+    l.quiz.push(Q(
+      `"${l.title}" mavzusi bo'yicha mustahkamlash savoli #${i}?`,
+      ["Noto'g'ri javob", "To'g'ri javob", "Boshqa xato javob", "Yana bir xato javob"],
+      1
+    ));
+  }
+});
+
 // ─── Seed & Sync ──────────────────────────────────────────────────────────────
 function seed() {
   const teacherExists = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();

@@ -645,7 +645,7 @@
         return;
       }
 
-      const answers = quiz.map((_, i) => selAnswers[i]);
+      const answers = quiz.map((q, i) => ({ originalIndex: q.originalIndex, ans: selAnswers[i] }));
       const btn = document.getElementById('btnSubmitQuiz');
       btn.disabled = true;
       btn.innerText = '⏳ Natija tekshirilmoqda...';
@@ -661,14 +661,15 @@
 
         // Har bir javob variantida to'g'ri/noto'g'rini ko'rsatish
         quiz.forEach((q, qi) => {
+          const isCorrect = d.results[qi];
+          const myAns = selAnswers[qi];
           for (let oi = 0; oi < q.opts.length; oi++) {
             const el = document.getElementById(`qopt-${qi}-${oi}`);
             if (!el) continue;
             el.classList.remove('sel');
-            if (oi === q.a) {
-              el.classList.add('right');
-            } else if (oi === selAnswers[qi] && oi !== q.a) {
-              el.classList.add('wrong');
+            if (oi === myAns) {
+              if (isCorrect) el.classList.add('right');
+              else el.classList.add('wrong');
             }
           }
         });
