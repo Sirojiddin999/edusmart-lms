@@ -11,9 +11,17 @@
   <style>
     /* ---- HOME SPECIFIC LIGHT THEME ---- */
     @keyframes btn-glow {
-      0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
-      70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+      0% {
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4);
+      }
+
+      70% {
+        box-shadow: 0 0 0 10px rgba(79, 70, 229, 0);
+      }
+
+      100% {
+        box-shadow: 0 0 0 0 rgba(79, 70, 229, 0);
+      }
     }
 
     .animated-btn {
@@ -306,9 +314,11 @@
   <div class="page-wrap">
     <!-- NAVBAR -->
     <!-- NAVBAR -->
-    <nav class='navbar' style='position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);'>
+    <nav class='navbar'
+      style='position: sticky; top: 0; z-index: 1000; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);'>
       <div class='container'>
-        <div class='navbar-inner' style='justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;'>
+        <div class='navbar-inner'
+          style='justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;'>
           <a href='/' class='brand' style='margin-right: auto;'>
             <div class='brand-logo'>🎓</div>
             <div>
@@ -316,17 +326,31 @@
               <div class='brand-subtitle'>Zamonaviy Ta'lim Platformasi</div>
             </div>
           </a>
-          <ul class='nav-links' style='display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap;'>
-            <li><a href='#home' style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Bosh sahifa</a></li>
-            <li><a href='#news' style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Yangiliklar</a></li>
-            <li><a href='#courses' style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Kurslar</a></li>
-            <li><a href='#library' style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Kutubxona</a></li>
-            <li><a href='#about' style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Sayt haqida</a></li>
-            <li><a href='#contact' style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Aloqa</a></li>
+          <ul class='nav-links'
+            style='display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap;'>
+            <li><a href='#home'
+                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Bosh
+                sahifa</a></li>
+            <li><a href='#news'
+                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Yangiliklar</a>
+            </li>
+            <li><a href='#courses'
+                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Kurslar</a>
+            </li>
+            <li><a href='#library'
+                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Kutubxona</a>
+            </li>
+            <li><a href='#about'
+                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Sayt
+                haqida</a></li>
+            <li><a href='#contact'
+                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Aloqa</a>
+            </li>
           </ul>
           <div class='nav-right' style='display: flex; gap: 10px;'>
             <button class='btn btn-ghost btn-sm' onclick='scrollToLogin()'>🔑 Kabinetga kirish</button>
             <button class='btn btn-primary btn-sm' onclick='scrollToRegister()'>📝 Ro'yxatdan o'tish</button>
+            <button class='btn btn-ghost btn-sm' onclick='scrollToTeacher()'>👨‍🏫 O'qituvchi</button>
           </div>
         </div>
       </div>
@@ -465,22 +489,32 @@
     <!-- COURSES -->
     <section id="courses" style="padding: 60px 0; background: #f8fafc;">
       <div class="container">
-        <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 40px; color: var(--text-primary);">Dasturlash Kurslari</h2>
+        <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 40px; color: var(--text-primary);">Dasturlash
+          Kurslari</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-          <div class="card card-body" style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div class="card card-body"
+            style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;"
+            onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
             <div style="font-size: 3.5rem; margin-bottom: 15px;">🐍</div>
             <h3 style="margin-bottom: 10px;">Python Asoslari</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Zamonaviy va eng mashhur dasturlash tilini noldan o'rganing. Backend, AI va Data Science uchun.</p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Zamonaviy va eng mashhur
+              dasturlash tilini noldan o'rganing. Backend, AI va Data Science uchun.</p>
           </div>
-          <div class="card card-body" style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div class="card card-body"
+            style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;"
+            onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
             <div style="font-size: 3.5rem; margin-bottom: 15px;">💛</div>
             <h3 style="margin-bottom: 10px;">JavaScript & Frontend</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Web dasturlashning asosiy tili. HTML, CSS va zamonaviy kutubxonalar (React, Vue) ga kirish.</p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Web dasturlashning asosiy tili.
+              HTML, CSS va zamonaviy kutubxonalar (React, Vue) ga kirish.</p>
           </div>
-          <div class="card card-body" style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
+          <div class="card card-body"
+            style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;"
+            onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
             <div style="font-size: 3.5rem; margin-bottom: 15px;">☕</div>
             <h3 style="margin-bottom: 10px;">Java Dasturlash</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Kuchli va yirik loyihalar uchun mo'ljallangan til. Android va Enterprise dasturlash uchun mukammal.</p>
+            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Kuchli va yirik loyihalar uchun
+              mo'ljallangan til. Android va Enterprise dasturlash uchun mukammal.</p>
           </div>
         </div>
       </div>
@@ -490,11 +524,13 @@
     <section id="library" style="padding: 70px 0;">
       <div class="container" style="text-align: center;">
         <h2 style="font-size: 2.2rem; margin-bottom: 15px; color: var(--text-primary);">Kutubxona</h2>
-        <p style="color: var(--text-muted); margin-bottom: 35px; font-size: 1.1rem;">O'quv qo'llanmalar, darsliklar va asosiy ilmiy ishlar to'plami.</p>
-        
+        <p style="color: var(--text-muted); margin-bottom: 35px; font-size: 1.1rem;">O'quv qo'llanmalar, darsliklar va
+          asosiy ilmiy ishlar to'plami.</p>
+
         <!-- Top Animated Buttons (Moved to library) -->
         <div class="top-buttons-container animate-fade-up">
-          <a href="https://drive.google.com/drive/folders/18UgKYPokejgspN-RLwQHKYn63RtN6xGc?usp=drive_link" target="_blank" class="animated-btn">
+          <a href="https://drive.google.com/drive/folders/18UgKYPokejgspN-RLwQHKYn63RtN6xGc?usp=drive_link"
+            target="_blank" class="animated-btn">
             📚 Asosiy ilmiy ishlar
           </a>
           <button onclick="openModal('books-modal')" class="animated-btn">
@@ -508,22 +544,26 @@
     <!-- NEWS -->
     <section id="news" style="padding: 60px 0; background: #f8fafc;">
       <div class="container">
-        <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 40px; color: var(--text-primary);">Dasturlash Yangiliklari</h2>
+        <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 40px; color: var(--text-primary);">Dasturlash
+          Yangiliklari</h2>
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
           <div class="card card-body">
             <div style="font-size: 2rem; margin-bottom: 10px;">🤖</div>
-            <h4 style="margin-bottom: 8px; font-size: 1.1rem;">Sun'iy Inson Yangiliklari</h4>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Chat GPT va Gemini endi dasturlashda eng katta yordamchiga aylanmoqda. Kod yozish va xatolarni topish ancha osonlashdi.</p>
+            <h4 style="margin-bottom: 8px; font-size: 1.1rem;">Sun'iy Intelekt Yangiliklari</h4>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Chat GPT va Gemini endi
+              dasturlashda eng katta yordamchiga aylanmoqda. Kod yozish va xatolarni topish ancha osonlashdi.</p>
           </div>
           <div class="card card-body">
             <div style="font-size: 2rem; margin-bottom: 10px;">🚀</div>
             <h4 style="margin-bottom: 8px; font-size: 1.1rem;">Yangi Kurslar Qo'shildi</h4>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Platformamizga Java va Python bo'yicha murakkab amaliy mashg'ulotlar va loyihalar qo'shildi.</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Platformamizga Java va Python
+              bo'yicha murakkab amaliy mashg'ulotlar va loyihalar qo'shildi.</p>
           </div>
           <div class="card card-body">
             <div style="font-size: 2rem; margin-bottom: 10px;">📈</div>
             <h4 style="margin-bottom: 8px; font-size: 1.1rem;">IT Sohasidagi O'zgarishlar</h4>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">O'zbekistonda dasturchilarga bo'lgan talab 2 barobar oshdi. Endilikda masofaviy ishlash imkoniyatlari yanada kengaymoqda.</p>
+            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">O'zbekistonda dasturchilarga
+              bo'lgan talab 2 barobar oshdi. Endilikda masofaviy ishlash imkoniyatlari yanada kengaymoqda.</p>
           </div>
         </div>
       </div>
@@ -533,16 +573,19 @@
   <!-- ABOUT & CONTACT (Footer area) -->
   <footer id="about" style="background: #0f172a; color: #f8fafc; padding: 70px 0 20px;">
     <div class="container">
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 50px;">
+      <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 50px;">
         <div>
           <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">Sayt haqida</h3>
           <p style="color: #94a3b8; line-height: 1.7; font-size: 0.95rem;">
-            EduSmart LMS — talabalar va o'qituvchilar uchun mo'ljallangan zamonaviy o'quv platformasi. Biz interaktiv ta'lim, darslarni to'liq o'zlashtirish va doimiy amaliyotni maqsad qilganmiz.
+            EduSmart LMS — talabalar va o'qituvchilar uchun mo'ljallangan zamonaviy o'quv platformasi. Biz interaktiv
+            ta'lim, darslarni to'liq o'zlashtirish va doimiy amaliyotni maqsad qilganmiz.
           </p>
         </div>
         <div id="contact">
           <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">Biz bilan bog'lanish</h3>
-          <ul style="list-style: none; padding: 0; color: #94a3b8; font-size: 0.95rem; display: flex; flex-direction: column; gap: 12px;">
+          <ul
+            style="list-style: none; padding: 0; color: #94a3b8; font-size: 0.95rem; display: flex; flex-direction: column; gap: 12px;">
             <li style="display: flex; align-items: center; gap: 10px;"><span>📍</span> Farg'ona, O'zbekiston</li>
             <li style="display: flex; align-items: center; gap: 10px;"><span>📞</span> +998 90 123 45 67</li>
             <li style="display: flex; align-items: center; gap: 10px;"><span>📧</span> info@edusmart.uz</li>
@@ -551,13 +594,20 @@
         <div>
           <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">Ijtimoiy tarmoqlar</h3>
           <div style="display: flex; flex-direction: column; gap: 14px;">
-            <a href="https://www.instagram.com/isomiddinov.marufjon/" target="_blank" style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>📸</span> Instagram: @isomiddinov.marufjon</a>
-            <a href="https://www.facebook.com/isomiddinov.marufjon.3/" target="_blank" style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>📘</span> Facebook: Marufjon Isomiddinov</a>
-            <a href="https://t.me/Marufjon0915" target="_blank" style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>✈️</span> Telegram: @Marufjon0915</a>
+            <a href="https://www.instagram.com/isomiddinov.marufjon/" target="_blank"
+              style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>📸</span>
+              Instagram: @isomiddinov.marufjon</a>
+            <a href="https://www.facebook.com/isomiddinov.marufjon.3/" target="_blank"
+              style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>📘</span>
+              Facebook: Marufjon Isomiddinov</a>
+            <a href="https://t.me/Marufjon0915" target="_blank"
+              style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>✈️</span>
+              Telegram: @Marufjon0915</a>
           </div>
         </div>
       </div>
-      <div style="text-align: center; padding-top: 24px; border-top: 1px solid #1e293b; font-weight: 800; color: #64748b; font-size: 1.1rem; letter-spacing: 1.5px;">
+      <div
+        style="text-align: center; padding-top: 24px; border-top: 1px solid #1e293b; font-weight: 800; color: #64748b; font-size: 1.1rem; letter-spacing: 1.5px;">
         2024_YIL
       </div>
     </div>
@@ -567,15 +617,30 @@
   <div class="modal-backdrop" id="books-modal">
     <div class="modal-box" style="max-width: 500px;">
       <button class="modal-close-btn" onclick="closeModal('books-modal')">✕</button>
-      <h2 style="font-size: 1.5rem; margin-bottom: 20px; text-align: center; color: var(--text-primary);">O'quv qo'llanma va darsliklar</h2>
+      <h2 style="font-size: 1.5rem; margin-bottom: 20px; text-align: center; color: var(--text-primary);">O'quv
+        qo'llanma va darsliklar</h2>
       <div style="display: flex; flex-direction: column; gap: 10px;">
-        <a href="https://drive.google.com/file/d/1x87vTAdlABLxlVfm5Bzrye-I0fNBYpzd/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv qo'llanma</a>
-        <a href="https://drive.google.com/file/d/1r4OxXfkVUzaLsgr51lXVHL8AdsiCMhCF/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗 Darslik</a>
-        <a href="https://drive.google.com/file/d/1u-IpJz_4SSoAo2Y87woRDkir7inpXXB7/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗 Darslik</a>
-        <a href="https://drive.google.com/file/d/1jPa-G66bp1zsteADygRLTqUX0VA8S_HI/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv qo'llanma</a>
-        <a href="https://drive.google.com/file/d/14HTx_rX0nSVlzVYNOQVAGIqyGMgFxQ8m/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv qo'llanma</a>
-        <a href="https://drive.google.com/file/d/1IqE-O_HDPKFBrG0qSqjv_cYoxzVunqVV/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv qo'llanma</a>
-        <a href="https://drive.google.com/file/d/1XiS_Z-5ZzGrtNjGiyrL455-ttfT7MHEz/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗 Darslik</a>
+        <a href="https://drive.google.com/file/d/1x87vTAdlABLxlVfm5Bzrye-I0fNBYpzd/view?usp=drive_link" target="_blank"
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv
+          qo'llanma</a>
+        <a href="https://drive.google.com/file/d/1r4OxXfkVUzaLsgr51lXVHL8AdsiCMhCF/view?usp=drive_link" target="_blank"
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗
+          Darslik</a>
+        <a href="https://drive.google.com/file/d/1u-IpJz_4SSoAo2Y87woRDkir7inpXXB7/view?usp=drive_link" target="_blank"
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗
+          Darslik</a>
+        <a href="https://drive.google.com/file/d/1jPa-G66bp1zsteADygRLTqUX0VA8S_HI/view?usp=drive_link" target="_blank"
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv
+          qo'llanma</a>
+        <a href="https://drive.google.com/file/d/14HTx_rX0nSVlzVYNOQVAGIqyGMgFxQ8m/view?usp=drive_link" target="_blank"
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv
+          qo'llanma</a>
+        <a href="https://drive.google.com/file/d/1IqE-O_HDPKFBrG0qSqjv_cYoxzVunqVV/view?usp=drive_link" target="_blank"
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv
+          qo'llanma</a>
+        <a href="https://drive.google.com/file/d/1XiS_Z-5ZzGrtNjGiyrL455-ttfT7MHEz/view?usp=drive_link" target="_blank"
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗
+          Darslik</a>
       </div>
     </div>
   </div>
@@ -646,10 +711,7 @@
       document.getElementById('form-login').style.display = isReg ? 'none' : '';
     }
 
-    document.getElementById('quick-teacher-btn').onclick = () => {
-      document.getElementById('teacher-portal-card').scrollIntoView({ behavior: 'smooth' });
-      setTimeout(() => document.getElementById('t-pass').focus(), 400);
-    };
+
 
     // Ro'yxatdan o'tish
     async function doRegister(e) {
@@ -763,6 +825,7 @@
       right: 25px;
       z-index: 9999;
     }
+
     .ai-btn {
       width: 65px;
       height: 65px;
@@ -779,7 +842,11 @@
       transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       animation: pulse-glow 2.5s infinite;
     }
-    .ai-btn:hover { transform: scale(1.1) rotate(10deg); }
+
+    .ai-btn:hover {
+      transform: scale(1.1) rotate(10deg);
+    }
+
     .ai-chat-window {
       position: absolute;
       bottom: 85px;
@@ -788,7 +855,7 @@
       height: 480px;
       background: white;
       border-radius: 16px;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
       display: none;
       flex-direction: column;
       overflow: hidden;
@@ -796,10 +863,19 @@
       transform-origin: bottom right;
       animation: popup 0.3s ease;
     }
+
     @keyframes popup {
-      from { transform: scale(0.8); opacity: 0; }
-      to { transform: scale(1); opacity: 1; }
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
+
     .ai-header {
       background: linear-gradient(135deg, #4f46e5, #9333ea);
       color: white;
@@ -810,6 +886,7 @@
       align-items: center;
       font-size: 1.1rem;
     }
+
     .ai-body {
       flex: 1;
       padding: 20px;
@@ -819,6 +896,7 @@
       flex-direction: column;
       gap: 12px;
     }
+
     .msg-ai {
       background: white;
       padding: 12px 16px;
@@ -830,8 +908,9 @@
       font-size: 0.95rem;
       line-height: 1.5;
       color: var(--text-primary);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.02);
     }
+
     .msg-user {
       background: linear-gradient(135deg, #4f46e5, #6366f1);
       color: white;
@@ -844,12 +923,14 @@
       line-height: 1.5;
       box-shadow: 0 2px 5px rgba(79, 70, 229, 0.2);
     }
+
     .ai-input-area {
       display: flex;
       border-top: 1px solid var(--border);
       padding: 12px;
       background: white;
     }
+
     .ai-input-area input {
       flex: 1;
       border: 1px solid var(--border);
@@ -859,9 +940,11 @@
       font-size: 0.95rem;
       transition: border 0.3s;
     }
+
     .ai-input-area input:focus {
       border-color: #4f46e5;
     }
+
     .ai-input-area button {
       background: #4f46e5;
       color: white;
@@ -877,7 +960,10 @@
       font-size: 1.1rem;
       transition: background 0.3s;
     }
-    .ai-input-area button:hover { background: #4338ca; }
+
+    .ai-input-area button:hover {
+      background: #4338ca;
+    }
   </style>
 
   <div class="ai-widget">
@@ -887,13 +973,16 @@
           <span style="font-size: 1.3rem;">✨</span>
           <span>EduSmart AI</span>
         </div>
-        <button onclick="toggleAI()" style="background:none;border:none;color:white;cursor:pointer;font-size:1.4rem;padding:0;">✕</button>
+        <button onclick="toggleAI()"
+          style="background:none;border:none;color:white;cursor:pointer;font-size:1.4rem;padding:0;">✕</button>
       </div>
       <div class="ai-body" id="aiBody">
-        <div class="msg-ai">Assalomu alaykum! Men EduSmart AI (Sun'iy Inson) yordamchisiman. Saytdan qanday foydalanish, darslar yoki testlar bo'yicha savollaringiz bormi?</div>
+        <div class="msg-ai">Assalomu alaykum! Men EduSmart AI (Sun'iy Intelekt) yordamchisiman. Saytdan qanday
+          foydalanish, darslar yoki testlar bo'yicha savollaringiz bormi?</div>
       </div>
       <div class="ai-input-area">
-        <input type="text" id="aiInput" placeholder="Savolingizni yozing..." onkeypress="if(event.key === 'Enter') sendAIMessage()">
+        <input type="text" id="aiInput" placeholder="Savolingizni yozing..."
+          onkeypress="if(event.key === 'Enter') sendAIMessage()">
         <button onclick="sendAIMessage()">➤</button>
       </div>
     </div>
@@ -904,7 +993,7 @@
     function toggleAI() {
       const w = document.getElementById('aiChatWindow');
       w.style.display = w.style.display === 'flex' ? 'none' : 'flex';
-      if(w.style.display === 'flex') {
+      if (w.style.display === 'flex') {
         document.getElementById('aiInput').focus();
       }
     }
@@ -912,56 +1001,64 @@
     function sendAIMessage() {
       const inp = document.getElementById('aiInput');
       const text = inp.value.trim();
-      if(!text) return;
-      
+      if (!text) return;
+
       const body = document.getElementById('aiBody');
-      body.innerHTML += \`<div class="msg-user">\${text.replace(/</g, '&lt;')}</div>\`;
+      body.innerHTML += `<div class="msg-user">${text.replace(/</g, '&lt;')}</div>`;
       inp.value = '';
       body.scrollTop = body.scrollHeight;
 
       // Show typing indicator
       const typingId = 'typing-' + Date.now();
-      body.innerHTML += \`<div id="\${typingId}" class="msg-ai" style="opacity:0.7;">Yozmoqda... ✍️</div>\`;
+      body.innerHTML += `<div id="${typingId}" class="msg-ai" style="opacity:0.7;">Yozmoqda... ✍️</div>`;
       body.scrollTop = body.scrollHeight;
 
       setTimeout(() => {
         document.getElementById(typingId).remove();
         let reply = "Savolingiz uchun rahmat. Hozirda men faqat ba'zi asosiy savollarga javob bera olaman. Platforma haqida yoki testlar haqida so'rashingiz mumkin.";
         const lower = text.toLowerCase();
-        
-        if(lower.includes('salom') || lower.includes('assalom')) 
+
+        if (lower.includes('salom') || lower.includes('assalom'))
           reply = "Assalomu alaykum! Sizga qanday yordam bera olaman?";
-        else if(lower.includes('test') || lower.includes('imtihon')) 
+        else if (lower.includes('test') || lower.includes('imtihon'))
           reply = "Sizda har bir darsning oxirida 5 tadan amaliy test savollari beriladi. Muhim qoida shuki: keyingi darsga o'tish uchun barcha 5 ta testni (100%) to'g'ri ishlashingiz shart!";
-        else if(lower.includes('foydalanish') || lower.includes('sayt') || lower.includes('qanday')) 
+        else if (lower.includes('foydalanish') || lower.includes('sayt') || lower.includes('qanday'))
           reply = "Saytdan foydalanish juda oddiy! 1. Ro'yxatdan o'ting. 2. 'Kabinetga kirish' tugmasi bilan kiring. 3. Chap tomondagi mundarijadan ochiq darslarni ko'rib, testlarni ishlashni boshlang.";
-        else if(lower.includes('dars') || lower.includes('kurs')) 
+        else if (lower.includes('dars') || lower.includes('kurs'))
           reply = "Platformamizda Python, JavaScript va Java kabi zamonaviy dasturlash kurslari mavjud. Har bir kurs chuqur amaliy videolardan iborat.";
-        else if(lower.includes('pul') || lower.includes('narx')) 
+        else if (lower.includes('pul') || lower.includes('narx'))
           reply = "Kurslar haqidagi to'liq ma'lumot va to'lovlar bo'yicha iltimos admin orqali 'Aloqa' bo'limidagi telegram manziliga yozing: @Marufjon0915";
-        else if(lower.includes('rahmat')) 
+        else if (lower.includes('rahmat'))
           reply = "Arzimaydi! Yana savollaringiz bo'lsa, bemalol murojaat qiling.";
 
-        body.innerHTML += \`<div class="msg-ai">\${reply}</div>\`;
+        body.innerHTML += `<div class="msg-ai">${reply}</div>`;
         body.scrollTop = body.scrollHeight;
       }, 1000 + Math.random() * 1000);
     }
-    
+
     function scrollToLogin() {
       const el = document.getElementById('stab-login');
-      if(el) {
+      if (el) {
         el.click();
         const card = document.querySelector('.student-card');
-        if(card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
     }
-    
+
     function scrollToRegister() {
       const el = document.getElementById('stab-reg');
-      if(el) {
+      if (el) {
         el.click();
         const card = document.querySelector('.student-card');
-        if(card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        if (card) card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    }
+
+    function scrollToTeacher() {
+      const card = document.getElementById('teacher-portal-card');
+      if (card) {
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => document.getElementById('t-pass').focus(), 400);
       }
     }
   </script>
