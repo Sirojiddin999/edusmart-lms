@@ -10,6 +10,45 @@
   <link rel="stylesheet" href="/css/style.css">
   <style>
     /* ---- HOME SPECIFIC LIGHT THEME ---- */
+    @keyframes btn-glow {
+      0% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0.4); }
+      70% { box-shadow: 0 0 0 10px rgba(79, 70, 229, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(79, 70, 229, 0); }
+    }
+
+    .animated-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 24px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+      color: white;
+      border-radius: var(--r-full);
+      font-weight: 800;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
+      animation: btn-glow 2s infinite;
+      cursor: pointer;
+      border: none;
+      font-size: 1rem;
+    }
+
+    .animated-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+      color: white;
+    }
+
+    .top-buttons-container {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+
     .hero {
       padding: 80px 0 60px;
       text-align: center;
@@ -288,6 +327,16 @@
     <!-- HERO -->
     <section class="hero">
       <div class="container">
+        <!-- Top Animated Buttons -->
+        <div class="top-buttons-container animate-fade-up">
+          <a href="https://drive.google.com/drive/folders/18UgKYPokejgspN-RLwQHKYn63RtN6xGc?usp=drive_link" target="_blank" class="animated-btn">
+            📚 Asosiy ilmiy ishlar
+          </a>
+          <button onclick="openModal('books-modal')" class="animated-btn">
+            📖 O'quv qo'llanma va darslik
+          </button>
+        </div>
+
         <div class="hero-chip animate-fade-up">
           <span class="chip-dot"></span>
           Yangi Avlod Interaktiv Ta'lim Platformasi
@@ -413,6 +462,27 @@
         </div>
       </div>
     </section>
+  </div>
+
+  <footer style="text-align: center; padding: 24px; font-weight: 800; color: var(--text-muted); font-size: 1.1rem; letter-spacing: 1px;">
+    2024_YIL
+  </footer>
+
+  <!-- ===== O'QUV QO'LLANMA VA DARSLIKLAR MODALI ===== -->
+  <div class="modal-backdrop" id="books-modal">
+    <div class="modal-box" style="max-width: 500px;">
+      <button class="modal-close-btn" onclick="closeModal('books-modal')">✕</button>
+      <h2 style="font-size: 1.5rem; margin-bottom: 20px; text-align: center; color: var(--text-primary);">O'quv qo'llanma va darsliklar</h2>
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <a href="https://drive.google.com/file/d/1x87vTAdlABLxlVfm5Bzrye-I0fNBYpzd/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv qo'llanma</a>
+        <a href="https://drive.google.com/file/d/1r4OxXfkVUzaLsgr51lXVHL8AdsiCMhCF/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗 Darslik</a>
+        <a href="https://drive.google.com/file/d/1u-IpJz_4SSoAo2Y87woRDkir7inpXXB7/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗 Darslik</a>
+        <a href="https://drive.google.com/file/d/1jPa-G66bp1zsteADygRLTqUX0VA8S_HI/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv qo'llanma</a>
+        <a href="https://drive.google.com/file/d/14HTx_rX0nSVlzVYNOQVAGIqyGMgFxQ8m/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv qo'llanma</a>
+        <a href="https://drive.google.com/file/d/1IqE-O_HDPKFBrG0qSqjv_cYoxzVunqVV/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv qo'llanma</a>
+        <a href="https://drive.google.com/file/d/1XiS_Z-5ZzGrtNjGiyrL455-ttfT7MHEz/view?usp=drive_link" target="_blank" class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗 Darslik</a>
+      </div>
+    </div>
   </div>
 
   <!-- ===== RO'YXATDAN O'TISHDAGI MUVAFFAQIYAT MODALI ===== -->
