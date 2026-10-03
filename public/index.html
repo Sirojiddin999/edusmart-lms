@@ -416,8 +416,114 @@
           updateTicker();
           setInterval(updateTicker, 3000);
         </script>
+      </div>
+    </section>
 
+    <!-- KURS YO'NALISHLARI -->
+    <section id="courses-section" style="padding: 60px 0; background: #fff;">
+      <style>
+        .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .course-card { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+        .course-card:hover { transform: translateY(-8px); box-shadow: 0 15px 50px rgba(0,0,0,0.1); border-color: var(--primary-subtle); }
+        .course-icon-wrap { height: 160px; background: var(--primary-subtle); display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+        .course-content { padding: 30px; }
+        .course-tag { display: inline-block; padding: 6px 12px; background: #e0e7ff; color: #4338ca; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; }
+        .course-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 12px 0; color: var(--text-primary); }
+        .course-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+        .course-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; }
+        .course-modules { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+      </style>
+      <div class="container">
+        <h2 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 40px; text-align: center; color: var(--text-primary);">Yo'nalishlar va Kurslar</h2>
+        <div class="course-grid">
+          <div class="course-card">
+            <div class="course-icon-wrap" style="background: #fdf4ff;">🐍</div>
+            <div class="course-content">
+              <span class="course-tag" style="background:#fce7f3; color:#be185d;">Backend Dasturlash</span>
+              <h3 class="course-title">Python Asoslari va Sun'iy Intellekt</h3>
+              <p class="course-desc">Dunyodagi eng mashhur dasturlash tili yordamida backend mantiqi, ma'lumotlar bazasi va sun'iy intellekt asoslarini o'rganing.</p>
+              <div class="course-footer">
+                <div class="course-modules"><span>📚</span> 24 Ta Modul</div>
+                <a href="/yunalishlar.html" class="btn btn-ghost" style="padding: 8px 16px; text-decoration:none;">Ko'rish ➔</a>
+              </div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-icon-wrap" style="background: #fffbeb;">💛</div>
+            <div class="course-content">
+              <span class="course-tag" style="background:#fef3c7; color:#b45309;">Frontend Dasturlash</span>
+              <h3 class="course-title">JavaScript & React.js</h3>
+              <p class="course-desc">Zamonaviy veb-saytlar va interfeyslar yaratish uchun eng kerakli bo'lgan texnologiyalar. Noldan to mukammallikkacha.</p>
+              <div class="course-footer">
+                <div class="course-modules"><span>📚</span> 32 Ta Modul</div>
+                <a href="/yunalishlar.html" class="btn btn-ghost" style="padding: 8px 16px; text-decoration:none;">Ko'rish ➔</a>
+              </div>
+            </div>
+          </div>
+          <div class="course-card">
+            <div class="course-icon-wrap" style="background: #ecfeff;">☕</div>
+            <div class="course-content">
+              <span class="course-tag" style="background:#e0f2fe; color:#0369a1;">Mobile va Enterprise</span>
+              <h3 class="course-title">Java va Android Dasturlash</h3>
+              <p class="course-desc">Katta va xavfsiz tizimlar hamda Android operatsion tizimi uchun mobil ilovalar yaratishni o'rganasiz.</p>
+              <div class="course-footer">
+                <div class="course-modules"><span>📚</span> 28 Ta Modul</div>
+                <a href="/yunalishlar.html" class="btn btn-ghost" style="padding: 8px 16px; text-decoration:none;">Ko'rish ➔</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
+    <!-- YANGILIKLAR -->
+    <section id="news-section" style="padding: 60px 0; background: #f8fafc;">
+      <style>
+        .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .news-card { background: white; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s; }
+        .news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); }
+        .news-image { height: 180px; background: #e2e8f0; position: relative; display:flex; align-items:center; justify-content:center; font-size:4rem; color: white;}
+        .news-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); }
+        .news-date { position: absolute; bottom: 15px; left: 20px; color: white; font-weight: 700; z-index: 2; font-size: 0.9rem; background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 8px; backdrop-filter: blur(4px); }
+        .news-content { padding: 25px; }
+        .news-title { font-size: 1.2rem; font-weight: 800; margin: 0 0 12px 0; color: var(--text-primary); line-height: 1.4; }
+        .news-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+        .news-link { color: var(--primary); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+        .news-link:hover { text-decoration: underline; }
+      </style>
+      <div class="container">
+        <h2 style="font-size: 2.2rem; font-weight: 900; margin-bottom: 40px; text-align: center; color: var(--text-primary);">So'nggi Yangiliklar</h2>
+        <div class="news-grid">
+          <div class="news-card">
+            <div class="news-image" style="background: #3b82f6;">📢<span class="news-date">24-Sentabr, 2024</span></div>
+            <div class="news-content">
+              <h3 class="news-title">2024-2025 o'quv yili uchun onlayn qabul boshlandi!</h3>
+              <p class="news-desc">Yangi mavsumda darslar yanada sifatli va interaktiv ko'rinishda o'tkaziladi.</p>
+              <a href="/yangiliklar.html" class="news-link">Batafsil o'qish ➔</a>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-image" style="background: #10b981;">💼<span class="news-date">20-Sentabr, 2024</span></div>
+            <div class="news-content">
+              <h3 class="news-title">Bo'sh ish o'rni: Jamoamizga Frontend dasturchi kerak</h3>
+              <p class="news-desc">innocode.uz jamoasiga React.js ni yaxshi biladigan, tajribali dasturchilarni kutamiz.</p>
+              <a href="/yangiliklar.html" class="news-link">Batafsil o'qish ➔</a>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-image" style="background: #8b5cf6;">🤖<span class="news-date">15-Sentabr, 2024</span></div>
+            <div class="news-content">
+              <h3 class="news-title">Sun'iy Intellekt yordamchisi ishga tushirildi</h3>
+              <p class="news-desc">Platformamizda endi sizga AI yordamchi doimiy ravishda savollaringizga javob beradi.</p>
+              <a href="/yangiliklar.html" class="news-link">Batafsil o'qish ➔</a>
+            </div>
+          </div>
+        </div>
+        <div style="text-align: center; margin-top: 40px;">
+          <a href="/yangiliklar.html" class="btn btn-primary" style="display: inline-block; padding: 12px 30px; text-decoration: none; border-radius: 12px;">Barcha yangiliklarni ko'rish</a>
+        </div>
+      </div>
+    </section>
 
   </div>
 
