@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kirish va Ro'yxatdan o'tish | innocode.uz</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    body {
+      background-color: #f8fafc;
+      font-family: 'Inter', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    
+    .navbar {
+      background: white;
+      padding: 15px 0;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    
+    .auth-container {
+      max-width: 1100px;
+      margin: 60px auto;
+      padding: 0 20px;
+      flex-grow: 1;
+    }
+    
+    .portal-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+    
+    .portal-card {
+      background: white;
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .portal-stripe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+    }
+    
+    .stripe-student { background: linear-gradient(90deg, #4f46e5, #0ea5e9); }
+    .stripe-teacher { background: linear-gradient(90deg, #8b5cf6, #f59e0b); }
+    
+    .portal-icon-wrap {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+    
+    .icon-student { background: #eef2ff; color: #4f46e5; }
+    .icon-teacher { background: #f5f3ff; color: #8b5cf6; }
+    
+    .portal-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 10px;
+      color: var(--text-primary);
+    }
+    
+    .portal-desc {
+      color: var(--text-secondary);
+      margin-bottom: 25px;
+      font-size: 0.95rem;
+    }
+    
+    .student-tabs {
+      display: flex;
+      background: #f1f5f9;
+      padding: 5px;
+      border-radius: 12px;
+      margin-bottom: 25px;
+    }
+    
+    .student-tabs button {
+      flex: 1;
+      padding: 10px;
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .student-tabs button.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+    }
+    
+    .form-input {
+      width: 100%;
+      padding: 12px 15px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s;
+      background: #f8fafc;
+    }
+    
+    .form-input:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: white;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    }
+    
+    .btn {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    
+    .btn-primary { background: var(--primary); color: white; }
+    .btn-primary:hover { background: var(--primary-dark); }
+    
+    .btn-teacher { background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%); color: white; }
+    
+    .feat-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 25px 0;
+    }
+    
+    .feat-list li {
+      margin-bottom: 12px;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .feat-check {
+      color: #10b981;
+      font-weight: bold;
+    }
+    
+    @media (max-width: 800px) {
+      .portal-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class='navbar'>
+    <div class='container' style='display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 15px;'>
+      <a href='/' class='brand' style='text-decoration:none; display:flex; align-items:center; gap: 12px;'>
+        <div style='font-size: 2.2rem; background: var(--primary-subtle); border-radius: 12px; padding: 5px 10px;'>🎓</div>
+        <div>
+          <div style='font-weight: 900; font-size: 1.3rem; color: var(--text-primary); letter-spacing: -0.5px;'>innocode.uz</div>
+          <div style='font-size: 0.8rem; color: var(--text-muted); font-weight: 600;'>Ta'lim Platformasi</div>
+        </div>
+      </a>
+      <ul style='display: flex; gap: 25px; list-style: none; margin: 0; padding: 0;'>
+        <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600;'>Bosh sahifa</a></li>
+        <li><a href='/yangiliklar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600;'>Yangiliklar</a></li>
+        <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600;'>Yo'nalishlar</a></li>
+        <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600;'>Aloqa</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="auth-container">
+    <div class="portal-grid">
+      <!-- ===== STUDENT CARD ===== -->
+      <div class="portal-card">
+        <div class="portal-stripe stripe-student"></div>
+        <div class="portal-icon-wrap icon-student">👨‍🎓</div>
+        <h2 class="portal-title">O'quvchilar Portali</h2>
+        <p class="portal-desc">Videolar, konspektlar, 5 ta test va shaxsiy kabinet</p>
+
+        <!-- Tabs -->
+        <div class="student-tabs">
+          <button class="active" id="stab-reg" onclick="switchTab('reg')">📝 Ro'yxatdan O'tish</button>
+          <button id="stab-login" onclick="switchTab('login')">🔑 Kirish</button>
+        </div>
+
+        <!-- Register Form -->
+        <form id="form-reg" onsubmit="doRegister(event)">
+          <div class="form-group">
+            <label class="form-label">Ismingiz *</label>
+            <input id="r-fname" type="text" class="form-input" placeholder="Masalan: Jasur" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Familiyangiz *</label>
+            <input id="r-lname" type="text" class="form-input" placeholder="Masalan: Toshmatov" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">O'zingizning parolingiz (ixtiyoriy)</label>
+            <input id="r-pin" type="text" class="form-input" placeholder="4+ ta belgi">
+          </div>
+          <button type="submit" class="btn btn-primary">🚀 Ro'yxatdan O'tish</button>
+        </form>
+
+        <!-- Login Form -->
+        <form id="form-login" style="display: none;" onsubmit="doLogin(event)">
+          <div class="form-group">
+            <label class="form-label">Loginingiz *</label>
+            <input id="l-user" type="text" class="form-input" placeholder="Masalan: jasur_4821" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Parol yoki PIN kod *</label>
+            <input id="l-pin" type="password" class="form-input" placeholder="Parolingizni kiriting..." required>
+          </div>
+          <button type="submit" class="btn btn-primary">📲 Kirish</button>
+        </form>
+      </div>
+
+      <!-- ===== TEACHER CARD ===== -->
+      <div class="portal-card">
+        <div class="portal-stripe stripe-teacher"></div>
+        <div class="portal-icon-wrap icon-teacher">👨‍🏫</div>
+        <h2 class="portal-title">O'qituvchi Boshqaruvi</h2>
+        <p class="portal-desc">Darslar yuklash, 5 ta test savollarini tuzish va nazorat</p>
+
+        <ul class="feat-list">
+          <li><span class="feat-check">✓</span> Yangi video va konspektli darslar qo'shish</li>
+          <li><span class="feat-check">✓</span> Har bir darsga 5 tadan test savoli tuzish</li>
+          <li><span class="feat-check">✓</span> 100% test yechilishini va reytingni kuzatish</li>
+          <li><span class="feat-check">✓</span> O'quvchilarning darsma-dars natijalar jadvali</li>
+        </ul>
+
+        <form id="form-teacher" onsubmit="doTeacherLogin(event)">
+          <div class="form-group">
+            <label class="form-label">O'qituvchi Logini *</label>
+            <input id="t-user" type="text" class="form-input" value="oqituvchi" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Parol *</label>
+            <input id="t-pass" type="password" class="form-input" placeholder="admin123" required>
+          </div>
+          <button type="submit" class="btn btn-teacher">🔐 Panelga Kirish</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchTab(tab) {
+      if(tab === 'reg') {
+        document.getElementById('stab-reg').classList.add('active');
+        document.getElementById('stab-login').classList.remove('active');
+        document.getElementById('form-reg').style.display = 'block';
+        document.getElementById('form-login').style.display = 'none';
+      } else {
+        document.getElementById('stab-login').classList.add('active');
+        document.getElementById('stab-reg').classList.remove('active');
+        document.getElementById('form-login').style.display = 'block';
+        document.getElementById('form-reg').style.display = 'none';
+      }
+    }
+
+    function doRegister(e) {
+      e.preventDefault();
+      // Baza mavjud bo'lmagani uchun login qilinganini simulyatsiya qilamiz
+      window.location.href = '/student.html';
+    }
+    
+    function doLogin(e) {
+      e.preventDefault();
+      window.location.href = '/student.html';
+    }
+    
+    function doTeacherLogin(e) {
+      e.preventDefault();
+      const user = document.getElementById('t-user').value;
+      const pass = document.getElementById('t-pass').value;
+      if (user === 'oqituvchi' && pass === 'admin123') {
+        window.location.href = '/teacher.html';
+      } else {
+        alert("Noto'g'ri login yoki parol! (Standart: oqituvchi / admin123)");
+      }
+    }
+  </script>
+</body>
+</html>

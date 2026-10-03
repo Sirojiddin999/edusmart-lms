@@ -364,10 +364,10 @@
             <li><a href='/haqida.html' class="nav-link-anim">Sayt haqida</a></li>
             <li><a href='/aloqa.html' class="nav-link-anim">Aloqa</a></li>
           </ul>
-          <div class='nav-right' style='display: flex; gap: 10px;'>
-            <button class='btn btn-ghost btn-sm' onclick='scrollToLogin()'>🔑 Kabinetga kirish</button>
-            <button class='btn btn-primary btn-sm' onclick='scrollToRegister()'>📝 Ro'yxatdan o'tish</button>
-            <button class='btn btn-ghost btn-sm' onclick='scrollToTeacher()'>👨‍🏫 O'qituvchi</button>
+          <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
+            <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'>🔑 Kabinetga kirish</a>
+            <a href='/login.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(90, 92, 230, 0.3);'>📝 Ro'yxatdan o'tish</a>
+            <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'>👨‍🏫 O'qituvchi</a>
           </div>
         </div>
       </div>
@@ -417,159 +417,131 @@
           setInterval(updateTicker, 3000);
         </script>
 
-        <!-- PORTAL CARDS -->
-        <div class="portal-grid animate-fade-up animate-delay-3">
 
-          <!-- ===== STUDENT CARD ===== -->
-          <div class="portal-card student-card">
-            <div class="portal-stripe stripe-student"></div>
-            <div class="portal-icon-wrap icon-student">👨‍🎓</div>
-            <h2 class="portal-title">O'quvchilar Portali</h2>
-            <p class="portal-desc">Videolar, konspektlar, 5 ta test va shaxsiy kabinet</p>
-
-            <!-- Tabs -->
-            <div class="student-tabs">
-              <button class="stab active" id="stab-reg" onclick="switchTab('reg')">📝 Ro'yxatdan O'tish</button>
-              <button class="stab" id="stab-login" onclick="switchTab('login')">🔑 Kirish</button>
-            </div>
-
-            <!-- Register Form -->
-            <form id="form-reg" onsubmit="doRegister(event)">
-              <div class="form-group">
-                <label class="form-label">Ismingiz *</label>
-                <input id="r-fname" type="text" class="form-input" placeholder="Masalan: Jasur" required
-                  autocomplete="given-name">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Familiyangiz *</label>
-                <input id="r-lname" type="text" class="form-input" placeholder="Masalan: Toshmatov" required
-                  autocomplete="family-name">
-              </div>
-              <div class="form-group">
-                <label class="form-label">O'zingizning parolingiz (ixtiyoriy)</label>
-                <input id="r-pin" type="text" class="form-input"
-                  placeholder="4+ ta belgi. Bo'sh qoldirsangiz avtomatik beriladi">
-              </div>
-              <button type="submit" id="btn-reg" class="btn btn-primary btn-block btn-lg" style="margin-top: 6px;">
-                🚀 Ro'yxatdan O'tish va Boshlash
-              </button>
-              <div class="info-box" style="margin-top: 14px;">
-                <span>💡</span>
-                <span>Bir marta ro'yxatdan o'tasiz — berilgan unikal login orqali istalgan qurilmadan kirasiz.</span>
-              </div>
-            </form>
-
-            <!-- Login Form -->
-            <form id="form-login" style="display: none;" onsubmit="doLogin(event)">
-              <div class="form-group">
-                <label class="form-label">Loginingiz *</label>
-                <input id="l-user" type="text" class="form-input" placeholder="Masalan: jasur_4821" required
-                  autocomplete="username">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Parol yoki PIN kod *</label>
-                <input id="l-pin" type="password" class="form-input" placeholder="Parolingizni kiriting..." required
-                  autocomplete="current-password">
-              </div>
-              <button type="submit" id="btn-login" class="btn btn-primary btn-block btn-lg" style="margin-top: 6px;">
-                📲 Kirish va Darsni Davom Ettirish
-              </button>
-              <div class="info-box" style="margin-top: 14px;">
-                <span>🔄</span>
-                <span>Boshqa telefondan kirganingizda ham to'xtagan darsingizdan avtomatik davom etasiz!</span>
-              </div>
-            </form>
-          </div>
-
-          <!-- ===== TEACHER CARD ===== -->
-          <div class="portal-card teacher-card" id="teacher-portal-card">
-            <div class="portal-stripe stripe-teacher"></div>
-            <div class="portal-icon-wrap icon-teacher">👨‍🏫</div>
-            <h2 class="portal-title">O'qituvchi Boshqaruvi</h2>
-            <p class="portal-desc">Darslar yuklash, 5 ta test savollarini tuzish va nazorat</p>
-
-            <ul class="feat-list">
-              <li><span class="feat-check">✓</span> Yangi video va konspektli darslar qo'shish</li>
-              <li><span class="feat-check">✓</span> Har bir darsga 5 tadan test savoli tuzish</li>
-              <li><span class="feat-check">✓</span> 100% test yechilishini va reytingni kuzatish</li>
-              <li><span class="feat-check">✓</span> O'quvchilarning darsma-dars natijalar jadvali</li>
-            </ul>
-
-            <form id="form-teacher" onsubmit="doTeacherLogin(event)">
-              <div class="form-group">
-                <label class="form-label">O'qituvchi Logini *</label>
-                <input id="t-user" type="text" class="form-input" value="oqituvchi" required autocomplete="username">
-              </div>
-              <div class="form-group">
-                <label class="form-label">Parol *</label>
-                <input id="t-pass" type="password" class="form-input" placeholder="admin123" required
-                  autocomplete="current-password">
-              </div>
-              <button type="submit" id="btn-teacher" class="btn btn-block btn-lg"
-                style="background: linear-gradient(135deg, var(--purple) 0%, var(--primary-dark) 100%); color: #fff; box-shadow: 0 4px 14px rgba(124, 58, 237, 0.3);">
-                🔐 O'qituvchi Paneliga Kirish
-              </button>
-              <p style="font-size: 0.78rem; color: var(--text-muted); text-align: center; margin-top: 12px;">
-                Standart: login <strong style="color: var(--primary);">oqituvchi</strong> / parol <strong
-                  style="color: var(--primary);">admin123</strong>
-              </p>
-            </form>
-          </div>
-        </div>
-
-        <!-- Qurilmalararo sinxronizatsiya ma'lumot qutisi -->
-        <div class="device-sync-notice animate-fade-up" style="max-width: 920px; margin: 32px auto 0;">
-          <div class="dsn-icon">📱</div>
-          <div class="dsn-text">
-            <strong>Qurilmalararo avtomatik sinxronizatsiya:</strong> O'quvchi kompyuterda 2-dars testini 100% yechib
-            3-darsni ochsa, telefonidan kirganda ham avtomatik 3-darsdan davom etadi. Barcha ballar xavfsiz saqlanadi!
-          </div>
-        </div>
-      </div>
-    </section>
 
   </div>
 
   <!-- ABOUT & CONTACT (Footer area) -->
-  <footer id="about" style="background: #0f172a; color: #f8fafc; padding: 70px 0 20px;">
-    <div class="container">
-      <div
-        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; margin-bottom: 50px;">
-        <div>
-          <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">Sayt haqida</h3>
-          <p style="color: #94a3b8; line-height: 1.7; font-size: 0.95rem;">
-            innocode.uz — talabalar va o'qituvchilar uchun mo'ljallangan zamonaviy o'quv platformasi. Biz interaktiv
-            ta'lim, darslarni to'liq o'zlashtirish va doimiy amaliyotni maqsad qilganmiz.
-          </p>
-        </div>
-        <div id="contact">
-          <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">Biz bilan bog'lanish</h3>
-          <ul
-            style="list-style: none; padding: 0; color: #94a3b8; font-size: 0.95rem; display: flex; flex-direction: column; gap: 12px;">
-            <li style="display: flex; align-items: center; gap: 10px;"><span>📍</span> QDTU</li>
-            <li style="display: flex; align-items: center; gap: 10px;"><span>📞</span> +998 99 667 09 15</li>
-          </ul>
-        </div>
-        <div>
-          <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">Ijtimoiy tarmoqlar</h3>
-          <div style="display: flex; gap: 20px; font-size: 1.5rem;">
-            <a href="https://www.instagram.com/isomiddinov.marufjon/" target="_blank"
-              style="color: #38bdf8; text-decoration: none;" title="Instagram">📸</a>
-            <a href="https://www.facebook.com/isomiddinov.marufjon.3/" target="_blank"
-              style="color: #38bdf8; text-decoration: none;" title="Facebook">📘</a>
-            <a href="https://t.me/Marufjon0915" target="_blank" style="color: #38bdf8; text-decoration: none;"
-              title="Telegram">✈️</a>
+  <!-- ABOUT & CONTACT (New Contact Section) -->
+  <section id="contact-section" style="
+      background-color: #f4f6fa;
+      background-image: 
+        radial-gradient(circle at 15% 50%, rgba(180, 220, 255, 0.4), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(230, 210, 240, 0.4), transparent 25%),
+        linear-gradient(to right, rgba(0,0,0,0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 1px, transparent 1px);
+      background-size: cover, cover, 40px 40px, 40px 40px;
+      padding: 60px 20px;
+  ">
+    <style>
+      .b-container { max-width: 1250px; margin: 0 auto; display: flex; flex-direction: column; gap: 25px; }
+      .row-1 { display: grid; grid-template-columns: 2fr 1fr; gap: 25px; }
+      .row-2 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 25px; }
+      .b-card { border-radius: 28px; padding: 45px; color: white; position: relative; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+      .card-tag { display: inline-block; background: rgba(255, 255, 255, 0.25); padding: 6px 18px; border-radius: 20px; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 25px; backdrop-filter: blur(8px); }
+      .card-main { background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%); }
+      .card-main h1 { font-size: 4rem; font-weight: 800; margin-bottom: 20px; line-height: 1.1; letter-spacing: -1px; }
+      .card-main p { font-size: 1.15rem; opacity: 0.9; max-width: 550px; line-height: 1.5; margin-bottom: 45px; }
+      .card-buttons { display: flex; gap: 15px; }
+      .btn-white { background: white; color: #0f172a; border: none; padding: 14px 28px; border-radius: 14px; font-weight: 700; font-size: 1.05rem; cursor: pointer; display: flex; align-items: center; gap: 10px; transition: transform 0.2s; }
+      .btn-white:hover { transform: translateY(-2px); }
+      .btn-glass { background: rgba(255, 255, 255, 0.25); color: white; border: none; padding: 14px 28px; border-radius: 14px; font-weight: 700; font-size: 1.05rem; cursor: pointer; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 10px; transition: transform 0.2s, background 0.2s; }
+      .btn-glass:hover { transform: translateY(-2px); background: rgba(255, 255, 255, 0.35); }
+      .card-tg { background: #1593cd; }
+      .card-tg .icon-wrap { background: rgba(255,255,255,0.25); width: 55px; height: 55px; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin-bottom: 25px; backdrop-filter: blur(8px); }
+      .card-tg h2 { font-size: 2rem; font-weight: 800; margin-bottom: 10px; letter-spacing: -0.5px; }
+      .card-tg p { font-size: 1.05rem; opacity: 0.9; line-height: 1.4; margin-bottom: 35px; }
+      .btn-full-white { background: white; color: #0f172a; width: 100%; padding: 16px; border-radius: 14px; font-weight: 700; font-size: 1.05rem; border: none; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: transform 0.2s; }
+      .btn-full-white:hover { transform: translateY(-2px); }
+      .card-sm { border-radius: 28px; padding: 35px; color: white; display: flex; flex-direction: column; justify-content: flex-end; height: 220px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.3s; }
+      .card-sm:hover { transform: translateY(-5px); }
+      .card-sm .icon-wrap { width: 50px; height: 50px; border-radius: 14px; display: flex; align-items: center; justify-content: center; margin-bottom: auto; }
+      .card-sm h3 { font-size: 1.6rem; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
+      .card-sm p { font-size: 0.95rem; opacity: 0.9; font-weight: 500; }
+      .bg-dark { background: #1e293b; } .bg-dark .icon-wrap { background: rgba(255,255,255,0.1); color: white; }
+      .bg-green { background: #10b981; } .bg-green .icon-wrap { background: rgba(255,255,255,0.2); color: white; }
+      .bg-orange { background: #f59e0b; } .bg-orange .icon-wrap { background: rgba(255,255,255,0.2); color: white; }
+      .bg-white { background: white; color: #0f172a; } .bg-white .icon-wrap { background: #eff6ff; color: #3b82f6; } .bg-white p { color: #64748b; }
+      @media (max-width: 1024px) { .row-1 { grid-template-columns: 1fr; } .row-2 { grid-template-columns: 1fr 1fr; } .card-main h1 { font-size: 3rem; } }
+      @media (max-width: 500px) { .row-2 { grid-template-columns: 1fr; } .card-main h1 { font-size: 2.5rem; } .card-buttons { flex-direction: column; } }
+    </style>
+
+    <div class="b-container">
+      <div class="row-1">
+        <div class="b-card card-main">
+          <div>
+            <div class="card-tag">📞 BOG'LANISH</div>
+            <h1>Biz bilan bog'laning.</h1>
+            <p>O'quv markazingiz eshigini innovatsion texnologiya uchun oching. Siz bilan hamkorlik qilishdan baxtiyormiz.</p>
+          </div>
+          <div class="card-buttons">
+            <button class="btn-white">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+              Qo'ng'iroq qilish
+            </button>
+            <button class="btn-glass">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+              Telegram
+            </button>
           </div>
         </div>
+        
+        <div class="b-card card-tg">
+          <div>
+            <div class="icon-wrap">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            </div>
+            <div class="card-tag">TELEGRAM</div>
+            <h2>@innocodeuz</h2>
+            <p>Tezkor javob uchun Telegram orqali bog'laning</p>
+          </div>
+          <button class="btn-full-white">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+            Yozish
+          </button>
+        </div>
       </div>
-      <div
-        style="text-align: center; padding-top: 24px; border-top: 1px solid #1e293b; font-weight: 800; color: #64748b; font-size: 1.1rem; letter-spacing: 1.5px; display: flex; flex-direction: column; gap: 10px;">
+
+      <div class="row-2">
+        <div class="card-sm bg-dark">
+          <div class="icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3>+998 99 667 09 15</h3>
+          <p>Asosiy raqam</p>
+        </div>
+
+        <div class="card-sm bg-green">
+          <div class="icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+          </div>
+          <h3>+998 90 123 45 67</h3>
+          <p>Qo'shimcha</p>
+        </div>
+
+        <div class="card-sm bg-orange">
+          <div class="icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+          </div>
+          <h3>+998 99 667 09 15</h3>
+          <p>Texnik yordam</p>
+        </div>
+
+        <div class="card-sm bg-white">
+          <div class="icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>24/7</h3>
+          <p>Doimo online</p>
+        </div>
+      </div>
+      
+      <div style="text-align: center; padding-top: 24px; border-top: 1px solid rgba(0,0,0,0.1); font-weight: 800; color: #64748b; font-size: 1.1rem; letter-spacing: 1.5px; display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
         <span>2024_YIL</span>
-        <span style="font-size: 0.9rem; color: #475569;">ATT 610 - 24 gurux talabalari bilan birgalikda
-          yaratilgan</span>
+        <span style="font-size: 0.9rem; color: #475569;">ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan</span>
       </div>
     </div>
-  </footer>
+  </section>
 
   <!-- ===== O'QUV QO'LLANMA VA DARSLIKLAR MODALI ===== -->
   <div class="modal-backdrop" id="books-modal">
