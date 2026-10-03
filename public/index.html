@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EduSmart — Zamonaviy O'quv Platformasi</title>
+  <title>innocode.uz — Zamonaviy O'quv Platformasi</title>
   <meta name="description"
     content="O'qituvchi va o'quvchilar uchun zamonaviy interaktiv ta'lim platformasi. Har bir dars uchun 5 ta test va 100% o'tish talabi.">
   <link rel="stylesheet" href="/css/style.css">
@@ -65,6 +65,7 @@
       position: relative;
       transition: color 0.3s;
     }
+
     .nav-link-anim::after {
       content: '';
       position: absolute;
@@ -76,9 +77,11 @@
       transition: width 0.3s ease-in-out;
       border-radius: 2px;
     }
+
     .nav-link-anim:hover {
       color: #4f46e5 !important;
     }
+
     .nav-link-anim:hover::after {
       width: 100%;
     }
@@ -348,18 +351,18 @@
           <a href='/' class='brand' style='margin-right: auto;'>
             <div class='brand-logo'>🎓</div>
             <div>
-              <div class='brand-name'>EduSmart LMS</div>
+              <div class='brand-name'>innocode.uz</div>
               <div class='brand-subtitle'>Zamonaviy Ta'lim Platformasi</div>
             </div>
           </a>
           <ul class='nav-links'
             style='display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap;'>
-            <li><a href='#home' class="nav-link-anim">Bosh sahifa</a></li>
-            <li><a href='#news' class="nav-link-anim">Yangiliklar</a></li>
-            <li><a href='#courses' class="nav-link-anim">Kurslar</a></li>
-            <li><a href='#library' class="nav-link-anim">Kutubxona</a></li>
-            <li><a href='#about' class="nav-link-anim">Sayt haqida</a></li>
-            <li><a href='#contact' class="nav-link-anim">Aloqa</a></li>
+            <li><a href='/' class="nav-link-anim">Bosh sahifa</a></li>
+            <li><a href='/yangiliklar.html' class="nav-link-anim">Yangiliklar</a></li>
+            <li><a href='/yunalishlar.html' class="nav-link-anim">Yo'nalishlar</a></li>
+            <li><a href='/kutubxona.html' class="nav-link-anim">Kutubxona</a></li>
+            <li><a href='/haqida.html' class="nav-link-anim">Sayt haqida</a></li>
+            <li><a href='/aloqa.html' class="nav-link-anim">Aloqa</a></li>
           </ul>
           <div class='nav-right' style='display: flex; gap: 10px;'>
             <button class='btn btn-ghost btn-sm' onclick='scrollToLogin()'>🔑 Kabinetga kirish</button>
@@ -384,10 +387,35 @@
           <span class="line2">istalgan qurilmangizda</span>
         </h1>
 
-        <p class="hero-sub animate-fade-up animate-delay-2">
-          Darslarni chap mundarijadan tanlang, videodarslarni ko'ring va har bir dars bo'yicha 5 ta testni 100% yechib
-          keyingi darslarni oching!
-        </p>
+        <div class="hero-sub animate-fade-up animate-delay-2"
+          style="background: #eef2ff; padding: 10px 20px; border-radius: 8px; border: 1px solid #c7d2fe; margin-bottom: 30px; height: 45px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+          <div id="news-ticker" style="font-weight: 600; color: #4f46e5; text-align: center; transition: opacity 0.5s ease; width: 100%;">
+          </div>
+        </div>
+        <script>
+          const newsItems = [
+            "🎉 innocode.uz platformasiga xush kelibsiz! Yangi o'quv mavsumi boshlandi.",
+            "📚 Kutubxonamizga yangi dasturlash darsliklari va qo'llanmalar qo'shildi.",
+            "🤖 innocode.uz Sun'iy Intellekt yordamchisi endi sizning xizmatingizda!",
+            "🚀 Har bir darsdan so'ng 5 ta testni yechib, o'zlashtirishni 100% ga yetkazing.",
+            "💼 Bo'sh ish o'rni: Jamoamizga kuchli Frontend dasturchilar kerak!",
+            "📱 Qurilmalararo sinxronizatsiya orqali istalgan joydan darslarni davom ettiring."
+          ];
+          let currentNewsIndex = 0;
+          const tickerEl = document.getElementById('news-ticker');
+          
+          function updateTicker() {
+            tickerEl.style.opacity = 0;
+            setTimeout(() => {
+              tickerEl.innerText = newsItems[currentNewsIndex];
+              tickerEl.style.opacity = 1;
+              currentNewsIndex = (currentNewsIndex + 1) % newsItems.length;
+            }, 500);
+          }
+          
+          updateTicker();
+          setInterval(updateTicker, 3000);
+        </script>
 
         <!-- PORTAL CARDS -->
         <div class="portal-grid animate-fade-up animate-delay-3">
@@ -500,88 +528,6 @@
       </div>
     </section>
 
-    <!-- COURSES -->
-    <section id="courses" style="padding: 60px 0; background: #f8fafc;">
-      <div class="container">
-        <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 40px; color: var(--text-primary);">Dasturlash
-          Kurslari</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-          <div class="card card-body"
-            style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;"
-            onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-            <div style="font-size: 3.5rem; margin-bottom: 15px;">🐍</div>
-            <h3 style="margin-bottom: 10px;">Python Asoslari</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Zamonaviy va eng mashhur
-              dasturlash tilini noldan o'rganing. Backend, AI va Data Science uchun.</p>
-          </div>
-          <div class="card card-body"
-            style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;"
-            onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-            <div style="font-size: 3.5rem; margin-bottom: 15px;">💛</div>
-            <h3 style="margin-bottom: 10px;">JavaScript & Frontend</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Web dasturlashning asosiy tili.
-              HTML, CSS va zamonaviy kutubxonalar (React, Vue) ga kirish.</p>
-          </div>
-          <div class="card card-body"
-            style="text-align: center; padding: 30px; transition: transform 0.3s; cursor: pointer;"
-            onmouseover="this.style.transform='translateY(-5px)'" onmouseout="this.style.transform='translateY(0)'">
-            <div style="font-size: 3.5rem; margin-bottom: 15px;">☕</div>
-            <h3 style="margin-bottom: 10px;">Java Dasturlash</h3>
-            <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5;">Kuchli va yirik loyihalar uchun
-              mo'ljallangan til. Android va Enterprise dasturlash uchun mukammal.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- LIBRARY -->
-    <section id="library" style="padding: 70px 0;">
-      <div class="container" style="text-align: center;">
-        <h2 style="font-size: 2.2rem; margin-bottom: 15px; color: var(--text-primary);">Kutubxona</h2>
-        <p style="color: var(--text-muted); margin-bottom: 35px; font-size: 1.1rem;">O'quv qo'llanmalar, darsliklar va
-          asosiy ilmiy ishlar to'plami.</p>
-
-        <!-- Top Animated Buttons (Moved to library) -->
-        <div class="top-buttons-container animate-fade-up">
-          <a href="https://drive.google.com/drive/folders/18UgKYPokejgspN-RLwQHKYn63RtN6xGc?usp=drive_link"
-            target="_blank" class="animated-btn">
-            📚 Asosiy ilmiy ishlar
-          </a>
-          <button onclick="openModal('books-modal')" class="animated-btn">
-            📖 O'quv qo'llanma va darslik
-          </button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- NEWS -->
-    <section id="news" style="padding: 60px 0; background: #f8fafc;">
-      <div class="container">
-        <h2 style="font-size: 2.2rem; text-align: center; margin-bottom: 40px; color: var(--text-primary);">Dasturlash
-          Yangiliklari</h2>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
-          <div class="card card-body">
-            <div style="font-size: 2rem; margin-bottom: 10px;">🤖</div>
-            <h4 style="margin-bottom: 8px; font-size: 1.1rem;">Sun'iy Intelekt Yangiliklari</h4>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Chat GPT va Gemini endi
-              dasturlashda eng katta yordamchiga aylanmoqda. Kod yozish va xatolarni topish ancha osonlashdi.</p>
-          </div>
-          <div class="card card-body">
-            <div style="font-size: 2rem; margin-bottom: 10px;">🚀</div>
-            <h4 style="margin-bottom: 8px; font-size: 1.1rem;">Yangi Kurslar Qo'shildi</h4>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">Platformamizga Java va Python
-              bo'yicha murakkab amaliy mashg'ulotlar va loyihalar qo'shildi.</p>
-          </div>
-          <div class="card card-body">
-            <div style="font-size: 2rem; margin-bottom: 10px;">📈</div>
-            <h4 style="margin-bottom: 8px; font-size: 1.1rem;">IT Sohasidagi O'zgarishlar</h4>
-            <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">O'zbekistonda dasturchilarga
-              bo'lgan talab 2 barobar oshdi. Endilikda masofaviy ishlash imkoniyatlari yanada kengaymoqda.</p>
-          </div>
-        </div>
-      </div>
-    </section>
   </div>
 
   <!-- ABOUT & CONTACT (Footer area) -->
@@ -592,7 +538,7 @@
         <div>
           <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">Sayt haqida</h3>
           <p style="color: #94a3b8; line-height: 1.7; font-size: 0.95rem;">
-            EduSmart LMS — talabalar va o'qituvchilar uchun mo'ljallangan zamonaviy o'quv platformasi. Biz interaktiv
+            innocode.uz — talabalar va o'qituvchilar uchun mo'ljallangan zamonaviy o'quv platformasi. Biz interaktiv
             ta'lim, darslarni to'liq o'zlashtirish va doimiy amaliyotni maqsad qilganmiz.
           </p>
         </div>
@@ -606,22 +552,21 @@
         </div>
         <div>
           <h3 style="color: white; margin-bottom: 20px; font-size: 1.3rem;">Ijtimoiy tarmoqlar</h3>
-          <div style="display: flex; flex-direction: column; gap: 14px;">
+          <div style="display: flex; gap: 20px; font-size: 1.5rem;">
             <a href="https://www.instagram.com/isomiddinov.marufjon/" target="_blank"
-              style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>📸</span>
-              Instagram: @isomiddinov.marufjon</a>
+              style="color: #38bdf8; text-decoration: none;" title="Instagram">📸</a>
             <a href="https://www.facebook.com/isomiddinov.marufjon.3/" target="_blank"
-              style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>📘</span>
-              Facebook: Marufjon Isomiddinov</a>
-            <a href="https://t.me/Marufjon0915" target="_blank"
-              style="color: #38bdf8; text-decoration: none; display: flex; align-items: center; gap: 8px; font-weight: 600;"><span>✈️</span>
-              Telegram: @Marufjon0915</a>
+              style="color: #38bdf8; text-decoration: none;" title="Facebook">📘</a>
+            <a href="https://t.me/Marufjon0915" target="_blank" style="color: #38bdf8; text-decoration: none;"
+              title="Telegram">✈️</a>
           </div>
         </div>
       </div>
       <div
-        style="text-align: center; padding-top: 24px; border-top: 1px solid #1e293b; font-weight: 800; color: #64748b; font-size: 1.1rem; letter-spacing: 1.5px;">
-        2024_YIL
+        style="text-align: center; padding-top: 24px; border-top: 1px solid #1e293b; font-weight: 800; color: #64748b; font-size: 1.1rem; letter-spacing: 1.5px; display: flex; flex-direction: column; gap: 10px;">
+        <span>2024_YIL</span>
+        <span style="font-size: 0.9rem; color: #475569;">ATT 610 - 24 gurux talabalari bilan birgalikda
+          yaratilgan</span>
       </div>
     </div>
   </footer>
@@ -634,26 +579,26 @@
         qo'llanma va darsliklar</h2>
       <div style="display: flex; flex-direction: column; gap: 10px;">
         <a href="https://drive.google.com/file/d/1x87vTAdlABLxlVfm5Bzrye-I0fNBYpzd/view?usp=drive_link" target="_blank"
-          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv
-          qo'llanma</a>
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 Dasturlash
+          asoslari (O'quv qo'llanma)</a>
         <a href="https://drive.google.com/file/d/1r4OxXfkVUzaLsgr51lXVHL8AdsiCMhCF/view?usp=drive_link" target="_blank"
           class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗
-          Darslik</a>
+          Ma'lumotlar bazasi (Darslik)</a>
         <a href="https://drive.google.com/file/d/1u-IpJz_4SSoAo2Y87woRDkir7inpXXB7/view?usp=drive_link" target="_blank"
-          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗
-          Darslik</a>
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗 Kompyuter
+          tarmoqlari (Darslik)</a>
         <a href="https://drive.google.com/file/d/1jPa-G66bp1zsteADygRLTqUX0VA8S_HI/view?usp=drive_link" target="_blank"
-          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv
-          qo'llanma</a>
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 Web
+          texnologiyalari (O'quv qo'llanma)</a>
         <a href="https://drive.google.com/file/d/14HTx_rX0nSVlzVYNOQVAGIqyGMgFxQ8m/view?usp=drive_link" target="_blank"
-          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv
-          qo'llanma</a>
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘
+          Kiberxavfsizlik asoslari (O'quv qo'llanma)</a>
         <a href="https://drive.google.com/file/d/1IqE-O_HDPKFBrG0qSqjv_cYoxzVunqVV/view?usp=drive_link" target="_blank"
-          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 O'quv
-          qo'llanma</a>
+          class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📘 Sun'iy
+          intellekt (O'quv qo'llanma)</a>
         <a href="https://drive.google.com/file/d/1XiS_Z-5ZzGrtNjGiyrL455-ttfT7MHEz/view?usp=drive_link" target="_blank"
           class="btn btn-ghost" style="text-align: left; justify-content: flex-start; font-size: 0.95rem;">📗
-          Darslik</a>
+          Algoritmlar va ma'lumotlar tuzilmasi (Darslik)</a>
       </div>
     </div>
   </div>
@@ -984,13 +929,13 @@
       <div class="ai-header">
         <div style="display:flex; align-items:center; gap:8px;">
           <span style="font-size: 1.3rem;">✨</span>
-          <span>EduSmart AI</span>
+          <span>innocode.uz AI</span>
         </div>
         <button onclick="toggleAI()"
           style="background:none;border:none;color:white;cursor:pointer;font-size:1.4rem;padding:0;">✕</button>
       </div>
       <div class="ai-body" id="aiBody">
-        <div class="msg-ai">Assalomu alaykum! Men EduSmart AI (Sun'iy Intelekt) yordamchisiman. Saytdan qanday
+        <div class="msg-ai">Assalomu alaykum! Men innocode.uz AI (Sun'iy Intelekt) yordamchisiman. Saytdan qanday
           foydalanish, darslar yoki testlar bo'yicha savollaringiz bormi?</div>
       </div>
       <div class="ai-input-area">
@@ -1033,13 +978,13 @@
 
         // 1. Salomlashish va hol-ahvol
         if (lower.match(/(salom|assalom|qalay|yaxshimisiz|hormang)/)) {
-          reply = "Assalomu alaykum! Men EduSmart sun'iy intellekt yordamchisiman. Sizga qanday yordam bera olaman?";
+          reply = "Assalomu alaykum! Men innocode.uz sun'iy intellekt yordamchisiman. Sizga qanday yordam bera olaman?";
         } else if (lower.match(/(qalaysan|qandaysan|ahvollar|nima gap)/)) {
           reply = "Rahmat, menda hammasi zo'r! Men doim sizga yordam berishga tayyorman. Darslarni boshlaymizmi?";
         }
         // 2. Shaxsiyat / Yaratuvchilar
         else if (lower.match(/(kimsan|isming nima|o'zing haqingda|uzing haqingda)/)) {
-          reply = "Men EduSmart LMS uchun maxsus ishlab chiqilgan Sun'iy Intellekt yordamchisiman. Vazifam sizga platformamizdan foydalanishda yordamlashish!";
+          reply = "Men innocode.uz uchun maxsus ishlab chiqilgan Sun'iy Intellekt yordamchisiman. Vazifam sizga platformamizdan foydalanishda yordamlashish!";
         } else if (lower.match(/(yaratdi|yaratilding|yaratuvchi|kim tuzgan|dasturchi)/)) {
           reply = "Meni mohir dasturchi Sirojiddin Savriyev yaratgan.";
         } else if (lower.match(/(admin|o'qituvchi|uqituvchi|rahbar|boshliq|kim o'tadi|kim o'rgatadi)/)) {
