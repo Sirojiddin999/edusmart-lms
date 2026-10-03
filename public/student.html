@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O'quvchi Kabineti — EduSmart</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* ─── STUDENT LAYOUT ──────────────────────────────────────── */
+    .s-root { display: flex; flex-direction: column; min-height: 100vh; background: var(--bg-base); }
+
+    .s-header {
+      position: sticky; top: 0; z-index: 60;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 64px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border); gap: 16px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+    }
+
+    .user-pill {
+      display: flex; align-items: center; gap: 10px;
+      padding: 5px 14px 5px 7px;
+      background: #f8fafc;
+      border: 1px solid var(--border); border-radius: var(--r-full);
+    }
+    .u-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.78rem; font-weight: 800; color: #fff; flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(79,70,229,0.3);
+    }
+    .u-name  { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
+    .u-login { font-size: 0.72rem; color: var(--text-muted); font-family: monospace; }
+
+    /* sync bar */
+    .sync-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 9px 24px; flex-wrap: wrap; gap: 12px;
+      background: #f0fdf4;
+      border-bottom: 1px solid #bbf7d0;
+    }
+    .sync-left { display: flex; align-items: center; gap: 8px; font-size: 0.82rem; color: #166534; font-weight: 600; }
+    .sync-dot  { width: 8px; height: 8px; border-radius: 50%; background: var(--emerald); box-shadow: 0 0 8px var(--emerald); animation: pulse-glow 2s infinite; flex-shrink: 0; }
+    .sync-right{ display: flex; align-items: center; gap: 12px; min-width: 240px; }
+    .sync-pct  { font-size: 0.85rem; font-weight: 800; color: var(--emerald); white-space: nowrap; }
+    .sync-cnt  { font-size: 0.78rem; color: #15803d; white-space: nowrap; font-weight: 600; }
+
+    /* TWO-COLUMN BODY:
+       LEFT: Darslar ro'yxati (340px)
+       RIGHT: Video dars, konspekt va 5 ta test (1fr)
+    */
+    .s-body {
+      flex: 1; display: grid;
+      grid-template-columns: 350px 1fr;
+      overflow: hidden; max-height: calc(100vh - 110px);
+    }
+
+    /* ─── SIDEBAR: CHAP TARAF (Darslar Ro'yxati) ─── */
+    .sidebar-col {
+      border-right: 1px solid var(--border);
+      overflow-y: auto;
+      background: #ffffff;
+      display: flex; flex-direction: column;
+    }
+    .sb-hdr {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+      position: sticky; top: 0;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px); z-index: 5;
+    }
+    .sb-title { font-size: 1rem; font-weight: 800; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; color: var(--text-primary); }
+    .sb-sub   { font-size: 0.76rem; color: var(--text-muted); line-height: 1.4; }
+
+    .lesson-list { padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+
+    /* Lesson Nav Item in Sidebar */
+    .lni {
+      display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+      border: 1px solid var(--border); border-radius: var(--r-md);
+      cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+      background: #ffffff; width: 100%; text-align: left;
+      color: var(--text-secondary); position: relative; overflow: hidden;
+    }
+    .lni::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3.5px;
+      background: transparent; transition: 0.2s;
+    }
+    .lni:hover:not(.locked) {
+      background: #f8fafc; border-color: var(--border-hover); color: var(--text-primary);
+      transform: translateX(2px);
+    }
+    .lni.active {
+      background: var(--primary-subtle); border-color: rgba(79, 70, 229, 0.35); color: var(--primary);
+      box-shadow: 0 2px 8px rgba(79, 70, 229, 0.08);
+    }
+    .lni.active::before { background: var(--primary); }
+    .lni.done {
+      border-color: rgba(5, 150, 105, 0.3); background: #f0fdf4;
+    }
+    .lni.done::before { background: var(--emerald); }
+    .lni.locked {
+      background: #f8fafc; border-color: #e2e8f0; opacity: 0.65; cursor: not-allowed;
+    }
+
+    .ldot {
+      width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.76rem; font-weight: 800; flex-shrink: 0; font-family: var(--font-heading);
+    }
+    .dot-p { background: #f1f5f9; color: var(--text-muted); border: 1px solid var(--border); }
+    .dot-a { background: var(--primary); color: #fff; box-shadow: 0 0 10px rgba(79, 70, 229, 0.4); }
+    .dot-d { background: var(--emerald); color: #fff; box-shadow: 0 0 10px rgba(5, 150, 105, 0.35); }
+    .dot-l { background: #e2e8f0; color: var(--text-disabled); border: 1px solid #cbd5e1; }
+
+    .lni-info { flex: 1; overflow: hidden; }
+    .lni-title { font-size: 0.86rem; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .lni-meta  { font-size: 0.72rem; color: var(--text-muted); margin-top: 3px; display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+
+    .score-chip {
+      font-size: 0.7rem; font-weight: 800; padding: 2px 7px; border-radius: 4px;
+      background: #dcfce7; color: #15803d; border: 1px solid #86efac; white-space: nowrap;
+    }
+    .lock-badge {
+      font-size: 0.7rem; font-weight: 700; color: #94a3b8; display: flex; align-items: center; gap: 3px;
+    }
+
+    /* ─── PLAYER AREA: O'NG TARAF (Video & Quiz) ─── */
+    .player-col {
+      overflow-y: auto; padding: 28px 32px;
+      display: flex; flex-direction: column; gap: 24px;
+      background: var(--bg-base);
+    }
+
+    /* Lesson header */
+    .lmeta { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 8px; }
+    .ltitle { font-size: 1.65rem; font-weight: 900; letter-spacing: -0.5px; line-height: 1.25; color: var(--text-primary); }
+    .ldesc  { font-size: 0.92rem; color: var(--text-muted); margin-top: 6px; line-height: 1.5; }
+
+    /* Tags */
+    .tag {
+      display: inline-flex; align-items: center; padding: 3px 11px;
+      background: var(--primary-subtle); border: 1px solid rgba(79, 70, 229, 0.2);
+      border-radius: var(--r-full); font-size: 0.74rem; color: var(--primary); font-weight: 600;
+    }
+
+    /* Video Player Wrap */
+    .video-wrap {
+      position: relative; width: 100%; padding-top: 56.25%;
+      border-radius: var(--r-xl); overflow: hidden; background: #000;
+      box-shadow: var(--shadow-lg), 0 0 0 1px var(--border);
+    }
+    .video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+
+    /* Content panel (Konspekt) */
+    .content-panel {
+      background: #ffffff; border: 1px solid var(--border);
+      border-radius: var(--r-xl); padding: 26px;
+      box-shadow: var(--shadow-sm);
+    }
+    .cp-heading {
+      font-size: 1rem; font-weight: 800; color: var(--text-primary);
+      margin-bottom: 14px; display: flex; align-items: center; gap: 8px;
+    }
+    .cp-body {
+      white-space: pre-wrap; font-size: 0.92rem; line-height: 1.8; color: var(--text-secondary);
+    }
+
+    /* ─── QUIZ SECTION ─── */
+    .quiz-section {
+      background: #ffffff; border: 1px solid var(--border);
+      border-radius: var(--r-xl); padding: 30px;
+      box-shadow: var(--shadow-md);
+      position: relative;
+    }
+    .quiz-heading {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 14px;
+      margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--border);
+    }
+    .quiz-title-text { font-size: 1.25rem; font-weight: 800; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+    .quiz-counter { font-size: 0.84rem; color: var(--text-muted); font-weight: 600; }
+
+    .quiz-instruction-alert {
+      background: #fffbeb; border: 1px solid #fde68a; border-radius: var(--r-md);
+      padding: 14px 18px; margin-bottom: 22px; display: flex; align-items: center; gap: 12px;
+      font-size: 0.88rem; color: #92400e; font-weight: 500;
+    }
+    .quiz-instruction-alert strong { color: #b45309; }
+
+    .q-card {
+      background: #f8fafc; border: 1px solid var(--border);
+      border-radius: var(--r-lg); padding: 20px; margin-bottom: 16px;
+      transition: all 0.2s;
+    }
+    .q-card:hover { border-color: var(--border-hover); background: #ffffff; }
+    .q-num  { font-size: 0.74rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 8px; }
+    .q-text { font-size: 0.98rem; font-weight: 700; line-height: 1.45; margin-bottom: 16px; color: var(--text-primary); }
+    .q-opts { display: flex; flex-direction: column; gap: 8px; }
+
+    .q-opt {
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      border: 1px solid var(--border); border-radius: var(--r-sm);
+      cursor: pointer; transition: all 0.18s; color: var(--text-secondary); font-size: 0.92rem;
+      user-select: none; background: #ffffff;
+    }
+    .q-opt:hover { background: #f1f5f9; border-color: var(--border-hover); color: var(--text-primary); }
+    .q-opt.sel   { background: var(--primary-subtle); border-color: var(--primary); color: var(--primary); font-weight: 600; }
+    .q-opt.right { background: #ecfdf5; border-color: #10b981; color: #047857; font-weight: 700; }
+    .q-opt.wrong { background: #fff1f2; border-color: #f43f5e; color: #be123c; font-weight: 600; }
+
+    .q-letter {
+      width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 0.74rem; font-weight: 800; background: #e2e8f0; color: #475569; flex-shrink: 0;
+      font-family: var(--font-heading); transition: all 0.18s;
+    }
+    .q-opt.sel   .q-letter { background: var(--primary); color: #fff; }
+    .q-opt.right .q-letter { background: #10b981; color: #fff; }
+    .q-opt.wrong .q-letter { background: #f43f5e; color: #fff; }
+
+    /* Quiz result banner */
+    .quiz-result-banner {
+      border-radius: var(--r-lg); padding: 22px 24px; margin-top: 20px;
+      display: flex; align-items: center; gap: 18px; flex-wrap: wrap;
+    }
+    .qrb-pass { background: #ecfdf5; border: 1px solid #6ee7b7; color: #065f46; }
+    .qrb-fail { background: #fff1f2; border: 1px solid #fda4af; color: #9f1239; }
+    .qrb-icon { font-size: 2.8rem; flex-shrink: 0; }
+    .qrb-score { font-size: 1.7rem; font-weight: 900; font-family: var(--font-heading); line-height: 1.1; }
+    .qrb-msg   { font-size: 0.92rem; margin-top: 5px; line-height: 1.5; font-weight: 500; }
+
+    /* Action row */
+    .lesson-actions {
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 14px; padding-top: 20px; border-top: 1px solid var(--border);
+    }
+
+    @media (max-width: 960px) {
+      .s-body { grid-template-columns: 1fr; max-height: none; }
+      .sidebar-col { border-right: none; border-bottom: 1px solid var(--border); max-height: 380px; }
+      .s-header, .sync-bar { padding: 10px 16px; }
+      .player-col { padding: 20px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orb glow-orb-1" style="opacity: 0.25;"></div>
+  <div class="glow-orb glow-orb-2" style="opacity: 0.2;"></div>
+
+  <div class="page-wrap s-root">
+
+    <!-- HEADER -->
+    <header class="s-header">
+      <a href="/" class="brand" style="text-decoration: none;">
+        <div class="brand-logo">🎓</div>
+        <div class="hide-mobile">
+          <div class="brand-name">EduSmart LMS</div>
+          <div class="brand-subtitle">Interaktiv Ta'lim Platformasi</div>
+        </div>
+      </a>
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <div class="user-pill">
+          <div class="u-avatar" id="uAvatar">?</div>
+          <div>
+            <div class="u-name"  id="uName">O'quvchi</div>
+            <div class="u-login" id="uLogin">@login</div>
+          </div>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()">Chiqish 🚪</button>
+      </div>
+    </header>
+
+    <!-- SYNC BAR -->
+    <div class="sync-bar">
+      <div class="sync-left">
+        <span class="sync-dot"></span>
+        <span>Qurilmalararo sinxronizatsiya: <strong>Faol</strong></span>
+      </div>
+      <div class="sync-right">
+        <span class="sync-pct" id="syncPct">0%</span>
+        <div class="progress-wrap" style="flex: 1; height: 8px;">
+          <div class="progress-fill" id="syncBar" style="width: 0%;"></div>
+        </div>
+        <span class="sync-cnt" id="syncCnt">0/0 dars</span>
+      </div>
+    </div>
+
+    <!-- BODY:
+         CHAP TARAF: Darslar ro'yxati (.sidebar-col)
+         O'NG TARAF: Video dars, konspekt va 5 ta test (.player-col)
+    -->
+    <div class="s-body">
+
+      <!-- ═══════════ CHAP TARAF: DARSLAR MUNDARIJASI ═══════════ -->
+      <aside class="sidebar-col">
+        <div class="sb-hdr">
+          <div class="sb-title">📚 Darslar Mundarijasi</div>
+          <div class="sb-sub">
+            🔒 Har bir darsning 5 ta testini <strong>100%</strong> yechganingizda keyingi dars avtomatik ochiladi.
+          </div>
+        </div>
+        <div class="lesson-list" id="lessonList">
+          <div style="padding: 20px; text-align: center; color: var(--text-muted);">Darslar yuklanmoqda...</div>
+        </div>
+      </aside>
+
+      <!-- ═══════════ O'NG TARAF: VIDEO VA DARSLAR ═══════════ -->
+      <main class="player-col" id="playerCol">
+
+        <!-- Dars sarlavhasi va ma'lumotlari -->
+        <div id="lessonHeader" class="animate-fade-up">
+          <div class="lmeta">
+            <span class="badge badge-primary" id="lNumBadge">1-Dars</span>
+            <span id="lStatusBadge"></span>
+            <span class="badge badge-cyan" id="lDurBadge">⏱ 30 daqiqa</span>
+          </div>
+          <h1 class="ltitle" id="lTitle">Yuklanmoqda...</h1>
+          <p class="ldesc" id="lDesc"></p>
+          <div id="lTags" style="display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;"></div>
+        </div>
+
+        <!-- Video dars -->
+        <div class="video-wrap animate-fade-up animate-delay-1" id="videoWrap">
+          <iframe id="lessonIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+
+        <!-- Dars konspekti -->
+        <div class="content-panel animate-fade-up animate-delay-2">
+          <div class="cp-heading">📖 Dars Konspekti va Asosiy Qoidalar</div>
+          <div class="cp-body" id="lContent">—</div>
+        </div>
+
+        <!-- 5 TA TEST SAVOLI SECTION -->
+        <div class="quiz-section animate-fade-up animate-delay-3" id="quizSection" style="display: none;">
+          <div class="quiz-heading">
+            <div>
+              <div class="quiz-title-text">✍️ Dars Testi (5 ta savol)</div>
+              <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">
+                Har bir savolni diqqat bilan o'qib, to'g'ri variantni tanlang
+              </p>
+            </div>
+            <div style="display: flex; align-items: center; gap: 10px;">
+              <span class="badge badge-primary" id="quizMinBadge">Talab: 100% (5/5)</span>
+              <span class="quiz-counter" id="quizCounter">5 ta savol</span>
+            </div>
+          </div>
+
+          <!-- 100% talab eslatmasi -->
+          <div class="quiz-instruction-alert">
+            <span style="font-size: 1.3rem;">⚡</span>
+            <span>
+              <strong>Muhim qoida:</strong> Keyingi dars ochilishi uchun ushbu darsning barcha 5 ta savoliga <strong>100% (5/5)</strong> to'g'ri javob berishingiz kerak!
+            </span>
+          </div>
+
+          <!-- Oldingi natija ko'rsatgichi -->
+          <div id="prevScoreNotice" style="display: none; margin-bottom: 18px;"></div>
+
+          <!-- Savollar kartalari -->
+          <div id="qCards"></div>
+
+          <!-- Yuborish / Qayta topshirish tugmalari -->
+          <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px;">
+            <button class="btn btn-primary btn-lg" id="btnSubmitQuiz" onclick="submitQuiz()">
+              📊 Natijani Tekshirish (5/5)
+            </button>
+            <button class="btn btn-ghost btn-lg" id="btnRetryQuiz" style="display: none;" onclick="resetQuiz()">
+              🔄 Qayta topshirish
+            </button>
+          </div>
+
+          <!-- Natija banneri -->
+          <div id="quizResultBanner" style="display: none;"></div>
+        </div>
+
+        <!-- NAVIGATSIYA TUGMALARI -->
+        <div class="lesson-actions animate-fade-up">
+          <button class="btn btn-ghost" id="btnPrev" onclick="stepLesson(-1)">← Oldingi Dars</button>
+          <button class="btn btn-success btn-lg" id="btnNext" onclick="stepLesson(1)" disabled>
+            Keyingi darsga o'tish →
+          </button>
+        </div>
+
+      </main>
+
+    </div>
+  </div>
+
+  <div id="toast-root"></div>
+  <script src="/js/utils.js"></script>
+  <script>
+    let STATE = null, CUR = null, selAnswers = {}, submitted = false;
+
+    // Auth tekshiruvi
+    const tok = Auth.getToken(), usr = Auth.getUser();
+    if (!tok || !usr || usr.role !== 'student') {
+      window.location.href = '/';
+      throw new Error('unauth');
+    }
+
+    const ini = (usr.full_name || 'O').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+    document.getElementById('uAvatar').innerText = ini;
+    document.getElementById('uName').innerText   = usr.full_name || 'O\'quvchi';
+    document.getElementById('uLogin').innerText  = '@' + (usr.username || '');
+
+    // ─── DASHBOARDNI YUKLASH ─────────────────────────────────────────────────
+    async function loadAll() {
+      try {
+        const r = await fetch('/api/student/dashboard', { headers: Auth.getHeaders() });
+        if (r.status === 401 || r.status === 403) {
+          Auth.clearSession();
+          window.location.href = '/';
+          return;
+        }
+        STATE = await r.json();
+        updateSyncBar(STATE.progress);
+        renderSidebar(STATE.lessons, STATE.progress);
+
+        // Ochilishi kerak bo'lgan darsni topish
+        const tgt = STATE.current_lesson || STATE.lessons[0];
+        if (tgt) loadLesson(tgt.id);
+      } catch (e) {
+        showToast("Ma'lumotlarni yuklashda xatolik", 'error');
+      }
+    }
+
+    function updateSyncBar(p) {
+      document.getElementById('syncPct').innerText = p.progress_percent + '%';
+      document.getElementById('syncBar').style.width = p.progress_percent + '%';
+      document.getElementById('syncCnt').innerText = `${p.completed_count}/${p.total_lessons} dars yakunlandi`;
+    }
+
+    // ─── SIDEBARNI CHIZISH (CHAP TARAF) ──────────────────────────────────────
+    function renderSidebar(lessons, prog) {
+      const list = document.getElementById('lessonList');
+      list.innerHTML = '';
+
+      const done = prog.completed_lesson_ids || [];
+      const unlocked = prog.unlocked_ids || [];
+      const scores = prog.scores || {};
+
+      lessons.forEach(l => {
+        const isActive    = CUR && CUR.id === l.id;
+        const isCompleted = done.includes(l.id);
+        const isUnlocked  = unlocked.includes(l.id);
+        const isLocked    = !isCompleted && !isUnlocked;
+        const score       = scores[l.id];
+
+        let dotClass = 'dot-p', dotContent = l.order_num;
+        if (isCompleted) {
+          dotClass = 'dot-d';
+          dotContent = '✓';
+        } else if (isActive) {
+          dotClass = 'dot-a';
+          dotContent = '▶';
+        } else if (isLocked) {
+          dotClass = 'dot-l';
+          dotContent = '🔒';
+        }
+
+        const btn = document.createElement('button');
+        btn.className = `lni${isActive ? ' active' : ''}${isCompleted ? ' done' : ''}${isLocked ? ' locked' : ''}`;
+        
+        if (!isLocked) {
+          btn.onclick = () => loadLesson(l.id);
+        } else {
+          btn.title = "Bu darsni ochish uchun oldingi dars testini 100% (5/5) yechishingiz kerak";
+        }
+
+        const scoreBadge = isCompleted && score !== undefined
+          ? `<span class="score-chip">${score}/5 (100%)</span>`
+          : (score !== undefined ? `<span class="score-chip" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5;">${score}/5</span>` : '');
+
+        const statusTag = isLocked
+          ? `<span class="lock-badge">🔒 Qulflangan</span>`
+          : (isCompleted ? `<span style="color:var(--emerald);font-weight:700;">• O'tildi</span>` : (isActive ? `<span style="color:var(--primary);font-weight:700;">• O'rganilmoqda</span>` : ''));
+
+        btn.innerHTML = `
+          <div class="ldot ${dotClass}">${dotContent}</div>
+          <div class="lni-info">
+            <div class="lni-title">${l.title}</div>
+            <div class="lni-meta">
+              <span>⏱ ${l.duration_mins} daq</span>
+              <span>• 5 ta test</span>
+              ${statusTag}
+            </div>
+          </div>
+          ${scoreBadge}
+        `;
+        list.appendChild(btn);
+      });
+    }
+
+    // ─── DARSNI YUKLASH (O'NG TARAF) ─────────────────────────────────────────
+    async function loadLesson(id) {
+      try {
+        const r = await fetch(`/api/student/lessons/${id}`, { headers: Auth.getHeaders() });
+        CUR = await r.json();
+        selAnswers = {};
+        submitted = false;
+
+        // Header ma'lumotlari
+        document.getElementById('lNumBadge').innerText = CUR.order_num + '-Dars';
+        document.getElementById('lTitle').innerText    = CUR.title;
+        document.getElementById('lDesc').innerText     = CUR.description || '';
+        document.getElementById('lDurBadge').innerText = `⏱ ${CUR.duration_mins} daqiqa`;
+
+        // Status badge
+        const sb = document.getElementById('lStatusBadge');
+        sb.innerHTML = CUR.is_completed
+          ? '<span class="badge badge-emerald">✓ 100% Yakunlangan</span>'
+          : '<span class="badge badge-amber">⏳ O\'rganilmoqda</span>';
+
+        // Hashteglar
+        const tagsEl = document.getElementById('lTags');
+        tagsEl.innerHTML = (CUR.hashtags || []).map(t => `<span class="tag">${t}</span>`).join('');
+
+        // Video Player
+        const vw = document.getElementById('videoWrap');
+        const vi = document.getElementById('lessonIframe');
+        if (CUR.video_url) {
+          vw.style.display = 'block';
+          vi.src = CUR.video_url;
+        } else {
+          vw.style.display = 'none';
+          vi.src = '';
+        }
+
+        // Konspekt
+        document.getElementById('lContent').innerText = CUR.content_text || 'Ushbu dars uchun qo\'shimcha konspekt kiritilmagan.';
+
+        // 5 ta Test Savoli
+        renderQuiz(CUR.quiz || [], CUR.min_score || 5, CUR.my_score, CUR.is_completed);
+
+        // Navigatsiya tugmalari
+        if (STATE) {
+          const idx = STATE.lessons.findIndex(l => l.id === CUR.id);
+          document.getElementById('btnPrev').disabled = idx <= 0;
+          // Keyingi dars faqat 100% topshirilganda yoqiladi!
+          document.getElementById('btnNext').disabled = !CUR.is_completed || idx >= STATE.lessons.length - 1;
+          if (idx >= STATE.lessons.length - 1) {
+            document.getElementById('btnNext').innerText = CUR.is_completed ? '🎓 Barcha darslar yakunlandi!' : 'Keyingi darsga o\'tish →';
+          } else {
+            document.getElementById('btnNext').innerText = 'Keyingi darsga o\'tish →';
+          }
+          renderSidebar(STATE.lessons, STATE.progress);
+        }
+
+        document.getElementById('playerCol').scrollTo({ top: 0, behavior: 'smooth' });
+      } catch (e) {
+        showToast("Darsni yuklashda xatolik", 'error');
+      }
+    }
+
+    // ─── QUIZ CHIZISH ────────────────────────────────────────────────────────
+    function renderQuiz(quiz, minScore, myScore, isCompleted) {
+      const sec = document.getElementById('quizSection');
+      if (!quiz.length) {
+        sec.style.display = 'none';
+        return;
+      }
+
+      sec.style.display = 'block';
+      document.getElementById('quizMinBadge').innerText = `Talab: 100% (5/5 to'g'ri)`;
+      document.getElementById('quizCounter').innerText = `${quiz.length} ta savol`;
+
+      const btnSubmit = document.getElementById('btnSubmitQuiz');
+      const btnRetry  = document.getElementById('btnRetryQuiz');
+      const banner    = document.getElementById('quizResultBanner');
+      const prevNotice = document.getElementById('prevScoreNotice');
+
+      // Oldingi natija ko'rsatgichi
+      if (myScore !== null && myScore !== undefined && !submitted) {
+        prevNotice.style.display = 'block';
+        const passed = (myScore === quiz.length);
+        prevNotice.innerHTML = `
+          <div class="${passed ? 'info-box' : 'warn-box'}" style="margin: 0;">
+            <span style="font-size: 1.2rem;">${passed ? '🎉' : '⚠️'}</span>
+            <div>
+              <strong>Oxirgi natijangiz: ${myScore}/${quiz.length} (${Math.round((myScore / quiz.length) * 100)}%)</strong>.
+              ${passed 
+                ? 'Siz bu dars testidan 100% o\'tgansiz va keyingi dars ochilgan!' 
+                : 'Keyingi darsni ochish uchun testni 100% (5/5) topshirishingiz shart. Quyidagi savollarni qayta yechib ko\'ring.'}
+            </div>
+          </div>`;
+      } else {
+        prevNotice.style.display = 'none';
+      }
+
+      banner.style.display = 'none';
+      btnSubmit.style.display = '';
+      btnRetry.style.display = 'none';
+
+      // 5 ta savol kartasini yaratish
+      const container = document.getElementById('qCards');
+      container.innerHTML = '';
+      const letters = ['A', 'B', 'C', 'D'];
+
+      quiz.forEach((q, qi) => {
+        const card = document.createElement('div');
+        card.className = 'q-card';
+        card.id = `qcard-${qi}`;
+
+        const optsHtml = q.opts.map((opt, oi) => `
+          <div class="q-opt" id="qopt-${qi}-${oi}" onclick="pickAnswer(${qi}, ${oi})">
+            <span class="q-letter">${letters[oi]}</span>
+            <span>${opt}</span>
+          </div>
+        `).join('');
+
+        card.innerHTML = `
+          <div class="q-num">${qi + 1}-SAVOL (5 dan)</div>
+          <div class="q-text">${q.q}</div>
+          <div class="q-opts">${optsHtml}</div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    function pickAnswer(qi, oi) {
+      if (submitted) return;
+      const prev = selAnswers[qi];
+      if (prev !== undefined) {
+        document.getElementById(`qopt-${qi}-${prev}`)?.classList.remove('sel');
+      }
+      selAnswers[qi] = oi;
+      document.getElementById(`qopt-${qi}-${oi}`)?.classList.add('sel');
+    }
+
+    // ─── TESTNI TOPSHIRISH VA 100% TEKSHIRISH ───────────────────────────────
+    async function submitQuiz() {
+      const quiz = CUR?.quiz || [];
+      if (!quiz.length) return;
+
+      // Hamma 5 ta savol belgilanganligini tekshirish
+      const unanswered = quiz.filter((_, i) => selAnswers[i] === undefined).length;
+      if (unanswered > 0) {
+        showToast(`Iltimos, barcha 5 ta savolga javob bering (${unanswered} ta qoldi)!`, 'error');
+        return;
+      }
+
+      const answers = quiz.map((_, i) => selAnswers[i]);
+      const btn = document.getElementById('btnSubmitQuiz');
+      btn.disabled = true;
+      btn.innerText = '⏳ Natija tekshirilmoqda...';
+
+      try {
+        const r = await fetch(`/api/student/lessons/${CUR.id}/quiz`, {
+          method: 'POST',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({ answers })
+        });
+        const d = await r.json();
+        submitted = true;
+
+        // Har bir javob variantida to'g'ri/noto'g'rini ko'rsatish
+        quiz.forEach((q, qi) => {
+          for (let oi = 0; oi < q.opts.length; oi++) {
+            const el = document.getElementById(`qopt-${qi}-${oi}`);
+            if (!el) continue;
+            el.classList.remove('sel');
+            if (oi === q.a) {
+              el.classList.add('right');
+            } else if (oi === selAnswers[qi] && oi !== q.a) {
+              el.classList.add('wrong');
+            }
+          }
+        });
+
+        // Natija banneri
+        const banner = document.getElementById('quizResultBanner');
+        banner.style.display = 'flex';
+
+        if (d.passed) {
+          // 100% (5/5) ga erishildi!
+          banner.className = 'quiz-result-banner qrb-pass';
+          banner.innerHTML = `
+            <div class="qrb-icon">🏆</div>
+            <div>
+              <div class="qrb-score" style="color: #059669;">5/5 — 100% A'lo!</div>
+              <div class="qrb-msg">
+                🎉 <strong>Ajoyib natija!</strong> Siz barcha 5 ta savolga to'liq to'g'ri javob berdingiz.
+                Ushbu dars muvaffaqiyatli yakunlandi va <strong>keyingi dars ochildi</strong>!
+              </div>
+            </div>
+          `;
+          showToast(`🎉 5/5 (100%) — keyingi dars ochildi!`, 'success');
+
+          // Yangilangan dashboardni olish
+          const dash = await fetch('/api/student/dashboard', { headers: Auth.getHeaders() });
+          STATE = await dash.json();
+          updateSyncBar(STATE.progress);
+          CUR.is_completed = true;
+          CUR.my_score = d.score;
+          document.getElementById('lStatusBadge').innerHTML = '<span class="badge badge-emerald">✓ 100% Yakunlangan</span>';
+
+          const idx = STATE.lessons.findIndex(l => l.id === CUR.id);
+          document.getElementById('btnNext').disabled = idx >= STATE.lessons.length - 1;
+          renderSidebar(STATE.lessons, STATE.progress);
+        } else {
+          // 100% dan kam (5/5 to'planmadi)
+          banner.className = 'quiz-result-banner qrb-fail';
+          banner.innerHTML = `
+            <div class="qrb-icon">❌</div>
+            <div>
+              <div class="qrb-score" style="color: #e11d48;">${d.score}/${d.total} — ${d.percent}%</div>
+              <div class="qrb-msg">
+                ⚠️ <strong>Keyingi dars ochilmadi!</strong> Talabga ko'ra barcha 5 ta savolga 100% to'g'ri javob berish lozim.
+                Xatolaringiz qizil bilan ko'rsatildi. Qoidalarni qayta o'qib, qayta urinib ko'ring!
+              </div>
+            </div>
+          `;
+          showToast(`❌ ${d.score}/5 — 100% kerak. Qayta urinib ko'ring!`, 'error');
+        }
+
+        document.getElementById('btnRetryQuiz').style.display = '';
+        btn.style.display = 'none';
+        document.getElementById('prevScoreNotice').style.display = 'none';
+      } catch (e) {
+        showToast("Xatolik yuz berdi", 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '📊 Natijani Tekshirish (5/5)';
+      }
+    }
+
+    function resetQuiz() {
+      selAnswers = {};
+      submitted = false;
+      document.getElementById('quizResultBanner').style.display = 'none';
+      document.getElementById('btnSubmitQuiz').style.display = '';
+      document.getElementById('btnRetryQuiz').style.display = 'none';
+      document.querySelectorAll('.q-opt').forEach(el => el.classList.remove('sel', 'right', 'wrong'));
+    }
+
+    function stepLesson(dir) {
+      if (!STATE || !CUR) return;
+      const idx = STATE.lessons.findIndex(l => l.id === CUR.id);
+      const target = STATE.lessons[idx + dir];
+      if (target) loadLesson(target.id);
+    }
+
+    function doLogout() {
+      Auth.clearSession();
+      window.location.href = '/';
+    }
+
+    window.addEventListener('DOMContentLoaded', loadAll);
+  </script>
+</body>
+</html>

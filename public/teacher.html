@@ -1,0 +1,1060 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>O'qituvchi Boshqaruv Paneli — EduSmart</title>
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    /* ─── TEACHER MODERN WHITE LAYOUT ───────────────────────────── */
+    * { box-sizing: border-box; }
+    .t-root { display: flex; min-height: 100vh; background: var(--bg-base); }
+
+    /* SIDEBAR */
+    .t-sidebar {
+      width: 280px; flex-shrink: 0;
+      background: #ffffff;
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      position: sticky; top: 0; height: 100vh; overflow-y: auto;
+      box-shadow: 1px 0 3px rgba(0,0,0,0.02);
+    }
+
+    .t-brand {
+      padding: 22px 20px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .t-brand-logo {
+      width: 42px; height: 42px; border-radius: var(--r-sm);
+      background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+      display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
+      box-shadow: 0 4px 14px rgba(79,70,229,0.25);
+    }
+
+    /* Login form in sidebar */
+    .t-login-section { padding: 22px 20px; flex: 1; }
+    .t-login-title { font-size: 0.95rem; font-weight: 800; color: var(--text-primary); margin-bottom: 16px; }
+
+    /* Nav menu (after login) */
+    .t-nav { padding: 14px 12px; display: flex; flex-direction: column; gap: 6px; }
+    .t-nav-item {
+      display: flex; align-items: center; gap: 12px; padding: 12px 16px;
+      border-radius: var(--r-md); cursor: pointer; transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+      border: 1px solid transparent; background: transparent;
+      color: var(--text-secondary); font-size: 0.9rem; font-weight: 700; font-family: var(--font-heading);
+      width: 100%; text-align: left;
+    }
+    .t-nav-item:hover { background: #f8fafc; color: var(--text-primary); }
+    .t-nav-item.active {
+      background: var(--primary-subtle); border-color: rgba(79, 70, 229, 0.25); color: var(--primary);
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.06);
+    }
+    .t-nav-item .nav-icon { font-size: 1.15rem; flex-shrink: 0; }
+    .t-nav-item .nav-badge {
+      margin-left: auto; font-size: 0.72rem; font-weight: 800;
+      background: #e0e7ff; color: var(--primary-dark);
+      padding: 2px 8px; border-radius: var(--r-full);
+    }
+
+    .t-user-footer {
+      padding: 16px 18px; border-top: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px; background: #ffffff;
+    }
+    .t-user-av {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--purple));
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.85rem; font-weight: 800; color: #fff; flex-shrink: 0;
+    }
+    .t-user-name  { font-size: 0.86rem; font-weight: 800; color: var(--text-primary); }
+    .t-user-role  { font-size: 0.72rem; color: var(--text-muted); }
+
+    /* MAIN CONTENT */
+    .t-main {
+      flex: 1; overflow-y: auto;
+      background: var(--bg-base);
+      display: flex; flex-direction: column;
+    }
+
+    .t-topbar {
+      padding: 16px 32px;
+      background: #ffffff;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50; gap: 16px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.02);
+    }
+    .t-page-title { font-size: 1.35rem; font-weight: 900; letter-spacing: -0.4px; color: var(--text-primary); }
+    .t-page-sub   { font-size: 0.82rem; color: var(--text-muted); margin-top: 2px; }
+
+    .t-content { padding: 32px; max-width: 1280px; width: 100%; margin: 0 auto; }
+
+    /* STAT STRIP */
+    .stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 28px; }
+    .s-tile {
+      background: #ffffff; border: 1px solid var(--border); border-radius: var(--r-xl);
+      padding: 20px 22px; position: relative; overflow: hidden; transition: all 0.2s;
+      box-shadow: var(--shadow-sm);
+    }
+    .s-tile:hover { border-color: var(--border-hover); box-shadow: var(--shadow-md); transform: translateY(-1px); }
+    .s-tile-icon { width: 44px; height: 44px; border-radius: var(--r-md); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; margin-bottom: 12px; }
+    .s-tile-val { font-family: var(--font-heading); font-size: 2.1rem; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-bottom: 4px; color: var(--text-primary); }
+    .s-tile-lbl { font-size: 0.8rem; color: var(--text-muted); font-weight: 600; }
+
+    /* Table */
+    .tbl-wrap { overflow-x: auto; border-radius: var(--r-xl); border: 1px solid var(--border); background: #ffffff; box-shadow: var(--shadow-sm); }
+
+    /* Lesson Cards */
+    .l-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 18px; }
+    .l-card {
+      background: #ffffff; border: 1px solid var(--border); border-radius: var(--r-xl);
+      padding: 22px; position: relative; overflow: hidden; transition: all 0.2s;
+      box-shadow: var(--shadow-sm); display: flex; flex-direction: column;
+    }
+    .l-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .l-card-order { font-size: 0.74rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.6px; margin-bottom: 6px; }
+    .l-card-title { font-size: 1.08rem; font-weight: 800; margin-bottom: 6px; line-height: 1.35; color: var(--text-primary); }
+    .l-card-desc  { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 14px; line-height: 1.5; flex: 1; }
+    .l-card-tags  { display: flex; gap: 5px; flex-wrap: wrap; margin-bottom: 14px; }
+    .l-card-tag   { font-size: 0.7rem; font-weight: 700; padding: 2px 8px; border-radius: var(--r-full); background: var(--primary-subtle); color: var(--primary); border: 1px solid rgba(79,70,229,0.2); }
+    .l-card-footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; padding-top: 14px; border-top: 1px solid var(--border); }
+
+    /* Leaderboard rank */
+    .rank-1 { background: #fffdf5; }
+    .rank-2 { background: #f8fafc; }
+    .rank-3 { background: #fffaf5; }
+    .rank-badge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 30px; height: 30px; border-radius: 50%; font-size: 0.85rem; font-weight: 900; font-family: var(--font-heading);
+    }
+    .rb-1 { background: linear-gradient(135deg, #fbbf24, #d97706); color: #fff; box-shadow: 0 2px 8px rgba(217, 119, 6, 0.35); }
+    .rb-2 { background: linear-gradient(135deg, #94a3b8, #64748b); color: #fff; }
+    .rb-3 { background: linear-gradient(135deg, #f59e0b, #b45309); color: #fff; }
+    .rb-n { background: #f1f5f9; color: var(--text-muted); border: 1px solid var(--border); }
+
+    /* Quiz rows modal */
+    .q-row { display: flex; align-items: flex-start; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--border); }
+    .q-row:last-child { border-bottom: none; }
+    .q-row-num { font-size: 0.78rem; font-weight: 800; color: var(--primary); flex-shrink: 0; min-width: 24px; padding-top: 2px; }
+    .q-row-body { flex: 1; }
+    .q-row-q { font-size: 0.94rem; font-weight: 700; margin-bottom: 8px; color: var(--text-primary); }
+    .q-row-opts { font-size: 0.86rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 4px; }
+    .q-row-opts .correct-opt { color: #047857; font-weight: 800; background: #ecfdf5; padding: 3px 8px; border-radius: 4px; display: inline-block; width: fit-content; }
+
+    /* Mini input */
+    .mini-input { padding: 8px 12px; border-radius: var(--r-sm); font-size: 0.88rem; }
+
+    @media (max-width: 960px) {
+      .t-root { flex-direction: column; }
+      .t-sidebar { width: 100%; height: auto; position: relative; }
+      .t-nav { flex-direction: row; flex-wrap: wrap; padding: 8px; }
+      .t-nav-item { flex: 1; min-width: 130px; justify-content: center; }
+      .stat-strip { grid-template-columns: repeat(2, 1fr); }
+      .t-content { padding: 18px 16px; }
+      .t-topbar { padding: 14px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="glow-orb glow-orb-1" style="opacity: 0.15;"></div>
+  <div class="glow-orb glow-orb-2" style="opacity: 0.12;"></div>
+
+  <div class="page-wrap t-root">
+
+    <!-- ═══════════ SIDEBAR ═══════════ -->
+    <aside class="t-sidebar">
+      <!-- Brand -->
+      <div class="t-brand">
+        <div class="t-brand-logo">👨‍🏫</div>
+        <div>
+          <div class="brand-name" style="font-size: 1.2rem;">EduSmart LMS</div>
+          <div style="font-size: 0.72rem; color: var(--text-muted); font-weight: 600;">O'qituvchi Boshqaruv Paneli</div>
+        </div>
+      </div>
+
+      <!-- LOGIN (Kirish formasi) -->
+      <div id="sideLoginSection" class="t-login-section">
+        <div class="t-login-title">🔐 Tizimga Kirish</div>
+        <form onsubmit="doTeacherLogin(event)">
+          <div class="form-group">
+            <label class="form-label">O'qituvchi logini</label>
+            <input id="tUsername" type="text" class="form-input" value="oqituvchi" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Parol</label>
+            <input id="tPassword" type="password" class="form-input" placeholder="admin123" required>
+          </div>
+          <button type="submit" id="btnTLogin" class="btn btn-primary btn-block btn-lg" style="margin-top: 6px;">
+            Kirish 🚀
+          </button>
+          <div class="info-box" style="margin-top: 14px; font-size: 0.78rem;">
+            <span>ℹ️</span>
+            <span>Standart: <strong>oqituvchi</strong> / <strong>admin123</strong></span>
+          </div>
+        </form>
+      </div>
+
+      <!-- NAV (Kirgandan keyin ko'rinadi) -->
+      <div id="sideNavSection" style="display: none; flex: 1;">
+        <div class="t-nav">
+          <button class="t-nav-item active" id="nav-overview" onclick="switchSection('overview')">
+            <span class="nav-icon">📊</span> Umumiy Tahlil
+          </button>
+          <button class="t-nav-item" id="nav-leaderboard" onclick="switchSection('leaderboard')">
+            <span class="nav-icon">🏆</span> Reyting
+          </button>
+          <button class="t-nav-item" id="nav-lessons" onclick="switchSection('lessons')">
+            <span class="nav-icon">📚</span> Darslar
+            <span class="nav-badge" id="lessonsBadge">0</span>
+          </button>
+          <button class="t-nav-item" id="nav-students" onclick="switchSection('students')">
+            <span class="nav-icon">👥</span> O'quvchilar
+            <span class="nav-badge" id="studentsBadge">0</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- User footer -->
+      <div id="sideUserFooter" style="display: none;">
+        <div class="t-user-footer">
+          <div class="t-user-av">👨‍🏫</div>
+          <div style="flex: 1; overflow: hidden;">
+            <div class="t-user-name" id="sideUserName">—</div>
+            <div class="t-user-role">Bosh O'qituvchi</div>
+          </div>
+          <button class="btn btn-ghost btn-xs" onclick="doLogout()" title="Chiqish">🚪</button>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ═══════════ ASOSIY QISM ═══════════ -->
+    <div class="t-main">
+
+      <!-- TOP BAR -->
+      <div class="t-topbar">
+        <div>
+          <div class="t-page-title" id="pageTitle">O'qituvchi Paneli</div>
+          <div class="t-page-sub"  id="pageSub">Platforma statistikasi va boshqaruvi</div>
+        </div>
+        <div id="topBarActions" style="display: flex; gap: 10px; align-items: center;"></div>
+      </div>
+
+      <!-- CONTENT -->
+      <div class="t-content" id="tContent">
+
+        <!-- STAT STRIP (Kirgandan keyin chiqadi) -->
+        <div class="stat-strip" id="statStrip" style="display: none;">
+          <div class="s-tile">
+            <div class="s-tile-icon" style="background: var(--primary-subtle); color: var(--primary);">👥</div>
+            <div class="s-tile-val" id="stTotal">0</div>
+            <div class="s-tile-lbl">Jami o'quvchilar soni</div>
+          </div>
+          <div class="s-tile">
+            <div class="s-tile-icon" style="background: var(--emerald-subtle); color: var(--emerald);">⚡</div>
+            <div class="s-tile-val" id="stActive" style="color: var(--emerald);">0</div>
+            <div class="s-tile-lbl">Bugun faol o'quvchilar</div>
+          </div>
+          <div class="s-tile">
+            <div class="s-tile-icon" style="background: var(--cyan-subtle); color: var(--cyan);">📚</div>
+            <div class="s-tile-val" id="stLessons" style="color: var(--cyan);">0</div>
+            <div class="s-tile-lbl">Jami darslar (har birida 5 test)</div>
+          </div>
+          <div class="s-tile">
+            <div class="s-tile-icon" style="background: var(--purple-subtle); color: var(--purple);">📈</div>
+            <div class="s-tile-val" id="stAvg" style="color: var(--purple);">0%</div>
+            <div class="s-tile-lbl">O'rtacha o'zlashtirish</div>
+          </div>
+        </div>
+
+        <!-- KIRISH OLDIDAGI XUSH KELIBSIZ EKRANI -->
+        <div id="secWelcome" style="text-align: center; padding: 70px 20px;">
+          <div style="font-size: 4.5rem; margin-bottom: 20px;">👨‍🏫</div>
+          <h2 style="font-size: 2rem; margin-bottom: 12px; color: var(--text-primary);">EduSmart LMS Boshqaruv Markazi</h2>
+          <p style="color: var(--text-muted); max-width: 520px; margin: 0 auto; line-height: 1.7; font-size: 0.95rem;">
+            Darslarni boshqarish, 5 ta test savollarini tahrirlash, o'quvchilar reytingini kuzatish va individual natijalarini ko'rish uchun chap tarafdagi formadan kiring.
+          </p>
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; max-width: 660px; margin-left: auto; margin-right: auto;">
+            <div class="card card-body" style="text-align: center; padding: 22px;">
+              <div style="font-size: 2rem; margin-bottom: 8px;">📊</div>
+              <div style="font-size: 0.88rem; font-weight: 800;">To'liq Nazorat</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">100% test yechilishini kuzatish</div>
+            </div>
+            <div class="card card-body" style="text-align: center; padding: 22px;">
+              <div style="font-size: 2rem; margin-bottom: 8px;">📚</div>
+              <div style="font-size: 0.88rem; font-weight: 800;">Dars & Test</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">5 ta testli darslar qo'shish</div>
+            </div>
+            <div class="card card-body" style="text-align: center; padding: 22px;">
+              <div style="font-size: 2rem; margin-bottom: 8px;">🏆</div>
+              <div style="font-size: 0.88rem; font-weight: 800;">O'quvchilar</div>
+              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">Reyting va o'zlashtirish</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1. UMUMIY TAHLIL / OVERVIEW BO'LIMI -->
+        <div id="secOverview" style="display: none;">
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px;">
+            <div class="card card-body">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+                <span>🎯</span> Ta'lim Oqimi Holati
+              </h3>
+              <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 18px;">
+                Platforma tizimi: har bir darsda <strong>5 ta test savoli</strong> mavjud. O'quvchi barcha 5 ta savolga <strong>100% to'g'ri</strong> javob bermaguncha keyingi dars ochilmaydi.
+              </p>
+              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+                <button class="btn btn-primary btn-sm" onclick="switchSection('lessons')">📚 Darslarni Ko'rish</button>
+                <button class="btn btn-ghost btn-sm" onclick="switchSection('students')">👥 O'quvchilarni Ko'rish</button>
+                <button class="btn btn-ghost btn-sm" onclick="openAddModal()">➕ Yangi Dars Qo'shish</button>
+              </div>
+            </div>
+
+            <div class="card card-body" style="background: linear-gradient(135deg, #f8fafc, #ffffff);">
+              <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 12px;">⚡ Tezkor Qoidalar</h3>
+              <ul style="padding-left: 18px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7;">
+                <li>Savollar soni: aniq 5 ta</li>
+                <li>O'tish sharti: 5/5 (100%)</li>
+                <li>Qulflanish: avtomatik</li>
+                <li>Sinxronizatsiya: real vaqtda</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Darslar ro'yxatining qisqacha ko'rinishi -->
+          <div class="card card-body">
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 14px;">📚 Darslar va Ularning Testlari Holati</h3>
+            <div class="tbl-wrap">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Tartib</th>
+                    <th>Dars Nomi</th>
+                    <th>Davomiyligi</th>
+                    <th>Test Savollari</th>
+                    <th>O'tish Talabi</th>
+                    <th>Amal</th>
+                  </tr>
+                </thead>
+                <tbody id="overviewLessonsBody">
+                  <tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">Yuklanmoqda...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. REYTING / LEADERBOARD BO'LIMI -->
+        <div id="secLeaderboard" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 900;">🏆 O'quvchilar Reytingi</div>
+              <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
+                Eng ko'p darsni 100% bilan yakunlagan va yuqori ball to'plagan o'quvchilar
+              </div>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()">🔄 Yangilash</button>
+          </div>
+          <div class="tbl-wrap">
+            <table class="data-table" id="leaderboardTable">
+              <thead>
+                <tr>
+                  <th>O'rin</th>
+                  <th>O'quvchi</th>
+                  <th>Login</th>
+                  <th>100% Yakunlangan</th>
+                  <th>O'zlashtirish</th>
+                  <th>Oxirgi Dars</th>
+                  <th>Faollik</th>
+                  <th>Batafsil</th>
+                </tr>
+              </thead>
+              <tbody id="lbBody">
+                <tr><td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- 3. DARSLAR BO'LIMI -->
+        <div id="secLessons" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 900;">📚 Darslar Boshqaruvi</div>
+              <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
+                Har bir darsda video, konspekt va 5 tadan test savollari
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddModal()">➕ Yangi Dars Qo'shish</button>
+          </div>
+          <div class="l-cards" id="lessonCards">
+            <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
+          </div>
+        </div>
+
+        <!-- 4. O'QUVCHILAR NAZORATI BO'LIMI -->
+        <div id="secStudents" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 900;">👥 O'quvchilar Nazorati</div>
+              <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
+                Har bir o'quvchining har bir darsdagi test ballari va faolligini nazorat qiling
+              </div>
+            </div>
+            <input type="text" class="form-input" id="stuSearch" style="max-width: 260px;" placeholder="🔍 Ism yoki login bo'yicha..." oninput="filterStudents()">
+          </div>
+          <div class="tbl-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>O'quvchi</th>
+                  <th>Login</th>
+                  <th>Joriy Darsi</th>
+                  <th>Progress</th>
+                  <th>O'rtacha Ball</th>
+                  <th>Oxirgi Faollik</th>
+                  <th>Amallar</th>
+                </tr>
+              </thead>
+              <tbody id="stuBody">
+                <tr><td colspan="7" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: YANGI DARS QO'SHISH ═══ -->
+  <div class="modal-backdrop" id="addLessonModal">
+    <div class="modal-box modal-box-lg" style="max-width: 720px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeModal('addLessonModal')">✕</button>
+      <h2 style="font-size: 1.35rem; margin-bottom: 6px;">➕ Yangi Dars Qo'shish</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 22px;">
+        Dars ma'lumotlarini va 5 ta test savolini kiriting (100% o'tish talabi avtomatik qo'yiladi)
+      </p>
+      <form id="addLessonForm" onsubmit="submitAddLesson(event)">
+        <div class="form-group">
+          <label class="form-label">Dars Sarlavhasi *</label>
+          <input id="al-title" type="text" class="form-input" placeholder="Masalan: TypeScript Asoslari" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Qisqacha Tavsif</label>
+          <input id="al-desc" type="text" class="form-input" placeholder="Ushbu darsda o'rganiladigan asosiy tushunchalar...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">YouTube Embed URL</label>
+          <input id="al-video" type="text" class="form-input" placeholder="https://www.youtube.com/embed/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Dars Matni / Konspekt</label>
+          <textarea id="al-content" class="form-input" rows="4" placeholder="Dars konspekti, asosiy formulalar, eslatmalar..."></textarea>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Hashteglar (vergul bilan ajrating)</label>
+          <input id="al-tags" type="text" class="form-input" placeholder="#typescript, #web, #dasturlash">
+        </div>
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div>
+            <label class="form-label">Davomiyligi (daqiqa)</label>
+            <input id="al-dur" type="number" class="form-input" value="30" min="1">
+          </div>
+          <div>
+            <label class="form-label">Talab etiladigan ball (5 dan)</label>
+            <input id="al-min" type="number" class="form-input" value="5" min="5" max="5" readonly style="background:#f1f5f9; cursor:not-allowed;" title="Talab: 100% (5/5)">
+          </div>
+        </div>
+
+        <!-- 5 ta Test Savoli Quruvchisi -->
+        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; margin-bottom: 22px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+            <div>
+              <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary);">✍️ 5 ta Test Savoli</div>
+              <div style="font-size: 0.76rem; color: var(--text-muted);">Har bir savol uchun 4 ta variant kiriting va to'g'risini belgilang</div>
+            </div>
+            <button type="button" class="btn btn-ghost btn-xs" onclick="addQuizRow()">+ Savol qo'shish</button>
+          </div>
+          <div id="quizRows"></div>
+        </div>
+
+        <div style="display: flex; gap: 12px; justify-content: flex-end;">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('addLessonModal')">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary btn-lg">💾 Darsni Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: TEST SAVOLLARINI KO'RISH ═══ -->
+  <div class="modal-backdrop" id="viewQuizModal">
+    <div class="modal-box" style="max-width: 620px; max-height: 88vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeModal('viewQuizModal')">✕</button>
+      <h2 style="font-size: 1.25rem; margin-bottom: 6px;" id="vqTitle">Test Savollari</h2>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;" id="vqSub">—</p>
+      <div id="vqBody"></div>
+    </div>
+  </div>
+
+  <!-- ═══ MODAL: O'QUVCHI BATAFSIL BALLARI (SCORECARD) ═══ -->
+  <div class="modal-backdrop" id="studentDetailModal">
+    <div class="modal-box" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeModal('studentDetailModal')">✕</button>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; font-weight: 800;" id="sdAvatar">?</div>
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; line-height: 1.2;" id="sdName">—</h2>
+          <div style="font-size: 0.8rem; color: var(--text-muted);" id="sdLogin">—</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
+        <div class="s-tile" style="padding: 12px 16px;">
+          <div style="font-size: 0.74rem; color: var(--text-muted);">100% Yakunlangan</div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--emerald);" id="sdCompleted">—</div>
+        </div>
+        <div class="s-tile" style="padding: 12px 16px;">
+          <div style="font-size: 0.74rem; color: var(--text-muted);">O'zlashtirish Foizi</div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary);" id="sdPercent">—</div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 10px;">📋 Har bir dars bo'yicha test natijalari:</h3>
+      <div class="tbl-wrap" style="margin-bottom: 20px;">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th>Dars</th>
+              <th>Dars Nomi</th>
+              <th>Ball</th>
+              <th>Foiz</th>
+              <th>Holati</th>
+            </tr>
+          </thead>
+          <tbody id="sdLessonsBody">
+            <tr><td colspan="5" style="text-align: center; color: var(--text-muted); padding: 20px;">Yuklanmoqda...</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end;">
+        <button class="btn btn-ghost" onclick="closeModal('studentDetailModal')">Yopish</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast-root"></div>
+  <script src="/js/utils.js"></script>
+  <script>
+    let ALL_STUDENTS = [], ALL_LESSONS = [], TEACHER_USER = null;
+    let quizRowCount = 0;
+
+    // ─── AUTH TEKSHIRUVI ─────────────────────────────────────────────────────
+    window.addEventListener('DOMContentLoaded', () => {
+      const tok = Auth.getToken(), usr = Auth.getUser();
+      if (tok && usr && usr.role === 'teacher') {
+        afterLogin(usr);
+        loadAll();
+      }
+    });
+
+    // ─── O'QITUVCHI KIRISHI ──────────────────────────────────────────────────
+    async function doTeacherLogin(e) {
+      e.preventDefault();
+      const btn = document.getElementById('btnTLogin');
+      btn.disabled = true;
+      btn.innerText = '⏳ Kirilmoqda...';
+
+      try {
+        const r = await fetch('/api/auth/login-teacher', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username: document.getElementById('tUsername').value.trim(),
+            password: document.getElementById('tPassword').value.trim()
+          })
+        });
+        const d = await r.json();
+        if (!r.ok) return showToast(d.error || "Parol yoki login noto'g'ri", 'error');
+
+        Auth.setSession(d.token, d.user);
+        afterLogin(d.user);
+        loadAll();
+        showToast("Xush kelibsiz, " + d.user.full_name + '!', "success");
+      } catch {
+        showToast("Server bilan ulanishda xatolik", 'error');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = 'Kirish 🚀';
+      }
+    }
+
+    function afterLogin(usr) {
+      TEACHER_USER = usr;
+      document.getElementById('sideLoginSection').style.display = 'none';
+      document.getElementById('sideNavSection').style.display   = 'flex';
+      document.getElementById('sideUserFooter').style.display   = 'block';
+      document.getElementById('statStrip').style.display        = 'grid';
+      document.getElementById('secWelcome').style.display       = 'none';
+      document.getElementById('sideUserName').innerText         = usr.full_name || 'O\'qituvchi';
+      switchSection('overview');
+    }
+
+    function doLogout() {
+      Auth.clearSession();
+      window.location.reload();
+    }
+
+    // ─── BO'LIMLARNI ALMASHTIRISH ────────────────────────────────────────────
+    function switchSection(sec) {
+      ['overview', 'leaderboard', 'lessons', 'students'].forEach(s => {
+        const el = document.getElementById('sec' + capitalize(s));
+        if (el) el.style.display = (s === sec) ? 'block' : 'none';
+        const navEl = document.getElementById('nav-' + s);
+        if (navEl) navEl.classList.toggle('active', s === sec);
+      });
+
+      const titles = {
+        overview:    ['📊 Platforma Tahlili va Boshqaruvi', 'Umumiy o\'quv jarayoni va darslar statistikasi'],
+        leaderboard: ['🏆 O\'quvchilar Reytingi', '100% bilan eng ko\'p dars yakunlagan peshqadamlar'],
+        lessons:     ['📚 Darslar va Testlar Boshqaruvi', 'Darslar qo\'shish, tahrirlash va 5 ta test savollari'],
+        students:    ['👥 O\'quvchilar Nazorati', 'Har bir o\'quvchining shaxsiy progressi va test ballari']
+      };
+
+      if (titles[sec]) {
+        document.getElementById('pageTitle').innerText = titles[sec][0];
+        document.getElementById('pageSub').innerText   = titles[sec][1];
+      }
+
+      const actions = document.getElementById('topBarActions');
+      actions.innerHTML = sec === 'lessons'
+        ? '<button class="btn btn-primary btn-sm" onclick="openAddModal()">➕ Yangi Dars Qo\'shish</button>'
+        : '<button class="btn btn-ghost btn-sm" onclick="loadAll()">🔄 Yangilash</button>';
+
+      if (sec === 'overview')    renderOverview();
+      if (sec === 'leaderboard') loadLeaderboard();
+      if (sec === 'lessons')     loadLessons();
+      if (sec === 'students')    loadStudents();
+    }
+
+    function capitalize(s) {
+      return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    // ─── BARCHA MA'LUMOTLARNI YUKLASH ────────────────────────────────────────
+    async function loadAll() {
+      try {
+        const [sr, lr] = await Promise.all([
+          fetch('/api/teacher/students', { headers: Auth.getHeaders() }),
+          fetch('/api/teacher/lessons',  { headers: Auth.getHeaders() })
+        ]);
+        const sd = await sr.json(), ld = await lr.json();
+        ALL_STUDENTS = sd.students || [];
+        ALL_LESSONS  = ld || [];
+
+        document.getElementById('stTotal').innerText   = ALL_STUDENTS.length;
+        document.getElementById('stActive').innerText  = sd.stats?.active_today ?? 0;
+        document.getElementById('stLessons').innerText = ALL_LESSONS.length;
+        document.getElementById('studentsBadge').innerText = ALL_STUDENTS.length;
+        document.getElementById('lessonsBadge').innerText  = ALL_LESSONS.length;
+
+        const avg = ALL_STUDENTS.length
+          ? Math.round(ALL_STUDENTS.reduce((a, s) => a + (s.progress_percent || 0), 0) / ALL_STUDENTS.length)
+          : 0;
+        document.getElementById('stAvg').innerText = avg + '%';
+
+        renderOverview();
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    function renderOverview() {
+      const tbody = document.getElementById('overviewLessonsBody');
+      if (!tbody) return;
+      if (!ALL_LESSONS.length) {
+        tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; color:var(--text-muted); padding:30px;">Darslar mavjud emas</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = ALL_LESSONS.map(l => {
+        const qCount = Array.isArray(l.quiz) ? l.quiz.length : 0;
+        return `
+          <tr>
+            <td><strong style="color:var(--primary);">${l.order_num}-dars</strong></td>
+            <td><strong style="font-size:0.92rem;">${l.title}</strong></td>
+            <td style="color:var(--text-muted);">⏱ ${l.duration_mins || 30} daq</td>
+            <td><span class="badge badge-primary">✍️ ${qCount} ta savol</span></td>
+            <td><span class="badge badge-emerald">100% (5/5)</span></td>
+            <td>
+              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})">👁️ Testlarni Ko'rish</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // ─── REYTING / LEADERBOARD ───────────────────────────────────────────────
+    async function loadLeaderboard() {
+      try {
+        const r = await fetch('/api/teacher/leaderboard', { headers: Auth.getHeaders() });
+        const d = await r.json();
+        const tbody = document.getElementById('lbBody');
+        if (!d.leaderboard?.length) {
+          tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:50px;">Hozircha o'quvchilar ro'yxatdan o'tmagan</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = d.leaderboard.map(s => {
+          const rowClass = s.rank <= 3 ? `rank-${s.rank}` : '';
+          const rbClass  = s.rank <= 3 ? `rb-${s.rank}` : 'rb-n';
+          const medal    = s.rank === 1 ? '🥇' : s.rank === 2 ? '🥈' : s.rank === 3 ? '🥉' : '';
+          const ini = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+          const date = s.last_active ? new Date(s.last_active).toLocaleDateString('uz-UZ') : '—';
+          const pct = s.progress_percent || 0;
+          const pColor = pct >= 70 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--rose)';
+
+          return `<tr class="${rowClass}">
+            <td><div style="display:flex; align-items:center; gap:8px;">
+              <span class="rank-badge ${rbClass}">${medal || s.rank}</span>
+            </div></td>
+            <td><div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--cyan)); display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:800; color:#fff; flex-shrink:0;">${ini}</div>
+              <div><strong style="font-size:0.92rem;">${s.full_name}</strong></div>
+            </div></td>
+            <td><code style="background:var(--primary-subtle); color:var(--primary); padding:3px 8px; border-radius:5px; font-size:0.82rem; font-weight:700;">${s.username}</code></td>
+            <td>
+              <span style="font-size:1.05rem; font-weight:900; color:${pColor};">${s.completed_count}</span>
+              <span style="color:var(--text-muted); font-size:0.8rem;">/${d.total_lessons} dars</span>
+            </td>
+            <td>
+              <div style="display:flex; align-items:center; gap:8px; min-width:110px;">
+                <div class="progress-wrap" style="flex:1; height:6px;"><div class="progress-fill" style="width:${pct}%;"></div></div>
+                <span style="font-size:0.82rem; font-weight:800; color:${pColor}; white-space:nowrap;">${pct}%</span>
+              </div>
+            </td>
+            <td style="font-size:0.84rem; color:var(--text-muted);">${s.last_lesson_title}</td>
+            <td style="font-size:0.8rem; color:var(--text-muted);">${date}</td>
+            <td>
+              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})">📊 Natijalar</button>
+            </td>
+          </tr>`;
+        }).join('');
+      } catch {
+        showToast("Reytingni yuklashda xatolik", 'error');
+      }
+    }
+
+    // ─── DARSLAR ─────────────────────────────────────────────────────────────
+    async function loadLessons() {
+      try {
+        const r = await fetch('/api/teacher/lessons', { headers: Auth.getHeaders() });
+        ALL_LESSONS = await r.json();
+        document.getElementById('lessonsBadge').innerText = ALL_LESSONS.length;
+        document.getElementById('stLessons').innerText    = ALL_LESSONS.length;
+        renderLessons(ALL_LESSONS);
+      } catch {}
+    }
+
+    function renderLessons(lessons) {
+      const wrap = document.getElementById('lessonCards');
+      if (!lessons.length) {
+        wrap.innerHTML = `<div style="color:var(--text-muted); padding:30px; grid-column:1/-1; text-align:center; font-size:1rem;">📖 Hozircha darslar mavjud emas</div>`;
+        return;
+      }
+
+      wrap.innerHTML = lessons.map(l => {
+        const tags = (Array.isArray(l.hashtags) ? l.hashtags : []).map(t => `<span class="l-card-tag">${t}</span>`).join('');
+        const qCount = Array.isArray(l.quiz) ? l.quiz.length : 0;
+
+        return `<div class="l-card">
+          <div class="l-card-order">${l.order_num}-Dars • ⏱ ${l.duration_mins || 30} daqiqa</div>
+          <div class="l-card-title">${l.title}</div>
+          <div class="l-card-desc">${l.description || 'Tavsif berilmagan'}</div>
+          ${tags ? `<div class="l-card-tags">${tags}</div>` : ''}
+          <div class="l-card-footer">
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              ${l.video_url ? '<span class="badge badge-cyan">🎬 Video</span>' : ''}
+              <span class="badge badge-primary">✍️ ${qCount} ta test (100%)</span>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})" title="Testlarni ko'rish">✍️ Test</button>
+              <button class="btn btn-danger btn-xs" onclick="delLesson(${l.id})" title="O'chirish">🗑️</button>
+            </div>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function viewQuiz(lessonId) {
+      const l = ALL_LESSONS.find(x => x.id === lessonId);
+      if (!l) return;
+      const quiz = Array.isArray(l.quiz) ? l.quiz : [];
+      document.getElementById('vqTitle').innerText = l.title + ' — Test Savollari';
+      document.getElementById('vqSub').innerText   = `${quiz.length} ta savol • O'tish talabi: 100% (barcha savollarga to'g'ri javob)`;
+      const letters = ['A', 'B', 'C', 'D'];
+
+      document.getElementById('vqBody').innerHTML = quiz.length
+        ? quiz.map((q, i) => `
+          <div class="q-row">
+            <div class="q-row-num">${i + 1}</div>
+            <div class="q-row-body">
+              <div class="q-row-q">${q.q}</div>
+              <div class="q-row-opts">
+                ${q.opts.map((o, oi) => `
+                  <div class="${oi === q.a ? 'correct-opt' : ''}">
+                    ${letters[oi]}) ${o} ${oi === q.a ? ' ✓ (To\'g\'ri javob)' : ''}
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          </div>`).join('')
+        : '<div style="color:var(--text-muted); padding:20px; text-align:center;">Test savollari mavjud emas</div>';
+
+      document.getElementById('viewQuizModal').classList.add('open');
+    }
+
+    async function delLesson(id) {
+      if (!confirm("Ushbu darsni o'chirishni tasdiqlaysizmi?")) return;
+      const r = await fetch(`/api/teacher/lessons/${id}`, { method: 'DELETE', headers: Auth.getHeaders() });
+      const d = await r.json();
+      if (d.success) {
+        showToast("Dars o'chirildi", 'success');
+        loadLessons();
+        loadAll();
+      } else {
+        showToast(d.error || 'Xatolik', 'error');
+      }
+    }
+
+    // ─── O'QUVCHILAR ─────────────────────────────────────────────────────────
+    async function loadStudents() {
+      try {
+        const r = await fetch('/api/teacher/students', { headers: Auth.getHeaders() });
+        const d = await r.json();
+        ALL_STUDENTS = d.students || [];
+        document.getElementById('studentsBadge').innerText = ALL_STUDENTS.length;
+        document.getElementById('stTotal').innerText       = ALL_STUDENTS.length;
+        document.getElementById('stActive').innerText      = d.stats?.active_today ?? 0;
+        renderStudents(ALL_STUDENTS);
+      } catch {}
+    }
+
+    function renderStudents(list) {
+      const tbody = document.getElementById('stuBody');
+      if (!list.length) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:50px;">O'quvchilar ro'yxati bo'sh</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(s => {
+        const ini  = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        const pct  = s.progress_percent || 0;
+        const pColor = pct >= 70 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--text-muted)';
+        const date = s.last_active ? new Date(s.last_active).toLocaleString('uz-UZ') : '—';
+        const avg  = s.avg_score ? s.avg_score + '%' : '—';
+
+        return `<tr>
+          <td><div style="display:flex; align-items:center; gap:10px;">
+            <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--cyan)); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; color:#fff; flex-shrink:0;">${ini}</div>
+            <div>
+              <div style="font-weight:800; font-size:0.92rem;">${s.full_name}</div>
+              <div style="font-size:0.72rem; color:var(--text-muted);">${new Date(s.registered_at).toLocaleDateString('uz-UZ')} da qo'shildi</div>
+            </div>
+          </div></td>
+          <td>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <code style="background:var(--primary-subtle); color:var(--primary); padding:3px 8px; border-radius:5px; font-size:0.84rem; font-weight:700;">${s.username}</code>
+              <button class="btn-copy-inline" onclick="copyToClipboard('${s.username}','Login nusxalandi!')">📋</button>
+            </div>
+          </td>
+          <td style="font-size:0.88rem; font-weight:700; color:var(--primary);">${s.last_lesson_title}</td>
+          <td>
+            <div style="min-width:130px;">
+              <div style="display:flex; justify-content:space-between; font-size:0.78rem; margin-bottom:4px; font-weight:600;">
+                <span>${s.completed_count}/${s.total_lessons} dars</span>
+                <span style="color:${pColor}; font-weight:800;">${pct}%</span>
+              </div>
+              <div class="progress-wrap" style="height:6px;">
+                <div class="progress-fill" style="width:${pct}%;"></div>
+              </div>
+            </div>
+          </td>
+          <td style="color:${pColor}; font-weight:800; font-size:0.9rem;">${avg}</td>
+          <td style="font-size:0.8rem; color:var(--text-muted);">${date}</td>
+          <td>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test ballari">📊 Natijalar</button>
+              <button class="btn btn-ghost btn-xs" onclick="resetProg(${s.id})" title="Progressni noldan boshlash">🔄</button>
+              <button class="btn btn-danger btn-xs" onclick="delStudent(${s.id})" title="O'chirish">🗑️</button>
+            </div>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    function filterStudents() {
+      const q = document.getElementById('stuSearch').value.toLowerCase().trim();
+      renderStudents(q ? ALL_STUDENTS.filter(s => s.full_name.toLowerCase().includes(q) || s.username.toLowerCase().includes(q)) : ALL_STUDENTS);
+    }
+
+    // ─── O'QUVCHI BATAFSIL SCORECARDINI KO'RISH ──────────────────────────────
+    async function viewStudentDetails(studentId) {
+      try {
+        const r = await fetch(`/api/teacher/students/${studentId}/details`, { headers: Auth.getHeaders() });
+        const d = await r.json();
+        if (!r.ok) return showToast(d.error || 'Yuklashda xatolik', 'error');
+
+        document.getElementById('sdAvatar').innerText = (d.student.full_name || 'O').slice(0, 2).toUpperCase();
+        document.getElementById('sdName').innerText   = d.student.full_name;
+        document.getElementById('sdLogin').innerText  = '@' + d.student.username + ` • Ro'yxatdan o'tgan: ${new Date(d.student.registered_at).toLocaleDateString('uz-UZ')}`;
+        document.getElementById('sdCompleted').innerText = `${d.progress.completed_count}/${d.progress.total_lessons} dars (100%)`;
+        document.getElementById('sdPercent').innerText   = `${d.progress.progress_percent}%`;
+
+        const tbody = document.getElementById('sdLessonsBody');
+        tbody.innerHTML = d.lessons.map(l => {
+          const scoreBadge = l.score !== null
+            ? `<span class="score-chip" style="${l.score === 5 ? 'background:#dcfce7; color:#15803d;' : 'background:#fee2e2; color:#b91c1c;'}">${l.score}/5</span>`
+            : '<span style="color:var(--text-muted); font-size:0.8rem;">Yechilmagan</span>';
+
+          const pctBadge = l.percent !== null ? `<strong>${l.percent}%</strong>` : '—';
+          const statusBadge = l.is_completed
+            ? '<span class="badge badge-emerald">✓ 100% Yakunlangan</span>'
+            : (l.score !== null ? '<span class="badge badge-rose">❌ O\'tmagan (&lt;100%)</span>' : '<span class="badge badge-amber">Kutilmoqda</span>');
+
+          return `
+            <tr>
+              <td><strong>${l.order_num}-dars</strong></td>
+              <td>${l.title}</td>
+              <td>${scoreBadge}</td>
+              <td>${pctBadge}</td>
+              <td>${statusBadge}</td>
+            </tr>
+          `;
+        }).join('');
+
+        openModal('studentDetailModal');
+      } catch {
+        showToast("Natijalarni yuklashda xatolik", 'error');
+      }
+    }
+
+    async function resetProg(id) {
+      if (!confirm("O'quvchining barcha progressini noldan boshlamoqchimisiz?")) return;
+      const r = await fetch(`/api/teacher/students/${id}/reset`, { method: 'POST', headers: Auth.getHeaders() });
+      const d = await r.json();
+      if (d.success) {
+        showToast("O'quvchi progressi tiklandi", 'success');
+        loadStudents();
+        loadAll();
+      }
+    }
+
+    async function delStudent(id) {
+      if (!confirm("Bu o'quvchini tizimdan o'chirishni tasdiqlaysizmi?")) return;
+      const r = await fetch(`/api/teacher/students/${id}`, { method: 'DELETE', headers: Auth.getHeaders() });
+      const d = await r.json();
+      if (d.success) {
+        showToast("O'quvchi o'chirildi", 'success');
+        loadStudents();
+        loadAll();
+      }
+    }
+
+    // ─── YANGI DARS VA 5 TA TEST QO'SHISH ────────────────────────────────────
+    function openAddModal() {
+      quizRowCount = 0;
+      document.getElementById('addLessonForm').reset();
+      document.getElementById('quizRows').innerHTML = '';
+      // Standart 5 ta savol qatorini avtomatik chiqarish
+      for (let i = 0; i < 5; i++) {
+        addQuizRow();
+      }
+      openModal('addLessonModal');
+    }
+
+    function addQuizRow() {
+      quizRowCount++;
+      const i = quizRowCount;
+      const letters = ['A', 'B', 'C', 'D'];
+      const row = document.createElement('div');
+      row.id = `qrow-${i}`;
+      row.style.cssText = 'background:#ffffff; border:1px solid var(--border); border-radius:var(--r-md); padding:16px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);';
+      row.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <span style="font-size:0.82rem; font-weight:800; color:var(--primary);">${i}-Savol</span>
+          <button type="button" class="btn btn-danger btn-xs" onclick="document.getElementById('qrow-${i}').remove()">✕ O'chirish</button>
+        </div>
+        <input type="text" class="form-input" id="qq-${i}" placeholder="Savol matnini kiriting..." style="margin-bottom:10px;" required>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
+          ${[0, 1, 2, 3].map(oi => `<input type="text" class="form-input mini-input" id="qo-${i}-${oi}" placeholder="${letters[oi]} varianti" required>`).join('')}
+        </div>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span style="font-size:0.8rem; font-weight:700; color:var(--text-secondary);">To'g'ri javob varianti:</span>
+          <select class="form-input mini-input" id="qa-${i}" style="width:auto; font-weight:700;">
+            ${['A', 'B', 'C', 'D'].map((l, j) => `<option value="${j}">${l} varianti</option>`).join('')}
+          </select>
+        </div>
+      `;
+      document.getElementById('quizRows').appendChild(row);
+    }
+
+    async function submitAddLesson(e) {
+      e.preventDefault();
+      const tagRaw = document.getElementById('al-tags').value.trim();
+      const hashtags = tagRaw ? tagRaw.split(',').map(t => '#' + t.trim().replace(/^#+/, '')).filter(Boolean) : [];
+
+      // Collect quiz rows
+      const quiz_json = [];
+      const rows = document.querySelectorAll('#quizRows > div');
+      rows.forEach(r => {
+        const id = r.id.replace('qrow-', '');
+        const qEl = document.getElementById(`qq-${id}`);
+        if (!qEl) return;
+        const q = qEl.value.trim();
+        if (!q) return;
+        const opts = [0, 1, 2, 3].map(oi => (document.getElementById(`qo-${id}-${oi}`)?.value || '').trim()).filter(Boolean);
+        const answer = parseInt(document.getElementById(`qa-${id}`)?.value || '0');
+        if (opts.length >= 2) quiz_json.push({ q, opts, a: answer });
+      });
+
+      if (quiz_json.length === 0) {
+        showToast("Kamida 1 ta (tavsiya: 5 ta) test savolini kiriting!", 'error');
+        return;
+      }
+
+      try {
+        const r = await fetch('/api/teacher/lessons', {
+          method: 'POST',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({
+            title: document.getElementById('al-title').value.trim(),
+            description: document.getElementById('al-desc').value.trim(),
+            video_url: document.getElementById('al-video').value.trim(),
+            content_text: document.getElementById('al-content').value.trim(),
+            hashtags,
+            quiz_json,
+            min_score: quiz_json.length, // 100% required
+            duration_mins: parseInt(document.getElementById('al-dur').value) || 30
+          })
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("Dars muvaffaqiyatli qo'shildi!", 'success');
+          closeModal('addLessonModal');
+          loadLessons();
+          loadAll();
+        } else {
+          showToast(d.error || 'Xatolik', 'error');
+        }
+      } catch {
+        showToast("Server bilan ulanishda xatolik", 'error');
+      }
+    }
+
+    function openModal(id)  { document.getElementById(id).classList.add('open'); }
+    function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+  </script>
+</body>
+</html>
