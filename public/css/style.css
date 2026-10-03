@@ -175,7 +175,7 @@ h1, h2, h3, h4, h5, h6 {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 68px;
+  height: 110px;
   gap: 16px;
 }
 
@@ -906,7 +906,7 @@ textarea.form-input { resize: vertical; min-height: 90px; }
 @media (max-width: 900px) {
   .hide-mobile { display: none !important; }
   .container { padding: 0 16px; }
-  .navbar-inner { height: 58px; }
+  .navbar-inner { height: 100px; }
   .card-body { padding: 20px; }
   .modal-box { padding: 24px; }
 }
