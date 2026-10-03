@@ -348,15 +348,11 @@
       <div class='container'>
         <div class='navbar-inner'
           style='justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;'>
-          <a href='/' class='brand' style='margin-right: auto;'>
-            <div class='brand-logo'>🎓</div>
-            <div>
-              <div class='brand-name'>innocode.uz</div>
-              <div class='brand-subtitle'>Zamonaviy Ta'lim Platformasi</div>
-            </div>
+          <a href='/' class='brand' style='display: flex; align-items: center; text-decoration: none;'>
+            <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 50px; object-fit: contain; mix-blend-mode: multiply;">
           </a>
           <ul class='nav-links'
-            style='display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap;'>
+            style='display: flex; gap: 18px; list-style: none; margin: 0 auto; padding: 0; align-items: center; flex-wrap: wrap;'>
             <li><a href='/' class="nav-link-anim">Bosh sahifa</a></li>
             <li><a href='/yangiliklar.html' class="nav-link-anim">Yangiliklar</a></li>
             <li><a href='/yunalishlar.html' class="nav-link-anim">Yo'nalishlar</a></li>
@@ -416,6 +412,69 @@
           updateTicker();
           setInterval(updateTicker, 3000);
         </script>
+      </div>
+    </section>
+
+    <!-- BIZ HAQIMIZDA -->
+    <section id="about-section" style="padding: 60px 0; background: #f8fafc;">
+      <style>
+        .about-card { background: white; border-radius: 24px; padding: 50px; box-shadow: 0 15px 50px rgba(0,0,0,0.08); position: relative; z-index: 10; border: 1px solid var(--border); }
+        .about-stats { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px; margin-top: 50px; margin-bottom: 50px; text-align: center; }
+        .stat-box { flex: 1; min-width: 150px; padding: 20px; background: #f1f5f9; border-radius: 16px; }
+        .stat-num { font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 10px; }
+        .stat-text { color: var(--text-secondary); font-weight: 600; font-size: 1rem; }
+        .about-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+        .feat-item { padding: 30px; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s; }
+        .feat-item:hover { border-color: var(--primary); box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); transform: translateY(-5px); }
+        .feat-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; }
+        .feat-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; color: var(--text-primary); }
+        .feat-desc { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
+      </style>
+      <div class="container">
+        <div class="about-card">
+          <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 20px; text-align: center;">Maqsadimiz va Vazifalarimiz</h2>
+          <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); text-align: center; max-width: 800px; margin: 0 auto;">
+            Bizning maqsadimiz — yoshlarni zamonaviy IT kasblarga o'rgatish orqali mamlakatimiz raqamli iqtisodiyotiga hissa qo'shish. Platformamiz har bir talabaning individual o'zlashtirish qobiliyatiga qarab moslashuvchi AI texnologiyalari bilan jihozlangan.
+          </p>
+
+          <div class="about-stats">
+            <div class="stat-box">
+              <div class="stat-num">10K+</div>
+              <div class="stat-text">Faol O'quvchilar</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">50+</div>
+              <div class="stat-text">Tajribali Mentorlar</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">100%</div>
+              <div class="stat-text">O'zlashtirish Kafolati</div>
+            </div>
+            <div class="stat-box">
+              <div class="stat-num">24/7</div>
+              <div class="stat-text">AI Yordamchisi</div>
+            </div>
+          </div>
+
+          <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 30px; text-align: center;">Nima uchun aynan innocode.uz?</h3>
+          <div class="about-features">
+            <div class="feat-item">
+              <div class="feat-icon">🎯</div>
+              <h4 class="feat-title">Majburiy 100% Test</h4>
+              <p class="feat-desc">Bizda darsni shunchaki ko'rib o'tib ketish mumkin emas. Har bir dars oxirida 5 ta testni to'liq to'g'ri yechsanggina keyingi dars ochiladi.</p>
+            </div>
+            <div class="feat-item">
+              <div class="feat-icon">🤖</div>
+              <h4 class="feat-title">Sun'iy Intellekt</h4>
+              <p class="feat-desc">Tushunmagan joylaringizni to'g'ridan-to'g'ri AI yordamchisidan so'rashingiz va shu zahoti aniq javob olishingiz mumkin.</p>
+            </div>
+            <div class="feat-item">
+              <div class="feat-icon">📱</div>
+              <h4 class="feat-title">Qurilmalararo Sinxron</h4>
+              <p class="feat-desc">Darsni kompyuterda boshlab, telefonda davom ettiring. Barcha jarayon, reyting va natijalar xavfsiz tarzda sinxronlanadi.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
