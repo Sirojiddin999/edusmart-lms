@@ -6,26 +6,108 @@
   <title>Sayt haqida | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .page-header { background: #eef2ff; padding: 40px 0; text-align: center; }
-    .page-title { color: #4f46e5; font-size: 2.5rem; font-weight: 800; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
+    .page-header { background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%); padding: 80px 0 100px; text-align: center; color: white; }
+    .page-title { font-size: 3rem; font-weight: 900; margin-bottom: 20px; letter-spacing: -1px; }
+    .page-subtitle { font-size: 1.2rem; opacity: 0.9; max-width: 700px; margin: 0 auto; line-height: 1.7; }
+    
+    .about-card { background: white; border-radius: 24px; padding: 50px; box-shadow: 0 15px 50px rgba(0,0,0,0.08); margin-top: -60px; position: relative; z-index: 10; margin-bottom: 60px; border: 1px solid var(--border); }
+    .about-stats { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 30px; margin-top: 50px; margin-bottom: 50px; text-align: center; }
+    .stat-box { flex: 1; min-width: 150px; padding: 20px; background: #f1f5f9; border-radius: 16px; }
+    .stat-num { font-size: 2.5rem; font-weight: 900; color: var(--primary); margin-bottom: 10px; }
+    .stat-text { color: var(--text-secondary); font-weight: 600; font-size: 1rem; }
+    
+    .about-features { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
+    .feat-item { padding: 30px; border-radius: 16px; border: 1px solid var(--border); transition: all 0.3s; }
+    .feat-item:hover { border-color: var(--primary); box-shadow: 0 10px 25px rgba(79, 70, 229, 0.1); transform: translateY(-5px); }
+    .feat-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; }
+    .feat-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; color: var(--text-primary); }
+    .feat-desc { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
   </style>
 </head>
 <body>
-  <nav class='navbar' style='padding:15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); background: white;'>
-    <div class='container' style='display:flex; justify-content:space-between; align-items:center;'>
-      <a href='/' style='text-decoration:none; font-weight:bold; font-size:1.5rem; color:#4f46e5;'>🎓 innocode.uz</a>
-      <div><a href='/' style='margin-left:15px; text-decoration:none; color:#333;'>Bosh sahifa</a></div>
+  <!-- Navbar -->
+  <nav class='navbar' style='padding:15px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;'>
+    <div class='container' style='display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 15px;'>
+      <a href='/' class='brand' style='text-decoration:none; display:flex; align-items:center; gap: 12px;'>
+        <div style='font-size: 2.2rem; background: var(--primary-subtle); border-radius: 12px; padding: 5px 10px;'>🎓</div>
+        <div>
+          <div style='font-weight: 900; font-size: 1.3rem; color: var(--text-primary); letter-spacing: -0.5px;'>innocode.uz</div>
+          <div style='font-size: 0.8rem; color: var(--text-muted); font-weight: 600;'>Ta'lim Platformasi</div>
+        </div>
+      </a>
+      <ul style='display: flex; gap: 25px; list-style: none; margin: 0; padding: 0;'>
+        <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
+        <li><a href='/yangiliklar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yangiliklar</a></li>
+        <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yo'nalishlar</a></li>
+        <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
+      </ul>
     </div>
   </nav>
+
   <div class="page-header">
-    <h1 class="page-title">Sayt haqida</h1>
+    <div class="container">
+      <h1 class="page-title">Biz haqimizda</h1>
+      <p class="page-subtitle">innocode.uz — O'zbekistondagi eng ilg'or, sun'iy intellektga asoslangan, interaktiv IT ta'lim platformasi.</p>
+    </div>
   </div>
-  <div class="container" style="padding: 40px 0; text-align: center;">
-    <h2>Zamonaviy ta'lim platformasi</h2>
-    <p style="color: #666; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto;">
-      innocode.uz — talabalar va o'qituvchilar uchun mo'ljallangan zamonaviy o'quv platformasi.
-    </p>
+
+  <div class="container">
+    <div class="about-card">
+      <h2 style="font-size: 2rem; font-weight: 900; margin-bottom: 20px; text-align: center;">Maqsadimiz va Vazifalarimiz</h2>
+      <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-secondary); text-align: center; max-width: 800px; margin: 0 auto;">
+        Bizning maqsadimiz — yoshlarni zamonaviy IT kasblarga o'rgatish orqali mamlakatimiz raqamli iqtisodiyotiga hissa qo'shish. Platformamiz har bir talabaning individual o'zlashtirish qobiliyatiga qarab moslashuvchi AI texnologiyalari bilan jihozlangan.
+      </p>
+
+      <div class="about-stats">
+        <div class="stat-box">
+          <div class="stat-num">10K+</div>
+          <div class="stat-text">Faol O'quvchilar</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">50+</div>
+          <div class="stat-text">Tajribali Mentorlar</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">100%</div>
+          <div class="stat-text">O'zlashtirish Kafolati</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num">24/7</div>
+          <div class="stat-text">AI Yordamchisi</div>
+        </div>
+      </div>
+
+      <h3 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 30px; text-align: center;">Nima uchun aynan innocode.uz?</h3>
+      <div class="about-features">
+        <div class="feat-item">
+          <div class="feat-icon">🎯</div>
+          <h4 class="feat-title">Majburiy 100% Test</h4>
+          <p class="feat-desc">Bizda darsni shunchaki ko'rib o'tib ketish mumkin emas. Har bir dars oxirida 5 ta testni to'liq to'g'ri yechsanggina keyingi dars ochiladi.</p>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">🤖</div>
+          <h4 class="feat-title">Sun'iy Intellekt</h4>
+          <p class="feat-desc">Tushunmagan joylaringizni to'g'ridan-to'g'ri AI yordamchisidan so'rashingiz va shu zahoti aniq javob olishingiz mumkin.</p>
+        </div>
+        <div class="feat-item">
+          <div class="feat-icon">📱</div>
+          <h4 class="feat-title">Qurilmalararo Sinxron</h4>
+          <p class="feat-desc">Darsni kompyuterda boshlab, telefonda davom ettiring. Barcha jarayon, reyting va natijalar xavfsiz tarzda sinxronlanadi.</p>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Footer -->
+  <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
+    <div class="container" style="text-align: center;">
+      <h2 style="margin-bottom: 15px; font-size: 1.8rem; font-weight: 900;">innocode.uz</h2>
+      <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 40px; line-height: 1.6;">Zamonaviy o'quv platformasi orqali bilim olishni va kasb o'rganishni yangi bosqichga olib chiqing.</p>
+      <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px;">
+        © 2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

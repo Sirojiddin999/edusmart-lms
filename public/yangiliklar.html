@@ -6,24 +6,103 @@
   <title>Yangiliklar | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .page-header { background: #eef2ff; padding: 40px 0; text-align: center; }
-    .page-title { color: #4f46e5; font-size: 2.5rem; font-weight: 800; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
+    .page-header { background: linear-gradient(135deg, var(--primary) 0%, var(--cyan) 100%); padding: 60px 0 90px; text-align: center; color: white; }
+    .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; }
+    .page-subtitle { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; margin-top: -50px; margin-bottom: 80px; position: relative; z-index: 10; }
+    .news-card { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s; }
+    .news-card:hover { transform: translateY(-5px); box-shadow: 0 15px 50px rgba(0,0,0,0.12); }
+    .news-image { height: 200px; background: #e2e8f0; position: relative; display:flex; align-items:center; justify-content:center; font-size:4rem; color: white;}
+    .news-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); }
+    .news-date { position: absolute; bottom: 15px; left: 20px; color: white; font-weight: 700; z-index: 2; font-size: 0.9rem; background: rgba(0,0,0,0.4); padding: 4px 10px; border-radius: 8px; backdrop-filter: blur(4px); }
+    .news-content { padding: 25px; }
+    .news-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 12px 0; color: var(--text-primary); line-height: 1.4; }
+    .news-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+    .news-link { color: var(--primary); font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 5px; }
+    .news-link:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
-  <nav class='navbar' style='padding:15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); background: white;'>
-    <div class='container' style='display:flex; justify-content:space-between; align-items:center;'>
-      <a href='/' style='text-decoration:none; font-weight:bold; font-size:1.5rem; color:#4f46e5;'>🎓 innocode.uz</a>
-      <div><a href='/' style='margin-left:15px; text-decoration:none; color:#333;'>Bosh sahifa</a></div>
+  <!-- Navbar -->
+  <nav class='navbar' style='padding:15px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;'>
+    <div class='container' style='display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 15px;'>
+      <a href='/' class='brand' style='text-decoration:none; display:flex; align-items:center; gap: 12px;'>
+        <div style='font-size: 2.2rem; background: var(--primary-subtle); border-radius: 12px; padding: 5px 10px;'>🎓</div>
+        <div>
+          <div style='font-weight: 900; font-size: 1.3rem; color: var(--text-primary); letter-spacing: -0.5px;'>innocode.uz</div>
+          <div style='font-size: 0.8rem; color: var(--text-muted); font-weight: 600;'>Ta'lim Platformasi</div>
+        </div>
+      </a>
+      <ul style='display: flex; gap: 25px; list-style: none; margin: 0; padding: 0;'>
+        <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
+        <li><a href='/yangiliklar.html' style='text-decoration:none; color:var(--primary); font-weight:700;'>Yangiliklar</a></li>
+        <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yo'nalishlar</a></li>
+        <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
+      </ul>
     </div>
   </nav>
+
   <div class="page-header">
-    <h1 class="page-title">Yangiliklar</h1>
+    <div class="container">
+      <h1 class="page-title">Yangiliklar va E'lonlar</h1>
+      <p class="page-subtitle">Platformamizdagi so'nggi yangiliklar, bo'sh ish o'rinlari va IT olamidagi qiziqarli maqolalar bilan tanishing.</p>
+    </div>
   </div>
-  <div class="container" style="padding: 40px 0; text-align: center;">
-    <h2>Tez kunda yangi xabarlar qo'shiladi...</h2>
-    <p style="color: #666; margin-top: 15px;">Bizni kuzatib boring!</p>
+
+  <div class="container">
+    <div class="news-grid">
+      <!-- News 1 -->
+      <div class="news-card">
+        <div class="news-image" style="background: #3b82f6;">📢<span class="news-date">24-Sentabr, 2024</span></div>
+        <div class="news-content">
+          <h3 class="news-title">2024-2025 o'quv yili uchun onlayn qabul boshlandi!</h3>
+          <p class="news-desc">Yangi mavsumda darslar yanada sifatli va interaktiv ko'rinishda o'tkaziladi. O'z o'rningizni hozirdan band qiling.</p>
+          <a href="#" class="news-link">Batafsil o'qish ➔</a>
+        </div>
+      </div>
+
+      <!-- News 2 -->
+      <div class="news-card">
+        <div class="news-image" style="background: #10b981;">💼<span class="news-date">20-Sentabr, 2024</span></div>
+        <div class="news-content">
+          <h3 class="news-title">Bo'sh ish o'rni: Jamoamizga Frontend dasturchi kerak</h3>
+          <p class="news-desc">innocode.uz jamoasiga React.js ni yaxshi biladigan, tajribali frontend dasturchilarni ishga taklif etamiz.</p>
+          <a href="#" class="news-link">Batafsil o'qish ➔</a>
+        </div>
+      </div>
+
+      <!-- News 3 -->
+      <div class="news-card">
+        <div class="news-image" style="background: #8b5cf6;">🤖<span class="news-date">15-Sentabr, 2024</span></div>
+        <div class="news-content">
+          <h3 class="news-title">Sun'iy Intellekt yordamchisi ishga tushirildi</h3>
+          <p class="news-desc">Platformamizda endi sizga AI yordamchi doimiy ravishda savollaringizga javob beradi va darslarni tushunishga yordam beradi.</p>
+          <a href="#" class="news-link">Batafsil o'qish ➔</a>
+        </div>
+      </div>
+      
+      <!-- News 4 -->
+      <div class="news-card">
+        <div class="news-image" style="background: #f59e0b;">📚<span class="news-date">10-Sentabr, 2024</span></div>
+        <div class="news-content">
+          <h3 class="news-title">Kutubxonaga yangi PDF darsliklar qo'shildi</h3>
+          <p class="news-desc">Kompyuter tarmoqlari va Sun'iy intellekt bo'yicha 5 ta yangi o'quv qo'llanma bepul yuklab olish uchun ochiq.</p>
+          <a href="#" class="news-link">Batafsil o'qish ➔</a>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Footer -->
+  <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
+    <div class="container" style="text-align: center;">
+      <h2 style="margin-bottom: 15px; font-size: 1.8rem; font-weight: 900;">innocode.uz</h2>
+      <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 40px; line-height: 1.6;">Zamonaviy o'quv platformasi orqali bilim olishni va kasb o'rganishni yangi bosqichga olib chiqing.</p>
+      <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px;">
+        © 2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

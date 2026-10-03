@@ -6,24 +6,118 @@
   <title>Yo'nalishlar | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .page-header { background: #eef2ff; padding: 40px 0; text-align: center; }
-    .page-title { color: #4f46e5; font-size: 2.5rem; font-weight: 800; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
+    .page-header { background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%); padding: 60px 0 90px; text-align: center; color: white; }
+    .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; }
+    .page-subtitle { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: -50px; margin-bottom: 80px; position: relative; z-index: 10; }
+    .course-card { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
+    .course-card:hover { transform: translateY(-8px); box-shadow: 0 15px 50px rgba(0,0,0,0.12); border-color: var(--primary-subtle); }
+    .course-icon-wrap { height: 160px; background: var(--primary-subtle); display: flex; align-items: center; justify-content: center; font-size: 5rem; }
+    .course-content { padding: 30px; }
+    .course-tag { display: inline-block; padding: 6px 12px; background: #e0e7ff; color: #4338ca; border-radius: 20px; font-size: 0.8rem; font-weight: 700; margin-bottom: 15px; }
+    .course-title { font-size: 1.4rem; font-weight: 800; margin: 0 0 12px 0; color: var(--text-primary); }
+    .course-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
+    .course-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; }
+    .course-modules { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
   </style>
 </head>
 <body>
-  <nav class='navbar' style='padding:15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); background: white;'>
-    <div class='container' style='display:flex; justify-content:space-between; align-items:center;'>
-      <a href='/' style='text-decoration:none; font-weight:bold; font-size:1.5rem; color:#4f46e5;'>🎓 innocode.uz</a>
-      <div><a href='/' style='margin-left:15px; text-decoration:none; color:#333;'>Bosh sahifa</a></div>
+  <!-- Navbar -->
+  <nav class='navbar' style='padding:15px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;'>
+    <div class='container' style='display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 15px;'>
+      <a href='/' class='brand' style='text-decoration:none; display:flex; align-items:center; gap: 12px;'>
+        <div style='font-size: 2.2rem; background: var(--primary-subtle); border-radius: 12px; padding: 5px 10px;'>🎓</div>
+        <div>
+          <div style='font-weight: 900; font-size: 1.3rem; color: var(--text-primary); letter-spacing: -0.5px;'>innocode.uz</div>
+          <div style='font-size: 0.8rem; color: var(--text-muted); font-weight: 600;'>Ta'lim Platformasi</div>
+        </div>
+      </a>
+      <ul style='display: flex; gap: 25px; list-style: none; margin: 0; padding: 0;'>
+        <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
+        <li><a href='/yangiliklar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yangiliklar</a></li>
+        <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--primary); font-weight:700;'>Yo'nalishlar</a></li>
+        <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
+      </ul>
     </div>
   </nav>
+
   <div class="page-header">
-    <h1 class="page-title">Yo'nalishlar</h1>
+    <div class="container">
+      <h1 class="page-title">Yo'nalishlar va Kurslar</h1>
+      <p class="page-subtitle">Zamonaviy dasturlash kasblarini eng nufuzli platformada, interaktiv testlar va sifatli darslar bilan o'rganing.</p>
+    </div>
   </div>
-  <div class="container" style="padding: 40px 0; text-align: center;">
-    <h2>Keng qamrovli dasturlash yo'nalishlari</h2>
-    <p style="color: #666; margin-top: 15px;">Frontend, Backend va Mobile dasturlash kurslarimiz bilan tanishing.</p>
+
+  <div class="container">
+    <div class="course-grid">
+      <!-- Course 1 -->
+      <div class="course-card">
+        <div class="course-icon-wrap" style="background: #fdf4ff;">🐍</div>
+        <div class="course-content">
+          <span class="course-tag" style="background:#fce7f3; color:#be185d;">Backend Dasturlash</span>
+          <h3 class="course-title">Python Asoslari va Sun'iy Intellekt</h3>
+          <p class="course-desc">Dunyodagi eng mashhur dasturlash tili yordamida backend mantiqi, ma'lumotlar bazasi va sun'iy intellekt asoslarini o'rganing.</p>
+          <div class="course-footer">
+            <div class="course-modules"><span>📚</span> 24 Ta Modul</div>
+            <button class="btn btn-ghost" style="padding: 8px 16px;">Ko'rish ➔</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 2 -->
+      <div class="course-card">
+        <div class="course-icon-wrap" style="background: #fffbeb;">💛</div>
+        <div class="course-content">
+          <span class="course-tag" style="background:#fef3c7; color:#b45309;">Frontend Dasturlash</span>
+          <h3 class="course-title">JavaScript & React.js</h3>
+          <p class="course-desc">Zamonaviy veb-saytlar va interfeyslar yaratish uchun eng kerakli bo'lgan texnologiyalar. Noldan to mukammallikkacha.</p>
+          <div class="course-footer">
+            <div class="course-modules"><span>📚</span> 32 Ta Modul</div>
+            <button class="btn btn-ghost" style="padding: 8px 16px;">Ko'rish ➔</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 3 -->
+      <div class="course-card">
+        <div class="course-icon-wrap" style="background: #ecfeff;">☕</div>
+        <div class="course-content">
+          <span class="course-tag" style="background:#e0f2fe; color:#0369a1;">Mobile va Enterprise</span>
+          <h3 class="course-title">Java va Android Dasturlash</h3>
+          <p class="course-desc">Katta va xavfsiz tizimlar hamda Android operatsion tizimi uchun mobil ilovalar yaratishni o'rganasiz.</p>
+          <div class="course-footer">
+            <div class="course-modules"><span>📚</span> 28 Ta Modul</div>
+            <button class="btn btn-ghost" style="padding: 8px 16px;">Ko'rish ➔</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Course 4 -->
+      <div class="course-card">
+        <div class="course-icon-wrap" style="background: #f0fdf4;">📊</div>
+        <div class="course-content">
+          <span class="course-tag" style="background:#dcfce7; color:#15803d;">Ma'lumotlar Boshqaruvi</span>
+          <h3 class="course-title">PostgreSQL & Ma'lumotlar Bazasi</h3>
+          <p class="course-desc">Har qanday dasturning yuragi bo'lmish ma'lumotlar bazalarini loyihalash, SQL so'rovlar yozish va optimallashtirish.</p>
+          <div class="course-footer">
+            <div class="course-modules"><span>📚</span> 16 Ta Modul</div>
+            <button class="btn btn-ghost" style="padding: 8px 16px;">Ko'rish ➔</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Footer -->
+  <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
+    <div class="container" style="text-align: center;">
+      <h2 style="margin-bottom: 15px; font-size: 1.8rem; font-weight: 900;">innocode.uz</h2>
+      <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 40px; line-height: 1.6;">Zamonaviy o'quv platformasi orqali bilim olishni va kasb o'rganishni yangi bosqichga olib chiqing.</p>
+      <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px;">
+        © 2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
+      </div>
+    </div>
+  </footer>
 </body>
 </html>

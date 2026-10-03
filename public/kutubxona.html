@@ -6,24 +6,101 @@
   <title>Kutubxona | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    body { font-family: 'Inter', sans-serif; }
-    .page-header { background: #eef2ff; padding: 40px 0; text-align: center; }
-    .page-title { color: #4f46e5; font-size: 2.5rem; font-weight: 800; }
+    body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
+    .page-header { background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%); padding: 60px 0 90px; text-align: center; color: white; }
+    .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; }
+    .page-subtitle { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.6; }
+    
+    .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; margin-top: -50px; margin-bottom: 80px; position: relative; z-index: 10; }
+    .book-card { background: white; border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.06); border: 1px solid var(--border); transition: transform 0.3s; }
+    .book-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); border-color: var(--primary-subtle); }
+    .book-icon { font-size: 4rem; margin-bottom: 20px; }
+    .book-title { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; line-height: 1.4; }
+    .book-category { font-size: 0.85rem; color: var(--primary); font-weight: 700; background: var(--primary-subtle); padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
+    .btn-download { display: inline-block; width: 100%; padding: 10px; background: #f1f5f9; color: var(--text-secondary); text-decoration: none; font-weight: 700; border-radius: 8px; transition: all 0.2s; }
+    .btn-download:hover { background: var(--primary); color: white; }
   </style>
 </head>
 <body>
-  <nav class='navbar' style='padding:15px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); background: white;'>
-    <div class='container' style='display:flex; justify-content:space-between; align-items:center;'>
-      <a href='/' style='text-decoration:none; font-weight:bold; font-size:1.5rem; color:#4f46e5;'>🎓 innocode.uz</a>
-      <div><a href='/' style='margin-left:15px; text-decoration:none; color:#333;'>Bosh sahifa</a></div>
+  <!-- Navbar -->
+  <nav class='navbar' style='padding:15px 0; box-shadow: 0 4px 20px rgba(0,0,0,0.05); background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;'>
+    <div class='container' style='display:flex; justify-content:space-between; align-items:center; flex-wrap: wrap; gap: 15px;'>
+      <a href='/' class='brand' style='text-decoration:none; display:flex; align-items:center; gap: 12px;'>
+        <div style='font-size: 2.2rem; background: var(--primary-subtle); border-radius: 12px; padding: 5px 10px;'>🎓</div>
+        <div>
+          <div style='font-weight: 900; font-size: 1.3rem; color: var(--text-primary); letter-spacing: -0.5px;'>innocode.uz</div>
+          <div style='font-size: 0.8rem; color: var(--text-muted); font-weight: 600;'>Ta'lim Platformasi</div>
+        </div>
+      </a>
+      <ul style='display: flex; gap: 25px; list-style: none; margin: 0; padding: 0;'>
+        <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
+        <li><a href='/yangiliklar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yangiliklar</a></li>
+        <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yo'nalishlar</a></li>
+        <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
+      </ul>
     </div>
   </nav>
+
   <div class="page-header">
-    <h1 class="page-title">Kutubxona</h1>
+    <div class="container">
+      <h1 class="page-title">Elektron Kutubxona</h1>
+      <p class="page-subtitle">Dasturlash, kiberxavfsizlik va axborot texnologiyalariga oid bepul o'quv qo'llanmalar va kitoblar bazasi.</p>
+    </div>
   </div>
-  <div class="container" style="padding: 40px 0; text-align: center;">
-    <h2>O'quv qo'llanmalar va darsliklar</h2>
-    <p style="color: #666; margin-top: 15px;">PDF formatidagi adabiyotlarni yuklab oling.</p>
+
+  <div class="container">
+    <div class="library-grid">
+      <!-- Book 1 -->
+      <div class="book-card">
+        <div class="book-icon">📘</div>
+        <div class="book-category">Dasturlash asoslari</div>
+        <h3 class="book-title">C++ va Obyektga Yo'naltirilgan Dasturlash</h3>
+        <a href="#" class="btn-download">Yuklab olish 📥</a>
+      </div>
+
+      <!-- Book 2 -->
+      <div class="book-card">
+        <div class="book-icon">📙</div>
+        <div class="book-category">Kiberxavfsizlik</div>
+        <h3 class="book-title">Axborot Xavfsizligi Asoslari</h3>
+        <a href="#" class="btn-download">Yuklab olish 📥</a>
+      </div>
+
+      <!-- Book 3 -->
+      <div class="book-card">
+        <div class="book-icon">📗</div>
+        <div class="book-category">Ma'lumotlar Bazasi</div>
+        <h3 class="book-title">SQL va MySQL Boshqaruvi</h3>
+        <a href="#" class="btn-download">Yuklab olish 📥</a>
+      </div>
+
+      <!-- Book 4 -->
+      <div class="book-card">
+        <div class="book-icon">📕</div>
+        <div class="book-category">Web Dasturlash</div>
+        <h3 class="book-title">HTML, CSS va JavaScript bo'yicha qo'llanma</h3>
+        <a href="#" class="btn-download">Yuklab olish 📥</a>
+      </div>
+      
+      <!-- Book 5 -->
+      <div class="book-card">
+        <div class="book-icon">📔</div>
+        <div class="book-category">Algoritmlar</div>
+        <h3 class="book-title">Ma'lumotlar Tuzilmasi va Algoritmlar</h3>
+        <a href="#" class="btn-download">Yuklab olish 📥</a>
+      </div>
+    </div>
   </div>
+
+  <!-- Footer -->
+  <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
+    <div class="container" style="text-align: center;">
+      <h2 style="margin-bottom: 15px; font-size: 1.8rem; font-weight: 900;">innocode.uz</h2>
+      <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 40px; line-height: 1.6;">Zamonaviy o'quv platformasi orqali bilim olishni va kasb o'rganishni yangi bosqichga olib chiqing.</p>
+      <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px;">
+        © 2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
+      </div>
+    </div>
+  </footer>
 </body>
 </html>
