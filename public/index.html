@@ -57,6 +57,32 @@
       flex-wrap: wrap;
     }
 
+    .nav-link-anim {
+      color: var(--text-primary);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 0.95rem;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .nav-link-anim::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -4px;
+      left: 0;
+      background: linear-gradient(90deg, #4f46e5, #9333ea);
+      transition: width 0.3s ease-in-out;
+      border-radius: 2px;
+    }
+    .nav-link-anim:hover {
+      color: #4f46e5 !important;
+    }
+    .nav-link-anim:hover::after {
+      width: 100%;
+    }
+
     .hero {
       padding: 80px 0 60px;
       text-align: center;
@@ -328,24 +354,12 @@
           </a>
           <ul class='nav-links'
             style='display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; align-items: center; flex-wrap: wrap;'>
-            <li><a href='#home'
-                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Bosh
-                sahifa</a></li>
-            <li><a href='#news'
-                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Yangiliklar</a>
-            </li>
-            <li><a href='#courses'
-                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Kurslar</a>
-            </li>
-            <li><a href='#library'
-                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Kutubxona</a>
-            </li>
-            <li><a href='#about'
-                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Sayt
-                haqida</a></li>
-            <li><a href='#contact'
-                style='color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem;'>Aloqa</a>
-            </li>
+            <li><a href='#home' class="nav-link-anim">Bosh sahifa</a></li>
+            <li><a href='#news' class="nav-link-anim">Yangiliklar</a></li>
+            <li><a href='#courses' class="nav-link-anim">Kurslar</a></li>
+            <li><a href='#library' class="nav-link-anim">Kutubxona</a></li>
+            <li><a href='#about' class="nav-link-anim">Sayt haqida</a></li>
+            <li><a href='#contact' class="nav-link-anim">Aloqa</a></li>
           </ul>
           <div class='nav-right' style='display: flex; gap: 10px;'>
             <button class='btn btn-ghost btn-sm' onclick='scrollToLogin()'>🔑 Kabinetga kirish</button>
