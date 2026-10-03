@@ -1015,21 +1015,59 @@
 
       setTimeout(() => {
         document.getElementById(typingId).remove();
-        let reply = "Savolingiz uchun rahmat. Hozirda men faqat ba'zi asosiy savollarga javob bera olaman. Platforma haqida yoki testlar haqida so'rashingiz mumkin.";
+        let reply = "Kechirasiz, bu savolga hozircha aniq javobim yo'q. Platforma qoidalari, darslar, testlar yoki admin haqida so'rashingiz mumkin.";
         const lower = text.toLowerCase();
 
-        if (lower.includes('salom') || lower.includes('assalom'))
-          reply = "Assalomu alaykum! Sizga qanday yordam bera olaman?";
-        else if (lower.includes('test') || lower.includes('imtihon'))
-          reply = "Sizda har bir darsning oxirida 5 tadan amaliy test savollari beriladi. Muhim qoida shuki: keyingi darsga o'tish uchun barcha 5 ta testni (100%) to'g'ri ishlashingiz shart!";
-        else if (lower.includes('foydalanish') || lower.includes('sayt') || lower.includes('qanday'))
-          reply = "Saytdan foydalanish juda oddiy! 1. Ro'yxatdan o'ting. 2. 'Kabinetga kirish' tugmasi bilan kiring. 3. Chap tomondagi mundarijadan ochiq darslarni ko'rib, testlarni ishlashni boshlang.";
-        else if (lower.includes('dars') || lower.includes('kurs'))
-          reply = "Platformamizda Python, JavaScript va Java kabi zamonaviy dasturlash kurslari mavjud. Har bir kurs chuqur amaliy videolardan iborat.";
-        else if (lower.includes('pul') || lower.includes('narx'))
-          reply = "Kurslar haqidagi to'liq ma'lumot va to'lovlar bo'yicha iltimos admin orqali 'Aloqa' bo'limidagi telegram manziliga yozing: @Marufjon0915";
-        else if (lower.includes('rahmat'))
-          reply = "Arzimaydi! Yana savollaringiz bo'lsa, bemalol murojaat qiling.";
+        // 1. Salomlashish va hol-ahvol
+        if (lower.match(/(salom|assalom|qalay|yaxshimisiz|hormang)/)) {
+          reply = "Assalomu alaykum! Men EduSmart sun'iy intellekt yordamchisiman. Sizga qanday yordam bera olaman?";
+        } else if (lower.match(/(qalaysan|qandaysan|ahvollar|nima gap)/)) {
+          reply = "Rahmat, menda hammasi zo'r! Men doim sizga yordam berishga tayyorman. Darslarni boshlaymizmi?";
+        }
+        // 2. Shaxsiyat / Yaratuvchilar
+        else if (lower.match(/(kimsan|isming nima|o'zing haqingda|uzing haqingda)/)) {
+          reply = "Men EduSmart LMS uchun maxsus ishlab chiqilgan Sun'iy Intellekt yordamchisiman. Vazifam sizga platformamizdan foydalanishda yordamlashish!";
+        } else if (lower.match(/(yaratdi|yaratilding|yaratuvchi|kim tuzgan|dasturchi)/)) {
+          reply = "Meni mohir dasturchi Sirojiddin Savriyev yaratgan.";
+        } else if (lower.match(/(admin|o'qituvchi|uqituvchi|rahbar|boshliq|kim o'tadi|kim o'rgatadi)/)) {
+          reply = "Loyiha rahbari va katta o'qituvchi — Marufjon Isomiddinov. Ular barcha darslar va amaliyotlar bo'yicha sizga bilim beradilar.";
+        }
+        // 3. Kurslar va Ta'lim
+        else if (lower.match(/(python|js|javascript|java|frontend|backend)/)) {
+          reply = "Platformamizda Python (Backend/Data Science), JavaScript (Frontend) va Java dasturlash tillari bo'yicha eng zamonaviy kurslar mavjud.";
+        } else if (lower.match(/(dars|kurs|video|nima o'rganaman|nimadan boshlay)/)) {
+          reply = "Dasturlash kurslarimiz noldan boshlab professionallikka qadar davom etadi. Avval ro'yxatdan o'ting va o'zingizga yoqqan yo'nalishni tanlab, videodarslarni ko'rishni boshlang!";
+        }
+        // 4. Test va Imtihon
+        else if (lower.match(/(test|imtihon|savol|baho|natija|o'tish)/)) {
+          reply = "Har bir dars yakunida mavzuni mustahkamlash uchun 5 tadan amaliy test beriladi. Keyingi darsni ochish uchun bu testlarni 100% to'g'ri ishlashingiz shart!";
+        }
+        // 5. Narxlar va Tolov
+        else if (lower.match(/(pul|narx|tolov|to'lov|pulli|bepul|tekin|qancha)/)) {
+          reply = "Kurslarning narxi va to'lov shartlari haqida batafsil ma'lumot olish uchun iltimos admin bilan bog'laning (Telegram: @Marufjon0915).";
+        }
+        // 6. Kutubxona / Kitoblar
+        else if (lower.match(/(kitob|kutubxona|pdf|darslik|qullanma|qo'llanma|ilmiy ish)/)) {
+          reply = "Kutubxona bo'limimizda darsliklar, o'quv qo'llanmalar va ilmiy ishlar to'plangan. Bosh sahifadagi 'Kutubxona' qismidan bepul yuklab olishingiz mumkin!";
+        }
+        // 7. Sertifikat
+        else if (lower.match(/(sertifikat|diplom|hujjat|tugatganda)/)) {
+          reply = "Kursni to'liq muvaffaqiyatli tugatgan va barcha amaliyotlarni (testlarni) a'lo baholarga topshirgan o'quvchilarga maxsus sertifikat taqdim etiladi.";
+        }
+        // 8. Qanday foydalanish
+        else if (lower.match(/(foydalanish|sayt|qanday ishlatsam|qanaqa qilib|ro'yxatdan|ruyxatdan)/)) {
+          reply = "Saytdan foydalanish juda onson: Tepadagi 'Ro'yxatdan o'tish' tugmasi orqali profil yarating. So'ng 'Kabinetga kirish' tugmasi orqali o'quvchi sahifasiga kirib darslarni boshlang.";
+        }
+        // 9. Manzil va Aloqa
+        else if (lower.match(/(aloqa|nomer|telefon|bog'lanish|boglanish|telegram|instagram|lokatsiya|manzil|qayerda)/)) {
+          reply = "Biz Farg'ona shahrida joylashganmiz. Tel: +998 90 123 45 67. Telegram orqali murojaat uchun: @Marufjon0915";
+        }
+        // 10. Rahmat va Xayrlashuv
+        else if (lower.match(/(rahmat|tashakkur|barakalla|yashavor)/)) {
+          reply = "Arzimaydi! Sizga foydam tekkanidan xursandman. Yana savollaringiz bormi?";
+        } else if (lower.match(/(xayr|korishguncha|ko'rishguncha|sog bo'ling|salomat)/)) {
+          reply = "Xayr, salomat bo'ling! Darslarni o'zlashtirishda omad tilayman!";
+        }
 
         body.innerHTML += `<div class="msg-ai">${reply}</div>`;
         body.scrollTop = body.scrollHeight;
