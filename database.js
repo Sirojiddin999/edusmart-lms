@@ -81,12 +81,14 @@ function seed() {
     // Sync / Upgrade existing lessons to 5 questions and min_score 5
     const updateLesson = db.prepare(`
       UPDATE lessons 
-      SET quiz_json = ?, min_score = 5
+      SET quiz_json = ?, min_score = ?, video_url = ?, title = ?, description = ?, content_text = ?, hashtags = ?, duration_mins = ?
       WHERE order_num = ?
     `);
     const syncTransaction = db.transaction(() => {
       for (const l of LESSONS) {
-        updateLesson.run(JSON.stringify(l.quiz), l.order_num);
+        updateLesson.run(
+          JSON.stringify(l.quiz), l.min_score, l.video_url, l.title, l.description, l.content_text, l.hashtags, l.duration_mins, l.order_num
+        );
       }
     });
     syncTransaction();
