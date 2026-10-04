@@ -445,10 +445,12 @@
       document.getElementById('syncCnt').innerText = `${p.completed_count}/${p.total_lessons} dars yakunlandi`;
       
       const btnCert = document.getElementById('btnCert');
-      if (p.completed_count >= 10) {
-        btnCert.style.display = 'inline-block';
-      } else {
-        btnCert.style.display = 'none';
+      if (btnCert) {
+        if (p.completed_count >= 10) {
+          btnCert.style.display = 'inline-block';
+        } else {
+          btnCert.style.display = 'none';
+        }
       }
     }
 
