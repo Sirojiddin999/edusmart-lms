@@ -421,7 +421,15 @@
 
         // Ochilishi kerak bo'lgan darsni topish
         const tgt = STATE.current_lesson || STATE.lessons[0];
-        if (tgt) loadLesson(tgt.id);
+        if (tgt) {
+          loadLesson(tgt.id);
+        } else {
+          document.getElementById('lessonTitle').innerText = "Darslar mavjud emas";
+          document.getElementById('lessonTitle').nextElementSibling.innerText = "Hozircha tizimga hech qanday dars qo'shilmagan. Iltimos, o'qituvchi dars qo'shishini kuting.";
+          document.getElementById('videoFrame').style.display = 'none';
+          document.getElementById('quizSection').style.display = 'none';
+          document.getElementById('lessonList').innerHTML = '<div style="padding: 20px; color: var(--text-secondary); text-align: center;">Darslar yo\'q</div>';
+        }
       } catch (e) {
         showToast("Ma'lumotlarni yuklashda xatolik", 'error');
       }
