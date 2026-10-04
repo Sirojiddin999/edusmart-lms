@@ -770,6 +770,66 @@
       window.location.href = '/';
     }
 
+    function generateCertificate() {
+      const w = window.open('', '_blank');
+      const date = new Date().toLocaleDateString('uz-UZ');
+      w.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Sertifikat - innocode.uz</title>
+          <style>
+            body { font-family: 'Arial', sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; background: #f0f4f8; }
+            .cert-container { 
+              border: 15px solid #0f172a; 
+              padding: 50px; 
+              text-align: center; 
+              background: white; 
+              width: 800px; 
+              height: 550px;
+              box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+              position: relative;
+            }
+            .cert-border { border: 2px solid #cbd5e1; padding: 40px; height: 100%; box-sizing: border-box; }
+            h1 { font-size: 50px; color: #0f172a; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 2px; }
+            .subtitle { font-size: 24px; color: #475569; margin-bottom: 40px; }
+            .name { font-size: 40px; color: #2563eb; font-weight: bold; margin-bottom: 30px; text-decoration: underline; text-decoration-color: #93c5fd; text-underline-offset: 8px;}
+            .desc { font-size: 18px; color: #334155; line-height: 1.6; margin-bottom: 50px; padding: 0 40px; }
+            .footer { display: flex; justify-content: space-between; align-items: flex-end; padding: 0 50px; }
+            .sign-box { text-align: center; }
+            .sign-line { border-bottom: 2px solid #0f172a; width: 200px; margin-bottom: 10px; }
+            .logo { font-size: 30px; margin-bottom: 10px; }
+          </style>
+        </head>
+        <body>
+          <div class="cert-container">
+            <div class="cert-border">
+              <div class="logo">🎓 innocode.uz</div>
+              <h1>Sertifikat</h1>
+              <div class="subtitle">Muvaffaqiyatli yakunlagani uchun</div>
+              <div class="name">${usr.full_name || 'O\\'quvchi'}</div>
+              <div class="desc">
+                Ushbu sertifikat innocode.uz interaktiv ta'lim platformasida <strong>10 ta va undan ortiq darslarni</strong>
+                muvaffaqiyatli tamomlab, o'zlashtirish ko'rsatkichlarini a'lo darajada bajargani uchun taqdim etiladi.
+              </div>
+              <div class="footer">
+                <div class="sign-box">
+                  <div class="sign-line"></div>
+                  <div>Sana: ${date}</div>
+                </div>
+                <div class="sign-box">
+                  <div class="sign-line"></div>
+                  <div>M. Isomiddinov</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <script>window.print();<\/script>
+        </body>
+        </html>
+      `);
+      w.document.close();
+    }
 
     window.addEventListener('DOMContentLoaded', loadAll);
   </script>
