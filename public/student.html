@@ -415,6 +415,10 @@
           window.location.href = '/';
           return;
         }
+        if (!r.ok) {
+          const errData = await r.json().catch(() => ({}));
+          throw new Error(errData.error || `Server xatosi: ${r.status}`);
+        }
         STATE = await r.json();
         updateSyncBar(STATE.progress);
         renderSidebar(STATE.lessons, STATE.progress);
@@ -424,9 +428,9 @@
         if (tgt) {
           loadLesson(tgt.id);
         } else {
-          document.getElementById('lessonTitle').innerText = "Darslar mavjud emas";
-          document.getElementById('lessonTitle').nextElementSibling.innerText = "Hozircha tizimga hech qanday dars qo'shilmagan. Iltimos, o'qituvchi dars qo'shishini kuting.";
-          document.getElementById('videoFrame').style.display = 'none';
+          document.getElementById('lTitle').innerText = "Darslar mavjud emas";
+          document.getElementById('lDesc').innerText = "Hozircha tizimga hech qanday dars qo'shilmagan. Iltimos, o'qituvchi dars qo'shishini kuting.";
+          document.getElementById('videoWrap').style.display = 'none';
           document.getElementById('quizSection').style.display = 'none';
           document.getElementById('lessonList').innerHTML = '<div style="padding: 20px; color: var(--text-secondary); text-align: center;">Darslar yo\'q</div>';
         }
