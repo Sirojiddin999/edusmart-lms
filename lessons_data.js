@@ -5,7 +5,7 @@ const LESSONS = [
     order_num: 1,
     title: "Internet va Web Texnologiyalari",
     description: "Internet qanday ishlaydi, brauzer, server, HTTP/HTTPS, frontend va backend tushunchalari.",
-    video_url: "https://www.youtube.com/embed/3KxhJwljwjY",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
     duration_mins: 22,
     min_score: 5,
     hashtags: JSON.stringify(["#web", "#internet", "#frontend", "#backend"]),
