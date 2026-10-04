@@ -9,16 +9,31 @@
     body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
     .page-header { background: linear-gradient(135deg, var(--primary) 0%, #3b82f6 100%); padding: 60px 0 90px; text-align: center; color: white; }
     .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; }
-    .page-subtitle { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0; padding-left: 20px; flex: 1; line-height: 1.6; }
+    .page-subtitle { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0 auto; line-height: 1.6; }
     
-    .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 30px; margin-top: -50px; margin-bottom: 80px; position: relative; z-index: 10; }
-    .book-card { background: white; border-radius: 16px; padding: 30px 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.06); border: 1px solid var(--border); transition: transform 0.3s; }
-    .book-card:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,0,0,0.1); border-color: var(--primary-subtle); }
-    .book-icon { font-size: 4rem; margin-bottom: 20px; }
-    .book-title { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; line-height: 1.4; }
-    .book-category { font-size: 0.85rem; color: var(--primary); font-weight: 700; background: var(--primary-subtle); padding: 4px 10px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
-    .btn-download { display: inline-block; width: 100%; padding: 10px; background: #f1f5f9; color: var(--text-secondary); text-decoration: none; font-weight: 700; border-radius: 8px; transition: all 0.2s; }
-    .btn-download:hover { background: var(--primary); color: white; }
+    /* Tabs Styles */
+    .tabs-container { margin-top: -45px; position: relative; z-index: 10; display: flex; justify-content: center; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; }
+    .tab-btn { 
+      background: white; border: none; padding: 15px 30px; font-size: 1.05rem; font-weight: 800; border-radius: 50px; 
+      color: var(--text-secondary); cursor: pointer; box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 8px;
+    }
+    .tab-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); color: var(--primary); }
+    .tab-btn.active { background: var(--primary); color: white; transform: scale(1.05); box-shadow: 0 15px 35px rgba(79, 70, 229, 0.3); }
+    
+    /* Tab Content Grid */
+    .tab-content { display: none; animation: fadeIn 0.4s ease-out forwards; margin-bottom: 80px; }
+    .tab-content.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .library-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 25px; }
+    .book-card { background: white; border-radius: 20px; padding: 30px 25px; text-align: left; box-shadow: 0 10px 30px rgba(0,0,0,0.04); border: 1px solid var(--border); transition: all 0.3s; position: relative; overflow: hidden; display: flex; flex-direction: column; }
+    .book-card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.08); border-color: var(--primary-subtle); }
+    .book-icon { font-size: 3.5rem; margin-bottom: 20px; background: #f8fafc; width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; border-radius: 18px; }
+    .book-title { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; line-height: 1.4; flex: 1; }
+    .book-category { font-size: 0.75rem; color: var(--primary); font-weight: 800; background: var(--primary-subtle); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .btn-download { display: inline-block; width: 100%; padding: 12px; background: #f1f5f9; color: var(--text-secondary); text-decoration: none; font-weight: 700; border-radius: 12px; transition: all 0.2s; text-align: center; margin-top: auto; border: 1px solid transparent; }
+    .btn-download:hover { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2); }
   </style>
 </head>
 <body>
@@ -49,53 +64,199 @@
   <div class="page-header">
     <div class="container">
       <h1 class="page-title">Elektron Kutubxona</h1>
-      <p class="page-subtitle">Dasturlash, kiberxavfsizlik va axborot texnologiyalariga oid bepul o'quv qo'llanmalar va kitoblar bazasi.</p>
+      <p class="page-subtitle">Axborot texnologiyalariga oid bepul o'quv qo'llanmalar, maqolalar va darsliklar bazasi.</p>
     </div>
   </div>
 
   <div class="container">
-    <div class="library-grid">
-      <!-- Book 1 -->
-      <div class="book-card">
-        <div class="book-icon">📘</div>
-        <div class="book-category">Dasturlash asoslari</div>
-        <h3 class="book-title">C++ va Obyektga Yo'naltirilgan Dasturlash</h3>
-        <a href="#" class="btn-download">Yuklab olish 📥</a>
-      </div>
+    <!-- Animated Tabs -->
+    <div class="tabs-container">
+      <button class="tab-btn active" onclick="showTab('maqolalar', this)"><span>📄</span> Maqolalar</button>
+      <button class="tab-btn" onclick="showTab('qollanmalar', this)"><span>📘</span> O'quv Qo'llanmalar</button>
+      <button class="tab-btn" onclick="showTab('darsliklar', this)"><span>📚</span> Darsliklar</button>
+    </div>
 
-      <!-- Book 2 -->
-      <div class="book-card">
-        <div class="book-icon">📙</div>
-        <div class="book-category">Kiberxavfsizlik</div>
-        <h3 class="book-title">Axborot Xavfsizligi Asoslari</h3>
-        <a href="#" class="btn-download">Yuklab olish 📥</a>
+    <!-- MAQOLALAR TAB -->
+    <div id="maqolalar" class="tab-content active">
+      <div class="library-grid">
+        
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 1-qism</h3>
+          <a href="https://drive.google.com/file/d/1zv0jGGwgMYU79R1PV86aeSVekKE1Th4s/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 2-qism</h3>
+          <a href="https://drive.google.com/file/d/1wkQxExyF1QOGagfrbacFpW_SqJhD6Pc_/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 3-qism</h3>
+          <a href="https://drive.google.com/file/d/1wPkICAazHkRKYD0MZumrQW8j0JyooK_y/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 4-qism</h3>
+          <a href="https://drive.google.com/file/d/1vOYXW4kks8I-k4rbiWU0NtwoLGx3Ks9o/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 5-qism</h3>
+          <a href="https://drive.google.com/file/d/1pAb6jRtAzzIfCY6T04CZDbtjlkTehjLm/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 6-qism</h3>
+          <a href="https://drive.google.com/file/d/1jQKuknNXCnQXjZgH8B1Icn2awY_biCEd/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 7-qism</h3>
+          <a href="https://drive.google.com/file/d/1j6jR9U-70x0bCMh1PgPV4vwWoc_qaRWk/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 8-qism</h3>
+          <a href="https://drive.google.com/file/d/1hf83Zy-kgMo36Y-vwsS-0DVfCig-IVXv/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 9-qism</h3>
+          <a href="https://drive.google.com/file/d/1hElccvfdvVJt7PJearsVGAZPtpvapyWc/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 10-qism</h3>
+          <a href="https://drive.google.com/file/d/1V_dR2g4FTJnou6CG760_zmdqJlfZql47/view?usp=sharing" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 11-qism</h3>
+          <a href="https://drive.google.com/file/d/1QJ0nzQoexPCfKoBp_RIxPQ5HQY0_pfIa/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 12-qism</h3>
+          <a href="https://drive.google.com/file/d/1Ox7Wb84GHT0N9_A5pbuxgF4HbBzL4bK-/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 13-qism</h3>
+          <a href="https://drive.google.com/file/d/1Jx9fRvvmKogPxNz6xs39B76teb9LTEzh/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 14-qism</h3>
+          <a href="https://drive.google.com/file/d/1Jrvc0NZesAomq5rkrgWKW67LhnLYUPej/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 15-qism</h3>
+          <a href="https://drive.google.com/file/d/1EA2KzT-MSyEmPd2hC9ljJSaCBI7nrwh8/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 16-qism</h3>
+          <a href="https://drive.google.com/file/d/1DjY56I0VnCJeTTRwosjUsE9ift-_Kw60/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 17-qism</h3>
+          <a href="https://drive.google.com/file/d/111aQxqayK_N5dKGBiEvM4Sw0z0DvgdQ0/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category">Ilmiy Maqola</div>
+          <div class="book-icon">📄</div>
+          <h3 class="book-title">IT sohasidagi zamonaviy ilmiy maqola 18-qism</h3>
+          <a href="https://drive.google.com/file/d/13vIKehB7Wd2iVJg08ZdkmIV7c-KkkjTk/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
       </div>
+    </div>
 
-      <!-- Book 3 -->
-      <div class="book-card">
-        <div class="book-icon">📗</div>
-        <div class="book-category">Ma'lumotlar Bazasi</div>
-        <h3 class="book-title">SQL va MySQL Boshqaruvi</h3>
-        <a href="#" class="btn-download">Yuklab olish 📥</a>
+    <!-- O'QUV QO'LLANMALAR TAB -->
+    <div id="qollanmalar" class="tab-content">
+      <div class="library-grid">
+        
+        <div class="book-card">
+          <div class="book-category" style="background: #ecfdf5; color: #10b981;">Qo'llanma</div>
+          <div class="book-icon">📘</div>
+          <h3 class="book-title">IT Maxsus o'quv qo'llanma 1-qism</h3>
+          <a href="https://drive.google.com/file/d/1x87vTAdlABLxlVfm5Bzrye-I0fNBYpzd/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category" style="background: #ecfdf5; color: #10b981;">Qo'llanma</div>
+          <div class="book-icon">📘</div>
+          <h3 class="book-title">IT Maxsus o'quv qo'llanma 2-qism</h3>
+          <a href="https://drive.google.com/file/d/1jPa-G66bp1zsteADygRLTqUX0VA8S_HI/view?usp=drive_link" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category" style="background: #ecfdf5; color: #10b981;">Qo'llanma</div>
+          <div class="book-icon">📘</div>
+          <h3 class="book-title">IT Maxsus o'quv qo'llanma 3-qism</h3>
+          <a href="https://drive.google.com/file/d/14HTx_rX0nSVlzVYNOQVAGIqyGMgFxQ8m/view" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category" style="background: #ecfdf5; color: #10b981;">Qo'llanma</div>
+          <div class="book-icon">📘</div>
+          <h3 class="book-title">IT Maxsus o'quv qo'llanma 4-qism</h3>
+          <a href="https://drive.google.com/file/d/1IqE-O_HDPKFBrG0qSqjv_cYoxzVunqVV/view" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
       </div>
+    </div>
 
-      <!-- Book 4 -->
-      <div class="book-card">
-        <div class="book-icon">📕</div>
-        <div class="book-category">Web Dasturlash</div>
-        <h3 class="book-title">HTML, CSS va JavaScript bo'yicha qo'llanma</h3>
-        <a href="#" class="btn-download">Yuklab olish 📥</a>
-      </div>
-      
-      <!-- Book 5 -->
-      <div class="book-card">
-        <div class="book-icon">📔</div>
-        <div class="book-category">Algoritmlar</div>
-        <h3 class="book-title">Ma'lumotlar Tuzilmasi va Algoritmlar</h3>
-        <a href="#" class="btn-download">Yuklab olish 📥</a>
+    <!-- DARSLIKLAR TAB -->
+    <div id="darsliklar" class="tab-content">
+      <div class="library-grid">
+        
+        <div class="book-card">
+          <div class="book-category" style="background: #fffbeb; color: #f59e0b;">Darslik</div>
+          <div class="book-icon">📚</div>
+          <h3 class="book-title">Fundamental IT Darslik 1-qism</h3>
+          <a href="https://drive.google.com/file/d/1r4OxXfkVUzaLsgr51lXVHL8AdsiCMhCF/view" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category" style="background: #fffbeb; color: #f59e0b;">Darslik</div>
+          <div class="book-icon">📚</div>
+          <h3 class="book-title">Fundamental IT Darslik 2-qism</h3>
+          <a href="https://drive.google.com/file/d/1u-IpJz_4SSoAo2Y87woRDkir7inpXXB7/view" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
+        <div class="book-card">
+          <div class="book-category" style="background: #fffbeb; color: #f59e0b;">Darslik</div>
+          <div class="book-icon">📚</div>
+          <h3 class="book-title">Fundamental IT Darslik 3-qism</h3>
+          <a href="https://drive.google.com/file/d/1XiS_Z-5ZzGrtNjGiyrL455-ttfT7MHEz/view" target="_blank" class="btn-download">O'qish / Yuklash 📥</a>
+        </div>
       </div>
     </div>
   </div>
+
+  <!-- Script for Tabs -->
+  <script>
+    function showTab(tabId, btnElement) {
+      document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+      btnElement.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+    }
+  </script>
 
   <!-- Footer -->
   <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">

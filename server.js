@@ -115,8 +115,13 @@ app.post('/api/auth/login-teacher', (req, res) => {
 // Dashboard
 app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
   try {
-    const p = getProgress(req.user.id);
+    let p = getProgress(req.user.id);
     const lessons = getAllLessons();
+    if (!p) {
+      const firstId = lessons.length ? lessons[0].id : null;
+      db.prepare("INSERT INTO student_progress (user_id, last_lesson_id) VALUES (?,?)").run(req.user.id, firstId);
+      p = getProgress(req.user.id);
+    }
     const completedIds = jsonParse(p.completed_lesson_ids, []);
     const scoresMap = jsonParse(p.scores_json, {});
     const total = lessons.length;
