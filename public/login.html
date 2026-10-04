@@ -282,6 +282,7 @@
     </div>
   </div>
 
+  <script src="/js/utils.js"></script>
   <script>
     function switchTab(tab) {
       if(tab === 'reg') {
@@ -297,25 +298,76 @@
       }
     }
 
-    function doRegister(e) {
+    async function doRegister(e) {
       e.preventDefault();
-      // Baza mavjud bo'lmagani uchun login qilinganini simulyatsiya qilamiz
-      window.location.href = '/student.html';
+      const first_name = document.getElementById('r-fname').value;
+      const last_name = document.getElementById('r-lname').value;
+      const custom_pin = document.getElementById('r-pin').value;
+      
+      try {
+        const r = await fetch('/api/auth/register-student', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ first_name, last_name, custom_pin })
+        });
+        const data = await r.json();
+        if(data.error) {
+          alert(data.error);
+        } else {
+          Auth.setSession(data.token, {
+            id: data.id, full_name: data.full_name, username: data.username, role: 'student'
+          });
+          alert(`Muvaffaqiyatli! Login: ${data.username}, Parol: ${data.pin_code}. Bularni eslab qoling!`);
+          window.location.href = '/student.html';
+        }
+      } catch(err) {
+        alert("Xatolik yuz berdi");
+      }
     }
     
-    function doLogin(e) {
+    async function doLogin(e) {
       e.preventDefault();
-      window.location.href = '/student.html';
+      const username = document.getElementById('l-user').value;
+      const pin_code = document.getElementById('l-pin').value;
+      
+      try {
+        const r = await fetch('/api/auth/login-student', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, pin_code })
+        });
+        const data = await r.json();
+        if(data.error) {
+          alert(data.error);
+        } else {
+          Auth.setSession(data.token, data.user);
+          window.location.href = '/student.html';
+        }
+      } catch(err) {
+        alert("Xatolik yuz berdi");
+      }
     }
     
-    function doTeacherLogin(e) {
+    async function doTeacherLogin(e) {
       e.preventDefault();
-      const user = document.getElementById('t-user').value;
-      const pass = document.getElementById('t-pass').value;
-      if (user === 'oqituvchi' && pass === 'admin123') {
-        window.location.href = '/teacher.html';
-      } else {
-        alert("Noto'g'ri login yoki parol! (Standart: oqituvchi / admin123)");
+      const username = document.getElementById('t-user').value;
+      const password = document.getElementById('t-pass').value;
+      
+      try {
+        const r = await fetch('/api/auth/login-teacher', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username, password })
+        });
+        const data = await r.json();
+        if(data.error) {
+          alert(data.error);
+        } else {
+          Auth.setSession(data.token, data.user);
+          window.location.href = '/teacher.html';
+        }
+      } catch(err) {
+        alert("Xatolik yuz berdi");
       }
     }
   </script>
