@@ -586,8 +586,8 @@ app.put('/api/teacher/settings', auth, onlyTeacher, (req, res) => {
 });
 
 // ─── START ────────────────────────────────────────────────────────────────────
-app.get('/api/fix-encoding', (req, res) => {
-  const fs = require('fs');
+const fs = require('fs');
+try {
   const publicDir = path.join(__dirname, 'public');
   const files = fs.readdirSync(publicDir).filter(f => f.endsWith('.html'));
   const win1252Rev = {
@@ -599,22 +599,26 @@ app.get('/api/fix-encoding', (req, res) => {
   files.forEach(file => {
     const filePath = path.join(publicDir, file);
     const text = fs.readFileSync(filePath, 'utf8');
-    const originalBytes = [];
-    for (let i = 0; i < text.length; i++) {
-      const c = text.charCodeAt(i);
-      if (c <= 0xFF && !(c >= 0x80 && c <= 0x9F && win1252Rev[c] === undefined)) {
-        originalBytes.push(c);
-      } else if (win1252Rev[c] !== undefined) {
-        originalBytes.push(win1252Rev[c]);
-      } else {
-        originalBytes.push(c & 0xFF);
+    if (text.includes('ðŸ')) {
+      const originalBytes = [];
+      for (let i = 0; i < text.length; i++) {
+        const c = text.charCodeAt(i);
+        if (c <= 0xFF && !(c >= 0x80 && c <= 0x9F && win1252Rev[c] === undefined)) {
+          originalBytes.push(c);
+        } else if (win1252Rev[c] !== undefined) {
+          originalBytes.push(win1252Rev[c]);
+        } else {
+          originalBytes.push(c & 0xFF);
+        }
       }
+      const restoredText = Buffer.from(originalBytes).toString('utf8');
+      fs.writeFileSync(filePath, restoredText, 'utf8');
+      console.log(`[FIXED] ${file}`);
     }
-    const restoredText = Buffer.from(originalBytes).toString('utf8');
-    fs.writeFileSync(filePath, restoredText, 'utf8');
   });
-  res.json({ success: true, message: 'Encoding fixed!' });
-});
+} catch (e) {
+  console.error("Fix error:", e);
+}
 
 app.listen(PORT, '0.0.0.0', () => {
   const { networkInterfaces } = require('os');
