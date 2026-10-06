@@ -1158,7 +1158,7 @@
           const rowClass = s.rank <= 3 ? `rank-${s.rank}` : '';
           const rbClass = s.rank <= 3 ? `rb-${s.rank}` : 'rb-n';
           const medal = s.rank === 1 ? '🥇' : s.rank === 2 ? '🥈' : s.rank === 3 ? '🥉' : '';
-          const ini = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+          const ini = (s.full_name || 'O').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
           const date = s.last_active ? new Date(s.last_active).toLocaleDateString('uz-UZ') : '—';
           const pct = s.progress_percent || 0;
           const pColor = pct >= 70 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--rose)';
@@ -1316,10 +1316,11 @@
       }
 
       tbody.innerHTML = list.map(s => {
-        const ini = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        const ini = (s.full_name || 'O').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
         const pct = s.progress_percent || 0;
         const pColor = pct >= 70 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--text-muted)';
         const date = s.last_active ? new Date(s.last_active).toLocaleString('uz-UZ') : '—';
+        const regDate = s.registered_at ? new Date(s.registered_at).toLocaleDateString('uz-UZ') : '—';
         const avg = s.avg_score ? s.avg_score + '%' : '0%';
 
         return `<tr>
@@ -1327,7 +1328,7 @@
             <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--cyan)); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; color:#fff; flex-shrink:0;">${ini}</div>
             <div>
               <div style="font-weight:800; font-size:0.92rem; color:var(--text-primary);">${s.full_name}</div>
-              <div style="font-size:0.72rem; color:var(--text-muted);">${new Date(s.registered_at).toLocaleDateString('uz-UZ')} da qo'shildi</div>
+              <div style="font-size:0.72rem; color:var(--text-muted);">${regDate} da qo'shildi</div>
             </div>
           </div></td>
           <td>

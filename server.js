@@ -445,16 +445,19 @@ app.get('/api/public/certificate/:id', (req, res) => {
 app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
   try {
     const students = db.prepare(`
-      SELECT u.id, u.full_name, u.username, COALESCE(u.pin_code, '') as pin_code, u.created_at as registered_at,
-             p.completed_lesson_ids, p.last_lesson_id, p.last_course_id, p.scores_json, p.last_active,
+      SELECT u.id, u.full_name, u.username,
+             COALESCE(u.pin_code, '') as pin_code,
+             COALESCE(u.created_at, datetime('now')) as registered_at,
+             p.completed_lesson_ids, p.last_lesson_id, p.last_course_id,
+             p.scores_json, p.last_active,
              l.title as last_lesson_title, l.order_num as last_lesson_order,
              c.title as last_course_title
       FROM users u
       LEFT JOIN student_progress p ON u.id = p.user_id
       LEFT JOIN lessons l ON p.last_lesson_id = l.id
-      LEFT JOIN courses c ON (p.last_course_id = c.id OR l.course_id = c.id)
+      LEFT JOIN courses c ON COALESCE(p.last_course_id, l.course_id) = c.id
       WHERE u.role = 'student'
-      ORDER BY p.last_active DESC
+      ORDER BY COALESCE(p.last_active, '1970-01-01') DESC
     `).all();
 
     const lessons = getAllLessons();
@@ -563,14 +566,17 @@ app.get('/api/teacher/students/:id/details', auth, onlyTeacher, (req, res) => {
 app.get('/api/teacher/leaderboard', auth, onlyTeacher, (req, res) => {
   try {
     const students = db.prepare(`
-      SELECT u.id, u.full_name, u.username, COALESCE(u.pin_code, '') as pin_code, u.created_at as registered_at,
-             p.completed_lesson_ids, p.last_lesson_id, p.last_course_id, p.scores_json, p.last_active,
+      SELECT u.id, u.full_name, u.username,
+             COALESCE(u.pin_code, '') as pin_code,
+             COALESCE(u.created_at, datetime('now')) as registered_at,
+             p.completed_lesson_ids, p.last_lesson_id, p.last_course_id,
+             p.scores_json, p.last_active,
              l.title as last_lesson_title, l.order_num as last_lesson_order,
              c.title as last_course_title
       FROM users u
       LEFT JOIN student_progress p ON u.id = p.user_id
       LEFT JOIN lessons l ON p.last_lesson_id = l.id
-      LEFT JOIN courses c ON (p.last_course_id = c.id OR l.course_id = c.id)
+      LEFT JOIN courses c ON COALESCE(p.last_course_id, l.course_id) = c.id
       WHERE u.role = 'student'
     `).all();
 

@@ -95,7 +95,8 @@ function seed() {
   
   if (!hasCorrectCourses || existingCoursesCount !== 3 || lessonsWithNullCourseId > 0 || sampleQuizCount !== 5) {
     console.log("Ma'lumotlar bazasi yangilanmoqda: 3 ta kurs va har birida 5 tadan savolli darslar o'rnatilmoqda...");
-    db.exec('DELETE FROM student_progress');
+    // Avval o'quvchilar progressini kurs/dars IDlariga bog'liqlikdan tozalaymiz (o'quvchi ma'lumotlari saqlanadi)
+    db.exec('UPDATE student_progress SET last_lesson_id=NULL, last_course_id=NULL');
     db.exec('DELETE FROM lessons');
     db.exec('DELETE FROM courses');
     db.exec('VACUUM');
