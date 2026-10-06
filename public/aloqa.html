@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Bog'lanish | innocode.uz</title>
+  <link rel="stylesheet" href="/css/style.css">
   <style>
     /* Reset & Fonts */
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
@@ -319,12 +320,30 @@
     @media (max-width: 1024px) {
       .row-1 { grid-template-columns: 1fr; }
       .row-2 { grid-template-columns: 1fr 1fr; }
-      .card-main h1 { font-size: 3rem; }
-      .nav-links { display: none; }
+      .card-main h1 { font-size: 2.4rem; }
+      .navbar-inner {
+        flex-direction: column !important;
+        gap: 8px !important;
+        align-items: center !important;
+      }
+      .nav-links {
+        display: flex !important;
+        flex-direction: row !important;
+        overflow-x: auto !important;
+        -webkit-overflow-scrolling: touch !important;
+        width: 100% !important;
+        gap: 6px !important;
+      }
+      .nav-right {
+        width: 100% !important;
+        justify-content: center !important;
+        flex-wrap: wrap !important;
+      }
     }
-    @media (max-width: 500px) {
+    @media (max-width: 600px) {
+      body { padding: 10px !important; }
       .row-2 { grid-template-columns: 1fr; }
-      .card-main h1 { font-size: 2.5rem; }
+      .card-main h1 { font-size: 1.8rem; }
       .card-buttons { flex-direction: column; }
     }
   </style>
@@ -350,7 +369,7 @@
             <li><a href='/aloqa.html' style='text-decoration:none; color:#2563eb; font-weight:700; transition: color 0.3s;'>Aloqa</a></li>
           </ul>
           <div class='nav-right' style='display: flex; gap: 6px; align-items: center;'>
-            <button onclick="history.back()" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 4px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer;'> Orqaga</button>
+            <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 4px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer;'>⬅ Orqaga</a>
             <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 4px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'> Kirish</a>
             <a href='/login.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 4px; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(90, 92, 230, 0.3);'> Ro'yxatdan o'tish</a>
             <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 4px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'> O'qituvchi</a>

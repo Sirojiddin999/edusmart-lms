@@ -23,6 +23,18 @@
     .feat-icon { font-size: 2.5rem; margin-bottom: 15px; display: inline-block; }
     .feat-title { font-size: 1.2rem; font-weight: 800; margin-bottom: 10px; color: var(--text-primary); }
     .feat-desc { color: var(--text-secondary); line-height: 1.6; font-size: 0.95rem; }
+
+    @media (max-width: 768px) {
+      .page-header { padding: 40px 14px 60px; }
+      .page-title { font-size: 2rem; }
+      .page-subtitle { font-size: 0.95rem; }
+      .about-card { padding: 22px 16px; margin-top: -30px; border-radius: 18px; margin-bottom: 30px; }
+      .about-stats { gap: 12px; margin: 24px 0; }
+      .stat-box { min-width: 120px; padding: 14px 10px; }
+      .stat-num { font-size: 1.8rem; }
+      .about-features { grid-template-columns: 1fr; gap: 14px; }
+      .feat-item { padding: 20px 14px; }
+    }
   </style>
 </head>
 <body>
@@ -43,7 +55,7 @@
           <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
-          <button onclick="history.back()" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer;'> Orqaga</button>
+          <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer;'>⬅ Orqaga</a>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'> Kabinetga kirish</a>
           <a href='/login.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(90, 92, 230, 0.3);'> Ro'yxatdan o'tish</a>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'> O'qituvchi</a>
