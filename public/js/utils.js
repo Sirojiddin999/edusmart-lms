@@ -114,6 +114,21 @@ const Auth = {
         if(c){ text = newText; changed = true; }
       }
 
+      // Hardcode course icons based on their parent's background color
+      if (node.parentElement && node.parentElement.classList.contains('course-icon-wrap')) {
+        const style = node.parentElement.getAttribute('style') || '';
+        if (style.includes('fdf4ff')) { node.nodeValue = '🐍'; changed = true; }
+        else if (style.includes('fffbeb')) { node.nodeValue = '💛'; changed = true; }
+        else if (style.includes('ecfeff')) { node.nodeValue = '☕'; changed = true; }
+        else if (style.includes('f0fdf4')) { node.nodeValue = '📊'; changed = true; }
+      }
+
+      // Hardcode module icons
+      if (node.parentElement && node.parentElement.tagName === 'SPAN' && node.parentElement.parentElement && node.parentElement.parentElement.classList.contains('course-modules')) {
+         node.nodeValue = '📚';
+         changed = true;
+      }
+
       if (changed) node.nodeValue = text;
     }
   }
