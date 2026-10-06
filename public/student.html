@@ -472,31 +472,45 @@
         }
         STATE = await r.json();
         
-          const sel = document.getElementById('courseSelect');
-          if (sel && STATE.courses) {
-            const urlParams = new URLSearchParams(window.location.search);
-            const courseParam = urlParams.get('course');
-            const prevCourseId = sel.value;
-            sel.innerHTML = STATE.courses.map(c => `<option value="${c.id}" style="color:#000;">${c.title}</option>`).join('');
-            
-            if (courseParam && STATE.courses.find(c => c.id == courseParam)) {
-              sel.value = courseParam;
-            } else if (STATE.current_lesson && STATE.current_lesson.course_id) {
-              sel.value = STATE.current_lesson.course_id;
-            } else if (prevCourseId && STATE.courses.find(c => c.id == prevCourseId)) {
-              sel.value = prevCourseId;
-            }
+        const sel = document.getElementById('courseSelect');
+        let initialLessonId = null;
+        if (sel && STATE.courses) {
+          const urlParams = new URLSearchParams(window.location.search);
+          const courseParam = urlParams.get('course');
+          const savedCourseId = STATE.progress?.last_course_id || (STATE.current_lesson ? STATE.current_lesson.course_id : null);
+          const savedLessonId = STATE.progress?.last_lesson_id || (STATE.current_lesson ? STATE.current_lesson.id : null);
+
+          sel.innerHTML = STATE.courses.map(c => `<option value="${c.id}" style="color:#000;">${c.title}</option>`).join('');
+          
+          if (courseParam && STATE.courses.find(c => c.id == courseParam)) {
+            sel.value = courseParam;
+          } else if (savedCourseId && STATE.courses.find(c => c.id == savedCourseId)) {
+            sel.value = savedCourseId;
+            initialLessonId = savedLessonId;
+          } else if (STATE.current_lesson && STATE.current_lesson.course_id) {
+            sel.value = STATE.current_lesson.course_id;
+            initialLessonId = STATE.current_lesson.id;
           }
+        }
         
-        onCourseSelect();
+        onCourseSelect(initialLessonId);
       } catch (e) {
         showToast("Ma'lumotlarni yuklashda xatolik", 'error');
       }
     }
 
-    function onCourseSelect() {
+    async function onCourseSelect(targetLessonId = null) {
       const courseId = parseInt(document.getElementById('courseSelect').value);
       if (!courseId) return;
+
+      // Agar o'quvchi kursni dropdown orqali almashtirsa, serverga bildirish (boshqa qurilmada ham saqlanadi)
+      if (!targetLessonId) {
+        fetch('/api/student/select-course', {
+          method: 'POST',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({ course_id: courseId })
+        }).catch(() => {});
+      }
 
       // Joriy kurs nomini saqlash (sertifikat uchun)
       const courseObj = STATE.courses && STATE.courses.find(c => parseInt(c.id) === courseId);
@@ -518,8 +532,15 @@
 
       renderSidebar(courseLessons, STATE.progress);
 
-      // Tugallanmagan birinchi darsni yoki 1-darsni yuklash
-      const tgt = courseLessons.find(l => !STATE.progress.completed_lesson_ids.includes(l.id)) || courseLessons[0];
+      // Agar aynan saqlangan dars bo'lsa, o'shani yuklaymiz (qurilmalararo davom etish)
+      let tgt = null;
+      if (targetLessonId) {
+        tgt = courseLessons.find(l => l.id === targetLessonId);
+      }
+      // Aks holda tugallanmagan birinchi darsni yoki 1-darsni yuklash
+      if (!tgt) {
+        tgt = courseLessons.find(l => !STATE.progress.completed_lesson_ids.includes(l.id)) || courseLessons[0];
+      }
 
       if (tgt) {
         loadLesson(tgt.id);

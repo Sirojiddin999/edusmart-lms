@@ -101,17 +101,23 @@ app.post('/api/auth/register-student', (req, res) => {
     const username = `${fname.toLowerCase().replace(/[^a-z]/g, '')}_${rand4}`;
     const hash = bcrypt.hashSync(pin, 10);
 
-    const r = db.prepare("INSERT INTO users (role,full_name,username,password_hash) VALUES (?,?,?,?)").run('student', full_name, username, hash);
+    const r = db.prepare("INSERT INTO users (role,full_name,username,password_hash,pin_code) VALUES (?,?,?,?,?)")
+      .run('student', full_name, username, hash, pin);
     const lessons = getAllLessons();
-    const firstId = lessons.length ? lessons[0].id : null;
-    db.prepare("INSERT INTO student_progress (user_id, last_lesson_id) VALUES (?,?)").run(r.lastInsertRowid, firstId);
+    const courses = getAllCourses();
+    const firstLesson = lessons.length ? lessons[0] : null;
+    const firstId = firstLesson ? firstLesson.id : null;
+    const firstCourseId = firstLesson ? firstLesson.course_id : (courses[0] ? courses[0].id : null);
+    
+    db.prepare("INSERT INTO student_progress (user_id, last_lesson_id, last_course_id) VALUES (?,?,?)")
+      .run(r.lastInsertRowid, firstId, firstCourseId);
 
-    const user = { id: r.lastInsertRowid, full_name, username, role: 'student' };
+    const user = { id: r.lastInsertRowid, full_name, username, role: 'student', pin_code: pin };
     const token = jwt.sign(user, JWT_SECRET, { expiresIn: '30d' });
     res.json({ success: true, message: "Muvaffaqiyatli ro'yxatdan o'tdingiz!", username, pin_code: pin, full_name, token });
   } catch (e) {
     if (e.message?.includes('UNIQUE')) return res.status(409).json({ error: "Bu login band, qayta urinib ko'ring" });
-    res.status(500).json({ error: "Server xatosi" });
+    res.status(500).json({ error: "Server xatosi: " + e.message });
   }
 });
 
@@ -122,8 +128,13 @@ app.post('/api/auth/login-student', (req, res) => {
     const u = db.prepare("SELECT * FROM users WHERE username=? AND role='student'").get(username?.trim());
     if (!u || !bcrypt.compareSync(pin_code, u.password_hash))
       return res.status(401).json({ error: "Login yoki parol noto'g'ri" });
+    
+    // Agar pin_code avval yozilmagan bo'lsa, o'qituvchi ko'rishi uchun saqlab qo'yish
+    if (!u.pin_code && pin_code) {
+      db.prepare("UPDATE users SET pin_code=? WHERE id=?").run(pin_code, u.id);
+    }
     db.prepare("UPDATE student_progress SET last_active=CURRENT_TIMESTAMP WHERE user_id=?").run(u.id);
-    const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'student' };
+    const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'student', pin_code: u.pin_code || pin_code };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
     res.json({ success: true, token, user: payload });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
@@ -144,7 +155,7 @@ app.post('/api/auth/login-teacher', (req, res) => {
 
 // ─── STUDENT ROUTES ────────────────────────────────────────────────────────────
 
-// Dashboard
+// Parolni o'zgartirish
 app.post('/api/student/change-password', auth, onlyStudent, (req, res) => {
   try {
     const { old_pin, new_pin } = req.body;
@@ -156,21 +167,23 @@ app.post('/api/student/change-password', auth, onlyStudent, (req, res) => {
       return res.status(400).json({ error: "Yangi parol kamida 4 ta belgidan iborat bo'lishi kerak" });
     }
     const hash = bcrypt.hashSync(new_pin.trim(), 10);
-    db.prepare("UPDATE users SET password_hash=? WHERE id=?").run(hash, req.user.id);
+    db.prepare("UPDATE users SET password_hash=?, pin_code=? WHERE id=?").run(hash, new_pin.trim(), req.user.id);
     res.json({ success: true, message: "Parol muvaffaqiyatli o'zgartirildi" });
   } catch (e) {
     res.status(500).json({ error: "Server xatosi" });
   }
 });
 
-// Dashboard
+// Dashboard (Istalgan qurilmadan kirganda o'quvchi aynan qoldirgan joyidan ochiladi)
 app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
   try {
     let p = getProgress(req.user.id);
     const lessons = getAllLessons();
+    const courses = getAllCourses();
     if (!p) {
-      const firstId = lessons.length ? lessons[0].id : null;
-      db.prepare("INSERT INTO student_progress (user_id, last_lesson_id) VALUES (?,?)").run(req.user.id, firstId);
+      const firstLesson = lessons.length ? lessons[0] : null;
+      db.prepare("INSERT INTO student_progress (user_id, last_lesson_id, last_course_id) VALUES (?,?,?)")
+        .run(req.user.id, firstLesson?.id || null, firstLesson?.course_id || null);
       p = getProgress(req.user.id);
     }
     const completedIds = jsonParse(p.completed_lesson_ids, []);
@@ -179,11 +192,23 @@ app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
     const completedCount = completedIds.length;
     const pct = total ? Math.round((completedCount / total) * 100) : 0;
 
-    const currentLesson = lessons.find(l => l.id === p.last_lesson_id) || lessons[0] || null;
+    // Oxirgi darsni aniqlash: saqlangan dars yoki tugallanmagan birinchi dars
+    let currentLesson = lessons.find(l => l.id === p.last_lesson_id);
+    if (!currentLesson && lessons.length) {
+      currentLesson = lessons.find(l => !completedIds.includes(l.id)) || lessons[0];
+    }
 
-    // Determine unlocked lessons: all completed + first incomplete
-    const firstIncomplete = lessons.find(l => !completedIds.includes(l.id));
-    const unlockedIds = [...completedIds, ...(firstIncomplete ? [firstIncomplete.id] : [])];
+    const currentCourseId = p.last_course_id || (currentLesson ? currentLesson.course_id : (courses[0] ? courses[0].id : null));
+
+    // Ochiq darslar: barcha tugallanganlar + har bir kursdagi birinchi tugallanmagan dars
+    const unlockedIds = [...completedIds];
+    courses.forEach(c => {
+      const cLessons = lessons.filter(l => l.course_id === c.id);
+      const firstInc = cLessons.find(l => !completedIds.includes(l.id));
+      if (firstInc && !unlockedIds.includes(firstInc.id)) {
+        unlockedIds.push(firstInc.id);
+      }
+    });
 
     res.json({
       lessons: lessons.map(l => ({
@@ -201,18 +226,43 @@ app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
         progress_percent: pct,
         scores: scoresMap,
         unlocked_ids: unlockedIds,
+        last_course_id: currentCourseId,
+        last_lesson_id: currentLesson ? currentLesson.id : null,
       },
       current_lesson: currentLesson ? { id: currentLesson.id, title: currentLesson.title, course_id: currentLesson.course_id } : null,
-      courses: getAllCourses()
+      courses: courses
     });
   } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// Get single lesson (without answers)
+// Kursni tanlash va serverda oxirgi holatni saqlash (qurilmalararo sinxronizatsiya)
+app.post('/api/student/select-course', auth, onlyStudent, (req, res) => {
+  try {
+    const { course_id } = req.body;
+    if (!course_id) return res.status(400).json({ error: "course_id kerak" });
+    const cLessons = db.prepare("SELECT id FROM lessons WHERE course_id=? ORDER BY order_num ASC").all(course_id);
+    const p = getProgress(req.user.id);
+    const completedIds = jsonParse(p.completed_lesson_ids, []);
+    const nextLesson = cLessons.find(l => !completedIds.includes(l.id)) || cLessons[0];
+    const lessonId = nextLesson ? nextLesson.id : null;
+    
+    db.prepare("UPDATE student_progress SET last_course_id=?, last_lesson_id=?, last_active=CURRENT_TIMESTAMP WHERE user_id=?")
+      .run(course_id, lessonId, req.user.id);
+    res.json({ success: true, course_id, lesson_id: lessonId });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
+});
+
+// Get single lesson (va joriy holatni serverda darhol saqlash)
 app.get('/api/student/lessons/:id', auth, onlyStudent, (req, res) => {
   try {
     const lesson = db.prepare("SELECT * FROM lessons WHERE id=?").get(req.params.id);
     if (!lesson) return res.status(404).json({ error: "Dars topilmadi" });
+
+    // Foydalanuvchi qaysi darsni ochsa, serverda oxirgi holat sifatida saqlanadi
+    db.prepare("UPDATE student_progress SET last_lesson_id=?, last_course_id=?, last_active=CURRENT_TIMESTAMP WHERE user_id=?")
+      .run(lesson.id, lesson.course_id, req.user.id);
 
     const p = getProgress(req.user.id);
     const completedIds = jsonParse(p.completed_lesson_ids, []);
@@ -232,7 +282,6 @@ app.get('/api/student/lessons/:id', auth, onlyStudent, (req, res) => {
       min_score: lesson.min_score || 5,
       is_completed: completedIds.includes(lesson.id),
       my_score: scoresMap[lesson.id] ?? null,
-      // 5 ta sifatli test savoli
       quiz: quiz.map((q, i) => ({ originalIndex: i, q: q.q, opts: q.opts })),
       question_count: quiz.length,
     });
@@ -270,10 +319,9 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
     scoresMap[lesson.id] = score;
 
     const lessons = getAllLessons();
-    let nextLessonId = p.last_lesson_id;
+    let nextLessonId = p.last_lesson_id || lesson.id;
 
     if (passed) {
-      // Add to completed if not already
       if (!completedIds.includes(lesson.id)) {
         completedIds.push(lesson.id);
       }
@@ -285,8 +333,8 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
     }
 
     db.prepare(`UPDATE student_progress
-      SET completed_lesson_ids=?, scores_json=?, last_lesson_id=?, last_active=CURRENT_TIMESTAMP
-      WHERE user_id=?`).run(JSON.stringify(completedIds), JSON.stringify(scoresMap), nextLessonId, req.user.id);
+      SET completed_lesson_ids=?, scores_json=?, last_lesson_id=?, last_course_id=?, last_active=CURRENT_TIMESTAMP
+      WHERE user_id=?`).run(JSON.stringify(completedIds), JSON.stringify(scoresMap), nextLessonId, lesson.course_id, req.user.id);
 
     res.json({
       score, total, percent, passed,
@@ -312,13 +360,14 @@ app.post('/api/student/progress', auth, onlyStudent, (req, res) => {
       completedIds.push(lesson_id);
     }
     const lessons = getAllLessons();
+    const curLesson = lessons.find(l => l.id === lesson_id);
     const curIdx = lessons.findIndex(l => l.id === lesson_id);
     let nextLessonId = p.last_lesson_id;
     if (curIdx >= 0 && curIdx < lessons.length - 1) {
       nextLessonId = lessons[curIdx + 1].id;
     }
-    db.prepare(`UPDATE student_progress SET completed_lesson_ids=?, last_lesson_id=?, last_active=CURRENT_TIMESTAMP WHERE user_id=?`)
-      .run(JSON.stringify(completedIds), nextLessonId, req.user.id);
+    db.prepare(`UPDATE student_progress SET completed_lesson_ids=?, last_lesson_id=?, last_course_id=COALESCE(?, last_course_id), last_active=CURRENT_TIMESTAMP WHERE user_id=?`)
+      .run(JSON.stringify(completedIds), nextLessonId, curLesson?.course_id || null, req.user.id);
     res.json({ success: true, next_lesson_id: nextLessonId });
   } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
 });
@@ -396,39 +445,58 @@ app.get('/api/public/certificate/:id', (req, res) => {
 app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
   try {
     const students = db.prepare(`
-      SELECT u.id, u.full_name, u.username, u.password_hash as pin_hash, u.created_at as registered_at,
-             p.completed_lesson_ids, p.last_lesson_id, p.scores_json, p.last_active,
-             l.title as last_lesson_title
+      SELECT u.id, u.full_name, u.username, COALESCE(u.pin_code, '') as pin_code, u.created_at as registered_at,
+             p.completed_lesson_ids, p.last_lesson_id, p.last_course_id, p.scores_json, p.last_active,
+             l.title as last_lesson_title, l.order_num as last_lesson_order,
+             c.title as last_course_title
       FROM users u
       LEFT JOIN student_progress p ON u.id = p.user_id
       LEFT JOIN lessons l ON p.last_lesson_id = l.id
+      LEFT JOIN courses c ON (p.last_course_id = c.id OR l.course_id = c.id)
       WHERE u.role = 'student'
       ORDER BY p.last_active DESC
     `).all();
 
     const lessons = getAllLessons();
+    const courses = getAllCourses();
     const total_lessons = lessons.length;
 
-    const now = new Date();
-    const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     let active_today = 0;
 
     const result = students.map(s => {
       const completed = jsonParse(s.completed_lesson_ids, []);
       const scores = jsonParse(s.scores_json, {});
       const avg_score = Object.keys(scores).length
-        ? Math.round((Object.values(scores).reduce((a, b) => a + b, 0) / (Object.keys(scores).length * 10)) * 100)
+        ? Math.round((Object.values(scores).reduce((a, b) => a + b, 0) / (Object.keys(scores).length * 5)) * 100)
         : 0;
 
-      if (s.last_active && new Date(s.last_active) >= today) active_today++;
+      const is_active = s.last_active && new Date(s.last_active) >= oneDayAgo;
+      if (is_active) active_today++;
+
+      let course_title = s.last_course_title;
+      if (!course_title && s.last_lesson_title) {
+        const foundL = lessons.find(l => l.title === s.last_lesson_title);
+        if (foundL) {
+          const foundC = courses.find(c => c.id === foundL.course_id);
+          if (foundC) course_title = foundC.title;
+        }
+      }
+      if (!course_title && courses.length > 0) {
+        course_title = courses[0].title;
+      }
 
       return {
         id: s.id,
         full_name: s.full_name,
         username: s.username,
+        pin_code: s.pin_code || "Kiritilmagan",
         registered_at: s.registered_at,
         last_active: s.last_active,
-        last_lesson_title: s.last_lesson_title || "Boshlanmagan",
+        is_active: !!is_active,
+        course_title: course_title || "Kurs tanlanmagan",
+        last_lesson_title: s.last_lesson_title || "1-dars",
+        last_lesson_order: s.last_lesson_order || 1,
         completed_count: completed.length,
         total_lessons,
         progress_percent: total_lessons ? Math.round((completed.length / total_lessons) * 100) : 0,
@@ -437,14 +505,25 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
       };
     });
 
-    res.json({ students: result, stats: { total: result.length, active_today } });
-  } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
+    const active_percent = result.length > 0 ? Math.round((active_today / result.length) * 100) : 0;
+    const avg_progress = result.length > 0 ? Math.round(result.reduce((a, b) => a + b.progress_percent, 0) / result.length) : 0;
+
+    res.json({
+      students: result,
+      stats: {
+        total: result.length,
+        active_today,
+        active_percent,
+        avg_progress
+      }
+    });
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
 });
 
 // Student detailed results per lesson
 app.get('/api/teacher/students/:id/details', auth, onlyTeacher, (req, res) => {
   try {
-    const student = db.prepare("SELECT id, full_name, username, created_at as registered_at FROM users WHERE id=? AND role='student'").get(req.params.id);
+    const student = db.prepare("SELECT id, full_name, username, COALESCE(pin_code, '') as pin_code, created_at as registered_at FROM users WHERE id=? AND role='student'").get(req.params.id);
     if (!student) return res.status(404).json({ error: "O'quvchi topilmadi" });
 
     const p = getProgress(student.id);
@@ -484,16 +563,19 @@ app.get('/api/teacher/students/:id/details', auth, onlyTeacher, (req, res) => {
 app.get('/api/teacher/leaderboard', auth, onlyTeacher, (req, res) => {
   try {
     const students = db.prepare(`
-      SELECT u.id, u.full_name, u.username, u.created_at as registered_at,
-             p.completed_lesson_ids, p.scores_json, p.last_active,
-             l.title as last_lesson_title
+      SELECT u.id, u.full_name, u.username, COALESCE(u.pin_code, '') as pin_code, u.created_at as registered_at,
+             p.completed_lesson_ids, p.last_lesson_id, p.last_course_id, p.scores_json, p.last_active,
+             l.title as last_lesson_title, l.order_num as last_lesson_order,
+             c.title as last_course_title
       FROM users u
       LEFT JOIN student_progress p ON u.id = p.user_id
       LEFT JOIN lessons l ON p.last_lesson_id = l.id
+      LEFT JOIN courses c ON (p.last_course_id = c.id OR l.course_id = c.id)
       WHERE u.role = 'student'
     `).all();
 
     const lessons = getAllLessons();
+    const courses = getAllCourses();
     const total_lessons = lessons.length;
 
     const ranked = students.map(s => {
@@ -503,11 +585,28 @@ app.get('/api/teacher/leaderboard', auth, onlyTeacher, (req, res) => {
       const avgScore = completed.length
         ? Math.round((totalScore / (completed.length * 5)) * 100)
         : 0;
+
+      let course_title = s.last_course_title;
+      if (!course_title && s.last_lesson_title) {
+        const foundL = lessons.find(l => l.title === s.last_lesson_title);
+        if (foundL) {
+          const foundC = courses.find(c => c.id === foundL.course_id);
+          if (foundC) course_title = foundC.title;
+        }
+      }
+      if (!course_title && courses.length > 0) course_title = courses[0].title;
+
       return {
-        id: s.id, full_name: s.full_name, username: s.username,
-        registered_at: s.registered_at, last_active: s.last_active,
-        last_lesson_title: s.last_lesson_title || '—',
-        completed_count: completed.length, total_lessons,
+        id: s.id,
+        full_name: s.full_name,
+        username: s.username,
+        pin_code: s.pin_code || "—",
+        registered_at: s.registered_at,
+        last_active: s.last_active,
+        course_title: course_title || "Kurs tanlanmagan",
+        last_lesson_title: s.last_lesson_title || '1-dars',
+        completed_count: completed.length,
+        total_lessons,
         progress_percent: total_lessons ? Math.round((completed.length / total_lessons) * 100) : 0,
         avg_score_percent: avgScore,
         total_score: totalScore,

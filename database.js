@@ -61,9 +61,15 @@ db.exec(`
   );
 `);
 
-// Add course_id if it does not exist (for existing databases)
+// Add columns if they do not exist (for existing databases)
 try {
   db.exec(`ALTER TABLE lessons ADD COLUMN course_id INTEGER REFERENCES courses(id);`);
+} catch(e) {}
+try {
+  db.exec(`ALTER TABLE users ADD COLUMN pin_code TEXT DEFAULT '';`);
+} catch(e) {}
+try {
+  db.exec(`ALTER TABLE student_progress ADD COLUMN last_course_id INTEGER REFERENCES courses(id);`);
 } catch(e) {}
 
 const COURSES_DATA = require('./curriculum.js');
@@ -73,11 +79,11 @@ function seed() {
   const teacherHash = bcrypt.hashSync('11121314', 10);
   const teacherExists = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
   if (!teacherExists) {
-    db.prepare("INSERT INTO users (role, full_name, username, password_hash) VALUES (?,?,?,?)")
-      .run('teacher', "Ma'rufjon Isomiddinov", 'Marufjon', teacherHash);
+    db.prepare("INSERT INTO users (role, full_name, username, password_hash, pin_code) VALUES (?,?,?,?,?)")
+      .run('teacher', "Ma'rufjon Isomiddinov", 'Marufjon', teacherHash, '11121314');
   } else {
-    db.prepare("UPDATE users SET full_name=?, username=?, password_hash=? WHERE role='teacher'")
-      .run("Ma'rufjon Isomiddinov", 'Marufjon', teacherHash);
+    db.prepare("UPDATE users SET full_name=?, username=?, password_hash=?, pin_code=? WHERE role='teacher'")
+      .run("Ma'rufjon Isomiddinov", 'Marufjon', teacherHash, '11121314');
   }
 
   // Check if re-seed is required
