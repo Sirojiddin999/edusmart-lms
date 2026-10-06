@@ -196,6 +196,7 @@ app.get('/api/student/lessons/:id', auth, onlyStudent, (req, res) => {
 
     res.json({
       id: lesson.id,
+      course_id: lesson.course_id,
       order_num: lesson.order_num,
       title: lesson.title,
       description: lesson.description,
@@ -203,19 +204,17 @@ app.get('/api/student/lessons/:id', auth, onlyStudent, (req, res) => {
       content_text: lesson.content_text,
       duration_mins: lesson.duration_mins,
       hashtags: jsonParse(lesson.hashtags, []),
-      min_score: lesson.min_score,
+      min_score: lesson.min_score || 10,
       is_completed: completedIds.includes(lesson.id),
       my_score: scoresMap[lesson.id] ?? null,
-      // 15 tadan 5 tasini tasodifiy tanlab olamiz
-      quiz: quiz.map((q, i) => ({ originalIndex: i, q: q.q, opts: q.opts }))
-                .sort(() => 0.5 - Math.random())
-                .slice(0, 5),
-      question_count: 5,
+      // 10 ta sifatli test savoli
+      quiz: quiz.map((q, i) => ({ originalIndex: i, q: q.q, opts: q.opts })),
+      question_count: quiz.length,
     });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// Submit quiz answers → calculate score, auto-complete if passed
+// Submit quiz answers → calculate score, auto-complete if passed (10/10)
 app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
   try {
     const lesson = db.prepare("SELECT * FROM lessons WHERE id=?").get(req.params.id);
@@ -235,8 +234,8 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
     const score = results.filter(Boolean).length;
     const total = answers.length;
     const percent = total > 0 ? Math.round((score / total) * 100) : 0;
-    // Talab: 100% yechgandan keyin keyingi dars ochilsin
-    const passed = (score === 5 && total === 5);
+    // Talab: 100% yechgandan keyin keyingi dars ochilsin (barcha 10 ta savolga to'g'ri)
+    const passed = (total >= 10 ? score === total : (total > 0 && score === total));
 
     const p = getProgress(req.user.id);
     let completedIds = jsonParse(p.completed_lesson_ids, []);
@@ -253,7 +252,7 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
       if (!completedIds.includes(lesson.id)) {
         completedIds.push(lesson.id);
       }
-      // Find next lesson
+      // Find next lesson in same course or overall
       const curIdx = lessons.findIndex(l => l.id === lesson.id);
       if (curIdx >= 0 && curIdx < lessons.length - 1) {
         nextLessonId = lessons[curIdx + 1].id;
@@ -272,7 +271,7 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
       next_lesson_id: passed ? nextLessonId : null,
       message: passed
         ? `🎉 Tabriklaymiz! ${score}/${total} (100%) to'g'ri yechdingiz. Dars to'liq o'zlashtirildi va keyingi dars ochildi!`
-        : `❌ Imtihondan yiqildiz! Natijangiz: ${score}/${total} (${percent}%). 100% to'g'ri yechish shart. Qayta urinib ko'ring!`,
+        : `❌ Imtihondan o'ta olmadingiz! Natijangiz: ${score}/${total} (${percent}%). 100% (10/10) to'g'ri yechish shart. Qayta urinib ko'ring!`,
     });
   } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
 });
@@ -297,6 +296,73 @@ app.post('/api/student/progress', auth, onlyStudent, (req, res) => {
       .run(JSON.stringify(completedIds), nextLessonId, req.user.id);
     res.json({ success: true, next_lesson_id: nextLessonId });
   } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
+});
+
+// Sertifikat olish yoki yuklash (O'quvchi)
+app.post('/api/student/certificate', auth, onlyStudent, (req, res) => {
+  try {
+    const { course_id } = req.body;
+    if (!course_id) return res.status(400).json({ error: "course_id talab qilinadi" });
+
+    const course = db.prepare("SELECT * FROM courses WHERE id=?").get(course_id);
+    if (!course) return res.status(404).json({ error: "Kurs topilmadi" });
+
+    const courseLessons = db.prepare("SELECT id FROM lessons WHERE course_id=?").all(course_id);
+    if (!courseLessons.length) return res.status(400).json({ error: "Kursda darslar mavjud emas" });
+
+    const p = getProgress(req.user.id);
+    const completedIds = jsonParse(p.completed_lesson_ids, []);
+
+    const allCompleted = courseLessons.every(l => completedIds.includes(l.id));
+    if (!allCompleted) {
+      const completedCount = courseLessons.filter(l => completedIds.includes(l.id)).length;
+      return res.status(400).json({
+        error: `Kurs hali to'liq yakunlanmagan. Siz ${completedCount}/${courseLessons.length} darsni topshirgansiz. Sertifikat uchun barcha darslarni 100% topshirishingiz lozim.`
+      });
+    }
+
+    const u = db.prepare("SELECT full_name FROM users WHERE id=?").get(req.user.id);
+    const studentName = u ? u.full_name : req.user.full_name;
+
+    // Mavjud sertifikatni tekshirish
+    let cert = db.prepare("SELECT * FROM certificates WHERE user_id=? AND course_id=?").get(req.user.id, course_id);
+    if (!cert) {
+      const randCode = Math.floor(100000 + Math.random() * 900000);
+      const certId = `INNO-${new Date().getFullYear()}-${randCode}`;
+      
+      const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+      const now = new Date();
+      const issueDate = `${now.getDate()}-${months[now.getMonth()]}, ${now.getFullYear()}-yil`;
+
+      db.prepare(`
+        INSERT INTO certificates (id, user_id, course_id, student_name, course_title, score_percent, issue_date)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `).run(certId, req.user.id, course_id, studentName, course.title, 100, issueDate);
+
+      cert = db.prepare("SELECT * FROM certificates WHERE id=?").get(certId);
+    }
+
+    res.json({
+      success: true,
+      certificate: cert,
+      verify_url: `/certificate.html?id=${cert.id}`
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
+});
+
+// Ommaviy elektron sertifikatni tekshirish (QR-kod orqali ochiladi)
+app.get('/api/public/certificate/:id', (req, res) => {
+  try {
+    const cert = db.prepare("SELECT * FROM certificates WHERE id=?").get(req.params.id);
+    if (!cert) {
+      return res.status(404).json({ success: false, error: "Bunday sertifikat topilmadi yoki haqiqiy emas." });
+    }
+    res.json({ success: true, certificate: cert });
+  } catch (e) {
+    res.status(500).json({ success: false, error: "Server xatosi: " + e.message });
+  }
 });
 
 // ─── TEACHER ROUTES ────────────────────────────────────────────────────────────
@@ -326,7 +392,7 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
       const completed = jsonParse(s.completed_lesson_ids, []);
       const scores = jsonParse(s.scores_json, {});
       const avg_score = Object.keys(scores).length
-        ? Math.round((Object.values(scores).reduce((a, b) => a + b, 0) / (Object.keys(scores).length * 5)) * 100)
+        ? Math.round((Object.values(scores).reduce((a, b) => a + b, 0) / (Object.keys(scores).length * 10)) * 100)
         : 0;
 
       if (s.last_active && new Date(s.last_active) >= today) active_today++;

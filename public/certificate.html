@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elektron Sertifikatni Tasdiqlash — InnoCode IT Academy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #4f46e5;
+      --navy: #0f172a;
+      --gold: #d97706;
+      --gold-light: #fef3c7;
+      --gold-border: #b45309;
+      --emerald: #059669;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: #0b0f19;
+      color: #334155;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 40px;
+    }
+
+    /* Verification Status Banner */
+    .verify-banner {
+      max-width: 960px;
+      width: 100%;
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid #10b981;
+      border-radius: 14px;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 24px;
+      color: #ecfdf5;
+      backdrop-filter: blur(8px);
+      flex-wrap: wrap;
+    }
+    .verify-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    .live-dot {
+      width: 12px;
+      height: 12px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 12px #10b981;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.7; }
+    }
+    .verify-badge {
+      background: #059669;
+      color: #fff;
+      font-size: 0.75rem;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
+    /* Certificate Outer Frame */
+    .cert-container {
+      max-width: 960px;
+      width: 100%;
+      background: #ffffff;
+      border-radius: 12px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      padding: 18px;
+    }
+
+    /* Certificate Luxury Borders */
+    .cert-border-outer {
+      border: 6px solid #0f172a;
+      border-radius: 8px;
+      padding: 8px;
+      background: #fff;
+    }
+    .cert-border-inner {
+      border: 2px solid #d97706;
+      border-radius: 4px;
+      padding: 36px 32px;
+      position: relative;
+      background: radial-gradient(circle at center, #ffffff 0%, #fafaf9 100%);
+      text-align: center;
+    }
+
+    /* Watermark */
+    .cert-watermark {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(217, 119, 6, 0.04) 1px, transparent 1px);
+      background-size: 24px 24px;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .cert-watermark-logo {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 14vw;
+      font-weight: 900;
+      color: rgba(15, 23, 42, 0.02);
+      font-family: 'Cinzel', serif;
+      pointer-events: none;
+      user-select: none;
+      z-index: 1;
+      white-space: nowrap;
+    }
+
+    .cert-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Header */
+    .cert-header {
+      margin-bottom: 18px;
+    }
+    .cert-brand {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+    }
+    .cert-brand span { color: #4f46e5; }
+    .cert-sub-brand {
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      color: #b45309;
+      font-weight: 800;
+      text-transform: uppercase;
+      margin-top: 4px;
+    }
+
+    .cert-main-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      color: #0f172a;
+      font-weight: 800;
+      letter-spacing: 4px;
+      margin: 16px 0 6px;
+      text-transform: uppercase;
+    }
+    .cert-subtitle {
+      font-size: 0.95rem;
+      color: #64748b;
+      font-style: italic;
+      letter-spacing: 0.5px;
+    }
+
+    /* Student Name */
+    .student-wrap {
+      margin: 22px 0 16px;
+      display: inline-block;
+      padding: 0 32px 8px;
+      border-bottom: 2px solid #d97706;
+    }
+    .student-name {
+      font-family: 'Great Vibes', cursive, 'Cinzel', serif;
+      font-size: 3.6rem;
+      color: #b45309;
+      line-height: 1.1;
+      text-shadow: 1px 1px 2px rgba(217, 119, 6, 0.2);
+    }
+
+    /* Description */
+    .cert-body-text {
+      max-width: 680px;
+      margin: 0 auto 28px;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #334155;
+    }
+    .cert-body-text strong {
+      color: #0f172a;
+    }
+    .course-badge {
+      display: inline-block;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fde68a;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-weight: 800;
+    }
+
+    /* Meta Grid */
+    .cert-meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 140px 1fr;
+      align-items: center;
+      gap: 20px;
+      margin-top: 32px;
+      padding-top: 24px;
+      border-top: 1px dashed #e2e8f0;
+    }
+
+    .sign-box {
+      text-align: center;
+    }
+    .sign-draw {
+      font-family: 'Great Vibes', cursive;
+      font-size: 2rem;
+      color: #0f172a;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .sign-line {
+      width: 140px;
+      height: 1px;
+      background: #0f172a;
+      margin: 0 auto 6px;
+    }
+    .sign-name {
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #0f172a;
+    }
+    .sign-role {
+      font-size: 0.75rem;
+      color: #64748b;
+    }
+
+    /* Seal */
+    .seal-box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .gold-seal {
+      width: 94px;
+      height: 94px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f59e0b 0%, #b45309 100%);
+      border: 4px solid #ffffff;
+      box-shadow: 0 0 0 3px #d97706, 0 6px 14px rgba(217, 119, 6, 0.4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #ffffff;
+      font-family: 'Cinzel', serif;
+      text-align: center;
+      padding: 6px;
+    }
+    .gold-seal-text {
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .gold-seal-star {
+      font-size: 1rem;
+      margin: 2px 0;
+      color: #fff;
+    }
+
+    /* QR Code and Verification ID */
+    .cert-footer-info {
+      margin-top: 28px;
+      padding: 16px 20px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      text-align: left;
+    }
+    .cert-qr-wrap {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .cert-qr-img {
+      width: 84px;
+      height: 84px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #fff;
+      padding: 3px;
+    }
+    .cert-qr-desc {
+      font-size: 0.78rem;
+      color: #475569;
+      line-height: 1.4;
+    }
+    .cert-qr-desc strong {
+      color: #0f172a;
+      display: block;
+      margin-bottom: 2px;
+    }
+    .cert-id-tag {
+      font-family: monospace;
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #1e293b;
+      background: #ffffff;
+      padding: 6px 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+    }
+
+    /* Actions below certificate */
+    .action-row {
+      max-width: 960px;
+      width: 100%;
+      margin-top: 24px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 24px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      border-radius: 10px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      color: #ffffff;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.45);
+    }
+    .btn-secondary {
+      background: #1e293b;
+      color: #e2e8f0;
+      border: 1px solid #334155;
+    }
+    .btn-secondary:hover {
+      background: #334155;
+      color: #fff;
+    }
+
+    /* Print settings */
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+      .verify-banner, .action-row {
+        display: none !important;
+      }
+      .cert-container {
+        box-shadow: none;
+        max-width: 100%;
+        width: 100%;
+        padding: 0;
+        border-radius: 0;
+      }
+      .cert-border-outer {
+        border-width: 4px;
+      }
+      .cert-border-inner {
+        padding: 24px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .cert-main-title { font-size: 1.6rem; letter-spacing: 2px; }
+      .student-name { font-size: 2.5rem; }
+      .cert-meta-grid { grid-template-columns: 1fr; gap: 24px; }
+      .seal-box { order: -1; }
+      .cert-border-inner { padding: 24px 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Tasdiqlash Statusi -->
+  <div class="verify-banner" id="verifyBanner">
+    <div class="verify-left">
+      <div class="live-dot"></div>
+      <span>Haqiqiy Rasmiy Elektron Sertifikat (innocode.uz / Inocoders.uz)</span>
+    </div>
+    <div class="verify-badge">✓ Tizimda Tasdiqlangan</div>
+  </div>
+
+  <!-- Sertifikat Asosiy Karkasi -->
+  <div class="cert-container" id="certContainer">
+    <div class="cert-border-outer">
+      <div class="cert-border-inner">
+        <div class="cert-watermark"></div>
+        <div class="cert-watermark-logo">INNOCODE</div>
+
+        <div class="cert-content">
+          <!-- Akademiya Logotipi va Brendi -->
+          <div class="cert-header">
+            <div class="cert-brand">innocode<span>.uz</span></div>
+            <div class="cert-sub-brand">InnoCode IT Academy & Inocoders</div>
+          </div>
+
+          <!-- Sarlavha -->
+          <h1 class="cert-main-title">Muvaffaqiyat Sertifikati</h1>
+          <p class="cert-subtitle">Ushbu rasmiy hujjat quyidagi o'quvchiga taqdim etiladi:</p>
+
+          <!-- O'quvchi Ismi -->
+          <div class="student-wrap">
+            <div class="student-name" id="viewStudentName">O'quvchi Ismi</div>
+          </div>
+
+          <!-- Sertifikat Matni -->
+          <p class="cert-body-text">
+            InnoCode IT Academy ta'lim platformasidagi
+            <span class="course-badge" id="viewCourseName">Python Asoslari va Sun'iy Intellekt</span>
+            o'quv dasturining barcha <strong>10 ta darsini</strong> hamda har bir dars bo'yicha 
+            amaliy test sinovlarini <strong>100% (10/10) a'lo bahoga</strong> topshirib, 
+            kursni muvaffaqiyatli tamomlaganligi tasdiqlanadi.
+          </p>
+
+          <!-- Imzolar va Muhr -->
+          <div class="cert-meta-grid">
+            <!-- Kurs Rahbari -->
+            <div class="sign-box">
+              <div class="sign-draw">M. Isomiddinov</div>
+              <div class="sign-line"></div>
+              <div class="sign-name">Ma'rufjon Isomiddinov</div>
+              <div class="sign-role">Bosh O'qituvchi & Mentor</div>
+            </div>
+
+            <!-- Rasmiy Oltin Muhr -->
+            <div class="seal-box">
+              <div class="gold-seal">
+                <span class="gold-seal-text">Official</span>
+                <span class="gold-seal-star">★</span>
+                <span class="gold-seal-text">Accredited<br>2026</span>
+              </div>
+            </div>
+
+            <!-- Akademiya Direktori -->
+            <div class="sign-box">
+              <div class="sign-draw">S. Savriyev</div>
+              <div class="sign-line"></div>
+              <div class="sign-name">Sirojiddin Savriyev</div>
+              <div class="sign-role">InnoCode IT Academy Direktori</div>
+            </div>
+          </div>
+
+          <!-- QR Kod va Tekshiruv Ma'lumotlari -->
+          <div class="cert-footer-info">
+            <div class="cert-qr-wrap">
+              <img id="viewQrCode" class="cert-qr-img" src="" alt="QR Verification Code">
+              <div class="cert-qr-desc">
+                <strong>Elektron QR Tasdiqlovchi Kod</strong>
+                Telefon kamerasi bilan skaner qilinganda elektron haqiqiyligi ochiladi.<br>
+                Berilgan sana: <b id="viewIssueDate">06-Oktabr, 2026-yil</b>
+              </div>
+            </div>
+            <div>
+              <span style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 4px;">Sertifikat Seriya Raqami:</span>
+              <span class="cert-id-tag" id="viewCertId">INNO-2026-XXXXXX</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Amallar Tugmalari -->
+  <div class="action-row">
+    <button class="btn btn-primary" onclick="window.print()">
+      🖨 Chop etish / PDF sifatida saqlash
+    </button>
+    <button class="btn btn-secondary" onclick="copyCertLink()">
+      🔗 Havolani nusxalash
+    </button>
+    <a href="/" class="btn btn-secondary">
+      🏠 Asosiy sahifaga o'tish
+    </a>
+  </div>
+
+  <script>
+    async function initCertificate() {
+      const params = new URLSearchParams(window.location.search);
+      const certId = params.get('id');
+
+      const nameEl = document.getElementById('viewStudentName');
+      const courseEl = document.getElementById('viewCourseName');
+      const dateEl = document.getElementById('viewIssueDate');
+      const idEl = document.getElementById('viewCertId');
+      const qrEl = document.getElementById('viewQrCode');
+
+      // QR linki har doim joriy to'liq URL bo'ladi
+      const currentUrl = window.location.href;
+      qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(currentUrl)}&color=0f172a`;
+
+      if (!certId) {
+        idEl.innerText = 'INNO-DEMO-001';
+        nameEl.innerText = params.get('name') || "Sirojiddin Savriyev";
+        courseEl.innerText = params.get('course') || "Python Asoslari va Sun'iy Intellekt";
+        return;
+      }
+
+      try {
+        const res = await fetch(`/api/public/certificate/${certId}`);
+        if (res.ok) {
+          const data = await res.json();
+          if (data.certificate) {
+            const c = data.certificate;
+            nameEl.innerText = c.student_name || "O'quvchi";
+            courseEl.innerText = c.course_title || "Dasturlash";
+            dateEl.innerText = c.issue_date || "2026-yil";
+            idEl.innerText = c.id;
+            return;
+          }
+        }
+      } catch (e) {
+        console.warn("API dan o'qishda xatolik:", e);
+      }
+
+      // Agar serverdan topilmasa yoki offline parametrlar bo'lsa
+      idEl.innerText = certId;
+      if (params.get('name')) nameEl.innerText = params.get('name');
+      if (params.get('course')) courseEl.innerText = params.get('course');
+    }
+
+    function copyCertLink() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        alert("Sertifikatning elektron tekshiruv havolasi nusxalandi!");
+      }).catch(() => {
+        prompt("Sertifikat havolasini nusxalang:", window.location.href);
+      });
+    }
+
+    initCertificate();
+  </script>
+</body>
+</html>

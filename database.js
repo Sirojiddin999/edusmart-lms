@@ -47,6 +47,18 @@ db.exec(`
     last_active          DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE
   );
+  CREATE TABLE IF NOT EXISTS certificates (
+    id           TEXT PRIMARY KEY,
+    user_id      INTEGER NOT NULL,
+    course_id    INTEGER NOT NULL,
+    student_name TEXT NOT NULL,
+    course_title TEXT NOT NULL,
+    score_percent INTEGER DEFAULT 100,
+    issue_date   TEXT NOT NULL,
+    created_at   DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY(course_id) REFERENCES courses(id) ON DELETE CASCADE
+  );
 `);
 
 // Add course_id if it does not exist (for existing databases)
@@ -54,10 +66,7 @@ try {
   db.exec(`ALTER TABLE lessons ADD COLUMN course_id INTEGER REFERENCES courses(id);`);
 } catch(e) {}
 
-// Helper
-const Q = (q, opts, a) => ({ q, opts, a });
-
-const LESSONS = require('./lessons_data.js');
+const COURSES_DATA = require('./curriculum.js');
 
 // ─── Seed & Sync ──────────────────────────────────────────────────────────────
 function seed() {
@@ -68,78 +77,48 @@ function seed() {
       .run('teacher', "Asliddin Karimov", 'oqituvchi', hash);
   }
 
-  // Define the required 3 courses
-  const coursesData = [
-    {
-      title: "Python Asoslari va Sun'iy Intellekt",
-      description: "Dunnyodagi eng mashhur dasturlash tili yordamida backend mantiqi va AI ni o'rganing.",
-      videoIds: ["kqtD5dpn9C8", "Z1Yd7upQsXY", "WGJJIrtnfpk", "t8pPdKYpowI", "x7X9w_GIm1s", "VchuKL44s6E", "8ext9G7xspg", "jO6qQDNa2CE", "rfscVS0vtbw", "XKHEtdqhPAI"],
-      hash: "python"
-    },
-    {
-      title: "JavaScript & React.js",
-      description: "Zamonaviy veb-saytlar va interfeyslar yaratish uchun eng kerakli texnologiyalar.",
-      videoIds: ["W6NZfCO5SIk", "hdI2bqOjy3c", "jS4aFq5-91M", "PkZNo7MFOUg", "hKB-YGF14SY", "w7ejDZ8SWv8", "bMknfKXIFA8", "Ke90Tje7VS0", "NCwa_xi0Uuc", "TNhaISOUy6Q"],
-      hash: "javascript"
-    },
-    {
-      title: "Java va Android Dasturlash",
-      description: "Katta va xavfsiz tizimlar hamda Android mobil ilovalar yaratishni o'rganing.",
-      videoIds: ["eIrMbAQSU34", "grEKMHGYyns", "WPvGqX-TXP0", "VHbSopMyc4M", "A74TOX803D0", "xk4_1vDrzzo", "ZBalWWHYFQc", "fis26HvvDII", "u-HOEUo2Dbc", "EE1-Wf12XEQ"],
-      hash: "java"
-    }
-  ];
-
-  // Hard Reset: Clear db to ensure EXACTLY these 3 courses
+  // Check if re-seed is required
   const existingCoursesCount = db.prepare("SELECT COUNT(*) as c FROM courses").get().c;
-  
-  // Only recreate if there aren't exactly 3 courses (prevents wiping student progress on every reboot)
-  // Or if we need to force it, we can wipe if the titles don't match. For simplicity, just wipe everything once to enforce.
   const hasCorrectCourses = db.prepare("SELECT COUNT(*) as c FROM courses WHERE title LIKE '%Python%'").get().c > 0;
-  
-  // Also check if lessons have valid course_id (migration might have left them NULL)
   const lessonsWithNullCourseId = db.prepare("SELECT COUNT(*) as c FROM lessons WHERE course_id IS NULL").get().c;
+  const sampleLesson = db.prepare("SELECT quiz_json FROM lessons LIMIT 1").get();
+  const sampleQuizCount = sampleLesson ? (JSON.parse(sampleLesson.quiz_json || '[]').length) : 0;
   
-  if (!hasCorrectCourses || existingCoursesCount !== 3 || lessonsWithNullCourseId > 0) {
-
-    console.log("Ma'lumotlar bazasi yangilanmoqda: Aniq 3 ta asosiy kurs o'rnatilmoqda...");
+  if (!hasCorrectCourses || existingCoursesCount !== 3 || lessonsWithNullCourseId > 0 || sampleQuizCount < 10) {
+    console.log("Ma'lumotlar bazasi yangilanmoqda: 3 ta kurs va har birida 10 tadan savolli darslar o'rnatilmoqda...");
     db.exec('DELETE FROM student_progress');
     db.exec('DELETE FROM lessons');
     db.exec('DELETE FROM courses');
     db.exec('VACUUM');
     
     const insertCourse = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
-    const insertLesson = db.prepare("INSERT INTO lessons (course_id, order_num, title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    const insertLesson = db.prepare(`
+      INSERT INTO lessons (course_id, order_num, title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
 
     db.transaction(() => {
-      for (const c of coursesData) {
+      for (const c of COURSES_DATA) {
         const r = insertCourse.run(c.title, c.description);
         const courseId = r.lastInsertRowid;
         
-        for (let i = 0; i < 10; i++) {
-          const orderNum = i + 1;
-          const quiz = [
-            { q: "Bu dars qaysi texnologiya haqida?", opts: [c.title.split(' ')[0], "HTML", "CSS", "Boshqa"], a: 0 },
-            { q: "O'zlashtirish uchun nima eng muhim?", opts: ["Dars qoldirish", "Faqat ko'rish", "Amaliyot va mashq qilish", "Uxlash"], a: 2 },
-            { q: "Qaysi qatorda xato yo'q?", opts: ["Sintaksis to'g'ri", "Sintaksix", "Syntekis", "Suntikss"], a: 0 },
-            { q: orderNum + "-darsdan olgan bilimlaringiz tushunarlimi?", opts: ["Juda tushunarli", "Uncha emas", "Tushunmadim", "Umuman emas"], a: 0 },
-            { q: "Darsni yakunlash uchun o'tish bali necha?", opts: ["20%", "50%", "80%", "100% (5 ball)"], a: 3 }
-          ];
-          
+        for (const l of c.lessons) {
           insertLesson.run(
             courseId,
-            orderNum,
-            c.title + " | " + orderNum + "-dars",
-            "Bu " + c.title + " kursining " + orderNum + "-video darsi.",
-            "https://www.youtube.com/embed/" + c.videoIds[i],
-            "Diqqat bilan videoni ko'ring va bilimlaringizni sinash uchun pastdagi 5 ta testni yeching. O'tish talabi: barcha savollarga to'g'ri javob berish (100%).",
-            JSON.stringify(["#" + c.hash, "#dasturlash", "#dars" + orderNum]),
-            JSON.stringify(quiz),
-            5, 30
+            l.order_num,
+            `${c.title} | ${l.order_num}-dars`,
+            l.description,
+            l.video_url,
+            l.content_text,
+            JSON.stringify(["#" + c.hash, "#dasturlash", "#dars" + l.order_num]),
+            JSON.stringify(l.quiz),
+            10, // min_score: 10 ta to'g'ri javob talab qilinadi
+            l.duration_mins
           );
         }
       }
     })();
+    console.log("Bazaga 3 ta kurs va har bir dars uchun 10 tadan sifatli test savollari muvaffaqiyatli saqlandi!");
   }
 }
 
