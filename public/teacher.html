@@ -493,8 +493,9 @@
     <!-- ═══════════ SIDEBAR ═══════════ -->
     <aside class="t-sidebar">
       <!-- Brand -->
-      <div class="t-brand" style="justify-content: center;">
+      <div class="t-brand" style="justify-content: center; display: flex; align-items: center;">
         <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 90px; object-fit: contain; mix-blend-mode: multiply;">
+        <span style="font-size: 1.5rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 10px;">innocode.uz</span>
       </div>
 
       <!-- LOGIN (Kirish formasi) -->
@@ -1043,9 +1044,9 @@
       }
 
       const actions = document.getElementById('topBarActions');
-      actions.innerHTML = sec === 'lessons'
-        ? '<button class="btn btn-primary btn-sm" onclick="openAddModal()">➕ Yangi Dars Qo\'shish</button>'
-        : '<button class="btn btn-ghost btn-sm" onclick="loadAll()">🔄 Yangilash</button>';
+      actions.innerHTML = '<button class="btn btn-primary btn-sm" onclick="openAddModal()">➕ Yangi Dars Qo\'shish</button>'
+        + ' <button class="btn btn-ghost btn-sm" onclick="loadAll()">🔄 Yangilash</button>'
+        + ' <button class="btn btn-ghost btn-sm" style="color: #ef4444; border-color: #fca5a5; background: #fef2f2; font-weight: 600;" onclick="doLogout()">🚪 Chiqish</button>';
 
       if (sec === 'overview') renderOverview();
       if (sec === 'leaderboard') loadLeaderboard();

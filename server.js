@@ -113,6 +113,25 @@ app.post('/api/auth/login-teacher', (req, res) => {
 // ─── STUDENT ROUTES ────────────────────────────────────────────────────────────
 
 // Dashboard
+app.post('/api/student/change-password', auth, onlyStudent, (req, res) => {
+  try {
+    const { old_pin, new_pin } = req.body;
+    const u = db.prepare("SELECT * FROM users WHERE id=?").get(req.user.id);
+    if (!u || !bcrypt.compareSync(old_pin, u.password_hash)) {
+      return res.status(401).json({ error: "Hozirgi parol noto'g'ri" });
+    }
+    if (!new_pin || new_pin.trim().length < 4) {
+      return res.status(400).json({ error: "Yangi parol kamida 4 ta belgidan iborat bo'lishi kerak" });
+    }
+    const hash = bcrypt.hashSync(new_pin.trim(), 10);
+    db.prepare("UPDATE users SET password_hash=? WHERE id=?").run(hash, req.user.id);
+    res.json({ success: true, message: "Parol muvaffaqiyatli o'zgartirildi" });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi" });
+  }
+});
+
+// Dashboard
 app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
   try {
     let p = getProgress(req.user.id);

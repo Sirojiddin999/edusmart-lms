@@ -281,6 +281,348 @@ const LESSONS = [
       Q("Fragment nima?", ["Keraksiz kod", "Ota tegsiz guruhlash (<></>)", "Xato", "State turi"], 1),
       Q("Yangi React loyiha qanday ochiladi?", ["npx create-react-app yoki vite", "npm install react", "git init", "react start"], 0)
     ]
+  },
+  // --- BACKEND DARSLARI ---
+  {
+    order_num: 11,
+    title: "[Backend] Node.js Asoslari",
+    description: "Node.js bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "Node.js Asoslari darsiga xush kelibsiz! Ushbu darsda backend texnologiyalari haqida o'rganamiz.",
+    quiz: [
+      Q("Node.js nima?", ["Frontend texnologiyasi", "Backend texnologiyasi", "Dizayn dasturi", "Brauzer"], 1),
+      Q("Qaysi tilda yoziladi?", ["C++", "JavaScript", "Python", "HTML"], 1),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Ma'lumotlarni saqlash va qayta ishlash", "Rasm chizish", "Matn yozish"], 1),
+      Q("Qaysi portda ishlaydi (standart)?", ["80", "3000/8080", "21", "443"], 1),
+      Q("Baza bilan qanday bog'lanadi?", ["CSS orqali", "ORM/Drayverlar orqali", "HTML form orqali", "Bog'lanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 12,
+    title: "[Backend] Express.js Frameworki",
+    description: "Express.js bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "Express.js darsiga xush kelibsiz! API larni qanday yaratishni o'rganamiz.",
+    quiz: [
+      Q("Express.js nima?", ["Frontend texnologiyasi", "Backend framework", "Dizayn dasturi", "Brauzer"], 1),
+      Q("Qaysi tilda yoziladi?", ["C++", "JavaScript", "Python", "HTML"], 1),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Ma'lumotlarni saqlash va qayta ishlash", "Rasm chizish", "Matn yozish"], 1),
+      Q("Qaysi portda ishlaydi (standart)?", ["80", "3000/8080", "21", "443"], 1),
+      Q("Baza bilan qanday bog'lanadi?", ["CSS orqali", "ORM/Drayverlar orqali", "HTML form orqali", "Bog'lanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 13,
+    title: "[Backend] API va RESTful xizmatlar",
+    description: "API va RESTful xizmatlar bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "API darsiga xush kelibsiz! Ushbu darsda backend texnologiyalari haqida o'rganamiz.",
+    quiz: [
+      Q("API nima?", ["Dizayn", "Application Programming Interface", "Rasm chizish", "Matn yozish"], 1),
+      Q("REST nima?", ["Arxitektura", "JavaScript", "Python", "HTML"], 0),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Ma'lumotlarni saqlash va qayta ishlash", "Rasm chizish", "Matn yozish"], 1),
+      Q("Qaysi portda ishlaydi (standart)?", ["80", "3000/8080", "21", "443"], 1),
+      Q("Baza bilan qanday bog'lanadi?", ["CSS orqali", "ORM/Drayverlar orqali", "HTML form orqali", "Bog'lanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 14,
+    title: "[Backend] Ma'lumotlar bazasi: MongoDB",
+    description: "MongoDB bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "MongoDB darsiga xush kelibsiz! Ushbu darsda NoSQL haqida o'rganamiz.",
+    quiz: [
+      Q("MongoDB qanday baza?", ["SQL", "NoSQL", "Dizayn dasturi", "Brauzer"], 1),
+      Q("Qaysi formatda ma'lumot saqlaydi?", ["XML", "JSON/BSON", "CSV", "HTML"], 1),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Ma'lumotlarni saqlash va qayta ishlash", "Rasm chizish", "Matn yozish"], 1),
+      Q("Qaysi portda ishlaydi (standart)?", ["80", "27017", "21", "443"], 1),
+      Q("Baza bilan qanday bog'lanadi?", ["CSS orqali", "ORM/Drayverlar orqali", "HTML form orqali", "Bog'lanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 15,
+    title: "[Backend] SQL va PostgreSQL",
+    description: "SQL bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "SQL darsiga xush kelibsiz! Ushbu darsda Relational DB haqida o'rganamiz.",
+    quiz: [
+      Q("PostgreSQL qanday baza?", ["NoSQL", "SQL (Relational)", "Dizayn dasturi", "Brauzer"], 1),
+      Q("Qaysi tilda so'rovlar yoziladi?", ["C++", "SQL", "Python", "HTML"], 1),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Ma'lumotlarni saqlash va qayta ishlash", "Rasm chizish", "Matn yozish"], 1),
+      Q("Qaysi portda ishlaydi (standart)?", ["80", "5432", "21", "443"], 1),
+      Q("Baza bilan qanday bog'lanadi?", ["CSS orqali", "ORM/Drayverlar orqali", "HTML form orqali", "Bog'lanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 16,
+    title: "[Backend] JWT Autentifikatsiya",
+    description: "JWT bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "JWT darsiga xush kelibsiz! Ushbu darsda avtorizatsiya haqida o'rganamiz.",
+    quiz: [
+      Q("JWT nima?", ["HTML tegi", "JSON Web Token", "Dizayn dasturi", "Brauzer"], 1),
+      Q("Vazifasi?", ["Fayl saqlash", "Xavfsizlik va avtorizatsiya", "Python o'rganish", "HTML chizish"], 1),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Ma'lumotlarni xavfsiz uzatish", "Rasm chizish", "Matn yozish"], 1),
+      Q("Sirlash algoritmi?", ["HMAC/SHA", "MD5", "HTML", "CSS"], 0),
+      Q("Token qayerda saqlanadi?", ["DB da", "Brauzerning LocalStorage/Cookie", "Faylda", "Saqlanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 17,
+    title: "[Backend] Backend Xavfsizligi",
+    description: "Backend Xavfsizligi bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "Backend Xavfsizligi darsiga xush kelibsiz! Ushbu darsda xavfsizlik haqida o'rganamiz.",
+    quiz: [
+      Q("CORS nima?", ["Xato", "Cross-Origin Resource Sharing", "Dizayn dasturi", "Brauzer"], 1),
+      Q("XSS nima?", ["Til", "Cross-Site Scripting hujumi", "Python", "HTML"], 1),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Himoya", "Rasm chizish", "Matn yozish"], 1),
+      Q("SQL Injection nima?", ["Ma'lumotlar bazasiga zararli so'rov kiritish", "Yaxshi narsa", "C++ kodi", "CSS stili"], 0),
+      Q("Baza bilan qanday himoya qilinadi?", ["CSS orqali", "Parametrlangan so'rovlar", "HTML form orqali", "Bog'lanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 18,
+    title: "[Backend] Fayllar bilan ishlash",
+    description: "Fayllar bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "Fayllar darsiga xush kelibsiz! Ushbu darsda fayl yuklash haqida o'rganamiz.",
+    quiz: [
+      Q("Fayl yuklash kutubxonasi?", ["Express", "Multer", "Dizayn dasturi", "Brauzer"], 1),
+      Q("Qaysi tilda yoziladi?", ["C++", "JavaScript", "Python", "HTML"], 1),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Fayllarni serverga saqlash", "Rasm chizish", "Matn yozish"], 1),
+      Q("Buffer nima?", ["Fayl", "Ma'lumotlarni xotirada ushlab turuvchi joy", "Rasm", "Video"], 1),
+      Q("Stream nima?", ["Oqim", "Faylni birdaniga emas, qismlab o'qish", "HTML form orqali", "Bog'lanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 19,
+    title: "[Backend] WebSocket va Real-time",
+    description: "WebSocket bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "WebSocket darsiga xush kelibsiz! Ushbu darsda jonli aloqa haqida o'rganamiz.",
+    quiz: [
+      Q("WebSocket nima?", ["Frontend texnologiyasi", "Ikki tomonlama real-time aloqa protokoli", "Dizayn dasturi", "Brauzer"], 1),
+      Q("Socket.io qaysi tilda?", ["C++", "JavaScript", "Python", "HTML"], 1),
+      Q("Asosiy vazifasi nima?", ["Dizayn", "Jonli xabarlar almashish", "Rasm chizish", "Matn yozish"], 1),
+      Q("Polling bilan farqi?", ["Doim ulanib turadi (socket)", "Sekin", "O'chirilgan", "HTML"], 0),
+      Q("Chat yaratishda nima kerak?", ["CSS orqali", "WebSocket", "HTML form orqali", "Bog'lanmaydi"], 1)
+    ]
+  },
+  {
+    order_num: 20,
+    title: "[Backend] Backend loyihani serverga yuklash",
+    description: "Deploy bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#backend", "#nodejs"]),
+    content_text: "Deploy darsiga xush kelibsiz! Ushbu darsda serverga chiqarish haqida o'rganamiz.",
+    quiz: [
+      Q("Deploy nima?", ["Frontend", "Kodni ommaviy serverga chiqarish", "Dizayn", "Brauzer"], 1),
+      Q("PM2 nima?", ["Protsessor", "Node.js jarayon boshqaruvchisi", "Python", "HTML"], 1),
+      Q("Nginx nima?", ["Dizayn", "Veb server / Reverse proxy", "Rasm chizish", "Matn yozish"], 1),
+      Q("Qaysi xizmat deploy uchun yaxshi?", ["Figma", "Render / Heroku / AWS", "Word", "Excel"], 1),
+      Q("Docker nima?", ["CSS", "Ilovani konteynerizatsiya qilish", "HTML form", "Bog'lanmaydi"], 1)
+    ]
+  },
+  // --- PYTHON DARSLARI ---
+  {
+    order_num: 21,
+    title: "[Python] Python Asoslari",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Python imkoniyatlari haqida o'rganamiz.",
+    quiz: [
+      Q("Python qaysi sohada ishlatiladi?", ["Faqat dizayn", "Backend va Data Science", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("Qanday til?", ["Kompilyatsiya qilinadigan", "Interpretatsiya qilinadigan", "Mashina tili", "Belgilash tili"], 1),
+      Q("Python sintaksisi qanday?", ["Juda qiyin", "Sodda va o'qilishi oson", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("O'zgaruvchi e'lon qilish?", ["int x = 5", "x = 5", "let x = 5", "var x = 5"], 1),
+      Q("Ekranga chiqarish?", ["console.log", "print()", "echo", "System.out.print"], 1)
+    ]
+  },
+  {
+    order_num: 22,
+    title: "[Python] Ma'lumotlar tuzilmalari",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Python ma'lumotlar tuzilmalari haqida o'rganamiz.",
+    quiz: [
+      Q("Ro'yxat (list) qanday yoziladi?", ["{}", "[]", "()", "<>"], 1),
+      Q("Tuple (kortej) qanday yoziladi?", ["{}", "[]", "()", "<>"], 2),
+      Q("Dictionary (lug'at) qanday yoziladi?", ["{}", "[]", "()", "<>"], 0),
+      Q("Set (to'plam) qanday yoziladi?", ["{}", "[]", "()", "<>"], 0),
+      Q("List metodi?", ["append()", "push()", "add()", "insert()"], 0)
+    ]
+  },
+  {
+    order_num: 23,
+    title: "[Python] OOP - Obyektga Yo'naltirilgan Dasturlash",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Python OOP haqida o'rganamiz.",
+    quiz: [
+      Q("Class nima?", ["Faqat dizayn", "Obyekt yaratish uchun qolip", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("Konstruktor qanday yoziladi?", ["__init__", "constructor", "init", "start"], 0),
+      Q("Self nima?", ["Juda qiyin", "Joriy obyektga havola", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("Vorislik (Inheritance)?", ["Yangi sinf oldingisidan meros oladi", "O'chirish", "Qo'shish", "Ayrish"], 0),
+      Q("Inkapsulyatsiya?", ["Ochiq kod", "Ma'lumotlarni yashirish", "npm start", "html orqali"], 1)
+    ]
+  },
+  {
+    order_num: 24,
+    title: "[Python] Fayllar va Xatolar bilan ishlash",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Python fayllari haqida o'rganamiz.",
+    quiz: [
+      Q("Faylni o'qish uchun funksiya?", ["read()", "open()", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("try/except nima uchun?", ["Kompilyatsiya qilinadigan", "Xatolarni ushlash", "Mashina tili", "Belgilash tili"], 1),
+      Q("finally bloki qachon ishlaydi?", ["Hech qachon", "Doim", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("Xato turlari?", ["ValueError, TypeError", "[]", "()", "<>"], 0),
+      Q("Faylni avtomatik yopish uchun nima ishlatiladi?", ["node run", "with statmenti", "npm start", "html orqali"], 1)
+    ]
+  },
+  {
+    order_num: 25,
+    title: "[Python] Modullar va Paketlar",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Python modullari haqida o'rganamiz.",
+    quiz: [
+      Q("Modulni qanday chaqiramiz?", ["require", "import", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("pip nima?", ["Kompilyatsiya qilinadigan", "Python paket boshqaruvchisi", "Mashina tili", "Belgilash tili"], 1),
+      Q("Virtual environment (venv) nima uchun?", ["Juda qiyin", "Loyiha izolyatsiyasi uchun", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("requirements.txt nima?", ["Matn fayli", "Loyihaning barcha kutubxonalari ro'yxati", "()", "<>"], 1),
+      Q("Paket o'rnatish?", ["node run", "pip install <paket>", "npm start", "html orqali"], 1)
+    ]
+  },
+  {
+    order_num: 26,
+    title: "[Python] Django Framework Asoslari",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Django haqida o'rganamiz.",
+    quiz: [
+      Q("Django nima?", ["Faqat dizayn", "Python web framework", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("Qanday arxitekturaga ega?", ["Kompilyatsiya", "MVT (Model-View-Template)", "Mashina tili", "Belgilash tili"], 1),
+      Q("Yangi loyiha yaratish?", ["Juda qiyin", "django-admin startproject", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("Serverni ishga tushirish?", ["{}", "python manage.py runserver", "()", "<>"], 1),
+      Q("App (ilova) nima?", ["node run", "Loyiha ichidagi ma'lum bir vazifani bajaruvchi modul", "npm start", "html orqali"], 1)
+    ]
+  },
+  {
+    order_num: 27,
+    title: "[Python] Django ORM va Bazalar",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Django ORM haqida o'rganamiz.",
+    quiz: [
+      Q("ORM nima?", ["Faqat dizayn", "Object-Relational Mapping", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("Model nima?", ["Kompilyatsiya qilinadigan", "Baza jadvalining Python klassi", "Mashina tili", "Belgilash tili"], 1),
+      Q("Migratsiya yaratish?", ["Juda qiyin", "python manage.py makemigrations", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("Migratsiyani bazaga qo'llash?", ["{}", "python manage.py migrate", "()", "<>"], 1),
+      Q("Djangoning standart bazasi?", ["node run", "SQLite", "npm start", "html orqali"], 1)
+    ]
+  },
+  {
+    order_num: 28,
+    title: "[Python] Django REST Framework",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Django REST haqida o'rganamiz.",
+    quiz: [
+      Q("DRF nima?", ["Faqat dizayn", "Django orqali API yaratish kutubxonasi", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("Serializer vazifasi nima?", ["Kompilyatsiya qilinadigan", "Python obyektlarini JSON ga va aksincha o'girish", "Mashina tili", "Belgilash tili"], 1),
+      Q("ViewSets nima?", ["Juda qiyin", "CRUD amallarini avtomatlashtiruvchi klasslar", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("API sinov vositasi?", ["{}", "Postman / Swagger", "()", "<>"], 1),
+      Q("Token Authentication qanday?", ["node run", "Foydalanuvchini token orqali aniqlash", "npm start", "html orqali"], 1)
+    ]
+  },
+  {
+    order_num: 29,
+    title: "[Python] Data Science: Pandas va NumPy",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda Pandas haqida o'rganamiz.",
+    quiz: [
+      Q("NumPy nima?", ["Faqat dizayn", "Matematik va massiv amallari uchun kutubxona", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("Pandas nima?", ["Kompilyatsiya qilinadigan", "Ma'lumotlarni tahlil qilish uchun kutubxona (DataFrame)", "Mashina tili", "Belgilash tili"], 1),
+      Q("DataFrame nima?", ["Juda qiyin", "Ikki o'lchovli jadval shaklidagi ma'lumotlar", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("Faylni Pandasda o'qish?", ["{}", "pd.read_csv()", "()", "<>"], 1),
+      Q("Jadval boshini ko'rish?", ["node run", "df.head()", "npm start", "html orqali"], 1)
+    ]
+  },
+  {
+    order_num: 30,
+    title: "[Python] Python loyihani serverga yuklash",
+    description: "Python bo'yicha asosiy tushunchalar va amaliyot.",
+    video_url: "https://www.youtube.com/embed/qz0aGYrrlhU",
+    duration_mins: 30,
+    min_score: 5,
+    hashtags: JSON.stringify(["#python", "#datascience"]),
+    content_text: "Python darsiga xush kelibsiz! Ushbu darsda deploy haqida o'rganamiz.",
+    quiz: [
+      Q("WSGI nima?", ["Faqat dizayn", "Web Server Gateway Interface (Gunicorn)", "Faqat mobil dastur", "Brauzer"], 1),
+      Q("Gunicorn vazifasi?", ["Kompilyatsiya qilinadigan", "Django dasturini Nginx bilan bog'laydi", "Mashina tili", "Belgilash tili"], 1),
+      Q("Nginx nima?", ["Juda qiyin", "Statik fayllarni tarqatuvchi va proxy server", "Faqat raqamlardan iborat", "JS bilan bir xil"], 1),
+      Q("PostgreSQL nega kerak?", ["{}", "Ishlab chiqarish (Production) dagi kuchli baza", "()", "<>"], 1),
+      Q("Qayerga deploy qilinadi?", ["node run", "AWS, DigitalOcean, Heroku", "npm start", "html orqali"], 1)
+    ]
   }
 ];
 

@@ -20,6 +20,13 @@
     .course-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 20px; }
     .course-footer { display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--border); padding-top: 20px; }
     .course-modules { color: var(--text-muted); font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 6px; }
+
+    /* Modal */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 2000; display: flex; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .modal-box { background: white; padding: 30px; border-radius: 20px; max-width: 500px; width: 90%; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: popIn 0.3s ease-out; }
+    .close-btn { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #64748b; }
+    .close-btn:hover { color: #0f172a; }
+    @keyframes popIn { from { transform: scale(0.9); opacity: 0; } to { transform: scale(1); opacity: 1; } }
   </style>
 </head>
 <body>
@@ -29,6 +36,7 @@
       <div class='navbar-inner' style='display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 15px;'>
         <a href='/' class='brand' style='display: flex; align-items: center; text-decoration: none;'>
           <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 90px; object-fit: contain; mix-blend-mode: multiply;">
+          <span style="font-size: 1.5rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 10px;">innocode.uz</span>
         </a>
         <ul class='nav-links' style='display: flex; gap: 18px; list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center; align-items: center; flex-wrap: nowrap; white-space: nowrap;'>
           <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
@@ -65,7 +73,7 @@
           <p class="course-desc">Dunyodagi eng mashhur dasturlash tili yordamida backend mantiqi, ma'lumotlar bazasi va sun'iy intellekt asoslarini o'rganing.</p>
           <div class="course-footer">
             <div class="course-modules"><span>📚</span> 24 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;">Ko'rish ➔</button>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('python')">Ko'rish ➔</button>
           </div>
         </div>
       </div>
@@ -79,7 +87,7 @@
           <p class="course-desc">Zamonaviy veb-saytlar va interfeyslar yaratish uchun eng kerakli bo'lgan texnologiyalar. Noldan to mukammallikkacha.</p>
           <div class="course-footer">
             <div class="course-modules"><span>📚</span> 32 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;">Ko'rish ➔</button>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('js')">Ko'rish ➔</button>
           </div>
         </div>
       </div>
@@ -93,7 +101,7 @@
           <p class="course-desc">Katta va xavfsiz tizimlar hamda Android operatsion tizimi uchun mobil ilovalar yaratishni o'rganasiz.</p>
           <div class="course-footer">
             <div class="course-modules"><span>📚</span> 28 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;">Ko'rish ➔</button>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('java')">Ko'rish ➔</button>
           </div>
         </div>
       </div>
@@ -107,7 +115,7 @@
           <p class="course-desc">Har qanday dasturning yuragi bo'lmish ma'lumotlar bazalarini loyihalash, SQL so'rovlar yozish va optimallashtirish.</p>
           <div class="course-footer">
             <div class="course-modules"><span>📚</span> 16 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;">Ko'rish ➔</button>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('db')">Ko'rish ➔</button>
           </div>
         </div>
       </div>
@@ -124,5 +132,52 @@
       </div>
     </div>
   </footer>
+
+  <!-- Course Modal -->
+  <div id="courseModal" class="modal-overlay" style="display: none;">
+    <div class="modal-box">
+      <span class="close-btn" onclick="closeCourseModal()">&times;</span>
+      <h2 id="modalTitle" style="margin-top: 0; color: var(--text-primary);">Kurs Nomi</h2>
+      <p id="modalDesc" style="color: var(--text-secondary); line-height: 1.6;"></p>
+      
+      <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin: 20px 0; border: 1px solid var(--border);">
+        <h4 style="margin: 0 0 10px 0; color: #334155;">🔒 Kursni boshlash uchun nima qilish kerak?</h4>
+        <ul style="margin: 0; padding-left: 20px; color: #475569; font-size: 0.95rem; line-height: 1.6;">
+          <li>Saytdan ro'yxatdan o'ting yoki profilga kiring.</li>
+          <li>Video darslarni diqqat bilan ko'ring.</li>
+          <li>Keyingi darsga o'tish uchun testlardan 100% o'ting.</li>
+        </ul>
+      </div>
+
+      <button class="btn" style="width: 100%; background: var(--primary); color: white; padding: 12px; font-size: 1.1rem; border-radius: 12px; cursor: pointer; border: none; font-weight: bold;" onclick="window.location.href='/login.html'">📝 Ro'yxatdan o'tish va Boshlash</button>
+    </div>
+  </div>
+
+  <script>
+    const courseData = {
+      python: { title: "Python Asoslari va Sun'iy Intellekt", desc: "Bu kursda siz Python dasturlash tilini noldan boshlab, backend va sun'iy intellekt elementlarigacha o'rganasiz. Barcha darslar amaliy testlar bilan mustahkamlanadi." },
+      js: { title: "JavaScript & React.js", desc: "Veb dasturlashning asosiy qismi bo'lmish JS va eng mashhur React.js kutubxonasi yordamida zamonaviy interfeyslar yaratishni o'rganing." },
+      java: { title: "Java va Android Dasturlash", desc: "Katta korporativ tizimlar va Android mobil ilovalari yaratish uchun mo'ljallangan chuqurlashtirilgan Java kursi." },
+      db: { title: "PostgreSQL & Ma'lumotlar Bazasi", desc: "Relyatsion ma'lumotlar bazalarini to'g'ri loyihalash, SQL so'rovlar yozish va ishlash tezligini oshirish bo'yicha maxsus kurs." }
+    };
+
+    function openCourseModal(id) {
+      document.getElementById('modalTitle').innerText = courseData[id].title;
+      document.getElementById('modalDesc').innerText = courseData[id].desc;
+      document.getElementById('courseModal').style.display = 'flex';
+    }
+    
+    function closeCourseModal() {
+      document.getElementById('courseModal').style.display = 'none';
+    }
+    
+    // Close modal if clicked outside
+    window.onclick = function(event) {
+      const modal = document.getElementById('courseModal');
+      if (event.target === modal) {
+        closeCourseModal();
+      }
+    }
+  </script>
 </body>
 </html>
