@@ -679,6 +679,10 @@ const COURSES_DATA = [
           Q("Kursning barcha 10 ta darsini to'liq o'zlashtirgan o'quvchi nima oladi?", ["Hech narsa", "InnoCode.uz tomonidan tasdiqlangan rasmiy elektron QR-kodli sertifikat", "Faqat tabriknoma", "Ruxsat"], 1)
         ]
       }
+    ]
+  }
+];
+
 // Har bir dars uchun 5 tadan test savolini ta'minlash
 COURSES_DATA.forEach(c => {
   c.lessons.forEach(l => {
