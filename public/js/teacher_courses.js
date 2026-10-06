@@ -42,7 +42,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 async function loadCourses() {
   try {
-    const r = await fetch('/api/teacher/courses', { headers: window.Auth.getHeaders() });
+    const r = await fetch('/api/teacher/courses', { headers: Auth.getHeaders() });
     ALL_COURSES = await r.json();
     document.getElementById('coursesBadge').innerText = ALL_COURSES.length;
     renderCourses(ALL_COURSES);
@@ -127,7 +127,7 @@ async function submitAddCourse(e) {
   try {
     const r = await fetch(url, {
       method,
-      headers: window.Auth.getHeaders(),
+      headers: Auth.getHeaders(),
       body: JSON.stringify({ title, description: desc })
     });
     const d = await r.json();
@@ -146,7 +146,7 @@ async function submitAddCourse(e) {
 async function delCourse(id) {
   if (!confirm("Diqqat! Kurs bilan birga uning ichidagi BARCHA DARSLAR o'chib ketadi! Davom etasizmi?")) return;
   try {
-    const r = await fetch('/api/teacher/courses/' + id, { method: 'DELETE', headers: window.Auth.getHeaders() });
+    const r = await fetch('/api/teacher/courses/' + id, { method: 'DELETE', headers: Auth.getHeaders() });
     const d = await r.json();
     if (d.success) {
       showToast("Kurs o'chirildi", "success");

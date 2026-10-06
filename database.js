@@ -121,6 +121,43 @@ function seed() {
     syncTransaction();
     console.log("🔄 Mavjud darslar har biri 5 tadan test va 100% o'tish talabi bilan yangilandi.");
   }
+
+  // Ensure ALL courses have at least 10 lessons dynamically
+  const allCourses = db.prepare("SELECT id, title FROM courses").all();
+  const countStmt = db.prepare("SELECT COUNT(*) as c FROM lessons WHERE course_id = ?");
+  const insertNewLesson = db.prepare(`
+    INSERT INTO lessons (course_id,order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
+    VALUES (@course_id,@order_num,@title,@description,@video_url,@content_text,@hashtags,@quiz_json,@min_score,@duration_mins)
+  `);
+  
+  db.transaction(() => {
+    for (const c of allCourses) {
+      if (countStmt.get(c.id).c === 0) {
+        for (let i = 1; i <= 10; i++) {
+          const quiz = [
+            { q: `${c.title} asoslari bo'yicha eng muhim tushuncha nima?`, opts: ["Sintaksis", "Mantiq", "Tezlik", "Dizayn"], a: 1 },
+            { q: `Ushbu texnologiyaning afzalligi nimada?`, opts: ["Oson o'rganilishi", "Ommabopligi", "Tez ishlashi", "Barchasi to'g'ri"], a: 3 },
+            { q: `Darslikda qaysi mavzu yoritildi?`, opts: ["Boshlang'ich tushunchalar", "Murakkab tizimlar", "Faqat nazariya", "Tarixi"], a: 0 },
+            { q: `Amaliyotda eng ko'p nima kerak bo'ladi?`, opts: ["Xatolarni topish", "Kod yozish", "Qayta o'qish", "Sabr va mehnat"], a: 3 },
+            { q: `${c.title} ni o'rganishda davomiylik muhimmi?`, opts: ["Ha, doimiy o'rganish kerak", "Yo'q, 1 kunda o'rganiladi", "Faqat kitob o'qish yetarli", "Bilmadim"], a: 0 }
+          ];
+          insertNewLesson.run({
+            course_id: c.id,
+            order_num: i,
+            title: `${c.title} | ${i}-dars`,
+            description: `Bu ${c.title} kursining ${i}-video darsi. Dars oxirida 5 ta testni 100% yechishingiz kerak.`,
+            video_url: "https://www.youtube.com/embed/T48Nn65_u-M",
+            content_text: `${c.title} kursining ${i}-qismiga xush kelibsiz! Diqqat bilan videoni ko'ring va bilimlaringizni test orqali sinab ko'ring. O'tish bali 100%.`,
+            hashtags: JSON.stringify(["#" + c.title.split(' ')[0].toLowerCase().replace(/[^a-z0-9]/g, ''), "#dars" + i]),
+            quiz_json: JSON.stringify(quiz),
+            min_score: 5,
+            duration_mins: 30
+          });
+        }
+        console.log(`✅ ${c.title} kursi uchun 10 ta yangi dars va testlar avtomatik yaratildi.`);
+      }
+    }
+  })();
 }
 
 seed();
