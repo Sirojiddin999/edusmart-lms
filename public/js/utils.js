@@ -116,11 +116,12 @@ const Auth = {
 
       // Hardcode course icons based on their parent's background color
       if (node.parentElement && node.parentElement.classList.contains('course-icon-wrap')) {
+        const bg = getComputedStyle(node.parentElement).backgroundColor;
         const style = node.parentElement.getAttribute('style') || '';
-        if (style.includes('fdf4ff')) { node.nodeValue = '🐍'; changed = true; }
-        else if (style.includes('fffbeb')) { node.nodeValue = '💛'; changed = true; }
-        else if (style.includes('ecfeff')) { node.nodeValue = '☕'; changed = true; }
-        else if (style.includes('f0fdf4')) { node.nodeValue = '📊'; changed = true; }
+        if (bg === 'rgb(253, 244, 255)' || style.includes('fdf4ff')) { node.nodeValue = '🐍'; changed = true; }
+        else if (bg === 'rgb(255, 251, 235)' || style.includes('fffbeb')) { node.nodeValue = '💛'; changed = true; }
+        else if (bg === 'rgb(236, 254, 255)' || style.includes('ecfeff')) { node.nodeValue = '☕'; changed = true; }
+        else if (bg === 'rgb(240, 253, 244)' || style.includes('f0fdf4')) { node.nodeValue = '📊'; changed = true; }
       }
 
       // Hardcode module icons
@@ -128,6 +129,21 @@ const Auth = {
          node.nodeValue = '📚';
          changed = true;
       }
+      
+      // Hardcode news icons based on background color
+      if (node.parentElement && node.parentElement.classList.contains('news-image')) {
+        const bg = getComputedStyle(node.parentElement).backgroundColor;
+        const style = node.parentElement.getAttribute('style') || '';
+        if (bg === 'rgb(59, 130, 246)' || style.includes('3b82f6')) { node.nodeValue = '📢'; changed = true; }
+        else if (bg === 'rgb(16, 185, 129)' || style.includes('10b981')) { node.nodeValue = '💼'; changed = true; }
+        else if (bg === 'rgb(139, 92, 246)' || style.includes('8b5cf6')) { node.nodeValue = '🤖'; changed = true; }
+        else if (bg === 'rgb(245, 158, 11)' || style.includes('f59e0b')) { node.nodeValue = '📚'; changed = true; }
+      }
+
+      // Hardcode login page large icons and checks
+      if (node.parentElement && node.parentElement.classList.contains('icon-student')) { node.nodeValue = '👨‍🎓'; changed = true; }
+      if (node.parentElement && node.parentElement.classList.contains('icon-teacher')) { node.nodeValue = '👨‍🏫'; changed = true; }
+      if (node.parentElement && node.parentElement.classList.contains('feat-check')) { node.nodeValue = '✔'; changed = true; }
 
       if (changed) node.nodeValue = text;
     }
