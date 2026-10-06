@@ -600,6 +600,9 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   justify-content: center;
   transition: all 0.18s;
 }
+.modal-close-btn::before {
+  content: "✕"; /* Clear X icon */
+}
 .modal-close-btn:hover { background: #e2e8f0; color: var(--text-primary); }
 
 /* Credential display */

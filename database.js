@@ -66,98 +66,77 @@ function seed() {
     const hash = bcrypt.hashSync('admin123', 10);
     db.prepare("INSERT INTO users (role, full_name, username, password_hash) VALUES (?,?,?,?)")
       .run('teacher', "Asliddin Karimov", 'oqituvchi', hash);
-    console.log("✅ O'qituvchi yaratildi: oqituvchi / admin123");
   }
 
-  const lessonCount = db.prepare("SELECT COUNT(*) as c FROM lessons").get().c;
-  if (lessonCount === 0) {
-    const courseInsert = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
-    const courseRes = courseInsert.run("Asosiy Kurs", "Barcha mavjud darslar");
-    const defaultCourseId = courseRes.lastInsertRowid;
-
-    const insert = db.prepare(`
-      INSERT INTO lessons (course_id,order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
-      VALUES (@course_id,@order_num,@title,@description,@video_url,@content_text,@hashtags,@quiz_json,@min_score,@duration_mins)
-    `);
-    const insertMany = db.transaction((lessons) => {
-      for (const l of lessons) insert.run(l);
-    });
-    insertMany(LESSONS.map(l => ({
-      course_id: defaultCourseId,
-      order_num: l.order_num,
-      title: l.title,
-      description: l.description,
-      video_url: l.video_url,
-      content_text: l.content_text,
-      hashtags: l.hashtags,
-      quiz_json: JSON.stringify(l.quiz),
-      min_score: 5,
-      duration_mins: l.duration_mins,
-    })));
-    console.log(`✅ ${LESSONS.length} ta dars yaratildi (har birida 5 tadan test, 100% talab qilinadi).`);
-  } else {
-    // Ensure all existing lessons belong to a course
-    const course = db.prepare("SELECT id FROM courses LIMIT 1").get();
-    let cId = course ? course.id : null;
-    if (!cId) {
-       const cres = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)").run("Asosiy Kurs", "Barcha mavjud darslar");
-       cId = cres.lastInsertRowid;
+  // Define the required 3 courses
+  const coursesData = [
+    {
+      title: "Python Asoslari va Sun'iy Intellekt",
+      description: "Dunnyodagi eng mashhur dasturlash tili yordamida backend mantiqi va AI ni o'rganing.",
+      videoIds: ["kqtD5dpn9C8", "Z1Yd7upQsXY", "WGJJIrtnfpk", "t8pPdKYpowI", "x7X9w_GIm1s", "VchuKL44s6E", "8ext9G7xspg", "jO6qQDNa2CE", "rfscVS0vtbw", "XKHEtdqhPAI"],
+      hash: "python"
+    },
+    {
+      title: "JavaScript & React.js",
+      description: "Zamonaviy veb-saytlar va interfeyslar yaratish uchun eng kerakli texnologiyalar.",
+      videoIds: ["W6NZfCO5SIk", "hdI2bqOjy3c", "jS4aFq5-91M", "PkZNo7MFOUg", "hKB-YGF14SY", "w7ejDZ8SWv8", "bMknfKXIFA8", "Ke90Tje7VS0", "NCwa_xi0Uuc", "TNhaISOUy6Q"],
+      hash: "javascript"
+    },
+    {
+      title: "Java va Android Dasturlash",
+      description: "Katta va xavfsiz tizimlar hamda Android mobil ilovalar yaratishni o'rganing.",
+      videoIds: ["eIrMbAQSU34", "grEKMHGYyns", "WPvGqX-TXP0", "VHbSopMyc4M", "A74TOX803D0", "xk4_1vDrzzo", "ZBalWWHYFQc", "fis26HvvDII", "u-HOEUo2Dbc", "EE1-Wf12XEQ"],
+      hash: "java"
     }
-    db.prepare("UPDATE lessons SET course_id = ? WHERE course_id IS NULL").run(cId);
+  ];
 
-    // Sync / Upgrade existing lessons to 5 questions and min_score 5
-    const updateLesson = db.prepare(`
-      UPDATE lessons 
-      SET quiz_json = ?, min_score = ?, video_url = ?, title = ?, description = ?, content_text = ?, hashtags = ?, duration_mins = ?
-      WHERE order_num = ?
-    `);
-    const syncTransaction = db.transaction(() => {
-      for (const l of LESSONS) {
-        updateLesson.run(
-          JSON.stringify(l.quiz), l.min_score, l.video_url, l.title, l.description, l.content_text, l.hashtags, l.duration_mins, l.order_num
-        );
-      }
-    });
-    syncTransaction();
-    console.log("🔄 Mavjud darslar har biri 5 tadan test va 100% o'tish talabi bilan yangilandi.");
-  }
-
-  // Ensure ALL courses have at least 10 lessons dynamically
-  const allCourses = db.prepare("SELECT id, title FROM courses").all();
-  const countStmt = db.prepare("SELECT COUNT(*) as c FROM lessons WHERE course_id = ?");
-  const insertNewLesson = db.prepare(`
-    INSERT INTO lessons (course_id,order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
-    VALUES (@course_id,@order_num,@title,@description,@video_url,@content_text,@hashtags,@quiz_json,@min_score,@duration_mins)
-  `);
+  // Hard Reset: Clear db to ensure EXACTLY these 3 courses
+  const existingCoursesCount = db.prepare("SELECT COUNT(*) as c FROM courses").get().c;
   
-  db.transaction(() => {
-    for (const c of allCourses) {
-      if (countStmt.get(c.id).c === 0) {
-        for (let i = 1; i <= 10; i++) {
+  // Only recreate if there aren't exactly 3 courses (prevents wiping student progress on every reboot)
+  // Or if we need to force it, we can wipe if the titles don't match. For simplicity, just wipe everything once to enforce.
+  const hasCorrectCourses = db.prepare("SELECT COUNT(*) as c FROM courses WHERE title LIKE '%Python%'").get().c > 0;
+  
+  if (!hasCorrectCourses || existingCoursesCount !== 3) {
+    console.log("Ma'lumotlar bazasi yangilanmoqda: Aniq 3 ta asosiy kurs o'rnatilmoqda...");
+    db.exec('DELETE FROM student_progress');
+    db.exec('DELETE FROM lessons');
+    db.exec('DELETE FROM courses');
+    db.exec('VACUUM');
+    
+    const insertCourse = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
+    const insertLesson = db.prepare("INSERT INTO lessons (course_id, order_num, title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+    db.transaction(() => {
+      for (const c of coursesData) {
+        const r = insertCourse.run(c.title, c.description);
+        const courseId = r.lastInsertRowid;
+        
+        for (let i = 0; i < 10; i++) {
+          const orderNum = i + 1;
           const quiz = [
-            { q: `${c.title} asoslari bo'yicha eng muhim tushuncha nima?`, opts: ["Sintaksis", "Mantiq", "Tezlik", "Dizayn"], a: 1 },
-            { q: `Ushbu texnologiyaning afzalligi nimada?`, opts: ["Oson o'rganilishi", "Ommabopligi", "Tez ishlashi", "Barchasi to'g'ri"], a: 3 },
-            { q: `Darslikda qaysi mavzu yoritildi?`, opts: ["Boshlang'ich tushunchalar", "Murakkab tizimlar", "Faqat nazariya", "Tarixi"], a: 0 },
-            { q: `Amaliyotda eng ko'p nima kerak bo'ladi?`, opts: ["Xatolarni topish", "Kod yozish", "Qayta o'qish", "Sabr va mehnat"], a: 3 },
-            { q: `${c.title} ni o'rganishda davomiylik muhimmi?`, opts: ["Ha, doimiy o'rganish kerak", "Yo'q, 1 kunda o'rganiladi", "Faqat kitob o'qish yetarli", "Bilmadim"], a: 0 }
+            { q: "Bu dars qaysi texnologiya haqida?", opts: [c.title.split(' ')[0], "HTML", "CSS", "Boshqa"], a: 0 },
+            { q: "O'zlashtirish uchun nima eng muhim?", opts: ["Dars qoldirish", "Faqat ko'rish", "Amaliyot va mashq qilish", "Uxlash"], a: 2 },
+            { q: "Qaysi qatorda xato yo'q?", opts: ["Sintaksis to'g'ri", "Sintaksix", "Syntekis", "Suntikss"], a: 0 },
+            { q: orderNum + "-darsdan olgan bilimlaringiz tushunarlimi?", opts: ["Juda tushunarli", "Uncha emas", "Tushunmadim", "Umuman emas"], a: 0 },
+            { q: "Darsni yakunlash uchun o'tish bali necha?", opts: ["20%", "50%", "80%", "100% (5 ball)"], a: 3 }
           ];
-          insertNewLesson.run({
-            course_id: c.id,
-            order_num: i,
-            title: `${c.title} | ${i}-dars`,
-            description: `Bu ${c.title} kursining ${i}-video darsi. Dars oxirida 5 ta testni 100% yechishingiz kerak.`,
-            video_url: "https://www.youtube.com/embed/T48Nn65_u-M",
-            content_text: `${c.title} kursining ${i}-qismiga xush kelibsiz! Diqqat bilan videoni ko'ring va bilimlaringizni test orqali sinab ko'ring. O'tish bali 100%.`,
-            hashtags: JSON.stringify(["#" + c.title.split(' ')[0].toLowerCase().replace(/[^a-z0-9]/g, ''), "#dars" + i]),
-            quiz_json: JSON.stringify(quiz),
-            min_score: 5,
-            duration_mins: 30
-          });
+          
+          insertLesson.run(
+            courseId,
+            orderNum,
+            c.title + " | " + orderNum + "-dars",
+            "Bu " + c.title + " kursining " + orderNum + "-video darsi.",
+            "https://www.youtube.com/embed/" + c.videoIds[i],
+            "Diqqat bilan videoni ko'ring va bilimlaringizni sinash uchun pastdagi 5 ta testni yeching. O'tish talabi: barcha savollarga to'g'ri javob berish (100%).",
+            JSON.stringify(["#" + c.hash, "#dasturlash", "#dars" + orderNum]),
+            JSON.stringify(quiz),
+            5, 30
+          );
         }
-        console.log(`✅ ${c.title} kursi uchun 10 ta yangi dars va testlar avtomatik yaratildi.`);
       }
-    }
-  })();
+    })();
+  }
 }
 
 seed();
