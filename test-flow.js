@@ -92,7 +92,7 @@ async function runTests() {
   const teacherLogin = await fetch(`${BASE_URL}/api/auth/login-teacher`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ username: 'oqituvchi', password: 'admin123' })
+    body: JSON.stringify({ username: 'Marufjon', password: '11121314' })
   });
   const teacherToken = (await teacherLogin.json()).token;
 

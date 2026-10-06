@@ -70,11 +70,14 @@ const COURSES_DATA = require('./curriculum.js');
 
 // ─── Seed & Sync ──────────────────────────────────────────────────────────────
 function seed() {
+  const teacherHash = bcrypt.hashSync('11121314', 10);
   const teacherExists = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
   if (!teacherExists) {
-    const hash = bcrypt.hashSync('admin123', 10);
     db.prepare("INSERT INTO users (role, full_name, username, password_hash) VALUES (?,?,?,?)")
-      .run('teacher', "Asliddin Karimov", 'oqituvchi', hash);
+      .run('teacher', "Ma'rufjon Isomiddinov", 'Marufjon', teacherHash);
+  } else {
+    db.prepare("UPDATE users SET full_name=?, username=?, password_hash=? WHERE role='teacher'")
+      .run("Ma'rufjon Isomiddinov", 'Marufjon', teacherHash);
   }
 
   // Check if re-seed is required
@@ -84,8 +87,8 @@ function seed() {
   const sampleLesson = db.prepare("SELECT quiz_json FROM lessons LIMIT 1").get();
   const sampleQuizCount = sampleLesson ? (JSON.parse(sampleLesson.quiz_json || '[]').length) : 0;
   
-  if (!hasCorrectCourses || existingCoursesCount !== 3 || lessonsWithNullCourseId > 0 || sampleQuizCount < 10) {
-    console.log("Ma'lumotlar bazasi yangilanmoqda: 3 ta kurs va har birida 10 tadan savolli darslar o'rnatilmoqda...");
+  if (!hasCorrectCourses || existingCoursesCount !== 3 || lessonsWithNullCourseId > 0 || sampleQuizCount !== 5) {
+    console.log("Ma'lumotlar bazasi yangilanmoqda: 3 ta kurs va har birida 5 tadan savolli darslar o'rnatilmoqda...");
     db.exec('DELETE FROM student_progress');
     db.exec('DELETE FROM lessons');
     db.exec('DELETE FROM courses');
@@ -103,6 +106,7 @@ function seed() {
         const courseId = r.lastInsertRowid;
         
         for (const l of c.lessons) {
+          const fiveQuiz = (l.quiz || []).slice(0, 5);
           insertLesson.run(
             courseId,
             l.order_num,
@@ -111,14 +115,14 @@ function seed() {
             l.video_url,
             l.content_text,
             JSON.stringify(["#" + c.hash, "#dasturlash", "#dars" + l.order_num]),
-            JSON.stringify(l.quiz),
-            10, // min_score: 10 ta to'g'ri javob talab qilinadi
+            JSON.stringify(fiveQuiz),
+            5, // min_score: 5 ta to'g'ri javob talab qilinadi (100%)
             l.duration_mins
           );
         }
       }
     })();
-    console.log("Bazaga 3 ta kurs va har bir dars uchun 10 tadan sifatli test savollari muvaffaqiyatli saqlandi!");
+    console.log("Bazaga 3 ta kurs va har bir dars uchun 5 tadan sifatli test savollari muvaffaqiyatli saqlandi!");
   }
 }
 

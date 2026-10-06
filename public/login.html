@@ -216,7 +216,7 @@
         <div class="portal-stripe stripe-student"></div>
         <div class="portal-icon-wrap icon-student"></div>
         <h2 class="portal-title">O'quvchilar Portali</h2>
-        <p class="portal-desc">Videolar, konspektlar, 10 ta test va elektron sertifikat</p>
+        <p class="portal-desc">Videolar, konspektlar, 5 ta test va elektron sertifikat</p>
 
         <!-- Tabs -->
         <div class="student-tabs">
@@ -232,11 +232,15 @@
           </div>
           <div class="form-group">
             <label class="form-label">Familiyangiz *</label>
-            <input id="r-lname" type="text" class="form-input" placeholder="Masalan: Toshmatov" required>
+            <input id="r-lname" type="text" class="form-input" placeholder="Masalan: Aliyev yoki Karimova" required>
+            <small style="font-size: 0.76rem; color: #64748b; display: block; margin-top: 4px;">Familiya ...yev yoki ...yeva bilan tugashi shart</small>
           </div>
           <div class="form-group">
-            <label class="form-label">O'zingizning parolingiz (ixtiyoriy)</label>
-            <input id="r-pin" type="text" class="form-input" placeholder="4+ ta belgi">
+            <label class="form-label">Parol / Maxfiy Kod *</label>
+            <input id="r-pin" type="text" class="form-input" placeholder="Masalan: Kod.123" required>
+            <div style="font-size: 0.78rem; color: #3730a3; background: #eef2ff; border: 1px solid #c7d2fe; padding: 8px 12px; border-radius: 8px; margin-top: 6px; line-height: 1.4;">
+              💡 <strong>Izoh:</strong> Kodda kamida bitta <strong>katta harf</strong> (A-Z), <strong>raqam</strong> (0-9) va <strong>nuqta (.)</strong> bo'lishi shart <em>(Masalan: <code>Kod.123</code> yoki <code>Parol.2024</code>)</em>.
+            </div>
           </div>
           <button type="submit" class="btn btn-primary"> Ro'yxatdan O'tish</button>
         </form>
@@ -260,7 +264,7 @@
         <div class="portal-stripe stripe-teacher"></div>
         <div class="portal-icon-wrap icon-teacher"></div>
         <h2 class="portal-title">O'qituvchi Boshqaruvi</h2>
-        <p class="portal-desc">Darslar yuklash, 10 ta test savollarini tuzish va nazorat</p>
+        <p class="portal-desc">Darslar yuklash, 5 ta test savollarini tuzish va nazorat</p>
 
         <ul class="feat-list">
           <li><span class="feat-check"></span> Yangi video va konspektli darslar qo'shish</li>
@@ -272,11 +276,11 @@
         <form id="form-teacher" onsubmit="doTeacherLogin(event)">
           <div class="form-group">
             <label class="form-label">O'qituvchi Logini *</label>
-            <input id="t-user" type="text" class="form-input" value="oqituvchi" required>
+            <input id="t-user" type="text" class="form-input" placeholder="Masalan: Marufjon" required>
           </div>
           <div class="form-group">
             <label class="form-label">Parol *</label>
-            <input id="t-pass" type="password" class="form-input" placeholder="admin123" required>
+            <input id="t-pass" type="password" class="form-input" placeholder="Parolingizni kiriting..." required>
           </div>
           <button type="submit" class="btn btn-teacher"> Panelga Kirish</button>
         </form>
@@ -302,9 +306,22 @@
 
     async function doRegister(e) {
       e.preventDefault();
-      const first_name = document.getElementById('r-fname').value;
-      const last_name = document.getElementById('r-lname').value;
-      const custom_pin = document.getElementById('r-pin').value;
+      const first_name = document.getElementById('r-fname').value.trim();
+      const last_name = document.getElementById('r-lname').value.trim();
+      const custom_pin = document.getElementById('r-pin').value.trim();
+
+      if (first_name.length < 2) {
+        alert("Ismingizni to'liq kiriting!");
+        return;
+      }
+      if (!/(yev|yeva|ev|eva|ov|ova)$/i.test(last_name)) {
+        alert("Familiyangizni to'liq kiriting! Familiya ...yev yoki ...yeva bilan tugashi shart (Masalan: Aliyev yoki Aliyeva).");
+        return;
+      }
+      if (!/[A-ZА-ЯЁ]/.test(custom_pin) || !/\./.test(custom_pin) || !/[0-9]/.test(custom_pin) || custom_pin.length < 4) {
+        alert("Kod talabga javob bermaydi!\nKod kamida 1 ta katta harf (A-Z), raqam (0-9) va nuqta (.) dan iborat bo'lishi shart!\n(Masalan: Kod.123)");
+        return;
+      }
       
       try {
         const r = await fetch('/api/auth/register-student', {

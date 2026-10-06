@@ -67,13 +67,38 @@ function getAllCourses() {
 app.post('/api/auth/register-student', (req, res) => {
   try {
     const { first_name, last_name, custom_pin } = req.body;
-    if (!first_name?.trim() || !last_name?.trim())
-      return res.status(400).json({ error: "Ism va familya majburiy" });
+    const fname = (first_name || '').trim();
+    const lname = (last_name || '').trim();
+    const pin = (custom_pin || '').trim();
 
-    const full_name = `${first_name.trim()} ${last_name.trim()}`;
+    if (!fname || !lname)
+      return res.status(400).json({ error: "Ism va familiya to'liq kiritilishi shart!" });
+
+    if (fname.length < 2)
+      return res.status(400).json({ error: "Ismingizni to'liq kiriting (kamida 2 ta harf)!" });
+
+    // Familiya tekshiruvi: oxirgacha kiritilgan va ...yev, ...yeva (yoki ...ov, ...ova) bilan tugashi shart
+    const surnameRegex = /(yev|yeva|ev|eva|ov|ova)$/i;
+    if (lname.length < 4 || !surnameRegex.test(lname)) {
+      return res.status(400).json({ 
+        error: "Familiyangizni to'liq kiriting! Familiya ...yev yoki ...yeva bilan tugashi shart (Masalan: Aliyev yoki Aliyeva)." 
+      });
+    }
+
+    // Kod tekshiruvi: katta harf, nuqta va son mavjudligi
+    const hasUpper = /[A-ZА-ЯЁ]/.test(pin);
+    const hasDot = /\./.test(pin);
+    const hasDigit = /[0-9]/.test(pin);
+
+    if (!pin || pin.length < 4 || !hasUpper || !hasDot || !hasDigit) {
+      return res.status(400).json({ 
+        error: "Kod talabga javob bermaydi! Kod kamida 1 ta katta harf (A-Z), raqam (0-9) va nuqta (.) dan iborat bo'lishi shart! (Masalan: Kod.123)" 
+      });
+    }
+
+    const full_name = `${fname} ${lname}`;
     const rand4 = Math.floor(1000 + Math.random() * 9000);
-    const username = `${first_name.trim().toLowerCase().replace(/[^a-z]/g, '')}_${rand4}`;
-    const pin = (custom_pin?.trim().length >= 4) ? custom_pin.trim() : String(Math.floor(100000 + Math.random() * 900000));
+    const username = `${fname.toLowerCase().replace(/[^a-z]/g, '')}_${rand4}`;
     const hash = bcrypt.hashSync(pin, 10);
 
     const r = db.prepare("INSERT INTO users (role,full_name,username,password_hash) VALUES (?,?,?,?)").run('student', full_name, username, hash);
@@ -108,7 +133,7 @@ app.post('/api/auth/login-student', (req, res) => {
 app.post('/api/auth/login-teacher', (req, res) => {
   try {
     const { username, password } = req.body;
-    const u = db.prepare("SELECT * FROM users WHERE username=? AND role='teacher'").get(username?.trim());
+    const u = db.prepare("SELECT * FROM users WHERE LOWER(username)=LOWER(?) AND role='teacher'").get(username?.trim());
     if (!u || !bcrypt.compareSync(password, u.password_hash))
       return res.status(401).json({ error: "Login yoki parol noto'g'ri" });
     const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'teacher' };
@@ -204,17 +229,17 @@ app.get('/api/student/lessons/:id', auth, onlyStudent, (req, res) => {
       content_text: lesson.content_text,
       duration_mins: lesson.duration_mins,
       hashtags: jsonParse(lesson.hashtags, []),
-      min_score: lesson.min_score || 10,
+      min_score: lesson.min_score || 5,
       is_completed: completedIds.includes(lesson.id),
       my_score: scoresMap[lesson.id] ?? null,
-      // 10 ta sifatli test savoli
+      // 5 ta sifatli test savoli
       quiz: quiz.map((q, i) => ({ originalIndex: i, q: q.q, opts: q.opts })),
       question_count: quiz.length,
     });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// Submit quiz answers → calculate score, auto-complete if passed (10/10)
+// Submit quiz answers → calculate score, auto-complete if passed (100%)
 app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
   try {
     const lesson = db.prepare("SELECT * FROM lessons WHERE id=?").get(req.params.id);
@@ -234,8 +259,8 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
     const score = results.filter(Boolean).length;
     const total = answers.length;
     const percent = total > 0 ? Math.round((score / total) * 100) : 0;
-    // Talab: 100% yechgandan keyin keyingi dars ochilsin (barcha 10 ta savolga to'g'ri)
-    const passed = (total >= 10 ? score === total : (total > 0 && score === total));
+    // Talab: 100% yechgandan keyin keyingi dars ochilsin (barcha savollarga to'g'ri javob)
+    const passed = (total > 0 && score === total);
 
     const p = getProgress(req.user.id);
     let completedIds = jsonParse(p.completed_lesson_ids, []);
@@ -271,7 +296,7 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
       next_lesson_id: passed ? nextLessonId : null,
       message: passed
         ? `🎉 Tabriklaymiz! ${score}/${total} (100%) to'g'ri yechdingiz. Dars to'liq o'zlashtirildi va keyingi dars ochildi!`
-        : `❌ Imtihondan o'ta olmadingiz! Natijangiz: ${score}/${total} (${percent}%). 100% (10/10) to'g'ri yechish shart. Qayta urinib ko'ring!`,
+        : `❌ Imtihondan o'ta olmadingiz! Natijangiz: ${score}/${total} (${percent}%). 100% (${total}/${total}) to'g'ri yechish shart. Qayta urinib ko'ring!`,
     });
   } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
 });

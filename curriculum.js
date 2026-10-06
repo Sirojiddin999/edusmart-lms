@@ -1,4 +1,4 @@
-// 10 Lessons per Course, 10 Questions per Lesson
+// 10 Lessons per Course, 5 Questions per Lesson
 const Q = (q, opts, a) => ({ q, opts, a });
 
 const COURSES_DATA = [
@@ -679,8 +679,13 @@ const COURSES_DATA = [
           Q("Kursning barcha 10 ta darsini to'liq o'zlashtirgan o'quvchi nima oladi?", ["Hech narsa", "InnoCode.uz tomonidan tasdiqlangan rasmiy elektron QR-kodli sertifikat", "Faqat tabriknoma", "Ruxsat"], 1)
         ]
       }
-    ]
-  }
-];
+// Har bir dars uchun 5 tadan test savolini ta'minlash
+COURSES_DATA.forEach(c => {
+  c.lessons.forEach(l => {
+    if (l.quiz && l.quiz.length > 5) {
+      l.quiz = l.quiz.slice(0, 5);
+    }
+  });
+});
 
 module.exports = COURSES_DATA;

@@ -350,7 +350,7 @@
             <span id="sbProgressPct" style="color:var(--primary);">0%</span>
           </div>
           <div class="sb-sub" style="margin-top: 8px; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:8px 10px; color:#9a3412;">
-            🔒 Har bir darsni <strong>100%</strong> (10/10) yechganingizda keyingisi ochiladi
+            🔒 Har bir darsni <strong>100%</strong> (5/5) yechganingizda keyingisi ochiladi
           </div>
         </div>
         <div class="lesson-list" id="lessonList">
@@ -384,18 +384,18 @@
           <div class="cp-body" id="lContent"></div>
         </div>
 
-        <!-- 10 TA TEST SAVOLI SECTION -->
+        <!-- 5 TA TEST SAVOLI SECTION -->
         <div class="quiz-section animate-fade-up animate-delay-3" id="quizSection" style="display: none;">
           <div class="quiz-heading">
             <div>
-              <div class="quiz-title-text"> Dars Testi (10 ta savol)</div>
+              <div class="quiz-title-text"> Dars Testi (5 ta savol)</div>
               <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">
                 Har bir savolni diqqat bilan o'qib, to'g'ri variantni tanlang
               </p>
             </div>
             <div style="display: flex; align-items: center; gap: 10px;">
-              <span class="badge badge-primary" id="quizMinBadge">Talab: 100% (10/10)</span>
-              <span class="quiz-counter" id="quizCounter">10 ta savol</span>
+              <span class="badge badge-primary" id="quizMinBadge">Talab: 100% (5/5)</span>
+              <span class="quiz-counter" id="quizCounter">5 ta savol</span>
             </div>
           </div>
 
@@ -403,7 +403,7 @@
           <div class="quiz-instruction-alert">
             <span style="font-size: 1.3rem;">⚠️</span>
             <span>
-              <strong>Muhim qoida:</strong> Keyingi dars ochilishi uchun ushbu darsning barcha 10 ta savoliga <strong>100% (10/10)</strong> to'g'ri javob berishingiz kerak!
+              <strong>Muhim qoida:</strong> Keyingi dars ochilishi uchun ushbu darsning barcha 5 ta savoliga <strong>100% (5/5)</strong> to'g'ri javob berishingiz kerak!
             </span>
           </div>
 
@@ -416,7 +416,7 @@
           <!-- Yuborish / Qayta topshirish tugmalari -->
           <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px;">
             <button class="btn btn-primary btn-lg" id="btnSubmitQuiz" onclick="submitQuiz()">
-               Natijani Tekshirish (10/10)
+               Natijani Tekshirish (5/5)
             </button>
             <button class="btn btn-primary btn-lg" id="btnRetryQuiz" style="display: none; background: #ef4444; color: #fff; border: none;" onclick="resetQuiz()">
                Qayta topshirish
@@ -626,7 +626,7 @@
         if (!isLocked) {
           btn.onclick = () => loadLesson(l.id);
         } else {
-          btn.title = `${l.order_num}-darsni ochish uchun oldingi darsning testini 100% (10/10) yechishingiz kerak`;
+          btn.title = `${l.order_num}-darsni ochish uchun oldingi darsning testini 100% (5/5) yechishingiz kerak`;
         }
 
         btn.innerHTML = `
@@ -636,7 +636,7 @@
             <div class="lni-meta">
               <span>⏱ ${l.duration_mins} daq</span>
               <span class="lni-meta-dot"></span>
-              <span>📝 10 test</span>
+              <span>📝 5 test</span>
               <span class="lni-meta-dot"></span>
               ${statusHTML}
             </div>
@@ -685,8 +685,8 @@
         // Konspekt
         document.getElementById('lContent').innerText = CUR.content_text || 'Ushbu dars uchun qo\'shimcha konspekt kiritilmagan.';
 
-        // 10 ta Test Savoli
-        renderQuiz(CUR.quiz || [], CUR.min_score || 10, CUR.my_score, CUR.is_completed);
+        // 5 ta Test Savoli
+        renderQuiz(CUR.quiz || [], CUR.min_score || 5, CUR.my_score, CUR.is_completed);
 
         // Navigatsiya tugmalari va Sidebar darslari
         if (STATE) {
@@ -719,7 +719,7 @@
       }
 
       sec.style.display = 'block';
-      const qCount = quiz.length || 10;
+      const qCount = quiz.length || 5;
       document.getElementById('quizMinBadge').innerText = `Talab: 100% (${qCount}/${qCount} to'g'ri)`;
       document.getElementById('quizCounter').innerText = `${qCount} ta savol`;
 
@@ -832,7 +832,7 @@
         banner.style.display = 'flex';
 
         if (d.passed) {
-          // 100% (10/10) ga erishildi!
+          // 100% (5/5) ga erishildi!
           banner.className = 'quiz-result-banner qrb-pass';
           banner.innerHTML = `
             <div class="qrb-icon">✓</div>
@@ -1006,7 +1006,7 @@
             InnoCode IT Academy ning
             <b id="certCourseName" style="color: #0f172a; background: #fef3c7; padding: 2px 8px; border-radius: 4px;">Dasturlash</b>
             o'quv dasturidagi barcha <b>10 ta dars</b> va amaliy testlarni
-            <b>100% (10/10)</b> a'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.
+            <b>100% (5/5)</b> a'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.
           </p>
 
           <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 36px; text-align: left; gap: 15px; flex-wrap: wrap;">
