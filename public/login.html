@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
@@ -377,6 +377,16 @@
       const usr = Auth.getUser();
       if (usr) {
         window.location.href = usr.role === 'teacher' ? '/teacher.html' : '/student.html';
+      }
+    });
+
+    // BROWSER BACK BUTTON FIX
+    window.addEventListener('pageshow', (e) => {
+      if (e.persisted) {
+        const usr = Auth.getUser();
+        if (usr) {
+          window.location.replace(usr.role === 'teacher' ? '/teacher.html' : '/student.html');
+        }
       }
     });
   </script>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
@@ -427,17 +427,21 @@
         }
         STATE = await r.json();
         
-        const sel = document.getElementById('courseSelect');
-        if (sel && STATE.courses) {
-          const prevCourseId = sel.value;
-          sel.innerHTML = STATE.courses.map(c => `<option value="${c.id}" style="color:#000;">${c.title}</option>`).join('');
-          
-          if (STATE.current_lesson && STATE.current_lesson.course_id) {
-            sel.value = STATE.current_lesson.course_id;
-          } else if (prevCourseId && STATE.courses.find(c => c.id == prevCourseId)) {
-            sel.value = prevCourseId;
+          const sel = document.getElementById('courseSelect');
+          if (sel && STATE.courses) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const courseParam = urlParams.get('course');
+            const prevCourseId = sel.value;
+            sel.innerHTML = STATE.courses.map(c => `<option value="${c.id}" style="color:#000;">${c.title}</option>`).join('');
+            
+            if (courseParam && STATE.courses.find(c => c.id == courseParam)) {
+              sel.value = courseParam;
+            } else if (STATE.current_lesson && STATE.current_lesson.course_id) {
+              sel.value = STATE.current_lesson.course_id;
+            } else if (prevCourseId && STATE.courses.find(c => c.id == prevCourseId)) {
+              sel.value = prevCourseId;
+            }
           }
-        }
         
         onCourseSelect();
       } catch (e) {
