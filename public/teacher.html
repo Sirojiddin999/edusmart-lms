@@ -529,6 +529,10 @@
           <button class="t-nav-item" id="nav-leaderboard" onclick="switchSection('leaderboard')">
             <span class="nav-icon">🏆</span> Reyting
           </button>
+          <button class="t-nav-item" id="nav-courses" onclick="switchSection('courses')">
+            <span class="nav-icon">🎓</span> Kurslar
+            <span class="nav-badge" id="coursesBadge">0</span>
+          </button>
           <button class="t-nav-item" id="nav-lessons" onclick="switchSection('lessons')">
             <span class="nav-icon">📚</span> Darslar
             <span class="nav-badge" id="lessonsBadge">0</span>
@@ -563,7 +567,9 @@
           <div class="t-page-title" id="pageTitle">O'qituvchi Paneli</div>
           <div class="t-page-sub" id="pageSub">Platforma statistikasi va boshqaruvi</div>
         </div>
-        <div id="topBarActions" style="display: flex; gap: 10px; align-items: center;"></div>
+        <div id="topBarActions" style="display: flex; gap: 10px; align-items: center;">
+          <button onclick="history.back()" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;'>⬅ Orqaga</button>
+        </div>
       </div>
 
       <!-- CONTENT -->
@@ -714,6 +720,22 @@
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- 2.1 KURSLAR BO'LIMI -->
+        <div id="secCourses" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 900;">🎓 Kurslar Boshqaruvi</div>
+              <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
+                Kurslar yaratish, darslarni kurslarga ajratish
+              </div>
+            </div>
+            <button class="btn btn-primary" onclick="openAddCourseModal()">➕ Yangi Kurs</button>
+          </div>
+          <div class="l-cards" id="courseCards">
+            <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
           </div>
         </div>
 
@@ -1024,7 +1046,7 @@
 
     // ─── BO'LIMLARNI ALMASHTIRISH ────────────────────────────────────────────
     function switchSection(sec) {
-      ['overview', 'leaderboard', 'lessons', 'students'].forEach(s => {
+      ['overview', 'leaderboard', 'courses', 'lessons', 'students'].forEach(s => {
         const el = document.getElementById('sec' + capitalize(s));
         if (el) el.style.display = (s === sec) ? 'block' : 'none';
         const navEl = document.getElementById('nav-' + s);
@@ -1034,6 +1056,7 @@
       const titles = {
         overview: ['📊 Platforma Tahlili va Boshqaruvi', 'Umumiy o\'quv jarayoni va darslar statistikasi'],
         leaderboard: ['🏆 O\'quvchilar Reytingi', '100% bilan eng ko\'p dars yakunlagan peshqadamlar'],
+        courses: ['🎓 Kurslar Boshqaruvi', 'Barcha o\'quv kurslarini boshqarish'],
         lessons: ['📚 Darslar va Testlar Boshqaruvi', 'Darslar qo\'shish, tahrirlash va 5 ta test savollari'],
         students: ['👥 O\'quvchilar Nazorati', 'Har bir o\'quvchining shaxsiy progressi va test ballari']
       };
@@ -1050,6 +1073,7 @@
 
       if (sec === 'overview') renderOverview();
       if (sec === 'leaderboard') loadLeaderboard();
+      if (sec === 'courses') { if (window.loadCourses) loadCourses(); }
       if (sec === 'lessons') loadLessons();
       if (sec === 'students') loadStudents();
     }
@@ -1472,6 +1496,7 @@
     function openModal(id) { document.getElementById(id).classList.add('open'); }
     function closeModal(id) { document.getElementById(id).classList.remove('open'); }
   </script>
+  <script src="/js/teacher_courses.js"></script>
 </body>
 
 </html>

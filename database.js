@@ -16,8 +16,16 @@ db.exec(`
     created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
   );
 
+  CREATE TABLE IF NOT EXISTS courses (
+    id          INTEGER PRIMARY KEY AUTOINCREMENT,
+    title       TEXT NOT NULL,
+    description TEXT DEFAULT '',
+    created_at  DATETIME DEFAULT CURRENT_TIMESTAMP
+  );
+
   CREATE TABLE IF NOT EXISTS lessons (
     id           INTEGER PRIMARY KEY AUTOINCREMENT,
+    course_id    INTEGER REFERENCES courses(id),
     order_num    INTEGER NOT NULL,
     title        TEXT NOT NULL,
     description  TEXT DEFAULT '',
@@ -41,7 +49,12 @@ db.exec(`
   );
 `);
 
-// ─── Helper ───────────────────────────────────────────────────────────────────
+// Add course_id if it does not exist (for existing databases)
+try {
+  db.exec(`ALTER TABLE lessons ADD COLUMN course_id INTEGER REFERENCES courses(id);`);
+} catch(e) {}
+
+// Helper
 const Q = (q, opts, a) => ({ q, opts, a });
 
 const LESSONS = require('./lessons_data.js');
@@ -58,14 +71,19 @@ function seed() {
 
   const lessonCount = db.prepare("SELECT COUNT(*) as c FROM lessons").get().c;
   if (lessonCount === 0) {
+    const courseInsert = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
+    const courseRes = courseInsert.run("Asosiy Kurs", "Barcha mavjud darslar");
+    const defaultCourseId = courseRes.lastInsertRowid;
+
     const insert = db.prepare(`
-      INSERT INTO lessons (order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
-      VALUES (@order_num,@title,@description,@video_url,@content_text,@hashtags,@quiz_json,@min_score,@duration_mins)
+      INSERT INTO lessons (course_id,order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
+      VALUES (@course_id,@order_num,@title,@description,@video_url,@content_text,@hashtags,@quiz_json,@min_score,@duration_mins)
     `);
     const insertMany = db.transaction((lessons) => {
       for (const l of lessons) insert.run(l);
     });
     insertMany(LESSONS.map(l => ({
+      course_id: defaultCourseId,
       order_num: l.order_num,
       title: l.title,
       description: l.description,
@@ -78,6 +96,15 @@ function seed() {
     })));
     console.log(`✅ ${LESSONS.length} ta dars yaratildi (har birida 5 tadan test, 100% talab qilinadi).`);
   } else {
+    // Ensure all existing lessons belong to a course
+    const course = db.prepare("SELECT id FROM courses LIMIT 1").get();
+    let cId = course ? course.id : null;
+    if (!cId) {
+       const cres = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)").run("Asosiy Kurs", "Barcha mavjud darslar");
+       cId = cres.lastInsertRowid;
+    }
+    db.prepare("UPDATE lessons SET course_id = ? WHERE course_id IS NULL").run(cId);
+
     // Sync / Upgrade existing lessons to 5 questions and min_score 5
     const updateLesson = db.prepare(`
       UPDATE lessons 

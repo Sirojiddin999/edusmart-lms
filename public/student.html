@@ -262,6 +262,7 @@
         <span style="font-size: 1.3rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 8px;">innocode.uz</span>
       </a>
       <div style="display: flex; align-items: center; gap: 12px;">
+        <button class="btn btn-ghost btn-sm" onclick="history.back()" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px;">⬅ Orqaga</button>
         <div class="user-pill">
           <div class="u-avatar" id="uAvatar">?</div>
           <div>
@@ -300,7 +301,10 @@
       <aside class="sidebar-col">
         <div class="sb-hdr">
           <div class="sb-title">📚 Darslar Mundarijasi</div>
-          <div class="sb-sub">
+          <select id="courseSelect" class="form-input" style="margin-top:10px; width:100%; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.1); color:#fff;" onchange="onCourseSelect()">
+            <option value="" style="color:#000;">-- Kursni Tanlang --</option>
+          </select>
+          <div class="sb-sub" style="margin-top: 10px;">
             🔒 Har bir darsning 5 ta testini <strong>100%</strong> yechganingizda keyingi dars avtomatik ochiladi.
           </div>
         </div>
@@ -422,22 +426,56 @@
           throw new Error(errData.error || `Server xatosi: ${r.status}`);
         }
         STATE = await r.json();
-        updateSyncBar(STATE.progress);
-        renderSidebar(STATE.lessons, STATE.progress);
-
-        // Ochilishi kerak bo'lgan darsni topish
-        const tgt = STATE.current_lesson || STATE.lessons[0];
-        if (tgt) {
-          loadLesson(tgt.id);
-        } else {
-          document.getElementById('lTitle').innerText = "Darslar mavjud emas";
-          document.getElementById('lDesc').innerText = "Hozircha tizimga hech qanday dars qo'shilmagan. Iltimos, o'qituvchi dars qo'shishini kuting.";
-          document.getElementById('videoWrap').style.display = 'none';
-          document.getElementById('quizSection').style.display = 'none';
-          document.getElementById('lessonList').innerHTML = '<div style="padding: 20px; color: var(--text-secondary); text-align: center;">Darslar yo\'q</div>';
+        
+        const sel = document.getElementById('courseSelect');
+        if (sel && STATE.courses) {
+          const prevCourseId = sel.value;
+          sel.innerHTML = STATE.courses.map(c => `<option value="${c.id}" style="color:#000;">${c.title}</option>`).join('');
+          
+          if (STATE.current_lesson && STATE.current_lesson.course_id) {
+            sel.value = STATE.current_lesson.course_id;
+          } else if (prevCourseId && STATE.courses.find(c => c.id == prevCourseId)) {
+            sel.value = prevCourseId;
+          }
         }
+        
+        onCourseSelect();
       } catch (e) {
         showToast("Ma'lumotlarni yuklashda xatolik", 'error');
+      }
+    }
+
+    function onCourseSelect() {
+      const courseId = parseInt(document.getElementById('courseSelect').value);
+      if (!courseId) return;
+      
+      const courseLessons = STATE.lessons.filter(l => l.course_id === courseId);
+      
+      // Calculate progress for current course
+      const total = courseLessons.length;
+      const completed = courseLessons.filter(l => STATE.progress.completed_lesson_ids.includes(l.id)).length;
+      const pct = total === 0 ? 0 : Math.round((completed / total) * 100);
+      
+      updateSyncBar({
+        completed_count: completed,
+        total_lessons: total,
+        progress_percent: pct
+      });
+      
+      renderSidebar(courseLessons, STATE.progress);
+
+      // Find first unfinished lesson in this course or first lesson
+      let tgt = courseLessons.find(l => !STATE.progress.completed_lesson_ids.includes(l.id)) || courseLessons[0];
+      
+      if (tgt) {
+        loadLesson(tgt.id);
+      } else {
+        document.getElementById('lTitle').innerText = "Darslar mavjud emas";
+        document.getElementById('lDesc').innerText = "Hozircha tanlangan kursda darslar mavjud emas.";
+        document.getElementById('videoWrap').style.display = 'none';
+        document.getElementById('quizSection').style.display = 'none';
+        document.getElementById('lessonList').innerHTML = '<div style="padding: 20px; color: var(--text-secondary); text-align: center;">Darslar yo\'q</div>';
+        CUR = null;
       }
     }
 
@@ -560,16 +598,17 @@
 
         // Navigatsiya tugmalari
         if (STATE) {
-          const idx = STATE.lessons.findIndex(l => l.id === CUR.id);
+          const courseLessons = STATE.lessons.filter(l => l.course_id === CUR.course_id);
+          const idx = courseLessons.findIndex(l => l.id === CUR.id);
           document.getElementById('btnPrev').disabled = idx <= 0;
-          // Keyingi dars faqat 100% topshirilganda yoqiladi!
-          document.getElementById('btnNext').disabled = !CUR.is_completed || idx >= STATE.lessons.length - 1;
-          if (idx >= STATE.lessons.length - 1) {
-            document.getElementById('btnNext').innerText = CUR.is_completed ? '🎓 Barcha darslar yakunlandi!' : 'Keyingi darsga o\'tish →';
+          
+          document.getElementById('btnNext').disabled = !CUR.is_completed || idx >= courseLessons.length - 1;
+          if (idx >= courseLessons.length - 1) {
+            document.getElementById('btnNext').innerText = CUR.is_completed ? '🎓 Kurs yakunlandi!' : 'Keyingi darsga o\'tish →';
           } else {
             document.getElementById('btnNext').innerText = 'Keyingi darsga o\'tish →';
           }
-          renderSidebar(STATE.lessons, STATE.progress);
+          renderSidebar(courseLessons, STATE.progress);
         }
 
         document.getElementById('playerCol').scrollTo({ top: 0, behavior: 'smooth' });
@@ -721,9 +760,10 @@
           CUR.my_score = d.score;
           document.getElementById('lStatusBadge').innerHTML = '<span class="badge badge-emerald">✓ 100% Yakunlangan</span>';
 
-          const idx = STATE.lessons.findIndex(l => l.id === CUR.id);
-          document.getElementById('btnNext').disabled = idx >= STATE.lessons.length - 1;
-          renderSidebar(STATE.lessons, STATE.progress);
+          const courseLessons = STATE.lessons.filter(l => l.course_id === CUR.course_id);
+          const idx = courseLessons.findIndex(l => l.id === CUR.id);
+          document.getElementById('btnNext').disabled = idx >= courseLessons.length - 1;
+          renderSidebar(courseLessons, STATE.progress);
         } else {
           // 100% dan kam (5/5 to'planmadi)
           banner.className = 'quiz-result-banner qrb-fail';
@@ -764,8 +804,9 @@
 
     function stepLesson(dir) {
       if (!STATE || !CUR) return;
-      const idx = STATE.lessons.findIndex(l => l.id === CUR.id);
-      const target = STATE.lessons[idx + dir];
+      const courseLessons = STATE.lessons.filter(l => l.course_id === CUR.course_id);
+      const idx = courseLessons.findIndex(l => l.id === CUR.id);
+      const target = courseLessons[idx + dir];
       if (target) loadLesson(target.id);
     }
 

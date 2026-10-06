@@ -50,8 +50,15 @@ function getProgress(userId) {
   return p;
 }
 
-function getAllLessons() {
+function getAllLessons(courseId = null) {
+  if (courseId) {
+    return db.prepare("SELECT * FROM lessons WHERE course_id=? ORDER BY order_num ASC").all(courseId);
+  }
   return db.prepare("SELECT * FROM lessons ORDER BY order_num ASC").all();
+}
+
+function getAllCourses() {
+  return db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
 }
 
 // ─── AUTH ROUTES ───────────────────────────────────────────────────────────────
@@ -170,7 +177,8 @@ app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
         scores: scoresMap,
         unlocked_ids: unlockedIds,
       },
-      current_lesson: currentLesson ? { id: currentLesson.id, title: currentLesson.title } : null,
+      current_lesson: currentLesson ? { id: currentLesson.id, title: currentLesson.title, course_id: currentLesson.course_id } : null,
+      courses: getAllCourses()
     });
   } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
 });
@@ -443,19 +451,62 @@ app.get('/api/teacher/lessons/:id', auth, onlyTeacher, (req, res) => {
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
+// Get all courses (teacher)
+app.get('/api/teacher/courses', auth, onlyTeacher, (req, res) => {
+  try {
+    const courses = getAllCourses();
+    const lessons = getAllLessons();
+    const coursesWithLessons = courses.map(c => ({
+      ...c,
+      lessons_count: lessons.filter(l => l.course_id === c.id).length
+    }));
+    res.json(coursesWithLessons);
+  } catch { res.status(500).json({ error: "Server xatosi" }); }
+});
+
+// Create course
+app.post('/api/teacher/courses', auth, onlyTeacher, (req, res) => {
+  try {
+    const { title, description } = req.body;
+    if (!title?.trim()) return res.status(400).json({ error: "Sarlavha majburiy" });
+    const r = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)").run(title.trim(), description || '');
+    res.json({ success: true, id: r.lastInsertRowid });
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+// Update course
+app.put('/api/teacher/courses/:id', auth, onlyTeacher, (req, res) => {
+  try {
+    const { title, description } = req.body;
+    db.prepare("UPDATE courses SET title=?, description=? WHERE id=?").run(title.trim(), description || '', req.params.id);
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
+});
+
+// Delete course
+app.delete('/api/teacher/courses/:id', auth, onlyTeacher, (req, res) => {
+  try {
+    // Delete all lessons of this course
+    db.prepare("DELETE FROM lessons WHERE course_id=?").run(req.params.id);
+    db.prepare("DELETE FROM courses WHERE id=?").run(req.params.id);
+    res.json({ success: true });
+  } catch { res.status(500).json({ error: "Server xatosi" }); }
+});
+
 // Add lesson
 app.post('/api/teacher/lessons', auth, onlyTeacher, (req, res) => {
   try {
-    const { title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins } = req.body;
+    const { title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins, course_id } = req.body;
     if (!title?.trim()) return res.status(400).json({ error: "Sarlavha majburiy" });
+    if (!course_id) return res.status(400).json({ error: "Kursni tanlash majburiy" });
 
-    const maxOrder = db.prepare("SELECT MAX(order_num) as m FROM lessons").get().m || 0;
+    const maxOrder = db.prepare("SELECT MAX(order_num) as m FROM lessons WHERE course_id=?").get(course_id).m || 0;
     const tags = Array.isArray(hashtags) ? hashtags : [];
     const quiz = Array.isArray(quiz_json) ? quiz_json : [];
 
-    const r = db.prepare(`INSERT INTO lessons (order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
-      VALUES (?,?,?,?,?,?,?,?,?)`).run(
-      maxOrder + 1, title.trim(), description || '', video_url || '', content_text || '',
+    const r = db.prepare(`INSERT INTO lessons (course_id,order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
+      VALUES (?,?,?,?,?,?,?,?,?,?)`).run(
+      course_id, maxOrder + 1, title.trim(), description || '', video_url || '', content_text || '',
       JSON.stringify(tags), JSON.stringify(quiz),
       min_score ?? 5, duration_mins ?? 30
     );
@@ -469,13 +520,13 @@ app.put('/api/teacher/lessons/:id', auth, onlyTeacher, (req, res) => {
     const l = db.prepare("SELECT id FROM lessons WHERE id=?").get(req.params.id);
     if (!l) return res.status(404).json({ error: "Dars topilmadi" });
 
-    const { title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins } = req.body;
+    const { title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins, course_id } = req.body;
     const tags = Array.isArray(hashtags) ? hashtags : jsonParse(db.prepare("SELECT hashtags FROM lessons WHERE id=?").get(req.params.id)?.hashtags, []);
     const quiz = Array.isArray(quiz_json) ? quiz_json : jsonParse(db.prepare("SELECT quiz_json FROM lessons WHERE id=?").get(req.params.id)?.quiz_json, []);
 
-    db.prepare(`UPDATE lessons SET title=?,description=?,video_url=?,content_text=?,hashtags=?,quiz_json=?,min_score=?,duration_mins=?
+    db.prepare(`UPDATE lessons SET course_id=COALESCE(?, course_id), title=?,description=?,video_url=?,content_text=?,hashtags=?,quiz_json=?,min_score=?,duration_mins=?
       WHERE id=?`).run(
-      title || '', description || '', video_url || '', content_text || '',
+      course_id, title || '', description || '', video_url || '', content_text || '',
       JSON.stringify(tags), JSON.stringify(quiz), min_score ?? 5, duration_mins ?? 30, req.params.id
     );
     res.json({ success: true });

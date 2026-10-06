@@ -200,6 +200,7 @@
           <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
+          <button onclick="history.back()" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer;'>⬅ Orqaga</button>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'>🔑 Kabinetga kirish</a>
           <a href='/login.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; box-shadow: 0 2px 5px rgba(90, 92, 230, 0.3);'>📝 Ro'yxatdan o'tish</a>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 8px 16px; border-radius: 10px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.9rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'>👨‍🏫 O'qituvchi</a>
@@ -371,6 +372,13 @@
         alert("Xatolik yuz berdi");
       }
     }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const usr = Auth.getUser();
+      if (usr) {
+        window.location.href = usr.role === 'teacher' ? '/teacher.html' : '/student.html';
+      }
+    });
   </script>
 </body>
 </html>
