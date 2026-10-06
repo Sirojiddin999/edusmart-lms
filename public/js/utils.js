@@ -54,3 +54,40 @@ const Auth = {
     'Authorization': `Bearer ${localStorage.getItem('_edu_token') || ''}`
   })
 };
+
+(function() {
+  function fixDOMText() {
+    const map = {
+      'ðŸ‘¨â€ ðŸ «': '👨‍🏫', 'ðŸ“ ': '📝', 'ðŸŽ‰': '🎉', 'ðŸ“š': '📚', 'ðŸ¤–': '🤖',
+      'ðŸš€': '🚀', 'ðŸ’¼': '💼', 'ðŸ“±': '📱', 'ðŸŽ¯': '🎯', 'ðŸ  ': '🐍',
+      'âž”': '➔', 'ðŸ’›': '💛', 'â˜…': '★', 'â˜•': '☕', 'ðŸ“¢': '📢',
+      'ðŸ“˜': '📘', 'ðŸ“—': '📙', 'ðŸ“‹': '📋', 'âš ï¸ ': '⚠️', 'â ³': '⏳',
+      'ðŸ“²': '📲', 'ðŸ” ': '🔍', 'âœ✨': '✨', 'âœ ï¸ ': '✍️', 'âž¤': '➤',
+      'â€”': '—', 'ðŸšª': '🚪', 'â¬…': '⬅'
+    };
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
+    let node;
+    while (node = walker.nextNode()) {
+      let text = node.nodeValue;
+      let changed = false;
+      for (const [bad, good] of Object.entries(map)) {
+        if (text.includes(bad)) {
+          text = text.split(bad).join(good);
+          changed = true;
+        }
+      }
+      if (text.includes('=')) {
+        let newText = ''; let c = false;
+        for (let i=0; i<text.length; i++) {
+          if (text[i] === '=' && i+1 < text.length && text.charCodeAt(i+1) === 0x9B) {
+             newText += '💛'; i++; c = true;
+          } else { newText += text[i]; }
+        }
+        if(c){ text = newText; changed = true; }
+      }
+      if (changed) node.nodeValue = text;
+    }
+  }
+  if (document.readyState !== 'loading') fixDOMText();
+  else document.addEventListener('DOMContentLoaded', fixDOMText);
+})();
