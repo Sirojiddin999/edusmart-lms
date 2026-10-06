@@ -57,25 +57,53 @@ const Auth = {
 
 (function() {
   function fixDOMText() {
-    const map = {
-      'ðŸ‘¨â€ ðŸ «': '👨‍🏫', 'ðŸ“ ': '📝', 'ðŸŽ‰': '🎉', 'ðŸ“š': '📚', 'ðŸ¤–': '🤖',
+    const map = [
+      { key: "O'qituvchi", icon: "👨‍🏫" },
+      { key: "Ro'yxatdan", icon: "📝" },
+      { key: "Kabinetga", icon: "🔑" },
+      { key: "Sayt haqida", icon: "ℹ️" },
+      { key: "Barcha kurslar", icon: "📚" },
+      { key: "Aloqa", icon: "📞" },
+      { key: "Bosh sahifa", icon: "🏠" },
+      { key: "Platformaga kirish", icon: "🔑" },
+      { key: "Orqaga", icon: "⬅" },
+      { key: "Ta Modul", icon: "📚" }
+    ];
+    
+    const icons = {
+      'ðŸŽ‰': '🎉', 'ðŸ“š': '📚', 'ðŸ¤–': '🤖',
       'ðŸš€': '🚀', 'ðŸ’¼': '💼', 'ðŸ“±': '📱', 'ðŸŽ¯': '🎯', 'ðŸ  ': '🐍',
       'âž”': '➔', 'ðŸ’›': '💛', 'â˜…': '★', 'â˜•': '☕', 'ðŸ“¢': '📢',
-      'ðŸ“˜': '📘', 'ðŸ“—': '📙', 'ðŸ“‹': '📋', 'âš ï¸ ': '⚠️', 'â ³': '⏳',
-      'ðŸ“²': '📲', 'ðŸ” ': '🔍', 'âœ✨': '✨', 'âœ ï¸ ': '✍️', 'âž¤': '➤',
+      'ðŸ“˜': '📘', 'ðŸ“—': '📙', 'ðŸ“‹': '📋', 'âš ': '⚠️', 'â ³': '⏳',
+      'ðŸ“²': '📲', 'ðŸ” ': '🔍', 'âœ✨': '✨', 'âœ ': '✍️', 'âž¤': '➤',
       'â€”': '—', 'ðŸšª': '🚪', 'â¬…': '⬅'
     };
+
     const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null, false);
     let node;
     while (node = walker.nextNode()) {
       let text = node.nodeValue;
       let changed = false;
-      for (const [bad, good] of Object.entries(map)) {
+
+      // Fix known texts with ANY corrupted prefix
+      if (text.includes('ð') || text.includes('â') || text.includes('=')) {
+        for (const item of map) {
+          if (text.includes(item.key)) {
+            text = item.icon + " " + item.key + (text.split(item.key)[1] || "");
+            changed = true;
+          }
+        }
+      }
+
+      // Fix exact matches for standalone icons
+      for (const [bad, good] of Object.entries(icons)) {
         if (text.includes(bad)) {
           text = text.split(bad).join(good);
           changed = true;
         }
       }
+      
+      // Fix specific '=' corruption for the yellow heart
       if (text.includes('=')) {
         let newText = ''; let c = false;
         for (let i=0; i<text.length; i++) {
@@ -85,6 +113,7 @@ const Auth = {
         }
         if(c){ text = newText; changed = true; }
       }
+
       if (changed) node.nodeValue = text;
     }
   }
