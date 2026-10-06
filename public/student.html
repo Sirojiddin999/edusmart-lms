@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
@@ -453,7 +453,8 @@
       const courseId = parseInt(document.getElementById('courseSelect').value);
       if (!courseId) return;
       
-      const courseLessons = STATE.lessons.filter(l => l.course_id === courseId);
+      // Use == to handle both string and number course_id from server
+      const courseLessons = STATE.lessons.filter(l => parseInt(l.course_id) === courseId);
       
       // Calculate progress for current course
       const total = courseLessons.length;
@@ -602,7 +603,7 @@
 
         // Navigatsiya tugmalari
         if (STATE) {
-          const courseLessons = STATE.lessons.filter(l => l.course_id === CUR.course_id);
+          const courseLessons = STATE.lessons.filter(l => parseInt(l.course_id) === parseInt(CUR.course_id));
           const idx = courseLessons.findIndex(l => l.id === CUR.id);
           document.getElementById('btnPrev').disabled = idx <= 0;
           

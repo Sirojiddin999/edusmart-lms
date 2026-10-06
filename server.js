@@ -162,7 +162,7 @@ app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
 
     res.json({
       lessons: lessons.map(l => ({
-        id: l.id, order_num: l.order_num, title: l.title,
+        id: l.id, course_id: l.course_id, order_num: l.order_num, title: l.title,
         description: l.description, duration_mins: l.duration_mins,
         hashtags: jsonParse(l.hashtags, []),
         has_quiz: jsonParse(l.quiz_json, []).length > 0,

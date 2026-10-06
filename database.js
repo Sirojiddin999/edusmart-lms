@@ -97,7 +97,11 @@ function seed() {
   // Or if we need to force it, we can wipe if the titles don't match. For simplicity, just wipe everything once to enforce.
   const hasCorrectCourses = db.prepare("SELECT COUNT(*) as c FROM courses WHERE title LIKE '%Python%'").get().c > 0;
   
-  if (!hasCorrectCourses || existingCoursesCount !== 3) {
+  // Also check if lessons have valid course_id (migration might have left them NULL)
+  const lessonsWithNullCourseId = db.prepare("SELECT COUNT(*) as c FROM lessons WHERE course_id IS NULL").get().c;
+  
+  if (!hasCorrectCourses || existingCoursesCount !== 3 || lessonsWithNullCourseId > 0) {
+
     console.log("Ma'lumotlar bazasi yangilanmoqda: Aniq 3 ta asosiy kurs o'rnatilmoqda...");
     db.exec('DELETE FROM student_progress');
     db.exec('DELETE FROM lessons');
