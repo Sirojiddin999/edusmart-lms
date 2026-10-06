@@ -147,6 +147,33 @@ const Auth = {
 
       if (changed) node.nodeValue = text;
     }
+    
+    // Also handle empty elements that lost their text nodes
+    document.querySelectorAll('.course-icon-wrap').forEach(el => {
+       const bg = getComputedStyle(el).backgroundColor;
+       const style = el.getAttribute('style') || '';
+       if (bg === 'rgb(253, 244, 255)' || style.includes('fdf4ff')) el.textContent = '🐍';
+       else if (bg === 'rgb(255, 251, 235)' || style.includes('fffbeb')) el.textContent = '💛';
+       else if (bg === 'rgb(236, 254, 255)' || style.includes('ecfeff')) el.textContent = '☕';
+       else if (bg === 'rgb(240, 253, 244)' || style.includes('f0fdf4')) el.textContent = '📊';
+    });
+    
+    document.querySelectorAll('.course-modules span').forEach(el => {
+       el.textContent = '📚';
+    });
+    
+    document.querySelectorAll('.news-image').forEach(el => {
+       const bg = getComputedStyle(el).backgroundColor;
+       const style = el.getAttribute('style') || '';
+       if (bg === 'rgb(59, 130, 246)' || style.includes('3b82f6')) el.innerHTML = '📢' + el.innerHTML;
+       else if (bg === 'rgb(16, 185, 129)' || style.includes('10b981')) el.innerHTML = '💼' + el.innerHTML;
+       else if (bg === 'rgb(139, 92, 246)' || style.includes('8b5cf6')) el.innerHTML = '🤖' + el.innerHTML;
+       else if (bg === 'rgb(245, 158, 11)' || style.includes('f59e0b')) el.innerHTML = '📚' + el.innerHTML;
+    });
+    
+    document.querySelectorAll('.icon-student').forEach(el => el.textContent = '👨‍🎓');
+    document.querySelectorAll('.icon-teacher').forEach(el => el.textContent = '👨‍🏫');
+    document.querySelectorAll('.feat-check').forEach(el => el.textContent = '✔');
   }
   if (document.readyState !== 'loading') fixDOMText();
   else document.addEventListener('DOMContentLoaded', fixDOMText);

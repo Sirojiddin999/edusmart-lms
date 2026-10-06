@@ -1,12 +1,12 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="uz">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O'quvchi Kabineti â€” innocode.uz</title>
+  <title>O'quvchi Kabineti  innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    /* â”€â”€â”€ STUDENT LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  STUDENT LAYOUT  */
     .s-root { display: flex; flex-direction: column; min-height: 100vh; background: var(--bg-base); }
 
     .s-header {
@@ -57,7 +57,7 @@
       align-items: start;
     }
 
-    /* â”€â”€â”€ SIDEBAR: CHAP TARAF (Darslar Ro'yxati) â”€â”€â”€ */
+    /*  SIDEBAR: CHAP TARAF (Darslar Ro'yxati)  */
     .sidebar-col {
       border-right: 1px solid var(--border);
       position: sticky; top: 90px; height: calc(100vh - 90px); overflow-y: auto;
@@ -126,7 +126,7 @@
       font-size: 0.7rem; font-weight: 700; color: #94a3b8; display: flex; align-items: center; gap: 3px;
     }
 
-    /* â”€â”€â”€ PLAYER AREA: O'NG TARAF (Video & Quiz) â”€â”€â”€ */
+    /*  PLAYER AREA: O'NG TARAF (Video & Quiz)  */
     .player-col {
       padding: 28px 32px;
       display: flex; flex-direction: column; gap: 24px;
@@ -167,7 +167,7 @@
       white-space: pre-wrap; font-size: 0.92rem; line-height: 1.8; color: var(--text-secondary);
     }
 
-    /* â”€â”€â”€ QUIZ SECTION â”€â”€â”€ */
+    /*  QUIZ SECTION  */
     .quiz-section {
       background: #ffffff; border: 1px solid var(--border);
       border-radius: var(--r-xl); padding: 30px;
@@ -262,7 +262,7 @@
         <span style="font-size: 1.3rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 8px;">innocode.uz</span>
       </a>
       <div style="display: flex; align-items: center; gap: 12px;">
-        <button class="btn btn-ghost btn-sm" onclick="history.back()" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px;">â¬… Orqaga</button>
+        <button class="btn btn-ghost btn-sm" onclick="history.back()" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px;"> Orqaga</button>
         <div class="user-pill">
           <div class="u-avatar" id="uAvatar">?</div>
           <div>
@@ -270,8 +270,8 @@
             <div class="u-login" id="uLogin">@login</div>
           </div>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="openStudentSettings()">âš™ï¸ Sozlamalar</button>
-        <button class="btn btn-ghost btn-sm" onclick="doLogout()">Chiqish ðŸšª</button>
+        <button class="btn btn-ghost btn-sm" onclick="openStudentSettings()"> Sozlamalar</button>
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()">Chiqish </button>
       </div>
     </header>
 
@@ -287,7 +287,7 @@
           <div class="progress-fill" id="syncBar" style="width: 0%;"></div>
         </div>
         <span class="sync-cnt" id="syncCnt">0/0 dars</span>
-        <button id="btnCert" class="btn btn-sm" style="display:none; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; font-weight: 700; padding: 6px 14px; border-radius: 8px; box-shadow: 0 2px 6px rgba(245,158,11,0.4);" onclick="generateCertificate()">ðŸŽ“ Sertifikat olish</button>
+        <button id="btnCert" class="btn btn-sm" style="display:none; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; font-weight: 700; padding: 6px 14px; border-radius: 8px; box-shadow: 0 2px 6px rgba(245,158,11,0.4);" onclick="generateCertificate()"> Sertifikat olish</button>
       </div>
     </div>
 
@@ -297,15 +297,15 @@
     -->
     <div class="s-body">
 
-      <!-- â•â•â•â•â•â•â•â•â•â•â• CHAP TARAF: DARSLAR MUNDARIJASI â•â•â•â•â•â•â•â•â•â•â• -->
+      <!--  CHAP TARAF: DARSLAR MUNDARIJASI  -->
       <aside class="sidebar-col">
         <div class="sb-hdr">
-          <div class="sb-title">ðŸ“š Darslar Mundarijasi</div>
+          <div class="sb-title"> Darslar Mundarijasi</div>
           <select id="courseSelect" class="form-input" style="margin-top:10px; width:100%; border:1px solid rgba(255,255,255,0.2); background:rgba(255,255,255,0.1); color:#fff;" onchange="onCourseSelect()">
             <option value="" style="color:#000;">-- Kursni Tanlang --</option>
           </select>
           <div class="sb-sub" style="margin-top: 10px;">
-            ðŸ”’ Har bir darsning 5 ta testini <strong>100%</strong> yechganingizda keyingi dars avtomatik ochiladi.
+             Har bir darsning 5 ta testini <strong>100%</strong> yechganingizda keyingi dars avtomatik ochiladi.
           </div>
         </div>
         <div class="lesson-list" id="lessonList">
@@ -313,7 +313,7 @@
         </div>
       </aside>
 
-      <!-- â•â•â•â•â•â•â•â•â•â•â• O'NG TARAF: VIDEO VA DARSLAR â•â•â•â•â•â•â•â•â•â•â• -->
+      <!--  O'NG TARAF: VIDEO VA DARSLAR  -->
       <main class="player-col" id="playerCol">
 
         <!-- Dars sarlavhasi va ma'lumotlari -->
@@ -321,7 +321,7 @@
           <div class="lmeta">
             <span class="badge badge-primary" id="lNumBadge">1-Dars</span>
             <span id="lStatusBadge"></span>
-            <span class="badge badge-cyan" id="lDurBadge">â± 30 daqiqa</span>
+            <span class="badge badge-cyan" id="lDurBadge"> 30 daqiqa</span>
           </div>
           <h1 class="ltitle" id="lTitle">Yuklanmoqda...</h1>
           <p class="ldesc" id="lDesc"></p>
@@ -335,15 +335,15 @@
 
         <!-- Dars konspekti -->
         <div class="content-panel animate-fade-up animate-delay-2">
-          <div class="cp-heading">ðŸ“– Dars Konspekti va Asosiy Qoidalar</div>
-          <div class="cp-body" id="lContent">â€”</div>
+          <div class="cp-heading"> Dars Konspekti va Asosiy Qoidalar</div>
+          <div class="cp-body" id="lContent"></div>
         </div>
 
         <!-- 5 TA TEST SAVOLI SECTION -->
         <div class="quiz-section animate-fade-up animate-delay-3" id="quizSection" style="display: none;">
           <div class="quiz-heading">
             <div>
-              <div class="quiz-title-text">âœï¸ Dars Testi (5 ta savol)</div>
+              <div class="quiz-title-text"> Dars Testi (5 ta savol)</div>
               <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">
                 Har bir savolni diqqat bilan o'qib, to'g'ri variantni tanlang
               </p>
@@ -356,7 +356,7 @@
 
           <!-- 100% talab eslatmasi -->
           <div class="quiz-instruction-alert">
-            <span style="font-size: 1.3rem;">âš¡</span>
+            <span style="font-size: 1.3rem;"></span>
             <span>
               <strong>Muhim qoida:</strong> Keyingi dars ochilishi uchun ushbu darsning barcha 5 ta savoliga <strong>100% (5/5)</strong> to'g'ri javob berishingiz kerak!
             </span>
@@ -371,10 +371,10 @@
           <!-- Yuborish / Qayta topshirish tugmalari -->
           <div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px;">
             <button class="btn btn-primary btn-lg" id="btnSubmitQuiz" onclick="submitQuiz()">
-              ðŸ“Š Natijani Tekshirish (5/5)
+               Natijani Tekshirish (5/5)
             </button>
             <button class="btn btn-primary btn-lg" id="btnRetryQuiz" style="display: none; background: #ef4444; color: #fff; border: none;" onclick="resetQuiz()">
-              ðŸ”„ Qayta topshirish
+               Qayta topshirish
             </button>
           </div>
 
@@ -384,9 +384,9 @@
 
         <!-- NAVIGATSIYA TUGMALARI -->
         <div class="lesson-actions animate-fade-up">
-          <button class="btn btn-ghost" id="btnPrev" onclick="stepLesson(-1)">â† Oldingi Dars</button>
+          <button class="btn btn-ghost" id="btnPrev" onclick="stepLesson(-1)"> Oldingi Dars</button>
           <button class="btn btn-success btn-lg" id="btnNext" onclick="stepLesson(1)" disabled>
-            Keyingi darsga o'tish â†’
+            Keyingi darsga o'tish 
           </button>
         </div>
 
@@ -412,7 +412,7 @@
     document.getElementById('uName').innerText   = usr.full_name || 'O\'quvchi';
     document.getElementById('uLogin').innerText  = '@' + (usr.username || '');
 
-    // â”€â”€â”€ DASHBOARDNI YUKLASH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  DASHBOARDNI YUKLASH 
     async function loadAll() {
       try {
         const r = await fetch('/api/student/dashboard', { headers: Auth.getHeaders() });
@@ -498,7 +498,7 @@
       }
     }
 
-    // â”€â”€â”€ SIDEBARNI CHIZISH (CHAP TARAF) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  SIDEBARNI CHIZISH (CHAP TARAF) 
     function renderSidebar(lessons, prog) {
       const list = document.getElementById('lessonList');
       list.innerHTML = '';
@@ -517,13 +517,13 @@
         let dotClass = 'dot-p', dotContent = l.order_num;
         if (isCompleted) {
           dotClass = 'dot-d';
-          dotContent = 'âœ“';
+          dotContent = '';
         } else if (isActive) {
           dotClass = 'dot-a';
-          dotContent = 'â–¶';
+          dotContent = '';
         } else if (isLocked) {
           dotClass = 'dot-l';
-          dotContent = 'ðŸ”’';
+          dotContent = '';
         }
 
         const btn = document.createElement('button');
@@ -540,16 +540,16 @@
           : (score !== undefined ? `<span class="score-chip" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5;">${score}/5</span>` : '');
 
         const statusTag = isLocked
-          ? `<span class="lock-badge">ðŸ”’ Qulflangan</span>`
-          : (isCompleted ? `<span style="color:var(--emerald);font-weight:700;">â€¢ O'tildi</span>` : (isActive ? `<span style="color:var(--primary);font-weight:700;">â€¢ O'rganilmoqda</span>` : ''));
+          ? `<span class="lock-badge"> Qulflangan</span>`
+          : (isCompleted ? `<span style="color:var(--emerald);font-weight:700;"> O'tildi</span>` : (isActive ? `<span style="color:var(--primary);font-weight:700;"> O'rganilmoqda</span>` : ''));
 
         btn.innerHTML = `
           <div class="ldot ${dotClass}">${dotContent}</div>
           <div class="lni-info">
             <div class="lni-title">${l.title}</div>
             <div class="lni-meta">
-              <span>â± ${l.duration_mins} daq</span>
-              <span>â€¢ 5 ta test</span>
+              <span> ${l.duration_mins} daq</span>
+              <span> 5 ta test</span>
               ${statusTag}
             </div>
           </div>
@@ -559,7 +559,7 @@
       });
     }
 
-    // â”€â”€â”€ DARSNI YUKLASH (O'NG TARAF) â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  DARSNI YUKLASH (O'NG TARAF) 
     async function loadLesson(id) {
       try {
         const r = await fetch(`/api/student/lessons/${id}`, { headers: Auth.getHeaders() });
@@ -571,13 +571,13 @@
         document.getElementById('lNumBadge').innerText = CUR.order_num + '-Dars';
         document.getElementById('lTitle').innerText    = CUR.title;
         document.getElementById('lDesc').innerText     = CUR.description || '';
-        document.getElementById('lDurBadge').innerText = `â± ${CUR.duration_mins} daqiqa`;
+        document.getElementById('lDurBadge').innerText = ` ${CUR.duration_mins} daqiqa`;
 
         // Status badge
         const sb = document.getElementById('lStatusBadge');
         sb.innerHTML = CUR.is_completed
-          ? '<span class="badge badge-emerald">âœ“ 100% Yakunlangan</span>'
-          : '<span class="badge badge-amber">â³ O\'rganilmoqda</span>';
+          ? '<span class="badge badge-emerald"> 100% Yakunlangan</span>'
+          : '<span class="badge badge-amber"> O\'rganilmoqda</span>';
 
         // Hashteglar
         const tagsEl = document.getElementById('lTags');
@@ -608,9 +608,9 @@
           
           document.getElementById('btnNext').disabled = !CUR.is_completed || idx >= courseLessons.length - 1;
           if (idx >= courseLessons.length - 1) {
-            document.getElementById('btnNext').innerText = CUR.is_completed ? 'ðŸŽ“ Kurs yakunlandi!' : 'Keyingi darsga o\'tish â†’';
+            document.getElementById('btnNext').innerText = CUR.is_completed ? ' Kurs yakunlandi!' : 'Keyingi darsga o\'tish ';
           } else {
-            document.getElementById('btnNext').innerText = 'Keyingi darsga o\'tish â†’';
+            document.getElementById('btnNext').innerText = 'Keyingi darsga o\'tish ';
           }
           renderSidebar(courseLessons, STATE.progress);
         }
@@ -621,7 +621,7 @@
       }
     }
 
-    // â”€â”€â”€ QUIZ CHIZISH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  QUIZ CHIZISH 
     function renderQuiz(quiz, minScore, myScore, isCompleted) {
       const sec = document.getElementById('quizSection');
       if (!quiz.length) {
@@ -644,7 +644,7 @@
         const passed = (myScore === quiz.length);
         prevNotice.innerHTML = `
           <div class="${passed ? 'info-box' : 'warn-box'}" style="margin: 0;">
-            <span style="font-size: 1.2rem;">${passed ? 'ðŸŽ‰' : 'âš ï¸'}</span>
+            <span style="font-size: 1.2rem;">${passed ? '' : ''}</span>
             <div>
               <strong>Oxirgi natijangiz: ${myScore}/${quiz.length} (${Math.round((myScore / quiz.length) * 100)}%)</strong>.
               ${passed 
@@ -696,7 +696,7 @@
       document.getElementById(`qopt-${qi}-${oi}`)?.classList.add('sel');
     }
 
-    // â”€â”€â”€ TESTNI TOPSHIRISH VA 100% TEKSHIRISH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  TESTNI TOPSHIRISH VA 100% TEKSHIRISH 
     async function submitQuiz() {
       const quiz = CUR?.quiz || [];
       if (!quiz.length) return;
@@ -711,7 +711,7 @@
       const answers = quiz.map((q, i) => ({ originalIndex: q.originalIndex, ans: selAnswers[i] }));
       const btn = document.getElementById('btnSubmitQuiz');
       btn.disabled = true;
-      btn.innerText = 'â³ Natija tekshirilmoqda...';
+      btn.innerText = ' Natija tekshirilmoqda...';
 
       try {
         const r = await fetch(`/api/student/lessons/${CUR.id}/quiz`, {
@@ -745,16 +745,16 @@
           // 100% (5/5) ga erishildi!
           banner.className = 'quiz-result-banner qrb-pass';
           banner.innerHTML = `
-            <div class="qrb-icon">ðŸ†</div>
+            <div class="qrb-icon"></div>
             <div>
-              <div class="qrb-score" style="color: #059669;">5/5 â€” 100% A'lo!</div>
+              <div class="qrb-score" style="color: #059669;">5/5  100% A'lo!</div>
               <div class="qrb-msg">
-                ðŸŽ‰ <strong>Ajoyib natija!</strong> Siz barcha 5 ta savolga to'liq to'g'ri javob berdingiz.
+                 <strong>Ajoyib natija!</strong> Siz barcha 5 ta savolga to'liq to'g'ri javob berdingiz.
                 Ushbu dars muvaffaqiyatli yakunlandi va <strong>keyingi dars ochildi</strong>!
               </div>
             </div>
           `;
-          showToast(`ðŸŽ‰ 5/5 (100%) â€” keyingi dars ochildi!`, 'success');
+          showToast(` 5/5 (100%)  keyingi dars ochildi!`, 'success');
 
           // Yangilangan dashboardni olish
           const dash = await fetch('/api/student/dashboard', { headers: Auth.getHeaders() });
@@ -762,7 +762,7 @@
           updateSyncBar(STATE.progress);
           CUR.is_completed = true;
           CUR.my_score = d.score;
-          document.getElementById('lStatusBadge').innerHTML = '<span class="badge badge-emerald">âœ“ 100% Yakunlangan</span>';
+          document.getElementById('lStatusBadge').innerHTML = '<span class="badge badge-emerald"> 100% Yakunlangan</span>';
 
           const courseLessons = STATE.lessons.filter(l => l.course_id === CUR.course_id);
           const idx = courseLessons.findIndex(l => l.id === CUR.id);
@@ -772,16 +772,16 @@
           // 100% dan kam (5/5 to'planmadi)
           banner.className = 'quiz-result-banner qrb-fail';
           banner.innerHTML = `
-            <div class="qrb-icon">âŒ</div>
+            <div class="qrb-icon"></div>
             <div>
-              <div class="qrb-score" style="color: #e11d48;">${d.score}/${d.total} â€” ${d.percent}%</div>
+              <div class="qrb-score" style="color: #e11d48;">${d.score}/${d.total}  ${d.percent}%</div>
               <div class="qrb-msg">
-                âš ï¸ <strong>Keyingi dars ochilmadi!</strong> Talabga ko'ra barcha 5 ta savolga 100% to'g'ri javob berish lozim.
+                 <strong>Keyingi dars ochilmadi!</strong> Talabga ko'ra barcha 5 ta savolga 100% to'g'ri javob berish lozim.
                 Xatolaringiz qizil bilan ko'rsatildi. Qoidalarni qayta o'qib, qayta urinib ko'ring!
               </div>
             </div>
           `;
-          showToast(`âŒ ${d.score}/5 â€” 100% kerak. Qayta urinib ko'ring!`, 'error');
+          showToast(` ${d.score}/5  100% kerak. Qayta urinib ko'ring!`, 'error');
         }
 
         document.getElementById('btnRetryQuiz').style.display = '';
@@ -791,7 +791,7 @@
         showToast("Xatolik yuz berdi", 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = 'ðŸ“Š Natijani Tekshirish (5/5)';
+        btn.innerText = ' Natijani Tekshirish (5/5)';
       }
     }
 
@@ -860,7 +860,7 @@
     <div class="modal-box" style="max-width: 400px; padding: 25px; border-radius: 12px; background: white; width: 100%;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h3 style="margin:0; font-size: 1.3rem; font-weight: 700;">Shaxsiy Kabinet Sozlamalari</h3>
-        <button class="btn btn-ghost btn-xs" onclick="closeStudentSettings()" style="font-size: 1.2rem; cursor: pointer;">âœ•</button>
+        <button class="btn btn-ghost btn-xs" onclick="closeStudentSettings()" style="font-size: 1.2rem; cursor: pointer;"></button>
       </div>
       <div class="form-group" style="margin-bottom: 15px;">
         <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-secondary);">Joriy Parol (PIN)</label>
@@ -885,7 +885,7 @@
   </style>
   <div class="modal-overlay" id="certModalOverlay" style="display:none; z-index: 10000; padding: 20px; overflow-y: auto;">
     <div id="certModal" style="max-width: 800px; margin: auto; background: #fff; padding: 40px; position: relative; border: 15px solid #0f172a; border-radius: 10px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
-      <button class="btn btn-ghost btn-xs cert-close" onclick="document.getElementById('certModalOverlay').style.display='none'" style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; color: #0f172a; font-weight: bold; background: transparent; border: none;">âœ•</button>
+      <button class="btn btn-ghost btn-xs cert-close" onclick="document.getElementById('certModalOverlay').style.display='none'" style="position: absolute; top: 10px; right: 10px; font-size: 1.5rem; cursor: pointer; color: #0f172a; font-weight: bold; background: transparent; border: none;"></button>
       
       <div style="border: 2px solid #d97706; padding: 40px; border-radius: 5px; position: relative; overflow: hidden;">
         <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle, rgba(245,158,11,0.05) 0%, rgba(255,255,255,0) 70%); z-index: 0;"></div>
@@ -911,7 +911,7 @@
             
             <div style="width: 150px; text-align: center;">
               <p id="certDate" style="margin: 0 0 10px 0; font-weight: bold; text-align: center; color: #334155;">2024-yil</p>
-              <div style="width: 80px; height: 80px; background: #d97706; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5rem; border: 4px solid #fff; box-shadow: 0 0 0 2px #d97706;">ðŸ†</div>
+              <div style="width: 80px; height: 80px; background: #d97706; border-radius: 50%; margin: 0 auto; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 1.5rem; border: 4px solid #fff; box-shadow: 0 0 0 2px #d97706;"></div>
             </div>
 
             <div style="width: 200px;">
@@ -923,7 +923,7 @@
       </div>
       
       <div class="cert-print" style="margin-top: 30px;">
-        <button class="btn" style="background: #0f172a; color: white; padding: 12px 30px; font-size: 1.1rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;" onclick="window.print()">ðŸ–¨ï¸ Chop etish (PDF saqlash)</button>
+        <button class="btn" style="background: #0f172a; color: white; padding: 12px 30px; font-size: 1.1rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;" onclick="window.print()"> Chop etish (PDF saqlash)</button>
       </div>
     </div>
   </div>
@@ -942,4 +942,5 @@
   </script>
 </body>
 </html>
+
 

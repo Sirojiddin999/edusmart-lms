@@ -4,10 +4,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O'qituvchi Boshqaruv Paneli â€” innocode.uz</title>
+  <title>O'qituvchi Boshqaruv Paneli  innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
-    /* â”€â”€â”€ TEACHER MODERN WHITE LAYOUT â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+    /*  TEACHER MODERN WHITE LAYOUT  */
     * {
       box-sizing: border-box;
     }
@@ -490,7 +490,7 @@
 
   <div class="page-wrap t-root">
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â• SIDEBAR â•â•â•â•â•â•â•â•â•â•â• -->
+    <!--  SIDEBAR  -->
     <aside class="t-sidebar">
       <!-- Brand -->
       <div class="t-brand" style="justify-content: center; display: flex; align-items: center;">
@@ -500,7 +500,7 @@
 
       <!-- LOGIN (Kirish formasi) -->
       <div id="sideLoginSection" class="t-login-section">
-        <div class="t-login-title">ðŸ” Tizimga Kirish</div>
+        <div class="t-login-title"> Tizimga Kirish</div>
         <form onsubmit="doTeacherLogin(event)">
           <div class="form-group">
             <label class="form-label">O'qituvchi logini</label>
@@ -511,10 +511,10 @@
             <input id="tPassword" type="password" class="form-input" placeholder="admin123" required>
           </div>
           <button type="submit" id="btnTLogin" class="btn btn-primary btn-block btn-lg" style="margin-top: 6px;">
-            Kirish ðŸš€
+            Kirish 
           </button>
           <div class="info-box" style="margin-top: 14px; font-size: 0.78rem;">
-            <span>â„¹ï¸</span>
+            <span></span>
             <span>Standart: <strong>oqituvchi</strong> / <strong>admin123</strong></span>
           </div>
         </form>
@@ -524,21 +524,21 @@
       <div id="sideNavSection" style="display: none; flex: 1;">
         <div class="t-nav">
           <button class="t-nav-item active" id="nav-overview" onclick="switchSection('overview')">
-            <span class="nav-icon">ðŸ“Š</span> Umumiy Tahlil
+            <span class="nav-icon"></span> Umumiy Tahlil
           </button>
           <button class="t-nav-item" id="nav-leaderboard" onclick="switchSection('leaderboard')">
-            <span class="nav-icon">ðŸ†</span> Reyting
+            <span class="nav-icon"></span> Reyting
           </button>
           <button class="t-nav-item" id="nav-courses" onclick="switchSection('courses')">
-            <span class="nav-icon">ðŸŽ“</span> Kurslar
+            <span class="nav-icon"></span> Kurslar
             <span class="nav-badge" id="coursesBadge">0</span>
           </button>
           <button class="t-nav-item" id="nav-lessons" onclick="switchSection('lessons')">
-            <span class="nav-icon">ðŸ“š</span> Darslar
+            <span class="nav-icon"></span> Darslar
             <span class="nav-badge" id="lessonsBadge">0</span>
           </button>
           <button class="t-nav-item" id="nav-students" onclick="switchSection('students')">
-            <span class="nav-icon">ðŸ‘¥</span> O'quvchilar
+            <span class="nav-icon"></span> O'quvchilar
             <span class="nav-badge" id="studentsBadge">0</span>
           </button>
         </div>
@@ -547,18 +547,18 @@
       <!-- User footer -->
       <div id="sideUserFooter" style="display: none;">
         <div class="t-user-footer">
-          <div class="t-user-av">ðŸ‘¨â€ðŸ«</div>
+          <div class="t-user-av"></div>
           <div style="flex: 1; overflow: hidden;">
-            <div class="t-user-name" id="sideUserName">â€”</div>
+            <div class="t-user-name" id="sideUserName"></div>
             <div class="t-user-role">Bosh O'qituvchi</div>
           </div>
-          <button class="btn btn-ghost btn-xs" onclick="openSettingsModal()" title="Sozlamalar">âš™ï¸</button>
-          <button class="btn btn-ghost btn-xs" onclick="doLogout()" title="Chiqish">ðŸšª</button>
+          <button class="btn btn-ghost btn-xs" onclick="openSettingsModal()" title="Sozlamalar"></button>
+          <button class="btn btn-ghost btn-xs" onclick="doLogout()" title="Chiqish"></button>
         </div>
       </div>
     </aside>
 
-    <!-- â•â•â•â•â•â•â•â•â•â•â• ASOSIY QISM â•â•â•â•â•â•â•â•â•â•â• -->
+    <!--  ASOSIY QISM  -->
     <div class="t-main">
 
       <!-- TOP BAR -->
@@ -568,7 +568,7 @@
           <div class="t-page-sub" id="pageSub">Platforma statistikasi va boshqaruvi</div>
         </div>
         <div id="topBarActions" style="display: flex; gap: 10px; align-items: center;">
-          <button onclick="history.back()" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;'>â¬… Orqaga</button>
+          <button onclick="history.back()" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;'> Orqaga</button>
         </div>
       </div>
 
@@ -578,22 +578,22 @@
         <!-- STAT STRIP (Kirgandan keyin chiqadi) -->
         <div class="stat-strip" id="statStrip" style="display: none;">
           <div class="s-tile">
-            <div class="s-tile-icon" style="background: var(--primary-subtle); color: var(--primary);">ðŸ‘¥</div>
+            <div class="s-tile-icon" style="background: var(--primary-subtle); color: var(--primary);"></div>
             <div class="s-tile-val" id="stTotal">0</div>
             <div class="s-tile-lbl">Jami o'quvchilar soni</div>
           </div>
           <div class="s-tile">
-            <div class="s-tile-icon" style="background: var(--emerald-subtle); color: var(--emerald);">âš¡</div>
+            <div class="s-tile-icon" style="background: var(--emerald-subtle); color: var(--emerald);"></div>
             <div class="s-tile-val" id="stActive" style="color: var(--emerald);">0</div>
             <div class="s-tile-lbl">Bugun faol o'quvchilar</div>
           </div>
           <div class="s-tile">
-            <div class="s-tile-icon" style="background: var(--cyan-subtle); color: var(--cyan);">ðŸ“š</div>
+            <div class="s-tile-icon" style="background: var(--cyan-subtle); color: var(--cyan);"></div>
             <div class="s-tile-val" id="stLessons" style="color: var(--cyan);">0</div>
             <div class="s-tile-lbl">Jami darslar (har birida 5 test)</div>
           </div>
           <div class="s-tile">
-            <div class="s-tile-icon" style="background: var(--purple-subtle); color: var(--purple);">ðŸ“ˆ</div>
+            <div class="s-tile-icon" style="background: var(--purple-subtle); color: var(--purple);"></div>
             <div class="s-tile-val" id="stAvg" style="color: var(--purple);">0%</div>
             <div class="s-tile-lbl">O'rtacha o'zlashtirish</div>
           </div>
@@ -601,7 +601,7 @@
 
         <!-- KIRISH OLDIDAGI XUSH KELIBSIZ EKRANI -->
         <div id="secWelcome" style="text-align: center; padding: 70px 20px;">
-          <div style="font-size: 4.5rem; margin-bottom: 20px;">ðŸ‘¨â€ðŸ«</div>
+          <div style="font-size: 4.5rem; margin-bottom: 20px;"></div>
           <h2 style="font-size: 2rem; margin-bottom: 12px; color: var(--text-primary);">innocode.uz Boshqaruv Markazi
           </h2>
           <p style="color: var(--text-muted); max-width: 520px; margin: 0; padding-left: 20px; flex: 1; line-height: 1.7; font-size: 0.95rem;">
@@ -610,19 +610,19 @@
           <div
             style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; max-width: 660px; margin-left: auto; margin-right: auto;">
             <div class="card card-body" style="text-align: center; padding: 22px;">
-              <div style="font-size: 2rem; margin-bottom: 8px;">ðŸ“Š</div>
+              <div style="font-size: 2rem; margin-bottom: 8px;"></div>
               <div style="font-size: 0.88rem; font-weight: 800;">To'liq Nazorat</div>
               <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">100% test yechilishini
                 kuzatish</div>
             </div>
             <div class="card card-body" style="text-align: center; padding: 22px;">
-              <div style="font-size: 2rem; margin-bottom: 8px;">ðŸ“š</div>
+              <div style="font-size: 2rem; margin-bottom: 8px;"></div>
               <div style="font-size: 0.88rem; font-weight: 800;">Dars & Test</div>
               <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">5 ta testli darslar qo'shish
               </div>
             </div>
             <div class="card card-body" style="text-align: center; padding: 22px;">
-              <div style="font-size: 2rem; margin-bottom: 8px;">ðŸ†</div>
+              <div style="font-size: 2rem; margin-bottom: 8px;"></div>
               <div style="font-size: 0.88rem; font-weight: 800;">O'quvchilar</div>
               <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">Reyting va o'zlashtirish</div>
             </div>
@@ -635,22 +635,22 @@
             <div class="card card-body">
               <h3
                 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <span>ðŸŽ¯</span> Ta'lim Oqimi Holati
+                <span></span> Ta'lim Oqimi Holati
               </h3>
               <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 18px;">
                 Platforma tizimi: har bir darsda <strong>5 ta test savoli</strong> mavjud. O'quvchi barcha 5 ta savolga
                 <strong>100% to'g'ri</strong> javob bermaguncha keyingi dars ochilmaydi.
               </p>
               <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="switchSection('lessons')">ðŸ“š Darslarni Ko'rish</button>
-                <button class="btn btn-ghost btn-sm" onclick="switchSection('students')">ðŸ‘¥ O'quvchilarni
+                <button class="btn btn-primary btn-sm" onclick="switchSection('lessons')"> Darslarni Ko'rish</button>
+                <button class="btn btn-ghost btn-sm" onclick="switchSection('students')"> O'quvchilarni
                   Ko'rish</button>
-                <button class="btn btn-ghost btn-sm" onclick="openAddModal()">âž• Yangi Dars Qo'shish</button>
+                <button class="btn btn-ghost btn-sm" onclick="openAddModal()"> Yangi Dars Qo'shish</button>
               </div>
             </div>
 
             <div class="card card-body" style="background: linear-gradient(135deg, #f8fafc, #ffffff);">
-              <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 12px;">âš¡ Tezkor Qoidalar</h3>
+              <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 12px;"> Tezkor Qoidalar</h3>
               <ul style="padding-left: 18px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7;">
                 <li>Savollar soni: aniq 5 ta</li>
                 <li>O'tish sharti: 5/5 (100%)</li>
@@ -662,7 +662,7 @@
 
           <!-- Darslar ro'yxatining qisqacha ko'rinishi -->
           <div class="card card-body">
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 14px;">ðŸ“š Darslar va Ularning Testlari
+            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 14px;"> Darslar va Ularning Testlari
               Holati</h3>
             <div class="tbl-wrap">
               <table class="data-table">
@@ -692,12 +692,12 @@
           <div
             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;">ðŸ† O'quvchilar Reytingi</div>
+              <div style="font-size: 1.25rem; font-weight: 900;"> O'quvchilar Reytingi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
                 Eng ko'p darsni 100% bilan yakunlagan va yuqori ball to'plagan o'quvchilar
               </div>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()">ðŸ”„ Yangilash</button>
+            <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()"> Yangilash</button>
           </div>
           <div class="tbl-wrap">
             <table class="data-table" id="leaderboardTable">
@@ -727,12 +727,12 @@
         <div id="secCourses" style="display: none;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;">ðŸŽ“ Kurslar Boshqaruvi</div>
+              <div style="font-size: 1.25rem; font-weight: 900;"> Kurslar Boshqaruvi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
                 Kurslar yaratish, darslarni kurslarga ajratish
               </div>
             </div>
-            <button class="btn btn-primary" onclick="openAddCourseModal()">âž• Yangi Kurs</button>
+            <button class="btn btn-primary" onclick="openAddCourseModal()"> Yangi Kurs</button>
           </div>
           <div class="l-cards" id="courseCards">
             <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
@@ -744,12 +744,12 @@
           <div
             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;">ðŸ“š Darslar Boshqaruvi</div>
+              <div style="font-size: 1.25rem; font-weight: 900;"> Darslar Boshqaruvi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
                 Har bir darsda video, konspekt va 5 tadan test savollari
               </div>
             </div>
-            <button class="btn btn-primary" onclick="openAddModal()">âž• Yangi Dars Qo'shish</button>
+            <button class="btn btn-primary" onclick="openAddModal()"> Yangi Dars Qo'shish</button>
           </div>
           <div class="l-cards" id="lessonCards">
             <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...
@@ -762,13 +762,13 @@
           <div
             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;">ðŸ‘¥ O'quvchilar Nazorati</div>
+              <div style="font-size: 1.25rem; font-weight: 900;"> O'quvchilar Nazorati</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
                 Har bir o'quvchining har bir darsdagi test ballari va faolligini nazorat qiling
               </div>
             </div>
             <input type="text" class="form-input" id="stuSearch" style="max-width: 260px;"
-              placeholder="ðŸ” Ism yoki login bo'yicha..." oninput="filterStudents()">
+              placeholder=" Ism yoki login bo'yicha..." oninput="filterStudents()">
           </div>
           <div class="tbl-wrap">
             <table class="data-table">
@@ -797,11 +797,11 @@
     </div>
   </div>
 
-  <!-- â•â•â• MODAL: YANGI DARS QO'SHISH â•â•â• -->
+  <!--  MODAL: YANGI DARS QO'SHISH  -->
   <div class="modal-backdrop" id="addLessonModal">
     <div class="modal-box modal-box-lg" style="max-width: 720px; max-height: 90vh; overflow-y: auto;">
-      <button class="modal-close-btn" onclick="closeModal('addLessonModal')">âœ•</button>
-      <h2 style="font-size: 1.35rem; margin-bottom: 6px;">âž• Yangi Dars Qo'shish</h2>
+      <button class="modal-close-btn" onclick="closeModal('addLessonModal')"></button>
+      <h2 style="font-size: 1.35rem; margin-bottom: 6px;"> Yangi Dars Qo'shish</h2>
       <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 22px;">
         Dars ma'lumotlarini va 5 ta test savolini kiriting (100% o'tish talabi avtomatik qo'yiladi)
       </p>
@@ -845,7 +845,7 @@
           style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; margin-bottom: 22px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <div>
-              <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary);">âœï¸ 5 ta Test Savoli</div>
+              <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary);"> 5 ta Test Savoli</div>
               <div style="font-size: 0.76rem; color: var(--text-muted);">Har bir savol uchun 4 ta variant kiriting va
                 to'g'risini belgilang</div>
             </div>
@@ -856,48 +856,48 @@
 
         <div style="display: flex; gap: 12px; justify-content: flex-end;">
           <button type="button" class="btn btn-ghost" onclick="closeModal('addLessonModal')">Bekor qilish</button>
-          <button type="submit" class="btn btn-primary btn-lg">ðŸ’¾ Darsni Saqlash</button>
+          <button type="submit" class="btn btn-primary btn-lg"> Darsni Saqlash</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- â•â•â• MODAL: TEST SAVOLLARINI KO'RISH â•â•â• -->
+  <!--  MODAL: TEST SAVOLLARINI KO'RISH  -->
   <div class="modal-backdrop" id="viewQuizModal">
     <div class="modal-box" style="max-width: 620px; max-height: 88vh; overflow-y: auto;">
-      <button class="modal-close-btn" onclick="closeModal('viewQuizModal')">âœ•</button>
+      <button class="modal-close-btn" onclick="closeModal('viewQuizModal')"></button>
       <h2 style="font-size: 1.25rem; margin-bottom: 6px;" id="vqTitle">Test Savollari</h2>
-      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;" id="vqSub">â€”</p>
+      <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;" id="vqSub"></p>
       <div id="vqBody"></div>
     </div>
   </div>
 
-  <!-- â•â•â• MODAL: O'QUVCHI BATAFSIL BALLARI (SCORECARD) â•â•â• -->
+  <!--  MODAL: O'QUVCHI BATAFSIL BALLARI (SCORECARD)  -->
   <div class="modal-backdrop" id="studentDetailModal">
     <div class="modal-box" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
-      <button class="modal-close-btn" onclick="closeModal('studentDetailModal')">âœ•</button>
+      <button class="modal-close-btn" onclick="closeModal('studentDetailModal')"></button>
       <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
         <div
           style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; font-weight: 800;"
           id="sdAvatar">?</div>
         <div>
-          <h2 style="font-size: 1.25rem; font-weight: 800; line-height: 1.2;" id="sdName">â€”</h2>
-          <div style="font-size: 0.8rem; color: var(--text-muted);" id="sdLogin">â€”</div>
+          <h2 style="font-size: 1.25rem; font-weight: 800; line-height: 1.2;" id="sdName"></h2>
+          <div style="font-size: 0.8rem; color: var(--text-muted);" id="sdLogin"></div>
         </div>
       </div>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
         <div class="s-tile" style="padding: 12px 16px;">
           <div style="font-size: 0.74rem; color: var(--text-muted);">100% Yakunlangan</div>
-          <div style="font-size: 1.4rem; font-weight: 800; color: var(--emerald);" id="sdCompleted">â€”</div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--emerald);" id="sdCompleted"></div>
         </div>
         <div class="s-tile" style="padding: 12px 16px;">
           <div style="font-size: 0.74rem; color: var(--text-muted);">O'zlashtirish Foizi</div>
-          <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary);" id="sdPercent">â€”</div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary);" id="sdPercent"></div>
         </div>
       </div>
 
-      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 10px;">ðŸ“‹ Har bir dars bo'yicha test natijalari:
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 10px;"> Har bir dars bo'yicha test natijalari:
       </h3>
       <div class="tbl-wrap" style="margin-bottom: 20px;">
         <table class="data-table">
@@ -924,11 +924,11 @@
     </div>
   </div>
 
-  <!-- âš™ï¸ SETTINGS MODAL -->
+  <!--  SETTINGS MODAL -->
   <div class="modal-overlay" id="settingsModal" onclick="if(event.target===this) closeModal('settingsModal')">
     <div class="modal-box" style="max-width: 400px;">
-      <button class="modal-close-btn" onclick="closeModal('settingsModal')">âœ•</button>
-      <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;">âš™ï¸ Sozlamalar</h2>
+      <button class="modal-close-btn" onclick="closeModal('settingsModal')"></button>
+      <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;"> Sozlamalar</h2>
       <form onsubmit="saveTeacherSettings(event)">
         <div class="form-group">
           <label class="form-label">Yangi Login (Username)</label>
@@ -949,7 +949,7 @@
     let ALL_STUDENTS = [], ALL_LESSONS = [], TEACHER_USER = null;
     let quizRowCount = 0;
 
-    // â”€â”€â”€ SETTINGS LOGIC â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  SETTINGS LOGIC 
     function openSettingsModal() {
       if (!TEACHER_USER) return;
       document.getElementById('set-username').value = TEACHER_USER.username || '';
@@ -988,7 +988,7 @@
       }
     }
 
-    // â”€â”€â”€ AUTH TEKSHIRUVI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  AUTH TEKSHIRUVI 
     window.addEventListener('DOMContentLoaded', () => {
       const tok = Auth.getToken(), usr = Auth.getUser();
       if (tok && usr && usr.role === 'teacher') {
@@ -997,12 +997,12 @@
       }
     });
 
-    // â”€â”€â”€ O'QITUVCHI KIRISHI â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  O'QITUVCHI KIRISHI 
     async function doTeacherLogin(e) {
       e.preventDefault();
       const btn = document.getElementById('btnTLogin');
       btn.disabled = true;
-      btn.innerText = 'â³ Kirilmoqda...';
+      btn.innerText = ' Kirilmoqda...';
 
       try {
         const r = await fetch('/api/auth/login-teacher', {
@@ -1024,7 +1024,7 @@
         showToast("Server bilan ulanishda xatolik", 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = 'Kirish ðŸš€';
+        btn.innerText = 'Kirish ';
       }
     }
 
@@ -1044,7 +1044,7 @@
       window.location.reload();
     }
 
-    // â”€â”€â”€ BO'LIMLARNI ALMASHTIRISH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  BO'LIMLARNI ALMASHTIRISH 
     function switchSection(sec) {
       ['overview', 'leaderboard', 'courses', 'lessons', 'students'].forEach(s => {
         const el = document.getElementById('sec' + capitalize(s));
@@ -1054,11 +1054,11 @@
       });
 
       const titles = {
-        overview: ['ðŸ“Š Platforma Tahlili va Boshqaruvi', 'Umumiy o\'quv jarayoni va darslar statistikasi'],
-        leaderboard: ['ðŸ† O\'quvchilar Reytingi', '100% bilan eng ko\'p dars yakunlagan peshqadamlar'],
-        courses: ['ðŸŽ“ Kurslar Boshqaruvi', 'Barcha o\'quv kurslarini boshqarish'],
-        lessons: ['ðŸ“š Darslar va Testlar Boshqaruvi', 'Darslar qo\'shish, tahrirlash va 5 ta test savollari'],
-        students: ['ðŸ‘¥ O\'quvchilar Nazorati', 'Har bir o\'quvchining shaxsiy progressi va test ballari']
+        overview: [' Platforma Tahlili va Boshqaruvi', 'Umumiy o\'quv jarayoni va darslar statistikasi'],
+        leaderboard: [' O\'quvchilar Reytingi', '100% bilan eng ko\'p dars yakunlagan peshqadamlar'],
+        courses: [' Kurslar Boshqaruvi', 'Barcha o\'quv kurslarini boshqarish'],
+        lessons: [' Darslar va Testlar Boshqaruvi', 'Darslar qo\'shish, tahrirlash va 5 ta test savollari'],
+        students: [' O\'quvchilar Nazorati', 'Har bir o\'quvchining shaxsiy progressi va test ballari']
       };
 
       if (titles[sec]) {
@@ -1067,9 +1067,9 @@
       }
 
       const actions = document.getElementById('topBarActions');
-      actions.innerHTML = '<button class="btn btn-primary btn-sm" onclick="openAddModal()">âž• Yangi Dars Qo\'shish</button>'
-        + ' <button class="btn btn-ghost btn-sm" onclick="loadAll()">ðŸ”„ Yangilash</button>'
-        + ' <button class="btn btn-ghost btn-sm" style="color: #ef4444; border-color: #fca5a5; background: #fef2f2; font-weight: 600;" onclick="doLogout()">ðŸšª Chiqish</button>';
+      actions.innerHTML = '<button class="btn btn-primary btn-sm" onclick="openAddModal()"> Yangi Dars Qo\'shish</button>'
+        + ' <button class="btn btn-ghost btn-sm" onclick="loadAll()"> Yangilash</button>'
+        + ' <button class="btn btn-ghost btn-sm" style="color: #ef4444; border-color: #fca5a5; background: #fef2f2; font-weight: 600;" onclick="doLogout()"> Chiqish</button>';
 
       if (sec === 'overview') renderOverview();
       if (sec === 'leaderboard') loadLeaderboard();
@@ -1082,7 +1082,7 @@
       return s.charAt(0).toUpperCase() + s.slice(1);
     }
 
-    // â”€â”€â”€ BARCHA MA'LUMOTLARNI YUKLASH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  BARCHA MA'LUMOTLARNI YUKLASH 
     async function loadAll() {
       try {
         const [sr, lr] = await Promise.all([
@@ -1124,18 +1124,18 @@
           <tr>
             <td><strong style="color:var(--primary);">${l.order_num}-dars</strong></td>
             <td><strong style="font-size:0.92rem;">${l.title}</strong></td>
-            <td style="color:var(--text-muted);">â± ${l.duration_mins || 30} daq</td>
-            <td><span class="badge badge-primary">âœï¸ ${qCount} ta savol</span></td>
+            <td style="color:var(--text-muted);"> ${l.duration_mins || 30} daq</td>
+            <td><span class="badge badge-primary"> ${qCount} ta savol</span></td>
             <td><span class="badge badge-emerald">100% (5/5)</span></td>
             <td>
-              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})">ðŸ‘ï¸ Testlarni Ko'rish</button>
+              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})"> Testlarni Ko'rish</button>
             </td>
           </tr>
         `;
       }).join('');
     }
 
-    // â”€â”€â”€ REYTING / LEADERBOARD â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  REYTING / LEADERBOARD 
     async function loadLeaderboard() {
       try {
         const r = await fetch('/api/teacher/leaderboard', { headers: Auth.getHeaders() });
@@ -1149,9 +1149,9 @@
         tbody.innerHTML = d.leaderboard.map(s => {
           const rowClass = s.rank <= 3 ? `rank-${s.rank}` : '';
           const rbClass = s.rank <= 3 ? `rb-${s.rank}` : 'rb-n';
-          const medal = s.rank === 1 ? 'ðŸ¥‡' : s.rank === 2 ? 'ðŸ¥ˆ' : s.rank === 3 ? 'ðŸ¥‰' : '';
+          const medal = s.rank === 1 ? '' : s.rank === 2 ? '' : s.rank === 3 ? '' : '';
           const ini = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-          const date = s.last_active ? new Date(s.last_active).toLocaleDateString('uz-UZ') : 'â€”';
+          const date = s.last_active ? new Date(s.last_active).toLocaleDateString('uz-UZ') : '';
           const pct = s.progress_percent || 0;
           const pColor = pct >= 70 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--rose)';
 
@@ -1177,7 +1177,7 @@
             <td style="font-size:0.84rem; color:var(--text-muted);">${s.last_lesson_title}</td>
             <td style="font-size:0.8rem; color:var(--text-muted);">${date}</td>
             <td>
-              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})">ðŸ“Š Natijalar</button>
+              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})"> Natijalar</button>
             </td>
           </tr>`;
         }).join('');
@@ -1186,7 +1186,7 @@
       }
     }
 
-    // â”€â”€â”€ DARSLAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  DARSLAR 
     async function loadLessons() {
       try {
         const r = await fetch('/api/teacher/lessons', { headers: Auth.getHeaders() });
@@ -1200,7 +1200,7 @@
     function renderLessons(lessons) {
       const wrap = document.getElementById('lessonCards');
       if (!lessons.length) {
-        wrap.innerHTML = `<div style="color:var(--text-muted); padding:30px; grid-column:1/-1; text-align:center; font-size:1rem;">ðŸ“– Hozircha darslar mavjud emas</div>`;
+        wrap.innerHTML = `<div style="color:var(--text-muted); padding:30px; grid-column:1/-1; text-align:center; font-size:1rem;"> Hozircha darslar mavjud emas</div>`;
         return;
       }
 
@@ -1209,18 +1209,18 @@
         const qCount = Array.isArray(l.quiz) ? l.quiz.length : 0;
 
         return `<div class="l-card">
-          <div class="l-card-order">${l.order_num}-Dars â€¢ â± ${l.duration_mins || 30} daqiqa</div>
+          <div class="l-card-order">${l.order_num}-Dars   ${l.duration_mins || 30} daqiqa</div>
           <div class="l-card-title">${l.title}</div>
           <div class="l-card-desc">${l.description || 'Tavsif berilmagan'}</div>
           ${tags ? `<div class="l-card-tags">${tags}</div>` : ''}
           <div class="l-card-footer">
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-              ${l.video_url ? '<span class="badge badge-cyan">ðŸŽ¬ Video</span>' : ''}
-              <span class="badge badge-primary">âœï¸ ${qCount} ta test (100%)</span>
+              ${l.video_url ? '<span class="badge badge-cyan"> Video</span>' : ''}
+              <span class="badge badge-primary"> ${qCount} ta test (100%)</span>
             </div>
             <div style="display:flex; gap:6px;">
-              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})" title="Testlarni ko'rish">âœï¸ Test</button>
-              <button class="btn btn-danger btn-xs" onclick="delLesson(${l.id})" title="O'chirish">ðŸ—‘ï¸</button>
+              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})" title="Testlarni ko'rish"> Test</button>
+              <button class="btn btn-danger btn-xs" onclick="delLesson(${l.id})" title="O'chirish"></button>
             </div>
           </div>
         </div>`;
@@ -1231,8 +1231,8 @@
       const l = ALL_LESSONS.find(x => x.id === lessonId);
       if (!l) return;
       const quiz = Array.isArray(l.quiz) ? l.quiz : [];
-      document.getElementById('vqTitle').innerText = l.title + ' â€” Test Savollari';
-      document.getElementById('vqSub').innerText = `${quiz.length} ta savol â€¢ O'tish talabi: 100% (barcha savollarga to'g'ri javob)`;
+      document.getElementById('vqTitle').innerText = l.title + '  Test Savollari';
+      document.getElementById('vqSub').innerText = `${quiz.length} ta savol  O'tish talabi: 100% (barcha savollarga to'g'ri javob)`;
       const letters = ['A', 'B', 'C', 'D'];
 
       document.getElementById('vqBody').innerHTML = quiz.length
@@ -1244,7 +1244,7 @@
               <div class="q-row-opts">
                 ${q.opts.map((o, oi) => `
                   <div class="${oi === q.a ? 'correct-opt' : ''}">
-                    ${letters[oi]}) ${o} ${oi === q.a ? ' âœ“ (To\'g\'ri javob)' : ''}
+                    ${letters[oi]}) ${o} ${oi === q.a ? '  (To\'g\'ri javob)' : ''}
                   </div>
                 `).join('')}
               </div>
@@ -1268,7 +1268,7 @@
       }
     }
 
-    // â”€â”€â”€ O'QUVCHILAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  O'QUVCHILAR 
     async function loadStudents() {
       try {
         const r = await fetch('/api/teacher/students', { headers: Auth.getHeaders() });
@@ -1292,8 +1292,8 @@
         const ini = s.full_name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
         const pct = s.progress_percent || 0;
         const pColor = pct >= 70 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--text-muted)';
-        const date = s.last_active ? new Date(s.last_active).toLocaleString('uz-UZ') : 'â€”';
-        const avg = s.avg_score ? s.avg_score + '%' : 'â€”';
+        const date = s.last_active ? new Date(s.last_active).toLocaleString('uz-UZ') : '';
+        const avg = s.avg_score ? s.avg_score + '%' : '';
 
         return `<tr>
           <td><div style="display:flex; align-items:center; gap:10px;">
@@ -1306,7 +1306,7 @@
           <td>
             <div style="display:flex; align-items:center; gap:6px;">
               <code style="background:var(--primary-subtle); color:var(--primary); padding:3px 8px; border-radius:5px; font-size:0.84rem; font-weight:700;">${s.username}</code>
-              <button class="btn-copy-inline" onclick="copyToClipboard('${s.username}','Login nusxalandi!')">ðŸ“‹</button>
+              <button class="btn-copy-inline" onclick="copyToClipboard('${s.username}','Login nusxalandi!')"></button>
             </div>
           </td>
           <td style="font-size:0.88rem; font-weight:700; color:var(--primary);">${s.last_lesson_title}</td>
@@ -1325,9 +1325,9 @@
           <td style="font-size:0.8rem; color:var(--text-muted);">${date}</td>
           <td>
             <div style="display:flex; gap:6px;">
-              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test ballari">ðŸ“Š Natijalar</button>
-              <button class="btn btn-ghost btn-xs" onclick="resetProg(${s.id})" title="Progressni noldan boshlash">ðŸ”„</button>
-              <button class="btn btn-danger btn-xs" onclick="delStudent(${s.id})" title="O'chirish">ðŸ—‘ï¸</button>
+              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test ballari"> Natijalar</button>
+              <button class="btn btn-ghost btn-xs" onclick="resetProg(${s.id})" title="Progressni noldan boshlash"></button>
+              <button class="btn btn-danger btn-xs" onclick="delStudent(${s.id})" title="O'chirish"></button>
             </div>
           </td>
         </tr>`;
@@ -1339,7 +1339,7 @@
       renderStudents(q ? ALL_STUDENTS.filter(s => s.full_name.toLowerCase().includes(q) || s.username.toLowerCase().includes(q)) : ALL_STUDENTS);
     }
 
-    // â”€â”€â”€ O'QUVCHI BATAFSIL SCORECARDINI KO'RISH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  O'QUVCHI BATAFSIL SCORECARDINI KO'RISH 
     async function viewStudentDetails(studentId) {
       try {
         const r = await fetch(`/api/teacher/students/${studentId}/details`, { headers: Auth.getHeaders() });
@@ -1348,7 +1348,7 @@
 
         document.getElementById('sdAvatar').innerText = (d.student.full_name || 'O').slice(0, 2).toUpperCase();
         document.getElementById('sdName').innerText = d.student.full_name;
-        document.getElementById('sdLogin').innerText = '@' + d.student.username + ` â€¢ Ro'yxatdan o'tgan: ${new Date(d.student.registered_at).toLocaleDateString('uz-UZ')}`;
+        document.getElementById('sdLogin').innerText = '@' + d.student.username + `  Ro'yxatdan o'tgan: ${new Date(d.student.registered_at).toLocaleDateString('uz-UZ')}`;
         document.getElementById('sdCompleted').innerText = `${d.progress.completed_count}/${d.progress.total_lessons} dars (100%)`;
         document.getElementById('sdPercent').innerText = `${d.progress.progress_percent}%`;
 
@@ -1358,10 +1358,10 @@
             ? `<span class="score-chip" style="${l.score === 5 ? 'background:#dcfce7; color:#15803d;' : 'background:#fee2e2; color:#b91c1c;'}">${l.score}/5</span>`
             : '<span style="color:var(--text-muted); font-size:0.8rem;">Yechilmagan</span>';
 
-          const pctBadge = l.percent !== null ? `<strong>${l.percent}%</strong>` : 'â€”';
+          const pctBadge = l.percent !== null ? `<strong>${l.percent}%</strong>` : '';
           const statusBadge = l.is_completed
-            ? '<span class="badge badge-emerald">âœ“ 100% Yakunlangan</span>'
-            : (l.score !== null ? '<span class="badge badge-rose">âŒ O\'tmagan (&lt;100%)</span>' : '<span class="badge badge-amber">Kutilmoqda</span>');
+            ? '<span class="badge badge-emerald"> 100% Yakunlangan</span>'
+            : (l.score !== null ? '<span class="badge badge-rose"> O\'tmagan (&lt;100%)</span>' : '<span class="badge badge-amber">Kutilmoqda</span>');
 
           return `
             <tr>
@@ -1402,7 +1402,7 @@
       }
     }
 
-    // â”€â”€â”€ YANGI DARS VA 5 TA TEST QO'SHISH â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+    //  YANGI DARS VA 5 TA TEST QO'SHISH 
     function openAddModal() {
       quizRowCount = 0;
       document.getElementById('addLessonForm').reset();
@@ -1424,7 +1424,7 @@
       row.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
           <span style="font-size:0.82rem; font-weight:800; color:var(--primary);">${i}-Savol</span>
-          <button type="button" class="btn btn-danger btn-xs" onclick="document.getElementById('qrow-${i}').remove()">âœ• O'chirish</button>
+          <button type="button" class="btn btn-danger btn-xs" onclick="document.getElementById('qrow-${i}').remove()"> O'chirish</button>
         </div>
         <input type="text" class="form-input" id="qq-${i}" placeholder="Savol matnini kiriting..." style="margin-bottom:10px;" required>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
@@ -1500,4 +1500,5 @@
 </body>
 
 </html>
+
 
