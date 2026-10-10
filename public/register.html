@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kabinetga Kirish | innocode.uz</title>
+  <title>Ro'yxatdan o'tish | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body {
@@ -26,8 +26,8 @@
     }
     
     .auth-container {
-      max-width: 480px;
-      margin: 60px auto 80px;
+      max-width: 520px;
+      margin: 50px auto 80px;
       padding: 0 20px;
       flex-grow: 1;
       width: 100%;
@@ -93,7 +93,7 @@
     
     .form-input {
       width: 100%;
-      padding: 14px 16px;
+      padding: 13px 16px;
       border: 1.5px solid #e2e8f0;
       border-radius: 12px;
       font-size: 0.95rem;
@@ -121,6 +121,7 @@
       color: white;
       box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
       transition: all 0.25s;
+      margin-top: 10px;
     }
     
     .btn-submit:hover {
@@ -181,7 +182,7 @@
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
           <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
-          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro'yxatdan o'tish</a>
+          <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
           <a href='/teacher-login.html' class='btn' style='background: #f8fafc; border: 1px solid #cbd5e1; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O'qituvchi</a>
         </div>
       </div>
@@ -191,24 +192,32 @@
   <div class="auth-container">
     <div class="auth-card">
       <div class="card-stripe"></div>
-      <div class="auth-icon-wrap">🔑</div>
-      <h1 class="auth-title">Kabinetga Kirish</h1>
-      <p class="auth-desc">O'quvchi login va parolingiz orqali darslaringizni davom ettiring.</p>
+      <div class="auth-icon-wrap">🎓</div>
+      <h1 class="auth-title">Ro'yxatdan O'tish</h1>
+      <p class="auth-desc">O'quvchi sifatida ro'yxatdan o'ting va darslarni darhol boshlang!</p>
 
-      <form id="form-login" onsubmit="doLogin(event)">
+      <form id="form-reg" onsubmit="doRegister(event)">
         <div class="form-group">
-          <label class="form-label">Loginingiz *</label>
-          <input id="l-user" type="text" class="form-input" placeholder="Masalan: jasur_4821" required autofocus>
+          <label class="form-label">Ismingiz *</label>
+          <input id="r-fname" type="text" class="form-input" placeholder="Masalan: Jasur" required autofocus>
         </div>
         <div class="form-group">
-          <label class="form-label">Parol yoki PIN kod *</label>
-          <input id="l-pin" type="password" class="form-input" placeholder="Parolingizni kiriting..." required>
+          <label class="form-label">Familiyangiz *</label>
+          <input id="r-lname" type="text" class="form-input" placeholder="Masalan: Aliyev yoki Karimova" required>
+          <small style="font-size: 0.76rem; color: #64748b; display: block; margin-top: 5px;">Familiya ...yev yoki ...yeva bilan tugashi shart</small>
         </div>
-        <button type="submit" class="btn-submit">Kabinetga Kirish ➔</button>
+        <div class="form-group">
+          <label class="form-label">Parol / Maxfiy Kod *</label>
+          <input id="r-pin" type="text" class="form-input" placeholder="Xohlagan parolingizni yozing (masalan: 1234)" required>
+          <div style="font-size: 0.8rem; color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 8px 12px; border-radius: 8px; margin-top: 6px; line-height: 1.4;">
+            ✨ O'zingiz xohlagan istalgan kod yoki parolni kiritishingiz mumkin.
+          </div>
+        </div>
+        <button type="submit" class="btn-submit">Ro'yxatdan O'tish 🚀</button>
       </form>
 
       <div class="auth-links">
-        Hisobingiz yo'qmi? <a href="/register.html">Ro'yxatdan o'tish</a>
+        Allaqachon hisobingiz bormi? <a href="/login.html">Kabinetga kirish</a>
         <div style="margin-top: 10px;">
           O'qituvchimisiz? <a href="/teacher-login.html" style="color: #6d28d9;">O'qituvchi paneli ↗</a>
         </div>
@@ -218,27 +227,64 @@
 
   <script src="/js/utils.js"></script>
   <script>
-    async function doLogin(e) {
+    async function doRegister(e) {
       e.preventDefault();
-      const username = document.getElementById('l-user').value.trim();
-      const pin_code = document.getElementById('l-pin').value.trim();
+      const first_name = document.getElementById('r-fname').value.trim();
+      const last_name = document.getElementById('r-lname').value.trim();
+      const custom_pin = document.getElementById('r-pin').value.trim();
+
+      if (first_name.length < 2) {
+        alert("Ismingizni to'liq kiriting (kamida 2 ta harf)!");
+        return;
+      }
+      if (!/(yev|yeva|ev|eva|ov|ova)$/i.test(last_name)) {
+        alert("Familiyangizni to'liq kiriting! Familiya ...yev yoki ...yeva bilan tugashi shart (Masalan: Aliyev yoki Aliyeva).");
+        return;
+      }
+      if (!custom_pin) {
+        alert("Iltimos, o'zingiz uchun parol kiriting!");
+        return;
+      }
       
       try {
-        const r = await fetch('/api/auth/login-student', {
+        const r = await fetch('/api/auth/register-student', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, pin_code })
+          body: JSON.stringify({ first_name, last_name, custom_pin })
         });
         const data = await r.json();
         if(data.error) {
           alert(data.error);
         } else {
-          Auth.setSession(data.token, data.user);
-          window.location.href = '/student.html';
+          Auth.setSession(data.token, {
+            id: data.id, full_name: data.full_name, username: data.username, role: 'student', pin_code: data.pin_code
+          });
+          showRegSuccessModal(data.username, data.pin_code, data.full_name);
         }
       } catch(err) {
         alert("Server bilan ulanishda xatolik yuz berdi");
       }
+    }
+
+    function showRegSuccessModal(username, pin, name) {
+      document.getElementById('resUser').innerText = username;
+      document.getElementById('resPin').innerText = pin;
+      document.getElementById('regSuccessModal').style.display = 'flex';
+    }
+
+    function copyCredentials(type) {
+      const text = type === 'user' 
+        ? document.getElementById('resUser').innerText 
+        : document.getElementById('resPin').innerText;
+      navigator.clipboard.writeText(text).then(() => {
+        alert((type === 'user' ? 'Login' : 'Parol') + ' nusxalandi: ' + text);
+      }).catch(() => {
+        prompt('Nusxalab oling:', text);
+      });
+    }
+
+    function goToStudent() {
+      window.location.href = '/student.html';
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -247,15 +293,36 @@
         window.location.href = usr.role === 'teacher' ? '/teacher.html' : '/student.html';
       }
     });
-
-    window.addEventListener('pageshow', (e) => {
-      if (e.persisted) {
-        const usr = Auth.getUser();
-        if (usr) {
-          window.location.replace(usr.role === 'teacher' ? '/teacher.html' : '/student.html');
-        }
-      }
-    });
   </script>
+
+  <!-- Modal: Ro'yxatdan o'tish muvaffaqiyatli -->
+  <div id="regSuccessModal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.65); backdrop-filter:blur(5px); z-index:10000; align-items:center; justify-content:center; padding:20px;">
+    <div style="background:white; border-radius:24px; max-width:480px; width:100%; padding:35px 30px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); text-align:center;">
+      <div style="width:70px; height:70px; border-radius:50%; background:#dcfce7; color:#16a34a; font-size:2.4rem; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 10px 20px rgba(22,163,74,0.15);">✓</div>
+      <h2 style="font-size:1.5rem; font-weight:900; color:#0f172a; margin-bottom:8px;">Muvaffaqiyatli Ro'yxatdan O'tdingiz!</h2>
+      <p style="font-size:0.9rem; color:#64748b; margin-bottom:22px; line-height:1.5;">
+        Siz uchun shaxsiy <strong>login</strong> va <strong>parol</strong> shakllantirildi. Bularni eslab qoling:
+      </p>
+
+      <div style="background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:16px; padding:18px; text-align:left; margin-bottom:24px;">
+        <div style="margin-bottom:14px;">
+          <div style="font-size:0.74rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.5px;">Sizning Loginingiz:</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+            <code id="resUser" style="font-size:1.2rem; font-weight:900; color:#4f46e5; background:#eef2ff; padding:5px 12px; border-radius:8px; border:1px solid #c7d2fe;"></code>
+            <button class="btn btn-ghost btn-xs" onclick="copyCredentials('user')" style="font-size:0.8rem; font-weight:800; border:1px solid #cbd5e1; padding:6px 12px; border-radius:8px; cursor:pointer; background:white;">📋 Nusxalash</button>
+          </div>
+        </div>
+        <div>
+          <div style="font-size:0.74rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.5px;">Sizning Parolingiz:</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
+            <code id="resPin" style="font-size:1.2rem; font-weight:900; color:#b45309; background:#fef3c7; padding:5px 12px; border-radius:8px; border:1px solid #fde68a;"></code>
+            <button class="btn btn-ghost btn-xs" onclick="copyCredentials('pin')" style="font-size:0.8rem; font-weight:800; border:1px solid #cbd5e1; padding:6px 12px; border-radius:8px; cursor:pointer; background:white;">📋 Nusxalash</button>
+          </div>
+        </div>
+      </div>
+
+      <button onclick="goToStudent()" class="btn-submit" style="margin-top:0;">Darslarni Boshlash 🚀</button>
+    </div>
+  </div>
 </body>
 </html>

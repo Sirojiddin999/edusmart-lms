@@ -114,30 +114,10 @@ const Auth = {
         if(c){ text = newText; changed = true; }
       }
 
-      // Hardcode course icons based on their parent's background color
-      if (node.parentElement && node.parentElement.classList.contains('course-icon-wrap')) {
-        const bg = getComputedStyle(node.parentElement).backgroundColor;
-        const style = node.parentElement.getAttribute('style') || '';
-        if (bg === 'rgb(253, 244, 255)' || style.includes('fdf4ff')) { node.nodeValue = '🐍'; changed = true; }
-        else if (bg === 'rgb(255, 251, 235)' || style.includes('fffbeb')) { node.nodeValue = '💛'; changed = true; }
-        else if (bg === 'rgb(236, 254, 255)' || style.includes('ecfeff')) { node.nodeValue = '☕'; changed = true; }
-        else if (bg === 'rgb(240, 253, 244)' || style.includes('f0fdf4')) { node.nodeValue = '📊'; changed = true; }
-      }
-
       // Hardcode module icons
       if (node.parentElement && node.parentElement.tagName === 'SPAN' && node.parentElement.parentElement && node.parentElement.parentElement.classList.contains('course-modules')) {
          node.nodeValue = '📚';
          changed = true;
-      }
-      
-      // Hardcode news icons based on background color
-      if (node.parentElement && node.parentElement.classList.contains('news-image')) {
-        const bg = getComputedStyle(node.parentElement).backgroundColor;
-        const style = node.parentElement.getAttribute('style') || '';
-        if (bg === 'rgb(59, 130, 246)' || style.includes('3b82f6')) { node.nodeValue = '📢'; changed = true; }
-        else if (bg === 'rgb(16, 185, 129)' || style.includes('10b981')) { node.nodeValue = '💼'; changed = true; }
-        else if (bg === 'rgb(139, 92, 246)' || style.includes('8b5cf6')) { node.nodeValue = '🤖'; changed = true; }
-        else if (bg === 'rgb(245, 158, 11)' || style.includes('f59e0b')) { node.nodeValue = '📚'; changed = true; }
       }
 
       // Hardcode login page large icons and checks
@@ -148,27 +128,8 @@ const Auth = {
       if (changed) node.nodeValue = text;
     }
     
-    // Also handle empty elements that lost their text nodes
-    document.querySelectorAll('.course-icon-wrap').forEach(el => {
-       const bg = getComputedStyle(el).backgroundColor;
-       const style = el.getAttribute('style') || '';
-       if (bg === 'rgb(253, 244, 255)' || style.includes('fdf4ff')) el.textContent = '🐍';
-       else if (bg === 'rgb(255, 251, 235)' || style.includes('fffbeb')) el.textContent = '💛';
-       else if (bg === 'rgb(236, 254, 255)' || style.includes('ecfeff')) el.textContent = '☕';
-       else if (bg === 'rgb(240, 253, 244)' || style.includes('f0fdf4')) el.textContent = '📊';
-    });
-    
     document.querySelectorAll('.course-modules span').forEach(el => {
-       el.textContent = '📚';
-    });
-    
-    document.querySelectorAll('.news-image').forEach(el => {
-       const bg = getComputedStyle(el).backgroundColor;
-       const style = el.getAttribute('style') || '';
-       if (bg === 'rgb(59, 130, 246)' || style.includes('3b82f6')) el.innerHTML = '📢' + el.innerHTML;
-       else if (bg === 'rgb(16, 185, 129)' || style.includes('10b981')) el.innerHTML = '💼' + el.innerHTML;
-       else if (bg === 'rgb(139, 92, 246)' || style.includes('8b5cf6')) el.innerHTML = '🤖' + el.innerHTML;
-       else if (bg === 'rgb(245, 158, 11)' || style.includes('f59e0b')) el.innerHTML = '📚' + el.innerHTML;
+       if (!el.textContent) el.textContent = '📚';
     });
     
     document.querySelectorAll('.icon-student').forEach(el => el.textContent = '👨‍🎓');

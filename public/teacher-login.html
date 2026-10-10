@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kabinetga Kirish | innocode.uz</title>
+  <title>O'qituvchi Kirish | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body {
@@ -26,7 +26,7 @@
     }
     
     .auth-container {
-      max-width: 480px;
+      max-width: 500px;
       margin: 60px auto 80px;
       padding: 0 20px;
       flex-grow: 1;
@@ -49,7 +49,7 @@
       left: 0;
       right: 0;
       height: 6px;
-      background: linear-gradient(90deg, #4f46e5, #0ea5e9);
+      background: linear-gradient(90deg, #8b5cf6, #f59e0b);
     }
     
     .auth-icon-wrap {
@@ -61,8 +61,8 @@
       justify-content: center;
       font-size: 2.2rem;
       margin-bottom: 20px;
-      background: #eef2ff;
-      color: #4f46e5;
+      background: #f5f3ff;
+      color: #8b5cf6;
     }
     
     .auth-title {
@@ -74,10 +74,30 @@
     
     .auth-desc {
       color: var(--text-secondary);
-      margin-bottom: 28px;
+      margin-bottom: 25px;
       font-size: 0.95rem;
       line-height: 1.5;
     }
+
+    .feat-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 25px 0;
+      background: #faf5ff;
+      border: 1px solid #f3e8ff;
+      border-radius: 14px;
+      padding: 16px;
+    }
+    
+    .feat-list li {
+      margin-bottom: 10px;
+      color: #4b5563;
+      font-size: 0.88rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .feat-list li:last-child { margin-bottom: 0; }
     
     .form-group {
       margin-bottom: 20px;
@@ -96,7 +116,7 @@
       padding: 14px 16px;
       border: 1.5px solid #e2e8f0;
       border-radius: 12px;
-      font-size: 0.95rem;
+      font-size: 1rem;
       transition: all 0.3s;
       background: #f8fafc;
       box-sizing: border-box;
@@ -104,9 +124,9 @@
     
     .form-input:focus {
       outline: none;
-      border-color: #4f46e5;
+      border-color: #8b5cf6;
       background: white;
-      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+      box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
     }
     
     .btn-submit {
@@ -117,14 +137,14 @@
       font-weight: 800;
       font-size: 1.05rem;
       cursor: pointer;
-      background: #4f46e5;
+      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
       color: white;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+      box-shadow: 0 4px 14px rgba(109, 40, 217, 0.35);
       transition: all 0.25s;
     }
     
     .btn-submit:hover {
-      background: #4338ca;
+      opacity: 0.95;
       transform: translateY(-2px);
     }
     
@@ -181,8 +201,8 @@
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
           <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
+          <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
           <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro'yxatdan o'tish</a>
-          <a href='/teacher-login.html' class='btn' style='background: #f8fafc; border: 1px solid #cbd5e1; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O'qituvchi</a>
         </div>
       </div>
     </div>
@@ -191,50 +211,52 @@
   <div class="auth-container">
     <div class="auth-card">
       <div class="card-stripe"></div>
-      <div class="auth-icon-wrap">🔑</div>
-      <h1 class="auth-title">Kabinetga Kirish</h1>
-      <p class="auth-desc">O'quvchi login va parolingiz orqali darslaringizni davom ettiring.</p>
+      <div class="auth-icon-wrap">👨‍🏫</div>
+      <h1 class="auth-title">O'qituvchi Paneli</h1>
+      <p class="auth-desc">O'qituvchi kabinetiga kirish uchun faqat loginingizni kiriting.</p>
 
-      <form id="form-login" onsubmit="doLogin(event)">
+      <ul class="feat-list">
+        <li><span style="color:#10b981; font-weight:bold;">✔</span> Darslar, videolar va konspektlarni boshqarish</li>
+        <li><span style="color:#10b981; font-weight:bold;">✔</span> Test savollarini tuzish va tahrirlash</li>
+        <li><span style="color:#10b981; font-weight:bold;">✔</span> O'quvchilar natijalari va faolligi monitoringi</li>
+      </ul>
+
+      <form id="form-teacher" onsubmit="doTeacherLogin(event)">
         <div class="form-group">
-          <label class="form-label">Loginingiz *</label>
-          <input id="l-user" type="text" class="form-input" placeholder="Masalan: jasur_4821" required autofocus>
+          <label class="form-label">O'qituvchi Logini *</label>
+          <input id="t-user" type="text" class="form-input" placeholder="Masalan: Marufjon" required autofocus>
         </div>
-        <div class="form-group">
-          <label class="form-label">Parol yoki PIN kod *</label>
-          <input id="l-pin" type="password" class="form-input" placeholder="Parolingizni kiriting..." required>
-        </div>
-        <button type="submit" class="btn-submit">Kabinetga Kirish ➔</button>
+        <button type="submit" class="btn-submit">Panelga Kirish ➔</button>
       </form>
 
       <div class="auth-links">
-        Hisobingiz yo'qmi? <a href="/register.html">Ro'yxatdan o'tish</a>
-        <div style="margin-top: 10px;">
-          O'qituvchimisiz? <a href="/teacher-login.html" style="color: #6d28d9;">O'qituvchi paneli ↗</a>
-        </div>
+        O'quvchimisiz? <a href="/login.html">O'quvchi kabinetiga kirish</a> | <a href="/register.html">Ro'yxatdan o'tish</a>
       </div>
     </div>
   </div>
 
   <script src="/js/utils.js"></script>
   <script>
-    async function doLogin(e) {
+    async function doTeacherLogin(e) {
       e.preventDefault();
-      const username = document.getElementById('l-user').value.trim();
-      const pin_code = document.getElementById('l-pin').value.trim();
+      const username = document.getElementById('t-user').value.trim();
+      if (!username) {
+        alert("O'qituvchi logini kiritilishi shart!");
+        return;
+      }
       
       try {
-        const r = await fetch('/api/auth/login-student', {
+        const r = await fetch('/api/auth/login-teacher', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username, pin_code })
+          body: JSON.stringify({ username })
         });
         const data = await r.json();
         if(data.error) {
           alert(data.error);
         } else {
           Auth.setSession(data.token, data.user);
-          window.location.href = '/student.html';
+          window.location.href = '/teacher.html';
         }
       } catch(err) {
         alert("Server bilan ulanishda xatolik yuz berdi");
@@ -243,17 +265,8 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const usr = Auth.getUser();
-      if (usr) {
-        window.location.href = usr.role === 'teacher' ? '/teacher.html' : '/student.html';
-      }
-    });
-
-    window.addEventListener('pageshow', (e) => {
-      if (e.persisted) {
-        const usr = Auth.getUser();
-        if (usr) {
-          window.location.replace(usr.role === 'teacher' ? '/teacher.html' : '/student.html');
-        }
+      if (usr && usr.role === 'teacher') {
+        window.location.href = '/teacher.html';
       }
     });
   </script>

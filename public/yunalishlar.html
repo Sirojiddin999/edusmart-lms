@@ -52,13 +52,12 @@
           <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--primary); font-weight:700; transition: color 0.3s;'>Yo'nalishlar</a></li>
           <li><a href='/kutubxona.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Kutubxona</a></li>
           <li><a href='/haqida.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Sayt haqida</a></li>
-          <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
-          <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer;'>⬅ Orqaga</a>
-          <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'> Kabinetga kirish</a>
-          <a href='/login.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(90, 92, 230, 0.3);'> Ro'yxatdan o'tish</a>
-          <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'> O'qituvchi</a>
+          <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
+          <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
+          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro'yxatdan o'tish</a>
+          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O'qituvchi</a>
         </div>
       </div>
     </div>
@@ -73,58 +72,113 @@
 
   <div class="container">
     <div class="course-grid">
-      <!-- Course 1 -->
+      <!-- Course 1: Python -->
       <div class="course-card">
-        <div class="course-icon-wrap" style="background: #fdf4ff;"></div>
+        <div class="course-icon-wrap" style="background: #fdf4ff; display:flex; align-items:center; justify-content:center;">
+          <svg width="78" height="78" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M54.5 5C27.5 5 29 16.5 29 16.5L29.05 28.5H55V32H16.5C16.5 32 5 30.5 5 57.5C5 84.5 15 83 15 83H24V70.5C24 70.5 23.5 55.5 38.5 55.5H64.5C64.5 55.5 78.5 55.5 78.5 41.5V17C78.5 17 80 5 54.5 5ZM40 13C42.2 13 44 14.8 44 17C44 19.2 42.2 21 40 21C37.8 21 36 19.2 36 17C36 14.8 37.8 13 40 13Z" fill="url(#p-blue-yun)"/>
+            <path d="M55.5 105C82.5 105 81 93.5 81 93.5L80.95 81.5H55V78H93.5C93.5 78 105 79.5 105 52.5C105 25.5 95 27 95 27H86V39.5C86 39.5 86.5 54.5 71.5 54.5H45.5C45.5 54.5 31.5 54.5 31.5 68.5V93C31.5 93 30 105 55.5 105ZM70 97C67.8 97 66 95.2 66 93C66 90.8 67.8 89 70 89C72.2 89 74 90.8 74 93C74 95.2 72.2 97 70 97Z" fill="url(#p-yellow-yun)"/>
+            <defs>
+              <linearGradient id="p-blue-yun" x1="5" y1="5" x2="78.5" y2="83" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#387EB8"/>
+                <stop offset="1" stop-color="#366994"/>
+              </linearGradient>
+              <linearGradient id="p-yellow-yun" x1="31.5" y1="27" x2="105" y2="105" gradientUnits="userSpaceOnUse">
+                <stop stop-color="#FFE873"/>
+                <stop offset="1" stop-color="#FFD43B"/>
+              </linearGradient>
+            </defs>
+          </svg>
+        </div>
         <div class="course-content">
           <span class="course-tag" style="background:#fce7f3; color:#be185d;">Backend Dasturlash</span>
           <h3 class="course-title">Python Asoslari va Sun'iy Intellekt</h3>
           <p class="course-desc">Dunyodagi eng mashhur dasturlash tili yordamida backend mantiqi, ma'lumotlar bazasi va sun'iy intellekt asoslarini o'rganing.</p>
           <div class="course-footer">
-            <div class="course-modules"><span></span> 24 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('python')">Ko'rish </button>
+            <div class="course-modules"><span>📚</span> 24 Ta Modul</div>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('python')">Ko'rish ➔</button>
           </div>
         </div>
       </div>
 
-      <!-- Course 2 -->
+      <!-- Course 2: JS & React -->
       <div class="course-card">
-        <div class="course-icon-wrap" style="background: #fffbeb;"></div>
+        <div class="course-icon-wrap" style="background: #fffbeb; display:flex; align-items:center; justify-content:center; gap:16px;">
+          <!-- JS Logo -->
+          <svg width="58" height="58" viewBox="0 0 105 105" fill="none" style="border-radius:12px; box-shadow: 0 4px 14px rgba(247,223,30,0.35);">
+            <rect width="105" height="105" fill="#F7DF1E" rx="14"/>
+            <path d="M29 78C30.5 80.5 34.5 82.5 39 82.5C46 82.5 49 78.5 49 71V35H39V71C39 74 37 75.5 34.5 75.5C32.5 75.5 30.5 74.5 29.5 73.5L29 78ZM64 77.5C67.5 81 74 83 80.5 83C91 83 97 77 97 68.5C97 59.5 90 56.5 82 53C76 50.5 72.5 48.5 72.5 44C72.5 40 75.5 37.5 80 37.5C84 37.5 87.5 39 90.5 41.5L95 34.5C91 31.5 86 30 80 30C70.5 30 63.5 35.5 63.5 44C63.5 52.5 69.5 55.5 77.5 59C83.5 61.5 87.5 64 87.5 69C87.5 73.5 83.5 76 79 76C73 76 68.5 73 65.5 69.5L64 77.5Z" fill="#000000"/>
+          </svg>
+          <!-- React Logo -->
+          <svg width="68" height="68" viewBox="-11.5 -10.23174 23 20.46348" style="animation: spinReactYun 18s linear infinite;">
+            <circle cx="0" cy="0" r="2.05" fill="#61dafb"/>
+            <g stroke="#61dafb" stroke-width="1.1" fill="none">
+              <ellipse rx="11" ry="4.2"/>
+              <ellipse rx="11" ry="4.2" transform="rotate(60)"/>
+              <ellipse rx="11" ry="4.2" transform="rotate(120)"/>
+            </g>
+          </svg>
+          <style>
+            @keyframes spinReactYun { 100% { transform: rotate(360deg); } }
+          </style>
+        </div>
         <div class="course-content">
           <span class="course-tag" style="background:#fef3c7; color:#b45309;">Frontend Dasturlash</span>
           <h3 class="course-title">JavaScript & React.js</h3>
           <p class="course-desc">Zamonaviy veb-saytlar va interfeyslar yaratish uchun eng kerakli bo'lgan texnologiyalar. Noldan to mukammallikkacha.</p>
           <div class="course-footer">
-            <div class="course-modules"><span></span> 32 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('js')">Ko'rish </button>
+            <div class="course-modules"><span>📚</span> 32 Ta Modul</div>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('js')">Ko'rish ➔</button>
           </div>
         </div>
       </div>
 
-      <!-- Course 3 -->
+      <!-- Course 3: Java & Android -->
       <div class="course-card">
-        <div class="course-icon-wrap" style="background: #ecfeff;"></div>
+        <div class="course-icon-wrap" style="background: #ecfeff; display:flex; align-items:center; justify-content:center; gap:16px;">
+          <!-- Java Logo -->
+          <svg width="55" height="65" viewBox="0 0 100 120" fill="none">
+            <path d="M38 98c14 1 29-1 41-6-4 3-10 6-16 7-9 2-18 2-25-1z" fill="#E76F00"/>
+            <path d="M34 85c16 1 34-1 49-8-5 4-13 7-21 8-10 2-20 2-28 0z" fill="#E76F00"/>
+            <path d="M49 71c8-8 16-16 11-27-2-4-6-6-7-10-3-9 4-17 9-23-4 5-8 11-7 18 1 5 4 8 5 13 3 8-3 15-11 21-3 3-5 5 0 8z" fill="#5382A1"/>
+            <path d="M73 89c19-10 13-24-3-26l-3 4c11 2 15 11 1 18l5 4z" fill="#E76F00"/>
+            <path d="M28 107c24 2 48-1 71-9-6 4-16 8-26 9-15 2-30 2-45 0z" fill="#E76F00"/>
+            <path d="M60 41c4-4 8-9 5-15-1-2-3-3-4-5-2-5 2-10 5-13-2 3-5 6-4 10 0 3 2 5 3 7 2 5-1 9-6 13-2 1-3 2 1 3z" fill="#5382A1"/>
+            <path d="M68 114c-22 3-45 3-67 0 0 0-3 3 3 4 23 3 48 3 71 0 5-1 2-4-7-4z" fill="#E76F00"/>
+          </svg>
+          <!-- Android Logo -->
+          <svg width="56" height="56" viewBox="0 0 24 24" fill="#3DDC84">
+            <path d="M6 18c0 .55.45 1 1 1h1v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h2v3.5c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5V19h1c.55 0 1-.45 1-1V8H6v10zM3.5 8C2.67 8 2 8.67 2 9.5v7c0 .83.67 1.5 1.5 1.5S5 17.33 5 16.5v-7C5 8.67 4.33 8 3.5 8zm17 0c-.83 0-1.5.67-1.5 1.5v7c0 .83.67 1.5 1.5 1.5s1.5-.67 1.5-1.5v-7c0-.83-.67-1.5-1.5-1.5zm-4.97-4.84l1.3-1.3c.2-.2.2-.51 0-.71-.2-.2-.51-.2-.71 0l-1.48 1.48C13.85 2.23 12.95 2 12 2c-.96 0-1.86.23-2.66.63L7.85 1.15c-.2-.2-.51-.2-.71 0-.2.2-.2.51 0 .71l1.31 1.31C6.73 4.15 5.5 5.92 5.5 8h13c0-2.08-1.23-3.85-2.97-4.84zM9 6c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm6 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/>
+          </svg>
+        </div>
         <div class="course-content">
           <span class="course-tag" style="background:#e0f2fe; color:#0369a1;">Mobile va Enterprise</span>
           <h3 class="course-title">Java va Android Dasturlash</h3>
           <p class="course-desc">Katta va xavfsiz tizimlar hamda Android operatsion tizimi uchun mobil ilovalar yaratishni o'rganasiz.</p>
           <div class="course-footer">
-            <div class="course-modules"><span></span> 28 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('java')">Ko'rish </button>
+            <div class="course-modules"><span>📚</span> 28 Ta Modul</div>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('java')">Ko'rish ➔</button>
           </div>
         </div>
       </div>
 
-      <!-- Course 4 -->
+      <!-- Course 4: PostgreSQL -->
       <div class="course-card">
-        <div class="course-icon-wrap" style="background: #f0fdf4;"></div>
+        <div class="course-icon-wrap" style="background: #f0fdf4; display:flex; align-items:center; justify-content:center;">
+          <!-- PostgreSQL Official Logo SVG -->
+          <svg width="72" height="72" viewBox="0 0 100 100" fill="none">
+            <circle cx="50" cy="50" r="45" fill="#336791"/>
+            <path d="M48.7 20c-7.2 0-14 3-18.3 8.3-4.3 5.3-5.7 12.5-4 19.3 1.2 5.2 4.3 9.7 8.5 12.8 1.4 1 2.9 1.8 4.5 2.5v13.6c0 1.2 1 2.2 2.2 2.2h8.6c1.2 0 2.2-1 2.2-2.2V62.9c3.8-.7 7.3-2.3 10.2-4.8 5-4.2 8-10.4 8-17 0-6.1-2.6-11.8-7.1-15.8-4-3.5-9.3-5.3-14.8-5.3z" fill="#FFFFFF"/>
+            <path d="M43 40c1.5 0 2.7 1.2 2.7 2.7s-1.2 2.7-2.7 2.7-2.7-1.2-2.7-2.7 1.2-2.7 2.7-2.7zm17 0c1.5 0 2.7 1.2 2.7 2.7s-1.2 2.7-2.7 2.7-2.7-1.2-2.7-2.7 1.2-2.7 2.7-2.7z" fill="#336791"/>
+          </svg>
+        </div>
         <div class="course-content">
           <span class="course-tag" style="background:#dcfce7; color:#15803d;">Ma'lumotlar Boshqaruvi</span>
           <h3 class="course-title">PostgreSQL & Ma'lumotlar Bazasi</h3>
           <p class="course-desc">Har qanday dasturning yuragi bo'lmish ma'lumotlar bazalarini loyihalash, SQL so'rovlar yozish va optimallashtirish.</p>
           <div class="course-footer">
-            <div class="course-modules"><span></span> 16 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('db')">Ko'rish </button>
+            <div class="course-modules"><span>📚</span> 16 Ta Modul</div>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('db')">Ko'rish ➔</button>
           </div>
         </div>
       </div>

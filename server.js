@@ -85,14 +85,10 @@ app.post('/api/auth/register-student', (req, res) => {
       });
     }
 
-    // Kod tekshiruvi: katta harf, nuqta va son mavjudligi
-    const hasUpper = /[A-ZА-ЯЁ]/.test(pin);
-    const hasDot = /\./.test(pin);
-    const hasDigit = /[0-9]/.test(pin);
-
-    if (!pin || pin.length < 4 || !hasUpper || !hasDot || !hasDigit) {
+    // Parol tekshiruvi: istalgan kod qo'yishi mumkin (foydalanuvchi talabi)
+    if (!pin || pin.trim().length === 0) {
       return res.status(400).json({ 
-        error: "Kod talabga javob bermaydi! Kod kamida 1 ta katta harf (A-Z), raqam (0-9) va nuqta (.) dan iborat bo'lishi shart! (Masalan: Kod.123)" 
+        error: "Parol yoki kod kiritilishi shart!" 
       });
     }
 
@@ -140,13 +136,21 @@ app.post('/api/auth/login-student', (req, res) => {
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// Teacher login
+// Teacher login (Faqat login orqali kirish imkoniyati)
 app.post('/api/auth/login-teacher', (req, res) => {
   try {
     const { username, password } = req.body;
-    const u = db.prepare("SELECT * FROM users WHERE LOWER(username)=LOWER(?) AND role='teacher'").get(username?.trim());
-    if (!u || !bcrypt.compareSync(password, u.password_hash))
-      return res.status(401).json({ error: "Login yoki parol noto'g'ri" });
+    if (!username || !username.trim()) {
+      return res.status(400).json({ error: "O'qituvchi logini kiritilishi shart" });
+    }
+    const u = db.prepare("SELECT * FROM users WHERE LOWER(username)=LOWER(?) AND role='teacher'").get(username.trim());
+    if (!u) {
+      return res.status(401).json({ error: "Bunday o'qituvchi logini topilmadi" });
+    }
+    // Agar parol ham yuborilgan bo'lsa va u mos kelmasa tekshirish (ixtiyoriy)
+    if (password && !bcrypt.compareSync(password, u.password_hash)) {
+      return res.status(401).json({ error: "Parol noto'g'ri" });
+    }
     const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'teacher' };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
     res.json({ success: true, token, user: payload });
