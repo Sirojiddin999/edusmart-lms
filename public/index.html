@@ -49,6 +49,58 @@
       color: white;
     }
 
+    /* HEMIS FLOATING BUTTON & STYLES */
+    @keyframes hemis-pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(2, 132, 199, 0.55);
+      }
+      70% {
+        box-shadow: 0 0 0 14px rgba(2, 132, 199, 0);
+      }
+      100% {
+        box-shadow: 0 0 0 0 rgba(2, 132, 199, 0);
+      }
+    }
+
+    .hemis-float-btn {
+      position: fixed;
+      bottom: 26px;
+      right: 26px;
+      z-index: 99999;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: linear-gradient(135deg, #0284c7 0%, #1e40af 100%);
+      color: #ffffff !important;
+      padding: 12px 22px;
+      border-radius: 50px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      text-decoration: none;
+      box-shadow: 0 8px 25px rgba(2, 132, 199, 0.42);
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      animation: hemis-pulse 2.5s infinite;
+      cursor: pointer;
+    }
+
+    .hemis-float-btn:hover {
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 14px 32px rgba(2, 132, 199, 0.6);
+      background: linear-gradient(135deg, #0369a1 0%, #1e3a8a 100%);
+      color: #ffffff !important;
+    }
+
+    @media (max-width: 640px) {
+      .hemis-float-btn {
+        bottom: 18px;
+        right: 14px;
+        padding: 10px 16px;
+        font-size: 0.85rem;
+      }
+    }
+
     .top-buttons-container {
       display: flex;
       justify-content: center;
@@ -358,8 +410,10 @@
             <li><a href='/yunalishlar.html' class="nav-link-anim">Yo'nalishlar</a></li>
             <li><a href='/kutubxona.html' class="nav-link-anim">Kutubxona</a></li>
             <li><a href='/haqida.html' class="nav-link-anim">Sayt haqida</a></li>
+            <li><a href='https://hemis.uz/' target='_blank' rel='noopener noreferrer' class="nav-link-anim" style="color: #0284c7; font-weight: 800; display: inline-flex; align-items: center; gap: 4px;">🎓 HEMIS ↗</a></li>
           </ul>
           <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
+            <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" class='btn' style='background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35); transition: transform 0.2s;' onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'" title="Oliy ta'lim HEMIS axborot tizimi">🎓 HEMIS</a>
             <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05); cursor: pointer;'>⬅ Orqaga</a>
             <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 1px 2px rgba(0,0,0,0.05);'> Kabinetga kirish</a>
             <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 10px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.8rem; box-shadow: 0 2px 5px rgba(90, 92, 230, 0.3);'> Ro'yxatdan o'tish</a>
@@ -384,12 +438,33 @@
         </h1>
 
         <div class="hero-sub animate-fade-up animate-delay-2"
-          style="background: #eef2ff; padding: 10px 20px; border-radius: 8px; border: 1px solid #c7d2fe; margin-bottom: 30px; height: 45px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
+          style="background: #eef2ff; padding: 10px 20px; border-radius: 8px; border: 1px solid #c7d2fe; margin-bottom: 25px; height: 45px; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative;">
           <div id="news-ticker" style="font-weight: 600; color: #4f46e5; text-align: center; transition: opacity 0.5s ease; width: 100%;">
           </div>
         </div>
+
+        <!-- HERO TEZKOR TUGMALAR (HEMIS & DARSLAR) -->
+        <div class="top-buttons-container animate-fade-up animate-delay-3" style="margin-bottom: 20px;">
+          <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" 
+             style="display: inline-flex; align-items: center; gap: 10px; padding: 13px 26px; background: linear-gradient(135deg, #0284c7 0%, #1e40af 100%); color: white; border-radius: 50px; font-weight: 800; font-size: 1rem; text-decoration: none; box-shadow: 0 4px 18px rgba(2, 132, 199, 0.4); transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);"
+             onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 22px rgba(2, 132, 199, 0.55)'"
+             onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 18px rgba(2, 132, 199, 0.4)'">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+              <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+            </svg>
+            <span>HEMIS tizimiga kirish (hemis.uz)</span>
+            <span style="background: rgba(255,255,255,0.25); padding: 2px 8px; border-radius: 12px; font-size: 0.76rem; letter-spacing: 0.4px;">OTM</span>
+            <span style="font-size: 1.05rem;">↗</span>
+          </a>
+          <a href="/login.html" class="animated-btn" style="padding: 13px 26px;">
+            <span>🚀 Darslarni boshlash</span>
+          </a>
+        </div>
+
         <script>
           const newsItems = [
+            "🎓 OTM HEMIS tizimiga to'g'ridan-to'g'ri integratsiya: hemis.uz orqali baholar va jadvalingizni tekshiring.",
             " innocode.uz platformasiga xush kelibsiz! Yangi o'quv mavsumi boshlandi.",
             " Kutubxonamizga yangi dasturlash darsliklari va qo'llanmalar qo'shildi.",
             " innocode.uz Sun'iy Intellekt yordamchisi endi sizning xizmatingizda!",
@@ -412,6 +487,56 @@
           updateTicker();
           setInterval(updateTicker, 3000);
         </script>
+      </div>
+    </section>
+
+    <!-- HEMIS OTM TIZIMI SECTION -->
+    <section id="hemis-section" style="padding: 45px 0; background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%); border-top: 1px solid #e0f2fe; border-bottom: 1px solid #e0f2fe;">
+      <div class="container">
+        <div style="background: white; border-radius: 24px; padding: 40px; box-shadow: 0 12px 35px rgba(2, 132, 199, 0.08); border: 1px solid #bae6fd; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 30px;">
+          <div style="flex: 1; min-width: 300px;">
+            <div style="display: inline-flex; align-items: center; gap: 8px; padding: 6px 16px; background: #e0f2fe; color: #0284c7; border-radius: 50px; font-size: 0.82rem; font-weight: 800; margin-bottom: 16px;">
+              <span style="width: 8px; height: 8px; border-radius: 50%; background: #0284c7;"></span>
+              Oliy Ta'lim Axborot Tizimi
+            </div>
+            <h2 style="font-size: 2rem; font-weight: 900; color: #0f172a; margin-bottom: 12px; line-height: 1.25;">
+              HEMIS Tizimi — Istalgan vaqtda kirish
+            </h2>
+            <p style="color: #475569; font-size: 1.02rem; line-height: 1.6; margin-bottom: 24px; max-width: 600px;">
+              Talabalar va professor-o'qituvchilar uchun yagona HEMIS axborot tizimi. Dars jadvallari, fan dasturlari, davomat va shaxsiy reytingni istalgan paytda to'g'ridan-to'g'ri kuzatib boring.
+            </p>
+            <div style="display: flex; gap: 14px; flex-wrap: wrap; align-items: center;">
+              <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" 
+                 style="display: inline-flex; align-items: center; gap: 10px; padding: 14px 30px; background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border-radius: 14px; font-weight: 800; font-size: 1.02rem; text-decoration: none; box-shadow: 0 4px 18px rgba(2, 132, 199, 0.35); transition: transform 0.2s;" onmouseover="this.style.transform='translateY(-2px)'" onmouseout="this.style.transform='translateY(0)'">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+                  <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+                </svg>
+                <span>HEMIS tizimiga kirish (hemis.uz)</span>
+                <span style="font-size: 1.1rem;">↗</span>
+              </a>
+              <span style="color: #64748b; font-size: 0.9rem; font-weight: 600;">
+                🌐 Rasmiy portal: <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" style="color: #0284c7; font-weight: 700; text-decoration: underline;">https://hemis.uz/</a>
+              </span>
+            </div>
+          </div>
+          <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+            <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 22px 24px; min-width: 170px; text-align: center; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.03);" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">🎓</div>
+                <div style="font-weight: 800; color: #1e293b; font-size: 1rem; margin-bottom: 4px;">Talaba HEMIS</div>
+                <div style="font-size: 0.8rem; color: #64748b;">Baholar & Jadval</div>
+              </div>
+            </a>
+            <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" style="text-decoration: none; color: inherit;">
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 16px; padding: 22px 24px; min-width: 170px; text-align: center; transition: all 0.2s; box-shadow: 0 2px 8px rgba(0,0,0,0.03);" onmouseover="this.style.borderColor='#0284c7'; this.style.transform='translateY(-3px)'" onmouseout="this.style.borderColor='#e2e8f0'; this.style.transform='translateY(0)'">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">👨‍🏫</div>
+                <div style="font-weight: 800; color: #1e293b; font-size: 1rem; margin-bottom: 4px;">O'qituvchi HEMIS</div>
+                <div style="font-size: 0.8rem; color: #64748b;">Jurnal & Nazorat</div>
+              </div>
+            </a>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -705,7 +830,18 @@
   <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
     <div class="container" style="text-align: center;">
       <h2 style="margin-bottom: 12px; font-size: 1.8rem; font-weight: 900; letter-spacing: -0.5px;">innocode.uz</h2>
-      <p style="color: #94a3b8; max-width: 520px; margin: 0 auto 30px; line-height: 1.6; font-size: 0.95rem;">Zamonaviy o'quv platformasi orqali dasturlashni va innovatsion texnologiyalarni yangi bosqichga olib chiqing.</p>
+      <p style="color: #94a3b8; max-width: 520px; margin: 0 auto 24px; line-height: 1.6; font-size: 0.95rem;">Zamonaviy o'quv platformasi orqali dasturlashni va innovatsion texnologiyalarni yangi bosqichga olib chiqing.</p>
+      
+      <div style="display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; margin-bottom: 25px; align-items: center;">
+        <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" style="background: rgba(2, 132, 199, 0.2); color: #38bdf8; border: 1px solid rgba(56, 189, 248, 0.4); padding: 6px 16px; border-radius: 20px; text-decoration: none; font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; gap: 6px; transition: all 0.2s;" onmouseover="this.style.background='rgba(2, 132, 199, 0.35)'" onmouseout="this.style.background='rgba(2, 132, 199, 0.2)'">
+          🎓 HEMIS OTM Axborot Tizimi (hemis.uz) ↗
+        </a>
+        <a href="/haqida.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 600;">Sayt haqida</a>
+        <a href="/yangiliklar.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 600;">Yangiliklar</a>
+        <a href="/yunalishlar.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 600;">Yo'nalishlar</a>
+        <a href="/kutubxona.html" style="color: #94a3b8; text-decoration: none; font-size: 0.9rem; font-weight: 600;">Kutubxona</a>
+      </div>
+
       <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.9rem; font-weight: 600;">
         © 2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
       </div>
@@ -798,6 +934,18 @@
   </div>
 
   <div id="toast-root"></div>
+
+  <!-- HEMIS FLOATING QUICK ACCESS BUTTON (ISTALGAN PAYTDA HEMISGA BIR BOSISHDA KIRISH) -->
+  <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" class="hemis-float-btn" id="hemis-quick-btn" title="HEMIS axborot tizimiga o'tish (hemis.uz)">
+    <span style="display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; background: rgba(255,255,255,0.22); border-radius: 50%;">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+        <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+      </svg>
+    </span>
+    <span>HEMIS tizimi</span>
+    <span style="font-size: 0.72rem; background: #22c55e; color: white; padding: 2px 7px; border-radius: 10px; font-weight: 800; letter-spacing: 0.3px;">Faol ↗</span>
+  </a>
   <script src="/js/utils.js"></script>
   <script>
     let _creds = { login: '', pin: '', token: '', user: null };
