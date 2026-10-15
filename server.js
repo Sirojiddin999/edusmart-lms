@@ -330,7 +330,10 @@ app.get('/api/student/lessons/:id', auth, onlyStudent, (req, res) => {
       quiz: quiz.map((q, i) => ({ originalIndex: i, q: q.q, opts: q.opts })),
       question_count: quiz.length,
     });
-  } catch { res.status(500).json({ error: "Server xatosi" }); }
+  } catch (e) {
+    console.error("Get lesson error:", e);
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
 });
 
 // Submit quiz answers → calculate score, auto-complete if passed (100%)
