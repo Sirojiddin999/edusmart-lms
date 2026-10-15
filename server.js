@@ -182,8 +182,46 @@ app.post('/api/student/change-password', auth, onlyStudent, (req, res) => {
 app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
   try {
     let p = getProgress(req.user.id);
-    const lessons = getAllLessons();
-    const courses = getAllCourses();
+    let lessons = getAllLessons();
+    let courses = getAllCourses();
+
+    // Agar bazada kurslar yoki darslar bo'lmasa, qayta tiklash
+    if (!courses.length || !lessons.length) {
+      try {
+        const COURSES_DATA = require('./curriculum.js');
+        const insertCourse = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
+        const insertLesson = db.prepare(`
+          INSERT INTO lessons (course_id, order_num, title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `);
+        db.transaction(() => {
+          for (const c of COURSES_DATA) {
+            const r = insertCourse.run(c.title, c.description);
+            const courseId = r.lastInsertRowid;
+            for (const l of c.lessons) {
+              const fiveQuiz = (l.quiz || []).slice(0, 5);
+              insertLesson.run(
+                courseId,
+                l.order_num,
+                `${c.title} | ${l.title || (l.order_num + '-dars')}`,
+                l.description,
+                l.video_url,
+                l.content_text,
+                JSON.stringify(["#" + c.hash, "#dasturlash", "#dars" + l.order_num]),
+                JSON.stringify(fiveQuiz),
+                5,
+                l.duration_mins
+              );
+            }
+          }
+        })();
+        lessons = getAllLessons();
+        courses = getAllCourses();
+      } catch (seedErr) {
+        console.error("Auto-seed error:", seedErr);
+      }
+    }
+
     if (!p) {
       const firstLesson = lessons.length ? lessons[0] : null;
       db.prepare("INSERT INTO student_progress (user_id, last_lesson_id, last_course_id) VALUES (?,?,?)")
@@ -236,7 +274,10 @@ app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
       current_lesson: currentLesson ? { id: currentLesson.id, title: currentLesson.title, course_id: currentLesson.course_id } : null,
       courses: courses
     });
-  } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
+  } catch (e) {
+    console.error("Dashboard error:", e);
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
 });
 
 // Kursni tanlash va serverda oxirgi holatni saqlash (qurilmalararo sinxronizatsiya)

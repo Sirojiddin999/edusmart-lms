@@ -88,18 +88,18 @@ function seed() {
 
   // Check if re-seed is required
   const existingCoursesCount = db.prepare("SELECT COUNT(*) as c FROM courses").get().c;
+  const existingLessonsCount = db.prepare("SELECT COUNT(*) as c FROM lessons").get().c;
   const hasCorrectCourses = db.prepare("SELECT COUNT(*) as c FROM courses WHERE title LIKE '%Python%'").get().c > 0;
   const lessonsWithNullCourseId = db.prepare("SELECT COUNT(*) as c FROM lessons WHERE course_id IS NULL").get().c;
   const sampleLesson = db.prepare("SELECT quiz_json FROM lessons LIMIT 1").get();
   const sampleQuizCount = sampleLesson ? (JSON.parse(sampleLesson.quiz_json || '[]').length) : 0;
   
-  if (!hasCorrectCourses || existingCoursesCount !== 3 || lessonsWithNullCourseId > 0 || sampleQuizCount !== 5) {
+  if (!hasCorrectCourses || existingCoursesCount !== 3 || existingLessonsCount === 0 || lessonsWithNullCourseId > 0 || sampleQuizCount !== 5) {
     console.log("Ma'lumotlar bazasi yangilanmoqda: 3 ta kurs va har birida 5 tadan savolli darslar o'rnatilmoqda...");
     // Avval o'quvchilar progressini kurs/dars IDlariga bog'liqlikdan tozalaymiz (o'quvchi ma'lumotlari saqlanadi)
     db.exec('UPDATE student_progress SET last_lesson_id=NULL, last_course_id=NULL');
     db.exec('DELETE FROM lessons');
     db.exec('DELETE FROM courses');
-    db.exec('VACUUM');
     
     const insertCourse = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
     const insertLesson = db.prepare(`
@@ -117,7 +117,7 @@ function seed() {
           insertLesson.run(
             courseId,
             l.order_num,
-            `${c.title} | ${l.order_num}-dars`,
+            `${c.title} | ${l.title || (l.order_num + '-dars')}`,
             l.description,
             l.video_url,
             l.content_text,
