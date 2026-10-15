@@ -212,6 +212,23 @@
           <div style="font-size: 0.8rem; color: #166534; background: #f0fdf4; border: 1px solid #bbf7d0; padding: 8px 12px; border-radius: 8px; margin-top: 6px; line-height: 1.4;">
             ✨ O'zingiz xohlagan istalgan kod yoki parolni kiritishingiz mumkin.
           </div>
+        <div class="form-group">
+          <label class="form-label">Qaysi kursni o'rganmoqchisiz? *</label>
+          <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #4f46e5; background: #f5f3ff; border-radius: 10px; cursor: pointer;">
+              <input type="radio" name="regCourse" value="1" checked style="accent-color: #4f46e5; width: 17px; height: 17px;">
+              <span style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">🐍 Python Asoslari va Sun'iy Intellekt</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #e2e8f0; background: #ffffff; border-radius: 10px; cursor: pointer;">
+              <input type="radio" name="regCourse" value="2" style="accent-color: #4f46e5; width: 17px; height: 17px;">
+              <span style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">⚛️ JavaScript & React.js</span>
+            </label>
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #e2e8f0; background: #ffffff; border-radius: 10px; cursor: pointer;">
+              <input type="radio" name="regCourse" value="3" style="accent-color: #4f46e5; width: 17px; height: 17px;">
+              <span style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">☕ Java va Android Dasturlash</span>
+            </label>
+          </div>
+          <small style="font-size: 0.74rem; color: #64748b; display: block; margin-top: 5px;">💡 Ro'yxatdan o'tgach kabinetingizda 3 ta kursning istalgan biriga o'tib o'rgana olasiz.</small>
         </div>
         <button type="submit" class="btn-submit">Ro'yxatdan O'tish 🚀</button>
       </form>
@@ -227,11 +244,15 @@
 
   <script src="/js/utils.js"></script>
   <script>
+    let chosenModalCourseId = 1;
+
     async function doRegister(e) {
       e.preventDefault();
       const first_name = document.getElementById('r-fname').value.trim();
       const last_name = document.getElementById('r-lname').value.trim();
       const custom_pin = document.getElementById('r-pin').value.trim();
+      const selectedCourseEl = document.querySelector('input[name="regCourse"]:checked');
+      const course_id = selectedCourseEl ? parseInt(selectedCourseEl.value) : 1;
 
       if (first_name.length < 2) {
         alert("Ismingizni to'liq kiriting (kamida 2 ta harf)!");
@@ -250,7 +271,7 @@
         const r = await fetch('/api/auth/register-student', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ first_name, last_name, custom_pin })
+          body: JSON.stringify({ first_name, last_name, custom_pin, course_id })
         });
         const data = await r.json();
         if(data.error) {
@@ -259,17 +280,38 @@
           Auth.setSession(data.token, {
             id: data.id, full_name: data.full_name, username: data.username, role: 'student', pin_code: data.pin_code
           });
-          showRegSuccessModal(data.username, data.pin_code, data.full_name);
+          chosenModalCourseId = data.selected_course_id || course_id || 1;
+          showRegSuccessModal(data.username, data.pin_code, data.full_name, chosenModalCourseId);
         }
       } catch(err) {
         alert("Server bilan ulanishda xatolik yuz berdi");
       }
     }
 
-    function showRegSuccessModal(username, pin, name) {
+    function showRegSuccessModal(username, pin, name, initialCourseId = 1) {
       document.getElementById('resUser').innerText = username;
       document.getElementById('resPin').innerText = pin;
+      selectModalCourse(initialCourseId);
       document.getElementById('regSuccessModal').style.display = 'flex';
+    }
+
+    function selectModalCourse(id) {
+      chosenModalCourseId = id;
+      [1, 2, 3].forEach(cid => {
+        const card = document.getElementById('mCourseCard-' + cid);
+        const check = document.getElementById('mCheck-' + cid);
+        if (card && check) {
+          if (cid === id) {
+            card.style.borderColor = '#4f46e5';
+            card.style.background = '#f5f3ff';
+            check.style.display = 'block';
+          } else {
+            card.style.borderColor = '#e2e8f0';
+            card.style.background = '#ffffff';
+            check.style.display = 'none';
+          }
+        }
+      });
     }
 
     function copyCredentials(type) {
@@ -284,7 +326,7 @@
     }
 
     function goToStudent() {
-      window.location.href = '/student.html';
+      window.location.href = '/student.html?course=' + (chosenModalCourseId || 1);
     }
 
     window.addEventListener('DOMContentLoaded', () => {
@@ -295,33 +337,82 @@
     });
   </script>
 
-  <!-- Modal: Ro'yxatdan o'tish muvaffaqiyatli -->
-  <div id="regSuccessModal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.65); backdrop-filter:blur(5px); z-index:10000; align-items:center; justify-content:center; padding:20px;">
-    <div style="background:white; border-radius:24px; max-width:480px; width:100%; padding:35px 30px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); text-align:center;">
-      <div style="width:70px; height:70px; border-radius:50%; background:#dcfce7; color:#16a34a; font-size:2.4rem; display:flex; align-items:center; justify-content:center; margin:0 auto 16px; box-shadow:0 10px 20px rgba(22,163,74,0.15);">✓</div>
-      <h2 style="font-size:1.5rem; font-weight:900; color:#0f172a; margin-bottom:8px;">Muvaffaqiyatli Ro'yxatdan O'tdingiz!</h2>
-      <p style="font-size:0.9rem; color:#64748b; margin-bottom:22px; line-height:1.5;">
-        Siz uchun shaxsiy <strong>login</strong> va <strong>parol</strong> shakllantirildi. Bularni eslab qoling:
+  <!-- Modal: Ro'yxatdan o'tish muvaffaqiyatli & 3 ta Kursdan birini tanlash -->
+  <div id="regSuccessModal" style="display:none; position:fixed; inset:0; background:rgba(15,23,42,0.65); backdrop-filter:blur(5px); z-index:10000; align-items:center; justify-content:center; padding:16px;">
+    <div style="background:white; border-radius:24px; max-width:500px; width:100%; padding:30px 24px; box-shadow:0 25px 50px -12px rgba(0,0,0,0.25); text-align:center; max-height:92vh; overflow-y:auto;">
+      <div style="width:60px; height:60px; border-radius:50%; background:#dcfce7; color:#16a34a; font-size:2rem; display:flex; align-items:center; justify-content:center; margin:0 auto 12px; box-shadow:0 8px 16px rgba(22,163,74,0.15);">✓</div>
+      <h2 style="font-size:1.4rem; font-weight:900; color:#0f172a; margin-bottom:6px;">Muvaffaqiyatli Ro'yxatdan O'tdingiz!</h2>
+      <p style="font-size:0.85rem; color:#64748b; margin-bottom:16px; line-height:1.4;">
+        Shaxsiy <strong>login</strong> va <strong>parolingiz</strong> shakllantirildi:
       </p>
 
-      <div style="background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:16px; padding:18px; text-align:left; margin-bottom:24px;">
-        <div style="margin-bottom:14px;">
-          <div style="font-size:0.74rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.5px;">Sizning Loginingiz:</div>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-            <code id="resUser" style="font-size:1.2rem; font-weight:900; color:#4f46e5; background:#eef2ff; padding:5px 12px; border-radius:8px; border:1px solid #c7d2fe;"></code>
-            <button class="btn btn-ghost btn-xs" onclick="copyCredentials('user')" style="font-size:0.8rem; font-weight:800; border:1px solid #cbd5e1; padding:6px 12px; border-radius:8px; cursor:pointer; background:white;">📋 Nusxalash</button>
+      <div style="background:#f8fafc; border:1.5px solid #e2e8f0; border-radius:14px; padding:14px; text-align:left; margin-bottom:18px;">
+        <div style="margin-bottom:10px;">
+          <div style="font-size:0.72rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.5px;">Sizning Loginingiz:</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+            <code id="resUser" style="font-size:1.1rem; font-weight:900; color:#4f46e5; background:#eef2ff; padding:4px 10px; border-radius:8px; border:1px solid #c7d2fe;"></code>
+            <button class="btn btn-ghost btn-xs" onclick="copyCredentials('user')" style="font-size:0.78rem; font-weight:800; border:1px solid #cbd5e1; padding:5px 10px; border-radius:8px; cursor:pointer; background:white;">📋 Nusxalash</button>
           </div>
         </div>
         <div>
-          <div style="font-size:0.74rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.5px;">Sizning Parolingiz:</div>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:5px;">
-            <code id="resPin" style="font-size:1.2rem; font-weight:900; color:#b45309; background:#fef3c7; padding:5px 12px; border-radius:8px; border:1px solid #fde68a;"></code>
-            <button class="btn btn-ghost btn-xs" onclick="copyCredentials('pin')" style="font-size:0.8rem; font-weight:800; border:1px solid #cbd5e1; padding:6px 12px; border-radius:8px; cursor:pointer; background:white;">📋 Nusxalash</button>
+          <div style="font-size:0.72rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.5px;">Sizning Parolingiz:</div>
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
+            <code id="resPin" style="font-size:1.1rem; font-weight:900; color:#b45309; background:#fef3c7; padding:4px 10px; border-radius:8px; border:1px solid #fde68a;"></code>
+            <button class="btn btn-ghost btn-xs" onclick="copyCredentials('pin')" style="font-size:0.78rem; font-weight:800; border:1px solid #cbd5e1; padding:5px 10px; border-radius:8px; cursor:pointer; background:white;">📋 Nusxalash</button>
           </div>
         </div>
       </div>
 
-      <button onclick="goToStudent()" class="btn-submit" style="margin-top:0;">Darslarni Boshlash 🚀</button>
+      <!-- 3 TA KURSDAN BOSHINI TANLASH -->
+      <div style="text-align:left; margin-bottom:18px;">
+        <div style="font-size:0.84rem; font-weight:800; color:#0f172a; margin-bottom:8px; display:flex; align-items:center; gap:6px;">
+          <span>📚 Qaysi kursni boshlashni xohlaysiz?</span>
+          <span style="font-size:0.7rem; font-weight:600; color:#10b981; background:#ecfdf5; padding:2px 8px; border-radius:10px;">Barchasi ochiq</span>
+        </div>
+        
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <!-- Kurs 1: Python -->
+          <div onclick="selectModalCourse(1)" id="mCourseCard-1" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:2px solid #4f46e5; background:#f5f3ff; border-radius:12px; cursor:pointer; transition:all 0.2s;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:1.6rem;">🐍</span>
+              <div>
+                <div style="font-weight:800; font-size:0.88rem; color:#1e293b;">Python Asoslari va Sun'iy Intellekt</div>
+                <div style="font-size:0.73rem; color:#64748b;">10 ta dars • AI & Data Science asoslari</div>
+              </div>
+            </div>
+            <span id="mCheck-1" style="color:#4f46e5; font-weight:900; font-size:1.1rem;">✓</span>
+          </div>
+
+          <!-- Kurs 2: JavaScript -->
+          <div onclick="selectModalCourse(2)" id="mCourseCard-2" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:2px solid #e2e8f0; background:#ffffff; border-radius:12px; cursor:pointer; transition:all 0.2s;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:1.6rem;">⚛️</span>
+              <div>
+                <div style="font-weight:800; font-size:0.88rem; color:#1e293b;">JavaScript & React.js</div>
+                <div style="font-size:0.73rem; color:#64748b;">10 ta dars • Zamonaviy Frontend & Web</div>
+              </div>
+            </div>
+            <span id="mCheck-2" style="color:#4f46e5; font-weight:900; font-size:1.1rem; display:none;">✓</span>
+          </div>
+
+          <!-- Kurs 3: Java -->
+          <div onclick="selectModalCourse(3)" id="mCourseCard-3" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:2px solid #e2e8f0; background:#ffffff; border-radius:12px; cursor:pointer; transition:all 0.2s;">
+            <div style="display:flex; align-items:center; gap:10px;">
+              <span style="font-size:1.6rem;">☕</span>
+              <div>
+                <div style="font-weight:800; font-size:0.88rem; color:#1e293b;">Java va Android Dasturlash</div>
+                <div style="font-size:0.73rem; color:#64748b;">10 ta dars • Mobil ilovalar & Backend</div>
+              </div>
+            </div>
+            <span id="mCheck-3" style="color:#4f46e5; font-weight:900; font-size:1.1rem; display:none;">✓</span>
+          </div>
+        </div>
+        <div style="font-size:0.74rem; color:#64748b; margin-top:6px;">
+          💡 Kabinetingizda istalgan payt boshqa kursga bemalol o'tishingiz mumkin.
+        </div>
+      </div>
+
+      <button onclick="goToStudent()" class="btn-submit" style="margin-top:0; padding:13px; font-size:1rem;">Tanlangan Kursni Boshlash 🚀</button>
     </div>
   </div>
 </body>

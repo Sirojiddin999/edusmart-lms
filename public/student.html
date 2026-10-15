@@ -345,7 +345,9 @@
         <span style="font-size: 1.3rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 8px;">innocode.uz</span>
       </a>
       <div class="s-header-actions" style="display: flex; align-items: center; gap: 10px;">
-        <a href="/" class="btn btn-ghost btn-sm" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 4px;">⬅ Orqaga</a>
+        <a href="/" class="btn btn-ghost btn-sm" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
+          🏠 Bosh sahifa
+        </a>
         <div class="user-pill">
           <div class="u-avatar" id="uAvatar">?</div>
           <div>
@@ -384,10 +386,17 @@
       <aside class="sidebar-col">
         <div class="sb-hdr">
           <div class="sb-title">📚 Darslar Mundarijasi</div>
-          <select id="courseSelect" class="form-input" style="margin-top:10px; width:100%; border:1.5px solid var(--border); background:#fff; color:#1e293b; font-weight:600; border-radius:8px; padding:8px 10px; font-size:0.84rem;" onchange="onCourseSelect()">
+          <div style="font-size: 0.76rem; color: #64748b; margin-top: 2px;">3 ta kursdan istalgan birini tanlang:</div>
+          <select id="courseSelect" class="form-input" style="margin-top:6px; width:100%; border:1.5px solid var(--border); background:#fff; color:#1e293b; font-weight:700; border-radius:8px; padding:8px 10px; font-size:0.84rem;" onchange="onCourseSelect()">
             <option value="" style="color:#000;">-- Kursni Tanlang --</option>
           </select>
-          <div class="sb-progress-wrap" id="sbProgressWrap" style="display:none;">
+          <!-- 3 ta kursni 1 marta bosishda almashtiruvchi tugmalar -->
+          <div id="quickCourseButtons" style="display: flex; gap: 4px; margin-top: 8px;">
+            <button type="button" onclick="quickSelectCourse(1)" id="qcBtn-1" class="btn btn-xs" style="flex: 1; padding: 6px 2px; font-size: 0.72rem; font-weight: 700; border-radius: 6px; border: 1px solid var(--border); background: #ffffff; cursor: pointer;">🐍 Python</button>
+            <button type="button" onclick="quickSelectCourse(2)" id="qcBtn-2" class="btn btn-xs" style="flex: 1; padding: 6px 2px; font-size: 0.72rem; font-weight: 700; border-radius: 6px; border: 1px solid var(--border); background: #ffffff; cursor: pointer;">⚛️ JS/React</button>
+            <button type="button" onclick="quickSelectCourse(3)" id="qcBtn-3" class="btn btn-xs" style="flex: 1; padding: 6px 2px; font-size: 0.72rem; font-weight: 700; border-radius: 6px; border: 1px solid var(--border); background: #ffffff; cursor: pointer;">☕ Java</button>
+          </div>
+          <div class="sb-progress-wrap" id="sbProgressWrap" style="display:none; margin-top: 10px;">
             <div class="sb-progress-bar" id="sbProgressBar" style="width:0%"></div>
           </div>
           <div class="sb-progress-label" id="sbProgressLabel" style="display:none;">
@@ -560,6 +569,14 @@
       }
     }
 
+    function quickSelectCourse(courseId) {
+      const sel = document.getElementById('courseSelect');
+      if (sel) {
+        sel.value = courseId;
+        onCourseSelect();
+      }
+    }
+
     async function onCourseSelect(targetLessonId = null) {
       const sel = document.getElementById('courseSelect');
       if (!sel) return;
@@ -568,6 +585,23 @@
         courseId = parseInt(STATE.courses[0].id);
         sel.value = courseId;
       }
+
+      // 3 ta tezkor tugmani sinxronlashtirish
+      [1, 2, 3].forEach(cid => {
+        const btn = document.getElementById('qcBtn-' + cid);
+        if (btn) {
+          if (cid === courseId) {
+            btn.style.background = '#4f46e5';
+            btn.style.color = '#ffffff';
+            btn.style.borderColor = '#4338ca';
+          } else {
+            btn.style.background = '#ffffff';
+            btn.style.color = '#334155';
+            btn.style.borderColor = '#e2e8f0';
+          }
+        }
+      });
+
       if (!courseId) {
         document.getElementById('lTitle').innerText = "Kurs tanlanmagan";
         document.getElementById('lDesc').innerText = "Darslarni ko'rish uchun yuqoridan kursni tanlang.";

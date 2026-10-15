@@ -1,4 +1,3 @@
-c:\Users\s4717\OneDrive\Desktop\5370910316969007358_121.jpg
 <!DOCTYPE html>
 <html lang="uz">
 
@@ -425,6 +424,7 @@ c:\Users\s4717\OneDrive\Desktop\5370910316969007358_121.jpg
         padding: 0;
       }
 
+      .cert-nav,
       .verify-banner,
       .action-row {
         display: none !important;
@@ -500,6 +500,23 @@ c:\Users\s4717\OneDrive\Desktop\5370910316969007358_121.jpg
 </head>
 
 <body>
+
+  <!-- TOP NAVIGATSIYA (ORQAGA VA BOSH SAHIFA) -->
+  <div class="cert-nav" style="max-width: 960px; width: 100%; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <button onclick="history.length > 1 ? history.back() : window.location.href='/'" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem;">
+        ⬅ Orqaga
+      </button>
+      <a href="/" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem;">
+        🏠 Bosh sahifa
+      </a>
+    </div>
+    <div style="display: flex; gap: 8px; align-items: center;">
+      <a href="/student.html" class="btn" style="background: linear-gradient(135deg, #4f46e5, #4338ca); color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);">
+        🎓 O'quvchi Kabineti
+      </a>
+    </div>
+  </div>
 
   <!-- Tasdiqlash Statusi -->
   <div class="verify-banner" id="verifyBanner">

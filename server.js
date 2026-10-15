@@ -61,12 +61,29 @@ function getAllCourses() {
   return db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
 }
 
+// ─── PUBLIC COURSES ROUTE ───────────────────────────────────────────────────
+app.get('/api/courses', (req, res) => {
+  try {
+    const courses = getAllCourses();
+    const lessons = getAllLessons();
+    const result = courses.map(c => ({
+      id: c.id,
+      title: c.title,
+      description: c.description,
+      lesson_count: lessons.filter(l => l.course_id === c.id).length
+    }));
+    res.json({ success: true, courses: result });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi" });
+  }
+});
+
 // ─── AUTH ROUTES ───────────────────────────────────────────────────────────────
 
 // Student register
 app.post('/api/auth/register-student', (req, res) => {
   try {
-    const { first_name, last_name, custom_pin } = req.body;
+    const { first_name, last_name, custom_pin, course_id } = req.body;
     const fname = (first_name || '').trim();
     const lname = (last_name || '').trim();
     const pin = (custom_pin || '').trim();
@@ -101,16 +118,31 @@ app.post('/api/auth/register-student', (req, res) => {
       .run('student', full_name, username, hash, pin);
     const lessons = getAllLessons();
     const courses = getAllCourses();
-    const firstLesson = lessons.length ? lessons[0] : null;
+
+    let chosenCourseId = course_id ? parseInt(course_id) : null;
+    let chosenFirstLesson = null;
+    if (chosenCourseId) {
+      chosenFirstLesson = lessons.find(l => l.course_id === chosenCourseId);
+    }
+    const firstCourseId = chosenCourseId || (courses[0] ? courses[0].id : (lessons[0]?.course_id || null));
+    const firstLesson = chosenFirstLesson || (firstCourseId ? lessons.find(l => l.course_id === firstCourseId) : lessons[0]);
     const firstId = firstLesson ? firstLesson.id : null;
-    const firstCourseId = firstLesson ? firstLesson.course_id : (courses[0] ? courses[0].id : null);
     
     db.prepare("INSERT INTO student_progress (user_id, last_lesson_id, last_course_id) VALUES (?,?,?)")
       .run(r.lastInsertRowid, firstId, firstCourseId);
 
     const user = { id: r.lastInsertRowid, full_name, username, role: 'student', pin_code: pin };
     const token = jwt.sign(user, JWT_SECRET, { expiresIn: '30d' });
-    res.json({ success: true, message: "Muvaffaqiyatli ro'yxatdan o'tdingiz!", username, pin_code: pin, full_name, token });
+    res.json({ 
+      success: true, 
+      message: "Muvaffaqiyatli ro'yxatdan o'tdingiz!", 
+      username, 
+      pin_code: pin, 
+      full_name, 
+      token,
+      selected_course_id: firstCourseId,
+      courses
+    });
   } catch (e) {
     if (e.message?.includes('UNIQUE')) return res.status(409).json({ error: "Bu login band, qayta urinib ko'ring" });
     res.status(500).json({ error: "Server xatosi: " + e.message });
