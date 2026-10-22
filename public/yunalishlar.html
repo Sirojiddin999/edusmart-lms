@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Yo'nalishlar | innocode.uz</title>
+  <title>Yo‘nalishlar | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
-    .page-header { background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%); padding: 60px 0 90px; text-align: center; color: white; }
-    .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; }
-    .page-subtitle { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0; padding-left: 20px; flex: 1; line-height: 1.6; }
+    .page-header { background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%); padding: 60px 0 90px; text-align: center; color: #ffffff !important; }
+    .page-header h1, .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; color: #ffffff !important; }
+    .page-subtitle { font-size: 1.15rem; opacity: 0.9; max-width: 600px; margin: 0; padding-left: 20px; flex: 1; line-height: 1.6; color: #ffffff !important; }
     .course-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin-top: -50px; margin-bottom: 80px; position: relative; z-index: 10; }
     .course-card { background: white; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.08); border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; }
     .course-card:hover { transform: translateY(-8px); box-shadow: 0 15px 50px rgba(0,0,0,0.12); border-color: var(--primary-subtle); }
@@ -49,17 +49,17 @@
         <ul class='nav-links' style='display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 0.85rem;'>
           <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
           <li><a href='/yangiliklar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yangiliklar</a></li>
-          <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--primary); font-weight:700; transition: color 0.3s;'>Yo'nalishlar</a></li>
+          <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--primary); font-weight:700; transition: color 0.3s;'>Yo‘nalishlar</a></li>
           <li><a href='/kutubxona.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Kutubxona</a></li>
           <li><a href='/haqida.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Sayt haqida</a></li>
           <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
-          <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" class='btn' style='background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);'>🎓 HEMIS</a>
+          <a href="https://student.kstu.uz/" target="_blank" rel="noopener noreferrer" class='btn' style='background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);'>🎓 HEMIS</a>
           <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
-          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro'yxatdan o'tish</a>
-          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O'qituvchi</a>
+          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
+          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
         </div>
       </div>
     </div>
@@ -67,8 +67,8 @@
 
   <div class="page-header">
     <div class="container">
-      <h1 class="page-title">Yo'nalishlar va Kurslar</h1>
-      <p class="page-subtitle">Zamonaviy dasturlash kasblarini eng nufuzli platformada, interaktiv testlar va sifatli darslar bilan o'rganing.</p>
+      <h1 class="page-title">Yo‘nalishlar va kurslar</h1>
+      <p class="page-subtitle">Zamonaviy dasturlash kasblarini eng nufuzli platformada, interaktiv testlar va sifatli darslar bilan o‘rganing.</p>
     </div>
   </div>
 
@@ -95,10 +95,10 @@
         <div class="course-content">
           <span class="course-tag" style="background:#fce7f3; color:#be185d;">Backend Dasturlash</span>
           <h3 class="course-title">Python Asoslari va Sun'iy Intellekt</h3>
-          <p class="course-desc">Dunyodagi eng mashhur dasturlash tili yordamida backend mantiqi, ma'lumotlar bazasi va sun'iy intellekt asoslarini o'rganing.</p>
+          <p class="course-desc">Dunyodagi eng mashhur dasturlash tili yordamida backend mantiqi, ma'lumotlar bazasi va sun'iy intellekt asoslarini o‘rganing.</p>
           <div class="course-footer">
             <div class="course-modules"><span>📚</span> 24 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('python')">Ko'rish ➔</button>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('python')">Ko‘rish ➔</button>
           </div>
         </div>
       </div>
@@ -127,10 +127,10 @@
         <div class="course-content">
           <span class="course-tag" style="background:#fef3c7; color:#b45309;">Frontend Dasturlash</span>
           <h3 class="course-title">JavaScript & React.js</h3>
-          <p class="course-desc">Zamonaviy veb-saytlar va interfeyslar yaratish uchun eng kerakli bo'lgan texnologiyalar. Noldan to mukammallikkacha.</p>
+          <p class="course-desc">Zamonaviy veb-saytlar va interfeyslar yaratish uchun eng kerakli bo‘lgan texnologiyalar. Noldan to mukammallikkacha.</p>
           <div class="course-footer">
             <div class="course-modules"><span>📚</span> 32 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('js')">Ko'rish ➔</button>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('js')">Ko‘rish ➔</button>
           </div>
         </div>
       </div>
@@ -156,10 +156,10 @@
         <div class="course-content">
           <span class="course-tag" style="background:#e0f2fe; color:#0369a1;">Mobile va Enterprise</span>
           <h3 class="course-title">Java va Android Dasturlash</h3>
-          <p class="course-desc">Katta va xavfsiz tizimlar hamda Android operatsion tizimi uchun mobil ilovalar yaratishni o'rganasiz.</p>
+          <p class="course-desc">Katta va xavfsiz tizimlar hamda Android operatsion tizimi uchun mobil ilovalar yaratishni o‘rganasiz.</p>
           <div class="course-footer">
             <div class="course-modules"><span>📚</span> 28 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('java')">Ko'rish ➔</button>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('java')">Ko‘rish ➔</button>
           </div>
         </div>
       </div>
@@ -177,10 +177,10 @@
         <div class="course-content">
           <span class="course-tag" style="background:#dcfce7; color:#15803d;">Ma'lumotlar Boshqaruvi</span>
           <h3 class="course-title">PostgreSQL & Ma'lumotlar Bazasi</h3>
-          <p class="course-desc">Har qanday dasturning yuragi bo'lmish ma'lumotlar bazalarini loyihalash, SQL so'rovlar yozish va optimallashtirish.</p>
+          <p class="course-desc">Har qanday dasturning yuragi bo‘lmish ma'lumotlar bazalarini loyihalash, SQL so‘rovlar yozish va optimallashtirish.</p>
           <div class="course-footer">
             <div class="course-modules"><span>📚</span> 16 Ta Modul</div>
-            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('db')">Ko'rish ➔</button>
+            <button class="btn btn-ghost" style="padding: 8px 16px;" onclick="openCourseModal('db')">Ko‘rish ➔</button>
           </div>
         </div>
       </div>
@@ -191,7 +191,7 @@
   <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
     <div class="container" style="text-align: center;">
       <h2 style="margin-bottom: 15px; font-size: 1.8rem; font-weight: 900;">innocode.uz</h2>
-      <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 40px; line-height: 1.6;">Zamonaviy o'quv platformasi orqali bilim olishni va kasb o'rganishni yangi bosqichga olib chiqing.</p>
+      <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 40px; line-height: 1.6;">Zamonaviy o‘quv platformasi orqali bilim olishni va kasb o‘rganishni yangi bosqichga olib chiqing.</p>
       <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px;">
          2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
       </div>
@@ -208,22 +208,22 @@
       <div style="background: #f8fafc; padding: 15px; border-radius: 12px; margin: 20px 0; border: 1px solid var(--border);">
         <h4 style="margin: 0 0 10px 0; color: #334155;"> Kursni boshlash uchun nima qilish kerak?</h4>
         <ul style="margin: 0; padding-left: 20px; color: #475569; font-size: 0.95rem; line-height: 1.6;">
-          <li>Saytdan ro'yxatdan o'ting yoki profilga kiring.</li>
-          <li>Video darslarni diqqat bilan ko'ring.</li>
-          <li>Keyingi darsga o'tish uchun testlardan 100% o'ting.</li>
+          <li>Saytdan ro‘yxatdan o‘ting yoki profilga kiring.</li>
+          <li>Video darslarni diqqat bilan ko‘ring.</li>
+          <li>Keyingi darsga o‘tish uchun testlardan 100% o‘ting.</li>
         </ul>
       </div>
 
-      <button class="btn" style="width: 100%; background: var(--primary); color: white; padding: 12px; font-size: 1.1rem; border-radius: 12px; cursor: pointer; border: none; font-weight: bold;" onclick="window.location.href='/login.html'"> Ro'yxatdan o'tish va Boshlash</button>
+      <button class="btn" style="width: 100%; background: var(--primary); color: white; padding: 12px; font-size: 1.1rem; border-radius: 12px; cursor: pointer; border: none; font-weight: bold;" onclick="window.location.href='/login.html'"> Ro‘yxatdan o‘tish va boshlash</button>
     </div>
   </div>
 
   <script>
     const courseData = {
-      python: { title: "Python Asoslari va Sun'iy Intellekt", desc: "Bu kursda siz Python dasturlash tilini noldan boshlab, backend va sun'iy intellekt elementlarigacha o'rganasiz. Barcha darslar amaliy testlar bilan mustahkamlanadi." },
-      js: { title: "JavaScript & React.js", desc: "Veb dasturlashning asosiy qismi bo'lmish JS va eng mashhur React.js kutubxonasi yordamida zamonaviy interfeyslar yaratishni o'rganing." },
-      java: { title: "Java va Android Dasturlash", desc: "Katta korporativ tizimlar va Android mobil ilovalari yaratish uchun mo'ljallangan chuqurlashtirilgan Java kursi." },
-      db: { title: "PostgreSQL & Ma'lumotlar Bazasi", desc: "Relyatsion ma'lumotlar bazalarini to'g'ri loyihalash, SQL so'rovlar yozish va ishlash tezligini oshirish bo'yicha maxsus kurs." }
+      python: { title: "Python Asoslari va Sun'iy Intellekt", desc: "Bu kursda siz Python dasturlash tilini noldan boshlab, backend va sun'iy intellekt elementlarigacha o‘rganasiz. Barcha darslar amaliy testlar bilan mustahkamlanadi." },
+      js: { title: "JavaScript & React.js", desc: "Veb dasturlashning asosiy qismi bo‘lmish JS va eng mashhur React.js kutubxonasi yordamida zamonaviy interfeyslar yaratishni o‘rganing." },
+      java: { title: "Java va Android Dasturlash", desc: "Katta korporativ tizimlar va Android mobil ilovalari yaratish uchun mo‘ljallangan chuqurlashtirilgan Java kursi." },
+      db: { title: "PostgreSQL & Ma'lumotlar Bazasi", desc: "Relyatsion ma'lumotlar bazalarini to‘g‘ri loyihalash, SQL so‘rovlar yozish va ishlash tezligini oshirish bo‘yicha maxsus kurs." }
     };
 
     function openCourseModal(id) {

@@ -7,7 +7,7 @@ const courseModalHtml = `
   <div class="modal-backdrop" id="addCourseModal">
     <div class="modal-box" style="max-width: 500px;">
       <button class="modal-close-btn" onclick="closeModal('addCourseModal')">✕</button>
-      <h2 style="font-size: 1.35rem; margin-bottom: 6px;" id="courseModalTitle">➕ Yangi Kurs Qo'shish</h2>
+      <h2 style="font-size: 1.35rem; margin-bottom: 6px;" id="courseModalTitle">➕ Yangi kurs qo‘shish</h2>
       <form id="addCourseForm" onsubmit="submitAddCourse(event)">
         <input type="hidden" id="ac-id">
         <div class="form-group">
@@ -101,7 +101,7 @@ window.loadAll = async function() {
 function openAddCourseModal() {
   document.getElementById('addCourseForm').reset();
   document.getElementById('ac-id').value = '';
-  document.getElementById('courseModalTitle').innerText = '➕ Yangi Kurs Qo\'shish';
+  document.getElementById('courseModalTitle').innerText = '➕ Yangi kurs qo‘shish';
   openModal('addCourseModal');
 }
 
@@ -144,12 +144,12 @@ async function submitAddCourse(e) {
 }
 
 async function delCourse(id) {
-  if (!confirm("Diqqat! Kurs bilan birga uning ichidagi BARCHA DARSLAR o'chib ketadi! Davom etasizmi?")) return;
+  if (!confirm("Diqqat! Kurs bilan birga uning ichidagi BARCHA DARSLAR o‘chib ketadi! Davom etasizmi?")) return;
   try {
     const r = await fetch('/api/teacher/courses/' + id, { method: 'DELETE', headers: Auth.getHeaders() });
     const d = await r.json();
     if (d.success) {
-      showToast("Kurs o'chirildi", "success");
+      showToast("Kurs o‘chirildi", "success");
       loadAll();
     } else {
       showToast(d.error || 'Xatolik', 'error');

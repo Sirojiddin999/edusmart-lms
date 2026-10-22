@@ -150,6 +150,17 @@ h1, h2, h3, h4, h5, h6 {
   color: var(--text-primary);
 }
 
+/* Page Header White Text Enforcement */
+.page-header,
+.page-header h1,
+.page-header h2,
+.page-header h3,
+.page-header p,
+.page-header .page-title,
+.page-header .page-subtitle {
+  color: #ffffff !important;
+}
+
 /* ===== CONTAINER ===== */
 .container {
   width: 100%;

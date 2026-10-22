@@ -7,9 +7,9 @@
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
-    .page-header { background: linear-gradient(135deg, #3730a3 0%, #4f46e5 50%, #06b6d4 100%); padding: 65px 0 95px; text-align: center; color: white; }
-    .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; letter-spacing: -0.5px; }
-    .page-subtitle { font-size: 1.15rem; opacity: 0.95; max-width: 680px; margin: 0 auto; line-height: 1.6; }
+    .page-header { background: linear-gradient(135deg, #3730a3 0%, #4f46e5 50%, #06b6d4 100%); padding: 65px 0 95px; text-align: center; color: #ffffff !important; }
+    .page-header h1, .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; letter-spacing: -0.5px; color: #ffffff !important; text-shadow: 0 2px 12px rgba(0,0,0,0.15); }
+    .page-subtitle { font-size: 1.15rem; opacity: 0.95; max-width: 680px; margin: 0 auto; line-height: 1.6; color: #ffffff !important; }
     
     .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; margin-top: -55px; margin-bottom: 80px; position: relative; z-index: 10; }
     .news-card { background: white; border-radius: 22px; box-shadow: 0 10px 40px rgba(0,0,0,0.07); border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
@@ -51,17 +51,17 @@
         <ul class='nav-links' style='display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 0.85rem;'>
           <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
           <li><a href='/yangiliklar.html' style='text-decoration:none; color:var(--primary); font-weight:700; transition: color 0.3s;'>Yangiliklar</a></li>
-          <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yo'nalishlar</a></li>
+          <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yo‘nalishlar</a></li>
           <li><a href='/kutubxona.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Kutubxona</a></li>
           <li><a href='/haqida.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Sayt haqida</a></li>
           <li><a href='/aloqa.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Aloqa</a></li>
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
-          <a href="https://hemis.uz/" target="_blank" rel="noopener noreferrer" class='btn' style='background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);'>🎓 HEMIS</a>
+          <a href="https://student.kstu.uz/" target="_blank" rel="noopener noreferrer" class='btn' style='background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%); color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 800; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; box-shadow: 0 2px 8px rgba(2, 132, 199, 0.35);'>🎓 HEMIS</a>
           <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
-          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro'yxatdan o'tish</a>
-          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O'qituvchi</a>
+          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
+          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
         </div>
       </div>
     </div>
@@ -69,8 +69,8 @@
 
   <div class="page-header">
     <div class="container">
-      <h1 class="page-title">Ta'lim va IT Yangiliklari</h1>
-      <p class="page-subtitle">O'zbekiston va xalqaro nufuzli saytlardan ta'lim sohasiga oid eng so'nggi muhim xabarlar, grantlar va yangiliklar. Har bir xabarga bosib, to'g'ridan-to'g'ri rasmiy manbaga o'tishingiz mumkin.</p>
+      <h1 class="page-title" style="color: #ffffff !important;">Ta'lim va IT Yangiliklari</h1>
+      <p class="page-subtitle" style="color: #ffffff !important;">O‘zbekiston va xalqaro nufuzli saytlardan ta'lim sohasiga oid eng so‘nggi muhim xabarlar, grantlar va yangiliklar. Har bir xabarga bosib, to‘g‘ridan-to‘g‘ri rasmiy manbaga o‘tishingiz mumkin.</p>
     </div>
   </div>
 
@@ -86,11 +86,11 @@
         <div class="news-content">
           <div>
             <h2 class="news-title">O‘zbekistonda xalqaro IT sertifikat xarajatlarini 100% gacha qoplash dasturi kengaytirildi</h2>
-            <p class="news-desc">Yoshlarning Coursera, Google, Cisco va Microsoft xalqaro sertifikatlarini olish xarajatlari davlat tomonidan to'liq qoplab berilmoqda. Arizalar Yagona portal orqali qabul qilinadi.</p>
+            <p class="news-desc">Yoshlarning Coursera, Google, Cisco va Microsoft xalqaro sertifikatlarini olish xarajatlari davlat tomonidan to‘liq qoplab berilmoqda. Arizalar Yagona portal orqali qabul qilinadi.</p>
           </div>
           <div class="news-footer">
             <span class="news-tag">IT Park & Edu</span>
-            <span class="news-link-btn">Manbada o'qish (Spot.uz) ↗</span>
+            <span class="news-link-btn">Manbada o‘qish (Spot.uz) ↗</span>
           </div>
         </div>
       </a>
@@ -105,11 +105,11 @@
         <div class="news-content">
           <div>
             <h2 class="news-title">O‘zbekistonlik dasturchilar uchun global kompaniyalarda masofaviy ishlash (Remote IT) imkoniyatlari 3 barobarga oshdi</h2>
-            <p class="news-desc">Mahalliy IT mutaxassislar xorijiy kompaniyalarga uydan turib eksport xizmatlarini ko'rsatish hajmini rekord darajaga yetkazdi. Ingliz tili va dasturlash bilimlari yuqori talabga ega.</p>
+            <p class="news-desc">Mahalliy IT mutaxassislar xorijiy kompaniyalarga uydan turib eksport xizmatlarini ko‘rsatish hajmini rekord darajaga yetkazdi. Ingliz tili va dasturlash bilimlari yuqori talabga ega.</p>
           </div>
           <div class="news-footer">
             <span class="news-tag">Eksport & Karyera</span>
-            <span class="news-link-btn">Manbada o'qish (Kun.uz) ↗</span>
+            <span class="news-link-btn">Manbada o‘qish (Kun.uz) ↗</span>
           </div>
         </div>
       </a>
@@ -123,12 +123,12 @@
         </div>
         <div class="news-content">
           <div>
-            <h2 class="news-title">Maktab va OTMlarda sun'iy intellekt va dasturlash bo'yicha interaktiv o'quv dasturlari joriy etilmoqda</h2>
-            <p class="news-desc">Yangi o'quv yilidan boshlab o'quvchi va talabalar uchun sun'iy intellekt texnologiyalaridan to'g'ri foydalanish, data science va machine learning asoslari bo'yicha amaliy mashg'ulotlar o'tiladi.</p>
+            <h2 class="news-title">Maktab va OTMlarda sun'iy intellekt va dasturlash bo‘yicha interaktiv o‘quv dasturlari joriy etilmoqda</h2>
+            <p class="news-desc">Yangi o‘quv yilidan boshlab o‘quvchi va talabalar uchun sun'iy intellekt texnologiyalaridan to‘g‘ri foydalanish, data science va machine learning asoslari bo‘yicha amaliy mashg‘ulotlar o‘tiladi.</p>
           </div>
           <div class="news-footer">
             <span class="news-tag">Sun'iy Intellekt</span>
-            <span class="news-link-btn">Manbada o'qish (Daryo.uz) ↗</span>
+            <span class="news-link-btn">Manbada o‘qish (Daryo.uz) ↗</span>
           </div>
         </div>
       </a>
@@ -142,12 +142,12 @@
         </div>
         <div class="news-content">
           <div>
-            <h2 class="news-title">Google va Coursera O'zbekiston yoshlariga minglab bepul ta'lim grantlarini taqdim etmoqda</h2>
-            <p class="news-desc">Kiberxavfsizlik, ma'lumotlar tahlili, loyiha boshqaruvi va IT-support yo'nalishlarida xalqaro darajadagi kasbiy sertifikatlar dasturiga qabul ochildi.</p>
+            <h2 class="news-title">Google va Coursera O‘zbekiston yoshlariga minglab bepul ta'lim grantlarini taqdim etmoqda</h2>
+            <p class="news-desc">Kiberxavfsizlik, ma'lumotlar tahlili, loyiha boshqaruvi va IT-support yo‘nalishlarida xalqaro darajadagi kasbiy sertifikatlar dasturiga qabul ochildi.</p>
           </div>
           <div class="news-footer">
             <span class="news-tag">Xalqaro Grant</span>
-            <span class="news-link-btn">Manbada o'qish (Gazeta.uz) ↗</span>
+            <span class="news-link-btn">Manbada o‘qish (Gazeta.uz) ↗</span>
           </div>
         </div>
       </a>
@@ -166,7 +166,7 @@
           </div>
           <div class="news-footer">
             <span class="news-tag">Elektron Kutubxona</span>
-            <span class="news-link-btn">Manbada o'qish (Edu.uz) ↗</span>
+            <span class="news-link-btn">Manbada o‘qish (Edu.uz) ↗</span>
           </div>
         </div>
       </a>
@@ -180,12 +180,12 @@
         </div>
         <div class="news-content">
           <div>
-            <h2 class="news-title">Eng talabgir dasturlash tillari: Python, JavaScript va mobil dasturlash bo'yicha tahliliy hisobot</h2>
-            <p class="news-desc">Amaliy dasturlash va zamonaviy web texnologiyalari bo'yicha bozorda talab qilinayotgan texnik ko'nikmalar hamda yangi boshlovchilar uchun tavsiyalar e'lon qilindi.</p>
+            <h2 class="news-title">Eng talabgir dasturlash tillari: Python, JavaScript va mobil dasturlash bo‘yicha tahliliy hisobot</h2>
+            <p class="news-desc">Amaliy dasturlash va zamonaviy web texnologiyalari bo‘yicha bozorda talab qilinayotgan texnik ko‘nikmalar hamda yangi boshlovchilar uchun tavsiyalar e'lon qilindi.</p>
           </div>
           <div class="news-footer">
             <span class="news-tag">Kasbiy Rivojlanish</span>
-            <span class="news-link-btn">Manbada o'qish (Mohirdev) ↗</span>
+            <span class="news-link-btn">Manbada o‘qish (Mohirdev) ↗</span>
           </div>
         </div>
       </a>
@@ -196,7 +196,7 @@
   <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
     <div class="container" style="text-align: center;">
       <h2 style="margin-bottom: 12px; font-size: 1.8rem; font-weight: 900; letter-spacing: -0.5px;">innocode.uz</h2>
-      <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6;">Zamonaviy o'quv platformasi orqali bilim olishni va kasb o'rganishni yangi bosqichga olib chiqing.</p>
+      <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6;">Zamonaviy o‘quv platformasi orqali bilim olishni va kasb o‘rganishni yangi bosqichga olib chiqing.</p>
       <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.95rem; font-weight: 600;">
         © 2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
       </div>

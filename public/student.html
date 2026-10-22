@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O'quvchi Kabineti  innocode.uz</title>
+  <title>O‘quvchi kabineti | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     /*  STUDENT LAYOUT  */
@@ -351,7 +351,7 @@
         <div class="user-pill">
           <div class="u-avatar" id="uAvatar">?</div>
           <div>
-            <div class="u-name"  id="uName">O'quvchi</div>
+            <div class="u-name"  id="uName">O‘quvchi</div>
             <div class="u-login" id="uLogin">@login</div>
           </div>
         </div>
@@ -444,7 +444,7 @@
             <div>
               <div class="quiz-title-text"> Dars Testi (5 ta savol)</div>
               <p style="font-size: 0.84rem; color: var(--text-muted); margin-top: 4px;">
-                Har bir savolni diqqat bilan o'qib, to'g'ri variantni tanlang
+                Har bir savolni diqqat bilan o‘qib, to‘g‘ri variantni tanlang
               </p>
             </div>
             <div style="display: flex; align-items: center; gap: 10px;">
@@ -457,7 +457,7 @@
           <div class="quiz-instruction-alert">
             <span style="font-size: 1.3rem;">⚠️</span>
             <span>
-              <strong>Muhim qoida:</strong> Keyingi dars ochilishi uchun ushbu darsning barcha 5 ta savoliga <strong>100% (5/5)</strong> to'g'ri javob berishingiz kerak!
+              <strong>Muhim qoida:</strong> Keyingi dars ochilishi uchun ushbu darsning barcha 5 ta savoliga <strong>100% (5/5)</strong> to‘g‘ri javob berishingiz kerak!
             </span>
           </div>
 
@@ -485,7 +485,7 @@
         <div class="lesson-actions animate-fade-up">
           <button class="btn btn-ghost" id="btnPrev" onclick="stepLesson(-1)"> Oldingi Dars</button>
           <button class="btn btn-success btn-lg" id="btnNext" onclick="stepLesson(1)" disabled>
-            Keyingi darsga o'tish 
+            Keyingi darsga o‘tish 
           </button>
         </div>
 
@@ -508,7 +508,7 @@
 
     const ini = (usr.full_name || 'O').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
     document.getElementById('uAvatar').innerText = ini;
-    document.getElementById('uName').innerText   = usr.full_name || 'O\'quvchi';
+    document.getElementById('uName').innerText   = usr.full_name || 'O\‘quvchi';
     document.getElementById('uLogin').innerText  = '@' + (usr.username || '');
 
     //  DASHBOARDNI YUKLASH 
@@ -565,7 +565,7 @@
           `;
         }
         document.getElementById('lTitle').innerText = "Darslar yuklanmadi";
-        document.getElementById('lDesc').innerText = "Serverdan darslarni yuklashda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.";
+        document.getElementById('lDesc').innerText = "Serverdan darslarni yuklashda xatolik yuz berdi. Iltimos, qayta urinib ko‘ring.";
       }
     }
 
@@ -604,7 +604,7 @@
 
       if (!courseId) {
         document.getElementById('lTitle').innerText = "Kurs tanlanmagan";
-        document.getElementById('lDesc').innerText = "Darslarni ko'rish uchun yuqoridan kursni tanlang.";
+        document.getElementById('lDesc').innerText = "Darslarni ko‘rish uchun yuqoridan kursni tanlang.";
         document.getElementById('videoWrap').style.display = 'none';
         document.getElementById('quizSection').style.display = 'none';
         document.getElementById('lessonList').innerHTML = '<div style="padding: 20px; color: var(--text-secondary); text-align: center;">Kurslar mavjud emas</div>';
@@ -754,8 +754,8 @@
 
         // Status matni
         let statusHTML = '';
-        if (isCompleted)       statusHTML = `<span style="color:#059669;font-weight:700;">✓ O'tildi</span>`;
-        else if (isActive)     statusHTML = `<span style="color:var(--primary);font-weight:700;">▶ O'rganilmoqda</span>`;
+        if (isCompleted)       statusHTML = `<span style="color:#059669;font-weight:700;">✓ O‘tildi</span>`;
+        else if (isActive)     statusHTML = `<span style="color:var(--primary);font-weight:700;">▶ O‘rganilmoqda</span>`;
         else if (isLocked)     statusHTML = `<span style="color:#94a3b8;">🔒 Qulflangan</span>`;
         else                   statusHTML = `<span style="color:#64748b;">Kutilmoqda</span>`;
 
@@ -804,7 +804,7 @@
         const sb = document.getElementById('lStatusBadge');
         sb.innerHTML = CUR.is_completed
           ? '<span class="badge badge-emerald"> 100% Yakunlangan</span>'
-          : '<span class="badge badge-amber"> O\'rganilmoqda</span>';
+          : '<span class="badge badge-amber"> O\‘rganilmoqda</span>';
 
         // Hashteglar
         const tagsEl = document.getElementById('lTags');
@@ -836,9 +836,9 @@
           
           document.getElementById('btnNext').disabled = !CUR.is_completed || idx >= courseLessons.length - 1;
           if (idx >= courseLessons.length - 1) {
-            document.getElementById('btnNext').innerText = CUR.is_completed ? ' Kurs yakunlandi!' : 'Keyingi darsga o\'tish ';
+            document.getElementById('btnNext').innerText = CUR.is_completed ? ' Kurs yakunlandi!' : 'Keyingi darsga o\‘tish ';
           } else {
-            document.getElementById('btnNext').innerText = 'Keyingi darsga o\'tish ';
+            document.getElementById('btnNext').innerText = 'Keyingi darsga o\‘tish ';
           }
           renderSidebar(courseLessons, STATE.progress);
         }
@@ -859,7 +859,7 @@
 
       sec.style.display = 'block';
       const qCount = quiz.length || 5;
-      document.getElementById('quizMinBadge').innerText = `Talab: 100% (${qCount}/${qCount} to'g'ri)`;
+      document.getElementById('quizMinBadge').innerText = `Talab: 100% (${qCount}/${qCount} to‘g‘ri)`;
       document.getElementById('quizCounter').innerText = `${qCount} ta savol`;
 
       const btnSubmit = document.getElementById('btnSubmitQuiz');
@@ -877,8 +877,8 @@
             <div>
               <strong>Oxirgi natijangiz: ${myScore}/${quiz.length} (${Math.round((myScore / quiz.length) * 100)}%)</strong>.
               ${passed 
-                ? 'Siz bu dars testidan 100% o\'tgansiz va keyingi dars ochilgan!' 
-                : `Keyingi darsni ochish uchun testni 100% (${quiz.length}/${quiz.length}) topshirishingiz shart. Quyidagi savollarni qayta yechib ko'ring.`}
+                ? 'Siz bu dars testidan 100% o\‘tgansiz va keyingi dars ochilgan!' 
+                : `Keyingi darsni ochish uchun testni 100% (${quiz.length}/${quiz.length}) topshirishingiz shart. Quyidagi savollarni qayta yechib ko\‘ring.`}
             </div>
           </div>`;
       } else {
@@ -978,7 +978,7 @@
             <div>
               <div class="qrb-score" style="color: #059669;">${d.score}/${d.total}  100% A'lo!</div>
               <div class="qrb-msg">
-                 <strong>Ajoyib natija!</strong> Siz barcha ${d.total} ta savolga to'liq to'g'ri javob berdingiz.
+                 <strong>Ajoyib natija!</strong> Siz barcha ${d.total} ta savolga to‘liq to‘g‘ri javob berdingiz.
                 Ushbu dars muvaffaqiyatli yakunlandi va <strong>keyingi dars ochildi</strong>!
               </div>
             </div>
@@ -1018,12 +1018,12 @@
             <div>
               <div class="qrb-score" style="color: #e11d48;">${d.score}/${d.total}  ${d.percent}%</div>
               <div class="qrb-msg">
-                 <strong>Keyingi dars ochilmadi!</strong> Talabga ko'ra barcha ${d.total} ta savolga 100% to'g'ri javob berish lozim.
-                Xatolaringiz qizil bilan ko'rsatildi. Qoidalarni qayta o'qib, qayta urinib ko'ring!
+                 <strong>Keyingi dars ochilmadi!</strong> Talabga ko‘ra barcha ${d.total} ta savolga 100% to‘g‘ri javob berish lozim.
+                Xatolaringiz qizil bilan ko‘rsatildi. Qoidalarni qayta o‘qib, qayta urinib ko‘ring!
               </div>
             </div>
           `;
-          showToast(` ${d.score}/${d.total}  100% kerak. Qayta urinib ko'ring!`, 'error');
+          showToast(` ${d.score}/${d.total}  100% kerak. Qayta urinib ko‘ring!`, 'error');
         }
 
         document.getElementById('btnRetryQuiz').style.display = '';
@@ -1080,7 +1080,7 @@
     async function changeStudentPassword() {
       const oldPin = document.getElementById('setOldPin').value;
       const newPin = document.getElementById('setNewPin').value;
-      if (!oldPin || !newPin) return showToast("Barcha maydonlarni to'ldiring", "error");
+      if (!oldPin || !newPin) return showToast("Barcha maydonlarni to‘ldiring", "error");
       
       try {
         const r = await fetch('/api/student/change-password', {
@@ -1143,12 +1143,12 @@
           <h1 style="font-family: 'Times New Roman', serif; font-size: 2.6rem; color: #0f172a; margin-top: 4px; letter-spacing: 4px;">MUVAFFAQIYAT SERTIFIKATI</h1>
           <p style="font-size: 1.05rem; color: #64748b; margin-top: 10px; font-style: italic;">Ushbu rasmiy sertifikat quyidagi shaxsga taqdim etiladi:</p>
           
-          <h2 id="certStudentName" style="font-family: 'Brush Script MT', cursive, serif; font-size: 3.6rem; color: #b45309; margin: 18px 0; border-bottom: 2px solid #d97706; display: inline-block; padding: 0 35px; line-height: 1.2;">O'quvchi Ismi</h2>
+          <h2 id="certStudentName" style="font-family: 'Brush Script MT', cursive, serif; font-size: 3.6rem; color: #b45309; margin: 18px 0; border-bottom: 2px solid #d97706; display: inline-block; padding: 0 35px; line-height: 1.2;">O‘quvchi ismi</h2>
           
           <p style="font-size: 1.15rem; color: #334155; line-height: 1.65; max-width: 620px; margin: 0 auto;">
             InnoCode IT Academy ning
             <b id="certCourseName" style="color: #0f172a; background: #fef3c7; padding: 2px 8px; border-radius: 4px;">Dasturlash</b>
-            o'quv dasturidagi barcha <b>10 ta dars</b> va amaliy testlarni
+            o‘quv dasturidagi barcha <b>10 ta dars</b> va amaliy testlarni
             <b>100% (5/5)</b> a'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.
           </p>
 
@@ -1209,7 +1209,7 @@
       const courseName = window._currentCourseName || 'Dasturlash';
       const usr = Auth.getUser();
 
-      document.getElementById('certStudentName').innerText = usr.full_name || "O'quvchi";
+      document.getElementById('certStudentName').innerText = usr.full_name || "O‘quvchi";
       document.getElementById('certCourseName').innerText = courseName;
 
       // Serverdan sertifikatni olish / yaratish
@@ -1243,7 +1243,7 @@
           document.getElementById('certModalOverlay').style.display = 'flex';
         }
       } catch (e) {
-        showToast("Server bilan bog'lanishda xatolik", "error");
+        showToast("Server bilan bog‘lanishda xatolik", "error");
       }
     }
   </script>

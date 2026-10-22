@@ -76,31 +76,23 @@ const COURSES_DATA = require('./curriculum.js');
 
 // ─── Seed & Sync ──────────────────────────────────────────────────────────────
 function seed() {
-  const teacherHash = bcrypt.hashSync('11121314', 10);
+  const teacherHash = bcrypt.hashSync('1111', 10);
   const teacherExists = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
   if (!teacherExists) {
     db.prepare("INSERT INTO users (role, full_name, username, password_hash, pin_code) VALUES (?,?,?,?,?)")
-      .run('teacher', "Ma'rufjon Isomiddinov", 'Marufjon', teacherHash, '11121314');
+      .run('teacher', "O‘qituvchi", '1111', teacherHash, '1111');
   } else {
-    db.prepare("UPDATE users SET full_name=?, username=?, password_hash=?, pin_code=? WHERE role='teacher'")
-      .run("Ma'rufjon Isomiddinov", 'Marufjon', teacherHash, '11121314');
+    db.prepare("UPDATE users SET full_name=?, username=?, password_hash=?, pin_code=? WHERE id=?")
+      .run("O‘qituvchi", '1111', teacherHash, '1111', teacherExists.id);
   }
 
-  // Check if re-seed is required
+  // Mavjud kurslar va darslar sonini tekshirish
   const existingCoursesCount = db.prepare("SELECT COUNT(*) as c FROM courses").get().c;
   const existingLessonsCount = db.prepare("SELECT COUNT(*) as c FROM lessons").get().c;
-  const hasCorrectCourses = db.prepare("SELECT COUNT(*) as c FROM courses WHERE title LIKE '%Python%'").get().c > 0;
-  const lessonsWithNullCourseId = db.prepare("SELECT COUNT(*) as c FROM lessons WHERE course_id IS NULL").get().c;
-  const sampleLesson = db.prepare("SELECT quiz_json FROM lessons LIMIT 1").get();
-  const sampleQuizCount = sampleLesson ? (JSON.parse(sampleLesson.quiz_json || '[]').length) : 0;
-  
-  if (!hasCorrectCourses || existingCoursesCount !== 3 || existingLessonsCount === 0 || lessonsWithNullCourseId > 0 || sampleQuizCount !== 5) {
-    console.log("Ma'lumotlar bazasi yangilanmoqda: 3 ta kurs va har birida 5 tadan savolli darslar o'rnatilmoqda...");
-    // Avval o'quvchilar progressini kurs/dars IDlariga bog'liqlikdan tozalaymiz (o'quvchi ma'lumotlari saqlanadi)
-    db.exec('UPDATE student_progress SET last_lesson_id=NULL, last_course_id=NULL');
-    db.exec('DELETE FROM lessons');
-    db.exec('DELETE FROM courses');
-    
+
+  // Agar darslar yoki kurslar bo'sh bo'lsa, curriculum.js dan to'liq yuklash (mavjud darslarni hech qachon o'chirmaymiz!)
+  if (existingCoursesCount === 0 || existingLessonsCount === 0) {
+    console.log("Darslar va testlar bazaga kiritilmoqda...");
     const insertCourse = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
     const insertLesson = db.prepare(`
       INSERT INTO lessons (course_id, order_num, title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins)
@@ -109,27 +101,59 @@ function seed() {
 
     db.transaction(() => {
       for (const c of COURSES_DATA) {
-        const r = insertCourse.run(c.title, c.description);
-        const courseId = r.lastInsertRowid;
-        
+        let course = db.prepare("SELECT id FROM courses WHERE title=?").get(c.title);
+        let courseId;
+        if (!course) {
+          const r = insertCourse.run(c.title, c.description);
+          courseId = r.lastInsertRowid;
+        } else {
+          courseId = course.id;
+        }
+
         for (const l of c.lessons) {
           const fiveQuiz = (l.quiz || []).slice(0, 5);
-          insertLesson.run(
-            courseId,
-            l.order_num,
-            `${c.title} | ${l.title || (l.order_num + '-dars')}`,
-            l.description,
-            l.video_url,
-            l.content_text,
-            JSON.stringify(["#" + c.hash, "#dasturlash", "#dars" + l.order_num]),
-            JSON.stringify(fiveQuiz),
-            5, // min_score: 5 ta to'g'ri javob talab qilinadi (100%)
-            l.duration_mins
-          );
+          const lessonTitle = `${c.title} | ${l.title || (l.order_num + '-dars')}`;
+          const lessonExists = db.prepare("SELECT id FROM lessons WHERE course_id=? AND order_num=?").get(courseId, l.order_num);
+          if (!lessonExists) {
+            insertLesson.run(
+              courseId,
+              l.order_num,
+              lessonTitle,
+              l.description,
+              l.video_url,
+              l.content_text,
+              JSON.stringify(["#" + c.hash, "#dasturlash", "#dars" + l.order_num]),
+              JSON.stringify(fiveQuiz),
+              5, // min_score: 5 ta to'g'ri javob talab qilinadi (100%)
+              l.duration_mins
+            );
+          }
         }
       }
     })();
-    console.log("Bazaga 3 ta kurs va har bir dars uchun 5 tadan sifatli test savollari muvaffaqiyatli saqlandi!");
+    console.log("Bazaga kurslar va har bir dars uchun 5 tadan sifatli test savollari muvaffaqiyatli saqlandi!");
+  } else {
+    // Agar course_id si yo'q darslar bo'lsa, ularni kurslarga bog'lash
+    const firstCourse = db.prepare("SELECT id FROM courses ORDER BY id ASC LIMIT 1").get();
+    if (firstCourse) {
+      db.prepare("UPDATE lessons SET course_id=? WHERE course_id IS NULL").run(firstCourse.id);
+    }
+
+    // Har bir darsda 5 ta test savoli mavjudligini ta'minlash
+    const emptyQuizLessons = db.prepare("SELECT id, course_id, order_num FROM lessons WHERE quiz_json IS NULL OR quiz_json = '[]' OR quiz_json = ''").all();
+    if (emptyQuizLessons.length > 0) {
+      console.log(`${emptyQuizLessons.length} ta darsda testlar yangilanmoqda...`);
+      const updateQuiz = db.prepare("UPDATE lessons SET quiz_json=?, min_score=5 WHERE id=?");
+      db.transaction(() => {
+        for (const l of emptyQuizLessons) {
+          const course = db.prepare("SELECT title FROM courses WHERE id=?").get(l.course_id);
+          const cData = COURSES_DATA.find(cd => cd.title === course?.title) || COURSES_DATA[0];
+          const lData = (cData.lessons && cData.lessons.find(ld => ld.order_num === l.order_num)) || (cData.lessons && cData.lessons[0]) || { quiz: [] };
+          const fiveQuiz = (lData.quiz || []).slice(0, 5);
+          updateQuiz.run(JSON.stringify(fiveQuiz), l.id);
+        }
+      })();
+    }
   }
 }
 

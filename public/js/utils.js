@@ -58,7 +58,9 @@ const Auth = {
 (function() {
   function fixDOMText() {
     const map = [
+      { key: "O‘qituvchi", icon: "👨‍🏫" },
       { key: "O'qituvchi", icon: "👨‍🏫" },
+      { key: "Ro‘yxatdan", icon: "📝" },
       { key: "Ro'yxatdan", icon: "📝" },
       { key: "Kabinetga", icon: "🔑" },
       { key: "Sayt haqida", icon: "ℹ️" },

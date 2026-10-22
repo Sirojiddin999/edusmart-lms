@@ -175,14 +175,14 @@
         <ul class='nav-links' style='display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 0.85rem;'>
           <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
           <li><a href='/yangiliklar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yangiliklar</a></li>
-          <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yo'nalishlar</a></li>
+          <li><a href='/yunalishlar.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Yo‘nalishlar</a></li>
           <li><a href='/kutubxona.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Kutubxona</a></li>
           <li><a href='/haqida.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Sayt haqida</a></li>
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
           <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
-          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro'yxatdan o'tish</a>
-          <a href='/teacher-login.html' class='btn' style='background: #f8fafc; border: 1px solid #cbd5e1; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O'qituvchi</a>
+          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
+          <a href='/teacher-login.html' class='btn' style='background: #f8fafc; border: 1px solid #cbd5e1; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
         </div>
       </div>
     </div>
@@ -193,7 +193,7 @@
       <div class="card-stripe"></div>
       <div class="auth-icon-wrap">🔑</div>
       <h1 class="auth-title">Kabinetga Kirish</h1>
-      <p class="auth-desc">O'quvchi login va parolingiz orqali darslaringizni davom ettiring.</p>
+      <p class="auth-desc">O‘quvchi login va parolingiz orqali darslaringizni davom ettiring.</p>
 
       <form id="form-login" onsubmit="doLogin(event)">
         <div class="form-group">
@@ -208,9 +208,9 @@
       </form>
 
       <div class="auth-links">
-        Hisobingiz yo'qmi? <a href="/register.html">Ro'yxatdan o'tish</a>
+        Hisobingiz yo‘qmi? <a href="/register.html">Ro‘yxatdan o‘tish</a>
         <div style="margin-top: 10px;">
-          O'qituvchimisiz? <a href="/teacher-login.html" style="color: #6d28d9;">O'qituvchi paneli ↗</a>
+          O‘qituvchimisiz? <a href="/teacher-login.html" style="color: #6d28d9;">O‘qituvchi paneli ↗</a>
         </div>
       </div>
     </div>
@@ -234,7 +234,7 @@
           alert(data.error);
         } else {
           Auth.setSession(data.token, data.user);
-          window.location.href = '/student.html';
+          window.location.href = (data.user && data.user.role === 'teacher') ? '/teacher.html' : '/student.html';
         }
       } catch(err) {
         alert("Server bilan ulanishda xatolik yuz berdi");
