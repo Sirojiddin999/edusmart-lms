@@ -629,7 +629,7 @@
         </div>
         <div id="topBarActions" style="display: flex; gap: 10px; align-items: center;">
           <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;'>⬅ Orqaga</a>
-          <button onclick="window.location.reload()" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer;' title="Sahifani yangilash">🔄 Yangilash</button>
+          <button onclick="forceRefreshStudents()" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;' title="Barcha ma'lumotlarni yangilash">🔄 Yangilash</button>
         </div>
       </div>
 
@@ -956,12 +956,12 @@
         <div id="secCourses" style="display: none;">
           <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;"> Kurslar Boshqaruvi</div>
+              <div style="font-size: 1.25rem; font-weight: 900;">📚 Kurslar Boshqaruvi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
-                Kurslar yaratish, darslarni kurslarga ajratish
+                Kurslar ro‘yxati va darslar taqsimoti
               </div>
             </div>
-            <!-- <button class="btn btn-primary" onclick="openAddCourseModal()"> Yangi Kurs</button> -->
+            <button class="btn btn-ghost btn-sm" onclick="loadCourses()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
           </div>
           <div class="l-cards" id="courseCards">
             <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
@@ -973,12 +973,15 @@
           <div
             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;"> Darslar Boshqaruvi</div>
+              <div style="font-size: 1.25rem; font-weight: 900;">📖 Darslar Boshqaruvi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
                 Har bir darsda video, konspekt va 5 tadan test savollari
               </div>
             </div>
-            <button class="btn btn-primary" onclick="openAddModal()"> Yangi dars qo‘shish</button>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-ghost btn-sm" onclick="loadLessons()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
+              <button class="btn btn-primary" onclick="openAddModal()">➕ Yangi dars qo‘shish</button>
+            </div>
           </div>
           <div class="l-cards" id="lessonCards">
             <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...
@@ -991,13 +994,18 @@
           <div
             style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;"> O‘quvchilar nazorati</div>
+              <div style="font-size: 1.25rem; font-weight: 900;">👥 O‘quvchilar nazorati</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
                 Har bir o‘quvchining har bir darsdagi test ballari va faolligini nazorat qiling
               </div>
             </div>
-            <input type="text" class="form-input" id="stuSearch" style="max-width: 260px;"
-              placeholder=" Ism yoki login bo‘yicha..." oninput="filterStudents()">
+            <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+              <input type="text" class="form-input" id="stuSearch" style="max-width: 220px;"
+                placeholder="🔍 Ism yoki login..." oninput="filterStudents()">
+              <button class="btn btn-primary btn-sm" onclick="forceRefreshStudents()" style="font-weight: 800; border-radius: 8px; padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px;" title="210 nafar o'quvchini yuklash / yangilash">
+                🔄 210 ta o‘quvchini yangilash
+              </button>
+            </div>
           </div>
           <div class="tbl-wrap">
             <table class="data-table">
@@ -1527,11 +1535,34 @@
     }
 
     //  O'QUVCHILAR 
-    async function loadStudents() {
+    async function forceRefreshStudents(silent = false) {
+      if (!silent) showToast("🔄 210 nafar o‘quvchilar yangilanmoqda...", "info");
+      try {
+        const r = await fetch('/api/teacher/refresh-students', {
+          method: 'POST',
+          headers: Auth.getHeaders()
+        });
+        const d = await r.json();
+        if (d.success && !silent) {
+          showToast(`✓ ${d.count || 210} nafar talaba muvaffaqiyatli yuklandi!`, "success");
+        }
+      } catch (err) {
+        console.error("Yangilashda xatolik:", err);
+      }
+      await loadStudents(true);
+      await loadLeaderboard();
+      await loadAll();
+    }
+
+    async function loadStudents(isAutoRetry = false) {
       try {
         const r = await fetch('/api/teacher/students', { headers: Auth.getHeaders() });
         const d = await r.json();
         ALL_STUDENTS = d.students || [];
+        if (ALL_STUDENTS.length === 0 && !isAutoRetry) {
+          await forceRefreshStudents(true);
+          return;
+        }
         document.getElementById('studentsBadge').innerText = ALL_STUDENTS.length;
         document.getElementById('stTotal').innerText = ALL_STUDENTS.length;
         document.getElementById('stActive').innerText = (d.stats?.active_today ?? 0) + ' nafar';

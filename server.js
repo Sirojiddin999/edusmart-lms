@@ -546,9 +546,35 @@ app.get('/api/public/certificate/:id', (req, res) => {
 
 // ─── TEACHER ROUTES ────────────────────────────────────────────────────────────
 
+// Force refresh 210 students endpoint
+app.all('/api/teacher/refresh-students', auth, onlyTeacher, (req, res) => {
+  try {
+    const runSeed210 = require('./seed_210_students.js');
+    runSeed210();
+    const updateVideos = require('./update_uz_videos.js');
+    updateVideos();
+    const count = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
+    res.json({ success: true, count, message: `${count} nafar talaba bazaga muvaffaqiyatli yangilandi!` });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // Get all students with progress
 app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
   try {
+    let studentCount = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
+    if (studentCount !== 210) {
+      try {
+        const runSeed210 = require('./seed_210_students.js');
+        runSeed210();
+        const updateVideos = require('./update_uz_videos.js');
+        updateVideos();
+      } catch (err) {
+        console.error("Auto-seed xatosi:", err);
+      }
+    }
+
     const students = db.prepare(`
       SELECT u.id, u.full_name, u.username,
              COALESCE(u.pin_code, '') as pin_code,
@@ -572,7 +598,7 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
     const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     let active_today = 0;
 
-    const total_course_lessons = pythonCourseLessons ? pythonCourseLessons.length : 10;
+    const total_course_lessons = 10;
 
     const result = students.map(s => {
       const completed = jsonParse(s.completed_lesson_ids, []);
@@ -715,6 +741,14 @@ app.get('/api/teacher/students/:id/details', auth, onlyTeacher, (req, res) => {
 // Leaderboard (rating)
 app.get('/api/teacher/leaderboard', auth, onlyTeacher, (req, res) => {
   try {
+    let studentCount = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
+    if (studentCount !== 210) {
+      try {
+        const runSeed210 = require('./seed_210_students.js');
+        runSeed210();
+      } catch (err) {}
+    }
+
     const students = db.prepare(`
       SELECT u.id, u.full_name, u.username,
              COALESCE(u.pin_code, '') as pin_code,
