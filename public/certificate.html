@@ -507,6 +507,9 @@
       <button onclick="history.length > 1 ? history.back() : window.location.href='/'" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem;">
         ⬅ Orqaga
       </button>
+      <button onclick="window.location.reload()" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem;" title="Sahifani yangilash">
+        🔄 Yangilash
+      </button>
       <a href="/" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem;">
         🏠 Bosh sahifa
       </a>
@@ -611,6 +614,12 @@
 
   <!-- Amallar Tugmalari -->
   <div class="action-row">
+    <button class="btn btn-secondary" onclick="if(window.history.length > 1){window.history.back();}else{window.location.href='/student.html';}">
+      ⬅ Orqaga qaytish
+    </button>
+    <button class="btn btn-secondary" onclick="window.location.reload()">
+      🔄 Yangilash
+    </button>
     <button class="btn btn-primary" onclick="window.print()">
       🖨 Chop etish / PDF sifatida saqlash
     </button>

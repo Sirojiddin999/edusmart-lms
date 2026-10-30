@@ -200,7 +200,8 @@
           <li><a href='/haqida.html' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Sayt haqida</a></li>
         </ul>
         <div class='nav-right' style='display: flex; gap: 10px; align-items: center;'>
-          <a href="/" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
+          <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
+          <button onclick="window.location.reload()" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 10px; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer;' title="Sahifani yangilash">🔄 Yangilash</button>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
           <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
         </div>
@@ -213,18 +214,18 @@
       <div class="card-stripe"></div>
       <div class="auth-icon-wrap">👨‍🏫</div>
       <h1 class="auth-title">O‘qituvchi paneli</h1>
-      <p class="auth-desc">O‘qituvchi kabinetiga kirish uchun loginingizni (<strong>1111</strong>) kiriting.</p>
+      <p class="auth-desc">Boshqaruv kabinetiga kirish uchun o‘qituvchi loginingizni (<strong>Marufjon</strong>) kiriting.</p>
 
       <ul class="feat-list">
-        <li><span style="color:#10b981; font-weight:bold;">✔</span> Darslar, videolar va konspektlarni boshqarish</li>
-        <li><span style="color:#10b981; font-weight:bold;">✔</span> Test savollarini tuzish va tahrirlash</li>
-        <li><span style="color:#10b981; font-weight:bold;">✔</span> O‘quvchilar natijalari va faolligi monitoringi</li>
+        <li><span style="color:#10b981; font-weight:bold;">✔</span> 210 nafar o‘quvchining to‘liq reytingi va monitoringi</li>
+        <li><span style="color:#10b981; font-weight:bold;">✔</span> Ilmiy-tajriba tahlili va rangli statistika diagrammalari</li>
+        <li><span style="color:#10b981; font-weight:bold;">✔</span> O‘quv kurslari, video darslar va test savollari nazorati</li>
       </ul>
 
       <form id="form-teacher" onsubmit="doTeacherLogin(event)">
         <div class="form-group">
           <label class="form-label">O‘qituvchi logini *</label>
-          <input id="t-user" type="text" class="form-input" placeholder="1111" value="1111" required autofocus>
+          <input id="t-user" type="text" class="form-input" placeholder="O‘qituvchi logini" value="Marufjon" required autofocus>
         </div>
         <button type="submit" class="btn-submit">Panelga Kirish ➔</button>
       </form>

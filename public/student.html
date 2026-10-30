@@ -345,9 +345,12 @@
         <span style="font-size: 1.3rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 8px;">innocode.uz</span>
       </a>
       <div class="s-header-actions" style="display: flex; align-items: center; gap: 10px;">
-        <a href="/" class="btn btn-ghost btn-sm" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">
-          🏠 Bosh sahifa
+        <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class="btn btn-ghost btn-sm" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
+          ⬅ Orqaga
         </a>
+        <button onclick="window.location.reload()" class="btn btn-ghost btn-sm" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 10px; cursor: pointer;" title="Sahifani yangilash">
+          🔄 Yangilash
+        </button>
         <div class="user-pill">
           <div class="u-avatar" id="uAvatar">?</div>
           <div>
@@ -355,8 +358,8 @@
             <div class="u-login" id="uLogin">@login</div>
           </div>
         </div>
-        <button class="btn btn-ghost btn-sm" onclick="openStudentSettings()"> Sozlamalar</button>
-        <button class="btn btn-ghost btn-sm" onclick="doLogout()">Chiqish </button>
+        <button class="btn btn-ghost btn-sm" onclick="openStudentSettings()">⚙️ Sozlamalar</button>
+        <button class="btn btn-ghost btn-sm" onclick="doLogout()">Chiqish ➔</button>
       </div>
     </header>
 
@@ -483,10 +486,28 @@
 
         <!-- NAVIGATSIYA TUGMALARI -->
         <div class="lesson-actions animate-fade-up">
-          <button class="btn btn-ghost" id="btnPrev" onclick="stepLesson(-1)"> Oldingi Dars</button>
+          <button class="btn btn-ghost" id="btnPrev" onclick="stepLesson(-1)">⬅ Oldingi Dars</button>
           <button class="btn btn-success btn-lg" id="btnNext" onclick="stepLesson(1)" disabled>
-            Keyingi darsga o‘tish 
+            Keyingi darsga o‘tish ➔
           </button>
+        </div>
+
+        <!-- KURSNI 100% BITIRGANDA PASTDA CHIQADIGAN SERTIFIKAT KARTASI -->
+        <div id="courseCompletionCertificateCard" style="display: none; margin-top: 30px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #eff6ff 100%); border: 2.5px solid #10b981; border-radius: 18px; padding: 32px 24px; text-align: center; box-shadow: 0 12px 35px rgba(16,185,129,0.15);">
+          <div style="font-size: 3.4rem; line-height: 1; margin-bottom: 12px;">🎓</div>
+          <span class="badge badge-emerald" style="font-size: 0.85rem; padding: 6px 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">✓ Kurs To‘liq Yakunlandi</span>
+          <h2 style="font-size: 1.85rem; font-weight: 900; color: #065f46; margin: 14px 0 8px;">Tabriklaymiz! Siz ushbu kursni muvaffaqiyatli tamomladingiz!</h2>
+          <p style="font-size: 1.05rem; color: #047857; max-width: 620px; margin: 0 auto 24px; line-height: 1.6;">
+            Siz barcha 10 ta dars va amaliy testlarni <strong>100% (5/5)</strong> a'lo natija bilan o‘zlashtirdingiz. InnoCode IT Academy tomonidan tasdiqlangan rasmiy elektron sertifikatingiz tayyor!
+          </p>
+          <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
+            <button onclick="generateCertificate()" class="btn btn-lg" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; border: none; font-weight: 800; padding: 14px 28px; border-radius: 12px; box-shadow: 0 6px 20px rgba(5,150,105,0.4); font-size: 1.05rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
+              📜 Sertifikatni Yuklab Olish / Ko‘rish
+            </button>
+            <button onclick="window.open('/certificate.html', '_blank')" class="btn btn-lg btn-ghost" style="border: 2px solid #059669; color: #065f46; font-weight: 800; padding: 14px 24px; border-radius: 12px; cursor: pointer;">
+              🌐 Rasmiy Tekshiruv Sahifasi
+            </button>
+          </div>
         </div>
 
       </main>
@@ -674,21 +695,21 @@
 
     // courseLessons — joriy kursning darslari (ixtiyoriy)
     function updateSyncBar(p, courseLessons) {
-      document.getElementById('syncPct').innerText = p.progress_percent + '%';
-      document.getElementById('syncBar').style.width = p.progress_percent + '%';
-      document.getElementById('syncCnt').innerText = `${p.completed_count}/${p.total_lessons} dars yakunlandi`;
+      document.getElementById('syncPct').innerText = (p.progress_percent || 0) + '%';
+      document.getElementById('syncBar').style.width = (p.progress_percent || 0) + '%';
+      document.getElementById('syncCnt').innerText = `${p.completed_count || 0}/${p.total_lessons || 10} dars yakunlandi`;
 
       const btnCert = document.getElementById('btnCert');
-      if (btnCert && courseLessons && courseLessons.length > 0) {
-        // Faqat JORIY KURS ning barcha darslari tugallansa ko'rsin
-        const courseTotal = courseLessons.length;
-        if (p.completed_count >= courseTotal && courseTotal > 0) {
-          btnCert.style.display = 'inline-block';
-        } else {
-          btnCert.style.display = 'none';
-        }
-      } else if (btnCert) {
-        btnCert.style.display = 'none';
+      const bottomCertCard = document.getElementById('courseCompletionCertificateCard');
+
+      // Agar joriy kursning barcha darslari (yoki 100%) bajarilgan bo'lsa
+      const isCompleted = (p.progress_percent >= 100 || (p.total_lessons > 0 && p.completed_count >= p.total_lessons));
+      if (isCompleted) {
+        if (btnCert) btnCert.style.display = 'inline-block';
+        if (bottomCertCard) bottomCertCard.style.display = 'block';
+      } else {
+        if (btnCert) btnCert.style.display = 'none';
+        if (bottomCertCard) bottomCertCard.style.display = 'none';
       }
     }
 

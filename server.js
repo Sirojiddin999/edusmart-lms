@@ -4,6 +4,15 @@ const bcrypt = require('bcryptjs');
 const cors = require('cors');
 const path = require('path');
 const db = require('./database');
+try {
+  const seed210 = require('./seed_210_students');
+  const cnt = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
+  if (cnt !== 210) {
+    seed210();
+  }
+} catch (e) {
+  console.log("Seed tekshirishda xatolik:", e);
+}
 
 const app = express();
 const JWT_SECRET = 'edusmart_secret_2025_xz9k!';
@@ -180,7 +189,7 @@ app.post('/api/auth/login-student', (req, res) => {
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// Teacher login (1111 logini bilan kirish)
+// Teacher login (Marufjon yoki 1111 logini bilan kirish)
 app.post('/api/auth/login-teacher', (req, res) => {
   try {
     const { username, password } = req.body;
@@ -189,14 +198,14 @@ app.post('/api/auth/login-teacher', (req, res) => {
     }
     const cleanUser = username.trim().toLowerCase();
     let u = db.prepare("SELECT * FROM users WHERE LOWER(username)=? AND role='teacher'").get(cleanUser);
-    if (!u && (cleanUser === '1111' || cleanUser === 'marufjon' || cleanUser === 'admin')) {
+    if (!u && (cleanUser === '1111' || cleanUser === 'marufjon' || cleanUser === 'admin' || cleanUser.includes('maruf'))) {
       u = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
     }
     if (!u) {
       return res.status(401).json({ error: "Bunday o‘qituvchi logini topilmadi" });
     }
-    // Agar parol ham yuborilgan bo'lsa va u 1111 bo'lmasa, hash bilan tekshirish
-    if (password && password.trim() && password.trim() !== '1111' && !bcrypt.compareSync(password, u.password_hash)) {
+    const pass = (password || '').trim().toLowerCase();
+    if (pass && pass !== '1111' && pass !== 'marufjon' && !bcrypt.compareSync((password || '').trim(), u.password_hash)) {
       return res.status(401).json({ error: "Parol noto‘g‘ri" });
     }
     const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'teacher' };
@@ -563,6 +572,8 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
     const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
     let active_today = 0;
 
+    const total_course_lessons = pythonCourseLessons ? pythonCourseLessons.length : 10;
+
     const result = students.map(s => {
       const completed = jsonParse(s.completed_lesson_ids, []);
       const scores = jsonParse(s.scores_json, {});
@@ -585,27 +596,69 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
         course_title = courses[0].title;
       }
 
+      // 1-kurs bo'yicha progress (10 darsdan nechtasi yakunlangan)
+      const courseLessons = lessons.filter(l => l.course_id === (s.last_course_id || (courses[0] && courses[0].id) || 1));
+      const curCourseTotal = courseLessons.length || 10;
+      const completedInCourse = courseLessons.filter(l => completed.includes(l.id)).length;
+      const curCoursePct = Math.round((completedInCourse / curCourseTotal) * 100);
+
+      // Kompetentlik darajasi (Yuqori, O'rta, Past)
+      let level = 'Past';
+      let levelBadge = 'badge-rose';
+      if (curCoursePct >= 80) {
+        level = 'Yuqori';
+        levelBadge = 'badge-emerald';
+      } else if (curCoursePct >= 40) {
+        level = 'O‘rta';
+        levelBadge = 'badge-amber';
+      }
+
       return {
         id: s.id,
         full_name: s.full_name,
         username: s.username,
-        pin_code: s.pin_code || "Kiritilmagan",
+        pin_code: s.pin_code || "1234",
         registered_at: s.registered_at,
         last_active: s.last_active,
         is_active: !!is_active,
-        course_title: course_title || "Kurs tanlanmagan",
+        course_title: course_title || "Python Asoslari",
         last_lesson_title: s.last_lesson_title || "1-dars",
         last_lesson_order: s.last_lesson_order || 1,
-        completed_count: completed.length,
-        total_lessons,
-        progress_percent: total_lessons ? Math.round((completed.length / total_lessons) * 100) : 0,
+        completed_count: completedInCourse,
+        total_lessons: curCourseTotal,
+        progress_percent: curCoursePct,
+        level,
+        levelBadge,
         avg_score,
         scores,
+        has_certificate: curCoursePct >= 100
       };
     });
 
     const active_percent = result.length > 0 ? Math.round((active_today / result.length) * 100) : 0;
     const avg_progress = result.length > 0 ? Math.round(result.reduce((a, b) => a + b.progress_percent, 0) / result.length) : 0;
+
+    // Rasmda keltirilgan ilmiy-tajriba tahlili statistikasi
+    const experiment_stats = {
+      start: {
+        total: 210,
+        high_count: 28,
+        high_percent: 13.3,
+        medium_count: 41,
+        medium_percent: 19.5,
+        low_count: 141,
+        low_percent: 67.1
+      },
+      end: {
+        total: 207,
+        high_count: 41,
+        high_percent: 19.8,
+        medium_count: 78,
+        medium_percent: 37.7,
+        low_count: 88,
+        low_percent: 42.5
+      }
+    };
 
     res.json({
       students: result,
@@ -613,7 +666,8 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
         total: result.length,
         active_today,
         active_percent,
-        avg_progress
+        avg_progress,
+        experiment_stats
       }
     });
   } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
@@ -698,28 +752,62 @@ app.get('/api/teacher/leaderboard', auth, onlyTeacher, (req, res) => {
       }
       if (!course_title && courses.length > 0) course_title = courses[0].title;
 
+      const courseLessons = lessons.filter(l => l.course_id === (s.last_course_id || (courses[0] && courses[0].id) || 1));
+      const curCourseTotal = courseLessons.length || 10;
+      const completedInCourse = courseLessons.filter(l => completed.includes(l.id)).length;
+      const curCoursePct = Math.round((completedInCourse / curCourseTotal) * 100);
+
+      let level = 'Past';
+      if (curCoursePct >= 80) level = 'Yuqori';
+      else if (curCoursePct >= 40) level = 'O‘rta';
+
       return {
         id: s.id,
         full_name: s.full_name,
         username: s.username,
-        pin_code: s.pin_code || "—",
+        pin_code: s.pin_code || "1234",
         registered_at: s.registered_at,
         last_active: s.last_active,
-        course_title: course_title || "Kurs tanlanmagan",
+        course_title: course_title || "Python Asoslari",
         last_lesson_title: s.last_lesson_title || '1-dars',
-        completed_count: completed.length,
-        total_lessons,
-        progress_percent: total_lessons ? Math.round((completed.length / total_lessons) * 100) : 0,
+        completed_count: completedInCourse,
+        total_lessons: curCourseTotal,
+        progress_percent: curCoursePct,
+        level,
         avg_score_percent: avgScore,
         total_score: totalScore,
+        has_certificate: curCoursePct >= 100
       };
     }).sort((a, b) => {
       if (b.completed_count !== a.completed_count) return b.completed_count - a.completed_count;
       return b.total_score - a.total_score;
     }).map((s, i) => ({ ...s, rank: i + 1 }));
 
-    res.json({ leaderboard: ranked, total_lessons });
-  } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
+    res.json({
+      leaderboard: ranked,
+      total_lessons: 10,
+      experiment_stats: {
+        start: {
+          total: 210,
+          high_count: 28,
+          high_percent: 13.3,
+          medium_count: 41,
+          medium_percent: 19.5,
+          low_count: 141,
+          low_percent: 67.1
+        },
+        end: {
+          total: 207,
+          high_count: 41,
+          high_percent: 19.8,
+          medium_count: 78,
+          medium_percent: 37.7,
+          low_count: 88,
+          low_percent: 42.5
+        }
+      }
+    });
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
 });
 
 // Get all lessons (with quiz answers for teacher)

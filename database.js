@@ -155,7 +155,23 @@ function seed() {
       })();
     }
   }
+
+  // 210 nafar talaba va o'qituvchi Marufjonni ta'minlash
+  try {
+    const studentCount = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
+    if (studentCount !== 210) {
+      console.log(`Bazadagi talabalar soni (${studentCount}) 210 ta emas. 210 nafar talabalar shakllantirilmoqda...`);
+      const runSeed210 = require('./seed_210_students.js');
+      runSeed210();
+    }
+    // Videolarni o'zbekcha YouTube darslariga yangilash
+    const updateUzVideos = require('./update_uz_videos.js');
+    updateUzVideos();
+  } catch (err) {
+    console.error("210 talaba yoki videolarni yangilashda xatolik:", err);
+  }
 }
 
 seed();
 module.exports = db;
+
