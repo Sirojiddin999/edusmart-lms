@@ -659,6 +659,11 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
         levelBadge = 'badge-amber';
       }
 
+      const rawLessonTitle = s.last_lesson_title || "1-dars";
+      const strippedLesson = rawLessonTitle.includes(' | ') ? rawLessonTitle.split(' | ').slice(1).join(' | ').trim() : rawLessonTitle;
+      const ordNum = s.last_lesson_order || 1;
+      const cleanLessonTitle = strippedLesson.match(/^\d+-dars/i) ? strippedLesson : `${ordNum}-dars: ${strippedLesson}`;
+
       return {
         id: s.id,
         full_name: s.full_name,
@@ -668,8 +673,9 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
         last_active: s.last_active,
         is_active: !!is_active,
         course_title: course_title || "Python Asoslari",
-        last_lesson_title: s.last_lesson_title || "1-dars",
-        last_lesson_order: s.last_lesson_order || 1,
+        last_lesson_id: s.last_lesson_id || (courseLessons[0] && courseLessons[0].id) || 1,
+        last_lesson_title: cleanLessonTitle,
+        last_lesson_order: ordNum,
         completed_count: completedInCourse,
         total_lessons: curCourseTotal,
         progress_percent: curCoursePct,

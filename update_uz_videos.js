@@ -23,6 +23,9 @@ function updateUzVideos() {
     const existingCourses = db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
 
     db.transaction(() => {
+      // Eski kursga biriktirilmagan (course_id IS NULL) ortiqcha dublikat darslarni tozalash
+      db.prepare("DELETE FROM lessons WHERE course_id IS NULL OR course_id NOT IN (SELECT id FROM courses)").run();
+
       for (let ci = 0; ci < COURSES_DATA.length; ci++) {
         const cData = COURSES_DATA[ci];
         let course = existingCourses[ci] || db.prepare("SELECT * FROM courses WHERE title=?").get(cData.title);
