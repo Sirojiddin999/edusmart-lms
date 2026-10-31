@@ -123,32 +123,35 @@
     }
 
     .t-user-footer {
-      padding: 16px 18px;
+      padding: 12px 14px;
       border-top: 1px solid var(--border, #e2e8f0);
       display: flex;
       align-items: center;
+      justify-content: space-between;
       gap: 10px;
-      background: #ffffff;
+      background: #f8fafc;
     }
 
     .t-user-av {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
       border-radius: 50%;
       background: linear-gradient(135deg, #4f46e5, #7c3aed);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.88rem;
+      font-size: 1rem;
       font-weight: 800;
       color: #fff;
       flex-shrink: 0;
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.25);
     }
 
     .t-user-name {
-      font-size: 0.88rem;
+      font-size: 0.86rem;
       font-weight: 800;
       color: var(--text-primary, #0f172a);
+      line-height: 1.25;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -156,7 +159,10 @@
 
     .t-user-role {
       font-size: 0.72rem;
+      font-weight: 600;
       color: var(--text-muted, #64748b);
+      line-height: 1.25;
+      white-space: nowrap;
     }
 
     /* MAIN CONTENT */
@@ -541,15 +547,16 @@
       </div>
 
       <!-- User footer -->
-      <div id="sideUserFooter" style="display: none;">
+      <div id="sideUserFooter" style="display: none; margin-top: auto;">
         <div class="t-user-footer">
-          <div class="t-user-av">👨‍🏫</div>
-          <div style="flex: 1; overflow: hidden;">
-            <div class="t-user-name" id="sideUserName">Marufjon</div>
-            <div class="t-user-role">Bosh o‘qituvchi</div>
+          <div style="display: flex; align-items: center; gap: 10px; min-width: 0; flex: 1;">
+            <div class="t-user-av">👨‍🏫</div>
+            <div style="min-width: 0; flex: 1;">
+              <div class="t-user-name" id="sideUserName">O‘qituvchi</div>
+              <div class="t-user-role">Bosh o‘qituvchi</div>
+            </div>
           </div>
-          <button class="btn btn-ghost btn-xs" onclick="switchSection('settings')" title="Sozlamalar">⚙️</button>
-          <button class="btn btn-ghost btn-xs" onclick="doLogout()" title="Chiqish" style="color: #ef4444;">🚪</button>
+          <button onclick="doLogout()" title="Tizimdan chiqish" style="width: 32px; height: 32px; border-radius: 8px; border: 1px solid #fecdd3; background: #fff1f2; color: #e11d48; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; padding: 0; transition: all 0.2s;">🚪</button>
         </div>
       </div>
     </aside>
@@ -917,14 +924,14 @@
             <table class="data-table" style="width: 100%;">
               <thead>
                 <tr>
-                  <th style="width: 18%;">O‘quvchi</th>
+                  <th style="width: 17%;">O‘quvchi</th>
                   <th style="width: 11%;">Login</th>
                   <th style="width: 13%;">Qaysi Kursda</th>
-                  <th style="width: 20%;">Qaysi Darsda</th>
+                  <th style="width: 19%;">Qaysi Darsda</th>
                   <th style="width: 11%;">Progress (%)</th>
                   <th style="width: 6%;">Ball</th>
                   <th style="width: 8%;">Faollik</th>
-                  <th style="text-align: center; width: 13%;">Amallar</th>
+                  <th style="text-align: center; width: 15%;">Amallar</th>
                 </tr>
               </thead>
               <tbody id="stuBody">
@@ -1271,6 +1278,28 @@
 
       <div style="display: flex; justify-content: flex-end;">
         <button class="btn btn-ghost" onclick="closeModal('studentDetailModal')">Yopish</button>
+      </div>
+    </div>
+  </div>
+
+  <!--  MODAL: O'QUVCHINING OLGAN SERTIFIKATLARI (KO'RISH VA YUKLAB OLISH)  -->
+  <div class="modal-backdrop" id="studentCertsModal">
+    <div class="modal-box" style="max-width: 720px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeModal('studentCertsModal')">✕</button>
+      <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-bottom: 14px; border-bottom: 1.5px solid #e2e8f0;">
+        <div style="width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #7c3aed); display: flex; align-items: center; justify-content: center; font-size: 1.35rem; color: #fff; font-weight: 800; flex-shrink: 0;">🎓</div>
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 900; color: #0f172a; margin: 0 0 3px;" id="scStudentName">O‘quvchi sertifikatlari</h2>
+          <div style="font-size: 0.82rem; color: #64748b; font-weight: 600;" id="scStudentSub">Kurslar bo‘yicha olgan barcha sertifikatlarni ko‘rish va yuklab olish</div>
+        </div>
+      </div>
+
+      <div id="scCoursesList" style="display: flex; flex-direction: column; gap: 14px;">
+        <div style="text-align: center; padding: 30px; color: var(--text-muted);">Yuklanmoqda...</div>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; margin-top: 20px;">
+        <button class="btn btn-ghost" onclick="closeModal('studentCertsModal')">Yopish</button>
       </div>
     </div>
   </div>
@@ -1640,7 +1669,10 @@
           <td><strong style="color:#4f46e5; font-size:0.85rem; white-space:nowrap;">${s.total_score || 0} ball</strong></td>
           <td>${certBadge}</td>
           <td style="text-align: center;">
-            <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test natijalari" style="padding:4px 8px; font-size:0.74rem;">🔍 Natijalar</button>
+            <div style="display:flex; gap:4px; justify-content:center; flex-wrap:wrap;">
+              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test natijalari" style="padding:3px 7px; font-size:0.7rem;">🔍 Ballar</button>
+              <button class="btn btn-ghost btn-xs" onclick="openStudentCertByTeacher(${s.id})" title="O‘quvchi sertifikatlarini ko‘rish va yuklab olish" style="padding:3px 7px; font-size:0.7rem; color:#4f46e5; font-weight:800;">📜 Sertifikat</button>
+            </div>
           </td>
         </tr>`;
       }).join('');
@@ -2033,12 +2065,16 @@
             </div>
           </td>
           <td style="text-align: center;">
-            <div style="display:flex; gap:3px; justify-content:center; flex-wrap:wrap;">
-              <button class="btn btn-ghost btn-xs" style="padding:2px 6px; font-size:0.68rem;" onclick="viewStudentDetails(${s.id})" title="Batafsil test ballari">🔍 Ballar</button>
-              <button class="btn btn-ghost btn-xs" style="padding:2px 6px; font-size:0.68rem; color:#4f46e5; font-weight:800;" onclick="openStudentCertByTeacher(${s.id})" title="O‘quvchi sertifikatini ko‘rish va yuklab olish">📜 Sertifikat</button>
-              <button class="btn btn-ghost btn-xs" style="padding:2px 6px; font-size:0.68rem;" onclick="selectStudentForEditById(${s.id})" title="Login yoki parolini sozlamalarda tahrirlash">🔑 Parol</button>
-              <button class="btn btn-ghost btn-xs" style="padding:2px 6px; font-size:0.68rem;" onclick="resetProg(${s.id})" title="Progressni noldan boshlash">🔄</button>
-              <button class="btn btn-danger btn-xs" style="padding:2px 6px; font-size:0.68rem;" onclick="delStudent(${s.id})" title="O‘chirish">🗑️</button>
+            <div style="display:flex; flex-direction:column; gap:4px; align-items:center;">
+              <div style="display:flex; gap:4px; justify-content:center;">
+                <button class="btn btn-ghost btn-xs" style="padding:3px 6px; font-size:0.68rem;" onclick="viewStudentDetails(${s.id})" title="Batafsil test ballari">🔍 Ballar</button>
+                <button class="btn btn-ghost btn-xs" style="padding:3px 6px; font-size:0.68rem; color:#4f46e5; font-weight:800; border-color:#c7d2fe; background:#eef2ff;" onclick="openStudentCertByTeacher(${s.id})" title="O‘quvchining olgan sertifikatlarini ko‘rish va yuklab olish">📜 Sertifikat</button>
+              </div>
+              <div style="display:flex; gap:4px; justify-content:center;">
+                <button class="btn btn-ghost btn-xs" style="padding:3px 6px; font-size:0.68rem;" onclick="selectStudentForEditById(${s.id})" title="Login yoki parolini sozlamalarda tahrirlash">🔑 Parol</button>
+                <button class="btn btn-ghost btn-xs" style="padding:3px 6px; font-size:0.68rem;" onclick="resetProg(${s.id})" title="Progressni noldan boshlash">🔄</button>
+                <button class="btn btn-danger btn-xs" style="padding:3px 6px; font-size:0.68rem;" onclick="delStudent(${s.id})" title="O‘chirish">🗑️</button>
+              </div>
             </div>
           </td>
         </tr>`;
@@ -2046,19 +2082,259 @@
     }
 
     async function openStudentCertByTeacher(studentId) {
+      openModal('studentCertsModal');
+      const listEl = document.getElementById('scCoursesList');
+      listEl.innerHTML = `<div style="text-align:center; padding:30px; color:var(--text-muted);">Sertifikatlar yuklanmoqda...</div>`;
       try {
-        const r = await fetch(`/api/teacher/students/${studentId}/certificate`, {
-          method: 'POST',
+        const r = await fetch(`/api/teacher/students/${studentId}/certificates`, {
           headers: Auth.getHeaders()
         });
         const d = await r.json();
-        if (d.cert_id) {
-          window.open(`/certificate.html?id=${encodeURIComponent(d.cert_id)}`, '_blank');
+        if (!r.ok || !d.success) {
+          listEl.innerHTML = `<div style="text-align:center; padding:24px; color:#dc2626;">${d.error || 'Yuklashda xatolik'}</div>`;
+          return;
+        }
+
+        document.getElementById('scStudentName').innerText = `${d.student.full_name} — Sertifikatlari`;
+        document.getElementById('scStudentSub').innerText = `Login: @${d.student.username || ''} • Kurslar bo‘yicha olgan sertifikatlarini ko‘rish va yuklab olish`;
+
+        renderStudentCertsList(d.student, d.courses || []);
+      } catch {
+        listEl.innerHTML = `<div style="text-align:center; padding:24px; color:#dc2626;">Server bilan ulanishda xatolik</div>`;
+      }
+    }
+
+    function renderStudentCertsList(student, courses) {
+      const listEl = document.getElementById('scCoursesList');
+      if (!courses.length) {
+        listEl.innerHTML = `<div style="text-align:center; padding:24px; color:var(--text-muted);">Kurslar topilmadi</div>`;
+        return;
+      }
+
+      listEl.innerHTML = courses.map(c => {
+        const cert = c.certificate;
+        const safeName = (student.full_name || '').replace(/'/g, "\\'");
+        const safeCourse = (c.course_title || '').replace(/'/g, "\\'");
+
+        if (cert) {
+          const safeCertId = (cert.id || '').replace(/'/g, "\\'");
+          const safeDate = (cert.issue_date || '').replace(/'/g, "\\'");
+          return `
+            <div style="background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border:2px solid #86efac; border-radius:16px; padding:18px 20px; box-shadow:0 4px 14px rgba(16,185,129,0.08);">
+              <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
+                <div>
+                  <span class="badge badge-emerald" style="font-size:0.72rem; font-weight:800; margin-bottom:6px;">🏆 SERTIFIKAT OLINGAN</span>
+                  <div style="font-size:1.05rem; font-weight:900; color:#0f172a;">📚 ${c.course_title}</div>
+                </div>
+                <div style="text-align:right;">
+                  <code style="background:#eef2ff; color:#4f46e5; padding:4px 10px; border-radius:8px; font-size:0.78rem; font-weight:800; border:1px solid #c7d2fe;">ID: ${cert.id}</code>
+                  <div style="font-size:0.73rem; color:#64748b; margin-top:4px; font-weight:600;">📅 ${cert.issue_date || 'Berilgan'}</div>
+                </div>
+              </div>
+
+              <div style="font-size:0.8rem; color:#475569; margin-bottom:14px; font-weight:600;">
+                O‘zlashtirish ko‘rsatkichi: <strong style="color:#059669;">${c.completed_count}/${c.total_lessons} dars (${c.progress_percent || 100}%)</strong> • Natija: <strong style="color:#059669;">100% Muvaffaqiyatli</strong>
+              </div>
+
+              <div style="display:flex; gap:8px; flex-wrap:wrap; padding-top:12px; border-top:1px solid #e2e8f0;">
+                <button class="btn btn-primary btn-sm" style="font-weight:800; background:linear-gradient(135deg,#059669,#047857); border:none;" onclick="downloadTeacherCertPNG('${safeCertId}', '${safeName}', '${safeCourse}', '${safeDate}')">
+                  📥 Yuklab olish (Rasm / PNG)
+                </button>
+                <a href="/certificate.html?id=${encodeURIComponent(cert.id)}" target="_blank" class="btn btn-primary btn-sm" style="font-weight:800; text-decoration:none;">
+                  👁️ Sertifikatni ko‘rish ↗
+                </a>
+                <a href="/certificate.html?id=${encodeURIComponent(cert.id)}" target="_blank" class="btn btn-ghost btn-sm" style="font-weight:700; text-decoration:none;">
+                  🖨️ Chop etish / PDF
+                </a>
+              </div>
+            </div>
+          `;
         } else {
-          showToast(d.error || 'Sertifikatni ochishda xatolik', 'error');
+          return `
+            <div style="background:#ffffff; border:1.5px solid #e2e8f0; border-radius:14px; padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
+              <div>
+                <div style="font-size:0.98rem; font-weight:800; color:#1e293b;">📚 ${c.course_title}</div>
+                <div style="font-size:0.78rem; color:#64748b; margin-top:3px;">
+                  Progress: <strong>${c.completed_count}/${c.total_lessons} dars (${c.progress_percent}%)</strong>
+                </div>
+              </div>
+              <button class="btn btn-ghost btn-sm" style="font-weight:800; color:#4f46e5; border-color:#c7d2fe; background:#eef2ff;" onclick="issueCourseCertByTeacher(${student.id}, ${c.course_id})">
+                📜 Ushbu kursdan sertifikat ochish
+              </button>
+            </div>
+          `;
+        }
+      }).join('');
+    }
+
+    async function issueCourseCertByTeacher(studentId, courseId) {
+      try {
+        const r = await fetch(`/api/teacher/students/${studentId}/certificate`, {
+          method: 'POST',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({ course_id: courseId })
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("Sertifikat tayyorlandi!", "success");
+          openStudentCertByTeacher(studentId);
+        } else {
+          showToast(d.error || "Xatolik", "error");
         }
       } catch {
-        showToast('Sertifikatni yuklashda xatolik', 'error');
+        showToast("Tarmoq xatosi", "error");
+      }
+    }
+
+    function downloadTeacherCertPNG(certId, studentName, courseTitle, issueDate) {
+      try {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1600;
+        canvas.height = 1130;
+        const ctx = canvas.getContext('2d');
+
+        const bgGrad = ctx.createRadialGradient(800, 565, 100, 800, 565, 900);
+        bgGrad.addColorStop(0, '#ffffff');
+        bgGrad.addColorStop(1, '#f8fafc');
+        ctx.fillStyle = bgGrad;
+        ctx.fillRect(0, 0, 1600, 1130);
+
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 28;
+        ctx.strokeRect(24, 24, 1552, 1082);
+
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 5;
+        ctx.strokeRect(58, 58, 1484, 1014);
+        ctx.lineWidth = 1.5;
+        ctx.strokeRect(68, 68, 1464, 994);
+
+        ctx.textAlign = 'center';
+        ctx.fillStyle = '#0f172a';
+        ctx.font = '900 54px Arial, sans-serif';
+        ctx.fillText('innocode.uz', 800, 165);
+
+        ctx.fillStyle = '#b45309';
+        ctx.font = 'bold 20px Arial, sans-serif';
+        ctx.fillText('INNOCODE IT ACADEMY & INOCODERS', 800, 200);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 64px Georgia, "Times New Roman", serif';
+        ctx.fillText('MUVAFFAQIYAT SERTIFIKATI', 800, 290);
+
+        ctx.fillStyle = '#64748b';
+        ctx.font = 'italic 26px Georgia, serif';
+        ctx.fillText('Ushbu rasmiy sertifikat quyidagi shaxsga taqdim etiladi:', 800, 345);
+
+        const fullNameUpper = (studentName || 'O‘QUVCHI').toUpperCase();
+        ctx.fillStyle = '#b45309';
+        let nameFontSize = 52;
+        ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
+        while (ctx.measureText(fullNameUpper).width > 1220 && nameFontSize > 26) {
+          nameFontSize -= 2;
+          ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
+        }
+        ctx.fillText(fullNameUpper, 800, 445, 1240);
+
+        const lineHalf = Math.min(620, Math.max(340, (ctx.measureText(fullNameUpper).width / 2) + 40));
+        ctx.strokeStyle = '#d97706';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(800 - lineHalf, 470);
+        ctx.lineTo(800 + lineHalf, 470);
+        ctx.stroke();
+
+        ctx.fillStyle = '#334155';
+        ctx.font = '28px Arial, sans-serif';
+        ctx.fillText('InnoCode IT Academy ta\'lim platformasidagi', 800, 540);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 34px Arial, sans-serif';
+        ctx.fillText('«' + (courseTitle || 'Dasturlash') + '»', 800, 592, 1240);
+
+        ctx.fillStyle = '#334155';
+        ctx.font = '27px Arial, sans-serif';
+        ctx.fillText('o‘quv dasturidagi barcha 10 ta dars va amaliy test sinovlarini', 800, 642);
+        ctx.fillText('100% (5/5) a\'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.', 800, 682);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'italic bold 34px Georgia, serif';
+        ctx.fillText('M. Isomiddinov', 360, 825);
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(210, 840);
+        ctx.lineTo(510, 840);
+        ctx.stroke();
+        ctx.fillStyle = '#475569';
+        ctx.font = 'bold 20px Arial, sans-serif';
+        ctx.fillText('Ma\'rufjon Isomiddinov', 360, 872);
+        ctx.font = '18px Arial, sans-serif';
+        ctx.fillText('Kurs rahbari & Bosh mentor', 360, 898);
+
+        const sealGrad = ctx.createRadialGradient(800, 835, 10, 800, 835, 78);
+        sealGrad.addColorStop(0, '#f59e0b');
+        sealGrad.addColorStop(1, '#b45309');
+        ctx.fillStyle = sealGrad;
+        ctx.beginPath();
+        ctx.arc(800, 835, 76, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#fde68a';
+        ctx.lineWidth = 4;
+        ctx.stroke();
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 16px Arial, sans-serif';
+        ctx.fillText('OFFICIAL', 800, 810);
+        ctx.font = 'bold 34px Arial, sans-serif';
+        ctx.fillText('★', 800, 845);
+        ctx.font = 'bold 15px Arial, sans-serif';
+        ctx.fillText('ACCREDITED', 800, 870);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'italic bold 34px Georgia, serif';
+        ctx.fillText('S. Savriyev', 1240, 825);
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(1090, 840);
+        ctx.lineTo(1390, 840);
+        ctx.stroke();
+        ctx.fillStyle = '#475569';
+        ctx.font = 'bold 20px Arial, sans-serif';
+        ctx.fillText('Sirojiddin Savriyev', 1240, 872);
+        ctx.font = '18px Arial, sans-serif';
+        ctx.fillText('InnoCode IT Academy Direktori', 1240, 898);
+
+        ctx.fillStyle = '#f1f5f9';
+        ctx.fillRect(140, 945, 1320, 90);
+        ctx.strokeStyle = '#cbd5e1';
+        ctx.lineWidth = 2;
+        ctx.strokeRect(140, 945, 1320, 90);
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 22px Arial, sans-serif';
+        ctx.fillText('Berilgan sana: ' + (issueDate || '2026-yil'), 175, 985);
+        ctx.fillStyle = '#475569';
+        ctx.font = '19px Arial, sans-serif';
+        ctx.fillText('Rasmiy tekshiruv manzili: ' + window.location.origin + '/certificate.html?id=' + certId, 175, 1016);
+
+        ctx.textAlign = 'right';
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 26px "Courier New", monospace';
+        ctx.fillText('ID: ' + certId, 1425, 1000);
+
+        const link = document.createElement('a');
+        const cleanFileName = (studentName || 'Oquvchi').replace(/[^a-zA-Z0-9_\u0400-\u04FF-]/g, '_');
+        link.download = `Sertifikat_${cleanFileName}_${certId}.png`;
+        link.href = canvas.toDataURL('image/png');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        showToast("📥 Sertifikat rasm (PNG) sifatida yuklab olindi!", "success");
+      } catch (e) {
+        showToast("Yuklab olishda xatolik: " + e.message, "error");
       }
     }
 

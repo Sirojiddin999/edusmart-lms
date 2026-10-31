@@ -473,6 +473,82 @@ app.post('/api/student/progress', auth, onlyStudent, (req, res) => {
   } catch (e) { res.status(500).json({ error: "Server xatosi" }); }
 });
 
+function ensureStudentCourseCertificate(userId, studentName, course) {
+  let cert = db.prepare("SELECT * FROM certificates WHERE user_id=? AND course_id=?").get(userId, course.id);
+  if (!cert) {
+    const randCode = Math.floor(100000 + Math.random() * 900000);
+    const certId = `INNO-${new Date().getFullYear()}-${randCode}`;
+    const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+    const now = new Date();
+    const issueDate = `${now.getDate()}-${months[now.getMonth()]}, ${now.getFullYear()}-yil`;
+
+    db.prepare(`
+      INSERT INTO certificates (id, user_id, course_id, student_name, course_title, score_percent, issue_date)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(certId, userId, course.id, studentName, course.title, 100, issueDate);
+
+    cert = db.prepare("SELECT * FROM certificates WHERE id=?").get(certId);
+  }
+  return cert;
+}
+
+function buildStudentCertificatesSummary(studentId, studentName) {
+  const p = getProgress(studentId);
+  const completedIds = jsonParse(p.completed_lesson_ids, []);
+  const courses = getAllCourses();
+  const lessons = getAllLessons();
+  const existingCerts = db.prepare("SELECT * FROM certificates WHERE user_id=?").all(studentId);
+
+  const courseList = courses.map(c => {
+    const cLessons = lessons.filter(l => l.course_id === c.id);
+    const total = cLessons.length || 10;
+    const comp = cLessons.filter(l => completedIds.includes(l.id)).length;
+    const pct = Math.round((comp / total) * 100);
+    let cert = existingCerts.find(x => x.course_id === c.id) || null;
+    if (!cert && pct >= 100) {
+      cert = ensureStudentCourseCertificate(studentId, studentName, c);
+    }
+    return {
+      course_id: c.id,
+      course_title: c.title,
+      completed_count: comp,
+      total_lessons: total,
+      progress_percent: pct,
+      is_completed: pct >= 100,
+      has_certificate: !!cert,
+      certificate: cert
+    };
+  });
+
+  // Agar o'quvchida hali hech qaysi kursdan sertifikat bo'lmasa, joriy o'qiyotgan kursi uchun tayyorlab beramiz
+  if (!courseList.some(x => x.has_certificate) && courseList.length > 0) {
+    const activeCourseId = p.last_course_id || courseList[0].course_id;
+    const target = courseList.find(x => x.course_id === activeCourseId) || courseList[0];
+    const cert = ensureStudentCourseCertificate(studentId, studentName, { id: target.course_id, title: target.course_title });
+    target.has_certificate = true;
+    target.certificate = cert;
+  }
+
+  return courseList;
+}
+
+// O'quvchining barcha kurslar bo'yicha sertifikatlari ro'yxati
+app.get('/api/student/certificates', auth, onlyStudent, (req, res) => {
+  try {
+    const u = db.prepare("SELECT id, full_name, username FROM users WHERE id=?").get(req.user.id);
+    const studentName = u ? u.full_name : (req.user.full_name || "O‘quvchi");
+    const courses = buildStudentCertificatesSummary(req.user.id, studentName);
+    res.json({
+      success: true,
+      student: u || { id: req.user.id, full_name: studentName },
+      courses,
+      certificates: courses.filter(c => c.certificate).map(c => c.certificate)
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
+});
+
 // Sertifikat olish yoki yuklash (O'quvchi)
 app.post('/api/student/certificate', auth, onlyStudent, (req, res) => {
   try {
@@ -486,28 +562,33 @@ app.post('/api/student/certificate', auth, onlyStudent, (req, res) => {
     const u = db.prepare("SELECT full_name FROM users WHERE id=?").get(req.user.id);
     const studentName = u ? u.full_name : (req.user.full_name || "O‘quvchi");
 
-    // Mavjud sertifikatni tekshirish
-    let cert = db.prepare("SELECT * FROM certificates WHERE user_id=? AND course_id=?").get(req.user.id, course.id);
-    if (!cert) {
-      const randCode = Math.floor(100000 + Math.random() * 900000);
-      const certId = `INNO-${new Date().getFullYear()}-${randCode}`;
-      
-      const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
-      const now = new Date();
-      const issueDate = `${now.getDate()}-${months[now.getMonth()]}, ${now.getFullYear()}-yil`;
-
-      db.prepare(`
-        INSERT INTO certificates (id, user_id, course_id, student_name, course_title, score_percent, issue_date)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `).run(certId, req.user.id, course.id, studentName, course.title, 100, issueDate);
-
-      cert = db.prepare("SELECT * FROM certificates WHERE id=?").get(certId);
-    }
+    const cert = ensureStudentCourseCertificate(req.user.id, studentName, course);
+    const allCourses = buildStudentCertificatesSummary(req.user.id, studentName);
 
     res.json({
       success: true,
+      cert_id: cert.id,
       certificate: cert,
+      courses: allCourses,
       verify_url: `/certificate.html?id=${cert.id}`
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
+});
+
+// O'qituvchi tomonidan o'quvchining barcha olgan sertifikatlarini ko'rish
+app.get('/api/teacher/students/:id/certificates', auth, onlyTeacher, (req, res) => {
+  try {
+    const student = db.prepare("SELECT id, full_name, username FROM users WHERE id=? AND role='student'").get(req.params.id);
+    if (!student) return res.status(404).json({ error: "O‘quvchi topilmadi" });
+
+    const courses = buildStudentCertificatesSummary(student.id, student.full_name);
+    res.json({
+      success: true,
+      student,
+      courses,
+      certificates: courses.filter(c => c.certificate).map(c => c.certificate)
     });
   } catch (e) {
     res.status(500).json({ error: "Server xatosi: " + e.message });
@@ -517,7 +598,7 @@ app.post('/api/student/certificate', auth, onlyStudent, (req, res) => {
 // O'qituvchi tomonidan o'quvchi sertifikatini olish / yaratish
 app.post('/api/teacher/students/:id/certificate', auth, onlyTeacher, (req, res) => {
   try {
-    const student = db.prepare("SELECT id, full_name FROM users WHERE id=? AND role='student'").get(req.params.id);
+    const student = db.prepare("SELECT id, full_name, username FROM users WHERE id=? AND role='student'").get(req.params.id);
     if (!student) return res.status(404).json({ error: "O‘quvchi topilmadi" });
 
     const p = getProgress(student.id);
@@ -525,24 +606,11 @@ app.post('/api/teacher/students/:id/certificate', auth, onlyTeacher, (req, res) 
     const courseId = req.body?.course_id ? parseInt(req.body.course_id) : (p.last_course_id || (courses[0] ? courses[0].id : 1));
     const course = db.prepare("SELECT * FROM courses WHERE id=?").get(courseId) || courses[0] || { id: 1, title: "Python Asoslari va Sun'iy Intellekt" };
 
-    let cert = db.prepare("SELECT * FROM certificates WHERE user_id=? AND course_id=?").get(student.id, course.id);
-    if (!cert) {
-      const randCode = Math.floor(100000 + Math.random() * 900000);
-      const certId = `INNO-${new Date().getFullYear()}-${randCode}`;
-      const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
-      const now = new Date();
-      const issueDate = `${now.getDate()}-${months[now.getMonth()]}, ${now.getFullYear()}-yil`;
-
-      db.prepare(`
-        INSERT INTO certificates (id, user_id, course_id, student_name, course_title, score_percent, issue_date)
-        VALUES (?, ?, ?, ?, ?, ?, ?)
-      `).run(certId, student.id, course.id, student.full_name, course.title, 100, issueDate);
-
-      cert = db.prepare("SELECT * FROM certificates WHERE id=?").get(certId);
-    }
+    const cert = ensureStudentCourseCertificate(student.id, student.full_name, course);
 
     res.json({
       success: true,
+      cert_id: cert.id,
       certificate: cert,
       verify_url: `/certificate.html?id=${cert.id}`
     });

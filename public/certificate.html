@@ -200,18 +200,22 @@
 
     /* Student Name */
     .student-wrap {
-      margin: 22px 0 16px;
+      margin: 22px auto 16px;
       display: inline-block;
-      padding: 0 32px 8px;
+      max-width: 92%;
+      padding: 0 24px 8px;
       border-bottom: 2px solid #d97706;
     }
 
     .student-name {
-      font-family: 'Great Vibes', cursive, 'Cinzel', serif;
-      font-size: 3.6rem;
+      font-family: 'Cinzel', Georgia, 'Times New Roman', serif;
+      font-size: clamp(1.3rem, 2.7vw, 2.25rem);
+      font-weight: 800;
       color: #b45309;
-      line-height: 1.1;
-      text-shadow: 1px 1px 2px rgba(217, 119, 6, 0.2);
+      line-height: 1.25;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      text-shadow: 1px 1px 2px rgba(217, 119, 6, 0.15);
     }
 
     /* Description */
@@ -753,14 +757,20 @@
       ctx.fillText('Ushbu rasmiy hujjat quyidagi o‘quvchiga taqdim etiladi:', 800, 345);
 
       ctx.fillStyle = '#b45309';
-      ctx.font = 'bold 72px Georgia, "Times New Roman", serif';
-      ctx.fillText(studentName, 800, 450);
+      let nameFontSize = 52;
+      ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
+      while (ctx.measureText(studentName).width > 1220 && nameFontSize > 26) {
+        nameFontSize -= 2;
+        ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
+      }
+      ctx.fillText(studentName, 800, 445, 1240);
 
+      const lineHalf = Math.min(620, Math.max(340, (ctx.measureText(studentName).width / 2) + 40));
       ctx.strokeStyle = '#d97706';
       ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.moveTo(420, 472);
-      ctx.lineTo(1180, 472);
+      ctx.moveTo(800 - lineHalf, 470);
+      ctx.lineTo(800 + lineHalf, 470);
       ctx.stroke();
 
       ctx.fillStyle = '#334155';
