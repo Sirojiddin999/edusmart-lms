@@ -214,7 +214,7 @@
       <div class="card-stripe"></div>
       <div class="auth-icon-wrap">👨‍🏫</div>
       <h1 class="auth-title">O‘qituvchi paneli</h1>
-      <p class="auth-desc">Boshqaruv kabinetiga kirish uchun o‘qituvchi loginingizni (<strong>Marufjon</strong>) kiriting.</p>
+      <p class="auth-desc">Boshqaruv kabinetiga kirish uchun o‘qituvchi login va maxfiy parolingizni kiriting.</p>
 
       <ul class="feat-list">
         <li><span style="color:#10b981; font-weight:bold;">✔</span> 210 nafar o‘quvchining to‘liq reytingi va monitoringi</li>
@@ -225,7 +225,11 @@
       <form id="form-teacher" onsubmit="doTeacherLogin(event)">
         <div class="form-group">
           <label class="form-label">O‘qituvchi logini *</label>
-          <input id="t-user" type="text" class="form-input" placeholder="O‘qituvchi logini" value="Marufjon" required autofocus>
+          <input id="t-user" type="text" class="form-input" placeholder="O‘qituvchi logini" required autofocus>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Maxfiy parol *</label>
+          <input id="t-pass" type="password" class="form-input" placeholder="Maxfiy parolingizni kiriting" required>
         </div>
         <button type="submit" class="btn-submit">Panelga Kirish ➔</button>
       </form>
@@ -241,6 +245,7 @@
     async function doTeacherLogin(e) {
       e.preventDefault();
       const username = document.getElementById('t-user').value.trim();
+      const password = document.getElementById('t-pass').value.trim();
       if (!username) {
         alert("O‘qituvchi logini kiritilishi shart!");
         return;
@@ -250,7 +255,7 @@
         const r = await fetch('/api/auth/login-teacher', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ username })
+          body: JSON.stringify({ username, password })
         });
         const data = await r.json();
         if(data.error) {

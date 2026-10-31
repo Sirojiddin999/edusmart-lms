@@ -6,72 +6,76 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>O‘qituvchi boshqaruv paneli | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
+  <!-- Chart.js for interactive diagrams -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <style>
-    /*  TEACHER MODERN WHITE LAYOUT  */
+    /*  TEACHER MODERN RESPONSIVE LAYOUT  */
     * {
       box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--bg-base, #f8fafc);
+      font-family: var(--font-body, 'Inter', -apple-system, BlinkMacSystemFont, sans-serif);
+      color: var(--text-primary, #0f172a);
+      overflow-x: hidden;
     }
 
     .t-root {
       display: flex;
       min-height: 100vh;
-      background: var(--bg-base);
+      background: var(--bg-base, #f8fafc);
+      width: 100%;
+      overflow-x: hidden;
     }
 
     /* SIDEBAR */
     .t-sidebar {
-      width: 280px;
+      width: 260px;
       flex-shrink: 0;
       background: #ffffff;
-      border-right: 1px solid var(--border);
+      border-right: 1px solid var(--border, #e2e8f0);
       display: flex;
       flex-direction: column;
       position: sticky;
       top: 0;
       height: 100vh;
       overflow-y: auto;
-      box-shadow: 1px 0 3px rgba(0, 0, 0, 0.02);
+      box-shadow: 1px 0 4px rgba(0, 0, 0, 0.03);
+      z-index: 40;
     }
 
     .t-brand {
-      padding: 22px 20px 18px;
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .t-brand-logo {
-      width: 42px;
-      height: 42px;
-      border-radius: var(--r-sm);
-      background: linear-gradient(135deg, var(--primary) 0%, var(--purple) 100%);
+      padding: 20px 18px 16px;
+      border-bottom: 1px solid var(--border, #e2e8f0);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.3rem;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+      gap: 8px;
     }
 
     /* Login form in sidebar */
     .t-login-section {
-      padding: 22px 20px;
+      padding: 24px 20px;
       flex: 1;
     }
 
     .t-login-title {
-      font-size: 0.95rem;
+      font-size: 1rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--text-primary, #0f172a);
       margin-bottom: 16px;
     }
 
     /* Nav menu (after login) */
     .t-nav {
-      padding: 14px 12px;
+      padding: 16px 12px;
       display: flex;
       flex-direction: column;
       gap: 6px;
+      flex: 1;
     }
 
     .t-nav-item {
@@ -79,33 +83,32 @@
       align-items: center;
       gap: 12px;
       padding: 12px 16px;
-      border-radius: var(--r-md);
+      border-radius: var(--r-md, 10px);
       cursor: pointer;
       transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
       border: 1px solid transparent;
       background: transparent;
-      color: var(--text-secondary);
-      font-size: 0.8rem;
+      color: var(--text-secondary, #475569);
+      font-size: 0.86rem;
       font-weight: 700;
-      font-family: var(--font-heading);
       width: 100%;
       text-align: left;
     }
 
     .t-nav-item:hover {
-      background: #f8fafc;
-      color: var(--text-primary);
+      background: #f1f5f9;
+      color: var(--text-primary, #0f172a);
     }
 
     .t-nav-item.active {
-      background: var(--primary-subtle);
+      background: #eef2ff;
       border-color: rgba(79, 70, 229, 0.25);
-      color: var(--primary);
-      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.06);
+      color: #4f46e5;
+      box-shadow: 0 2px 6px rgba(79, 70, 229, 0.08);
     }
 
     .t-nav-item .nav-icon {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       flex-shrink: 0;
     }
 
@@ -114,14 +117,14 @@
       font-size: 0.72rem;
       font-weight: 800;
       background: #e0e7ff;
-      color: var(--primary-dark);
+      color: #3730a3;
       padding: 2px 8px;
-      border-radius: var(--r-full);
+      border-radius: 9999px;
     }
 
     .t-user-footer {
       padding: 16px 18px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--border, #e2e8f0);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -129,43 +132,49 @@
     }
 
     .t-user-av {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
       border-radius: 50%;
-      background: linear-gradient(135deg, var(--primary), var(--purple));
+      background: linear-gradient(135deg, #4f46e5, #7c3aed);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
+      font-size: 0.88rem;
       font-weight: 800;
       color: #fff;
       flex-shrink: 0;
     }
 
     .t-user-name {
-      font-size: 0.86rem;
+      font-size: 0.88rem;
       font-weight: 800;
-      color: var(--text-primary);
+      color: var(--text-primary, #0f172a);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
 
     .t-user-role {
       font-size: 0.72rem;
-      color: var(--text-muted);
+      color: var(--text-muted, #64748b);
     }
 
     /* MAIN CONTENT */
     .t-main {
       flex: 1;
+      min-width: 0; /* Prevents flexbox children from causing layout blowout */
       overflow-y: auto;
-      background: var(--bg-base);
+      overflow-x: hidden;
+      background: var(--bg-base, #f8fafc);
       display: flex;
       flex-direction: column;
+      width: calc(100% - 260px);
     }
 
     .t-topbar {
-      padding: 16px 32px;
+      padding: 14px 28px;
       background: #ffffff;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--border, #e2e8f0);
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -173,27 +182,29 @@
       top: 0;
       z-index: 50;
       gap: 16px;
-      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.02);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
     }
 
     .t-page-title {
-      font-size: 1.35rem;
+      font-size: 1.3rem;
       font-weight: 900;
       letter-spacing: -0.4px;
-      color: var(--text-primary);
+      color: var(--text-primary, #0f172a);
     }
 
     .t-page-sub {
       font-size: 0.82rem;
-      color: var(--text-muted);
+      color: var(--text-muted, #64748b);
       margin-top: 2px;
     }
 
     .t-content {
-      padding: 32px;
-      max-width: 1280px;
+      padding: 24px 28px;
+      max-width: 100%;
       width: 100%;
-      margin: 0; padding-left: 20px; flex: 1;
+      margin: 0;
+      box-sizing: border-box;
+      flex: 1;
     }
 
     /* STAT STRIP */
@@ -201,92 +212,138 @@
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 16px;
-      margin-bottom: 28px;
+      margin-bottom: 24px;
     }
 
     .s-tile {
       background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--r-xl);
-      padding: 20px 22px;
+      border: 1px solid var(--border, #e2e8f0);
+      border-radius: var(--r-xl, 16px);
+      padding: 18px 20px;
       position: relative;
       overflow: hidden;
       transition: all 0.2s;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.05));
     }
 
     .s-tile:hover {
-      border-color: var(--border-hover);
-      box-shadow: var(--shadow-md);
+      border-color: #cbd5e1;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
       transform: translateY(-1px);
     }
 
     .s-tile-icon {
-      width: 44px;
-      height: 44px;
-      border-radius: var(--r-md);
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 1.3rem;
-      margin-bottom: 12px;
+      margin-bottom: 10px;
     }
 
     .s-tile-val {
-      font-family: var(--font-heading);
-      font-size: 2.1rem;
+      font-family: var(--font-heading, inherit);
+      font-size: 1.9rem;
       font-weight: 900;
       letter-spacing: -1px;
       line-height: 1;
       margin-bottom: 4px;
-      color: var(--text-primary);
+      color: var(--text-primary, #0f172a);
     }
 
     .s-tile-lbl {
       font-size: 0.8rem;
-      color: var(--text-muted);
+      color: var(--text-muted, #64748b);
       font-weight: 600;
     }
 
-    /* Table */
+    /* FULL TABLE WRAPPER - NEVER CUTS OFF */
     .tbl-wrap {
-      overflow-x: auto;
-      border-radius: var(--r-xl);
-      border: 1px solid var(--border);
+      overflow-x: auto !important;
+      -webkit-overflow-scrolling: touch;
+      border-radius: 14px;
+      border: 1.5px solid #cbd5e1;
       background: #ffffff;
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+      scrollbar-width: thin;
+      scrollbar-color: #cbd5e1 #f8fafc;
     }
 
-    /* Lesson Cards */
+    .tbl-wrap::-webkit-scrollbar {
+      height: 8px;
+    }
+    .tbl-wrap::-webkit-scrollbar-track {
+      background: #f8fafc;
+      border-radius: 4px;
+    }
+    .tbl-wrap::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 4px;
+    }
+    .tbl-wrap::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    .data-table th {
+      background: #f8fafc;
+      padding: 12px 14px;
+      font-weight: 800;
+      color: #334155;
+      border-bottom: 1.5px solid #cbd5e1;
+      text-align: left;
+    }
+
+    .data-table td {
+      padding: 12px 14px;
+      border-bottom: 1px solid #f1f5f9;
+      vertical-align: middle;
+    }
+
+    .data-table tr:hover td {
+      background: #f8fafc;
+    }
+
+    /* Cards Grid */
     .l-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 14px;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 16px;
     }
 
     .l-card {
       background: #ffffff;
-      border: 1px solid var(--border);
-      border-radius: var(--r-xl);
-      padding: 22px;
+      border: 1.5px solid var(--border, #e2e8f0);
+      border-radius: 16px;
+      padding: 20px;
       position: relative;
       overflow: hidden;
       transition: all 0.2s;
-      box-shadow: var(--shadow-sm);
+      box-shadow: var(--shadow-sm, 0 1px 3px rgba(0,0,0,0.05));
       display: flex;
       flex-direction: column;
     }
 
     .l-card:hover {
-      border-color: var(--border-hover);
+      border-color: #cbd5e1;
       transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.06);
     }
 
     .l-card-order {
       font-size: 0.74rem;
       font-weight: 800;
-      color: var(--primary);
+      color: #4f46e5;
       text-transform: uppercase;
       letter-spacing: 0.6px;
       margin-bottom: 6px;
@@ -297,12 +354,12 @@
       font-weight: 800;
       margin-bottom: 6px;
       line-height: 1.35;
-      color: var(--text-primary);
+      color: var(--text-primary, #0f172a);
     }
 
     .l-card-desc {
       font-size: 0.85rem;
-      color: var(--text-muted);
+      color: var(--text-muted, #64748b);
       margin-bottom: 14px;
       line-height: 1.5;
       flex: 1;
@@ -310,18 +367,18 @@
 
     .l-card-tags {
       display: flex;
-      gap: 5px;
+      gap: 6px;
       flex-wrap: wrap;
       margin-bottom: 14px;
     }
 
     .l-card-tag {
-      font-size: 0.7rem;
+      font-size: 0.72rem;
       font-weight: 700;
       padding: 2px 8px;
-      border-radius: var(--r-full);
-      background: var(--primary-subtle);
-      color: var(--primary);
+      border-radius: 9999px;
+      background: #eef2ff;
+      color: #4f46e5;
       border: 1px solid rgba(79, 70, 229, 0.2);
     }
 
@@ -332,32 +389,23 @@
       flex-wrap: wrap;
       gap: 8px;
       padding-top: 14px;
-      border-top: 1px solid var(--border);
+      border-top: 1px solid var(--border, #f1f5f9);
     }
 
     /* Leaderboard rank */
-    .rank-1 {
-      background: #fffdf5;
-    }
-
-    .rank-2 {
-      background: #f8fafc;
-    }
-
-    .rank-3 {
-      background: #fffaf5;
-    }
+    .rank-1 { background: #fffdf5; }
+    .rank-2 { background: #f8fafc; }
+    .rank-3 { background: #fffaf5; }
 
     .rank-badge {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       font-size: 0.85rem;
       font-weight: 900;
-      font-family: var(--font-heading);
     }
 
     .rb-1 {
@@ -378,205 +426,72 @@
 
     .rb-n {
       background: #f1f5f9;
-      color: var(--text-muted);
-      border: 1px solid var(--border);
+      color: var(--text-muted, #64748b);
+      border: 1px solid var(--border, #e2e8f0);
     }
 
-    /* Quiz rows modal */
-    .q-row {
-      display: flex;
-      align-items: flex-start;
-      gap: 12px;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .q-row:last-child {
-      border-bottom: none;
-    }
-
-    .q-row-num {
-      font-size: 0.78rem;
-      font-weight: 800;
-      color: var(--primary);
-      flex-shrink: 0;
-      min-width: 24px;
-      padding-top: 2px;
-    }
-
-    .q-row-body {
-      flex: 1;
-    }
-
-    .tbl-wrap {
-      overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
-      width: 100%;
-    }
-
-    .q-row-q {
-      font-size: 0.94rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--text-primary);
-    }
-
-    .q-row-opts {
-      font-size: 0.86rem;
-      color: var(--text-secondary);
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-    }
-
-    .q-row-opts .correct-opt {
-      color: #047857;
-      font-weight: 800;
-      background: #ecfdf5;
-      padding: 3px 8px;
-      border-radius: 4px;
-      display: inline-block;
-      width: fit-content;
-    }
-
-    /* Mini input */
-    .mini-input {
-      padding: 8px 12px;
-      border-radius: var(--r-sm);
-      font-size: 0.88rem;
-    }
-
-    .teacher-welcome-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 40px;
-      max-width: 660px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .teacher-overview-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr;
-      gap: 20px;
-      margin-bottom: 24px;
-    }
-
+    /* Responsive */
     @media (max-width: 960px) {
       .t-root {
         flex-direction: column !important;
-        min-height: auto !important;
       }
-
       .t-sidebar {
         width: 100% !important;
         height: auto !important;
         position: static !important;
         border-right: none !important;
-        border-bottom: 1px solid var(--border) !important;
+        border-bottom: 1px solid var(--border, #e2e8f0) !important;
       }
-
-      .t-login-section {
-        padding: 18px 16px !important;
-        max-width: 100% !important;
+      .t-main {
+        width: 100% !important;
       }
-
       .t-nav {
         flex-direction: row !important;
         overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        scrollbar-width: none !important;
         padding: 8px 12px !important;
         gap: 6px !important;
-        flex-wrap: nowrap !important;
       }
-      .t-nav::-webkit-scrollbar { display: none; }
-
       .t-nav-item {
-        flex: 0 0 auto !important;
         white-space: nowrap !important;
-        padding: 8px 14px !important;
-        font-size: 0.8rem !important;
-        border-radius: 8px !important;
         width: auto !important;
+        padding: 8px 14px !important;
       }
-
       .stat-strip {
         grid-template-columns: repeat(2, 1fr) !important;
-        gap: 10px !important;
       }
-
       .t-content {
-        padding: 14px 12px !important;
-      }
-
-      .t-topbar {
-        padding: 12px 14px !important;
-        flex-direction: column !important;
-        align-items: flex-start !important;
-        gap: 8px !important;
-      }
-
-      #topBarActions {
-        width: 100% !important;
-        justify-content: flex-end !important;
-      }
-
-      .teacher-welcome-grid,
-      .teacher-overview-grid {
-        grid-template-columns: 1fr !important;
-      }
-
-      .tbl-wrap {
-        overflow-x: auto !important;
-        -webkit-overflow-scrolling: touch !important;
-        width: 100% !important;
-      }
-
-      .modal-box {
-        width: 95vw !important;
-        max-width: 95vw !important;
-        padding: 18px 14px !important;
-        margin: auto !important;
+        padding: 16px 14px !important;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="glow-orb glow-orb-1" style="opacity: 0.15;"></div>
-  <div class="glow-orb glow-orb-2" style="opacity: 0.12;"></div>
-
   <div class="page-wrap t-root">
 
     <!--  SIDEBAR  -->
     <aside class="t-sidebar">
       <!-- Brand -->
-      <div class="t-brand" style="justify-content: center; display: flex; align-items: center;">
-        <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 50px; object-fit: contain; mix-blend-mode: multiply;">
-        <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">innocode.uz</span>
+      <div class="t-brand">
+        <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 46px; object-fit: contain; mix-blend-mode: multiply;">
+        <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px;">innocode.uz</span>
       </div>
 
       <!-- LOGIN (Kirish formasi) -->
       <div id="sideLoginSection" class="t-login-section">
-        <div class="t-login-title">🔐 Tizimga Kirish</div>
+        <div class="t-login-title">🔐 O‘qituvchi Kirishi</div>
         <form onsubmit="doTeacherLogin(event)">
           <div class="form-group">
             <label class="form-label">O‘qituvchi logini</label>
-            <input id="tUsername" type="text" class="form-input" placeholder="O‘qituvchi logini" value="Marufjon" required>
+            <input id="tUsername" type="text" class="form-input" placeholder="Loginingizni kiriting" required>
           </div>
           <div class="form-group">
-            <label class="form-label">Parol</label>
-            <input id="tPassword" type="password" class="form-input" placeholder="Parol" value="Marufjon" required>
+            <label class="form-label">Maxfiy parol</label>
+            <input id="tPassword" type="password" class="form-input" placeholder="Parolingizni kiriting" required>
           </div>
-          <button type="submit" id="btnTLogin" class="btn btn-primary btn-block btn-lg" style="margin-top: 6px;">
+          <button type="submit" id="btnTLogin" class="btn btn-primary btn-block btn-lg" style="margin-top: 8px; font-weight: 800;">
             Kirish ➔
           </button>
-          <div class="info-box" style="margin-top: 14px; font-size: 0.78rem;">
-            <span>ℹ️</span>
-            <span>Login: <strong>Marufjon</strong> / Parol: <strong>Marufjon</strong></span>
-          </div>
         </form>
       </div>
 
@@ -584,22 +499,25 @@
       <div id="sideNavSection" style="display: none; flex: 1;">
         <div class="t-nav">
           <button class="t-nav-item active" id="nav-overview" onclick="switchSection('overview')">
-            <span class="nav-icon"></span> Umumiy Tahlil
+            <span class="nav-icon">📊</span> Umumiy Tahlil
           </button>
           <button class="t-nav-item" id="nav-leaderboard" onclick="switchSection('leaderboard')">
-            <span class="nav-icon"></span> Reyting
+            <span class="nav-icon">🏆</span> Reyting & Statistika
           </button>
           <button class="t-nav-item" id="nav-courses" onclick="switchSection('courses')">
-            <span class="nav-icon"></span> Kurslar
+            <span class="nav-icon">📚</span> Kurslar
             <span class="nav-badge" id="coursesBadge">0</span>
           </button>
           <button class="t-nav-item" id="nav-lessons" onclick="switchSection('lessons')">
-            <span class="nav-icon"></span> Darslar
+            <span class="nav-icon">📖</span> Darslar
             <span class="nav-badge" id="lessonsBadge">0</span>
           </button>
           <button class="t-nav-item" id="nav-students" onclick="switchSection('students')">
-            <span class="nav-icon"></span> O‘quvchilar
+            <span class="nav-icon">👥</span> O‘quvchilar
             <span class="nav-badge" id="studentsBadge">0</span>
+          </button>
+          <button class="t-nav-item" id="nav-settings" onclick="switchSection('settings')">
+            <span class="nav-icon">⚙️</span> Sozlamalar
           </button>
         </div>
       </div>
@@ -607,13 +525,13 @@
       <!-- User footer -->
       <div id="sideUserFooter" style="display: none;">
         <div class="t-user-footer">
-          <div class="t-user-av"></div>
+          <div class="t-user-av">👨‍🏫</div>
           <div style="flex: 1; overflow: hidden;">
-            <div class="t-user-name" id="sideUserName"></div>
+            <div class="t-user-name" id="sideUserName">Marufjon</div>
             <div class="t-user-role">Bosh o‘qituvchi</div>
           </div>
-          <button class="btn btn-ghost btn-xs" onclick="openSettingsModal()" title="Sozlamalar"></button>
-          <button class="btn btn-ghost btn-xs" onclick="doLogout()" title="Chiqish"></button>
+          <button class="btn btn-ghost btn-xs" onclick="switchSection('settings')" title="Sozlamalar">⚙️</button>
+          <button class="btn btn-ghost btn-xs" onclick="doLogout()" title="Chiqish" style="color: #ef4444;">🚪</button>
         </div>
       </div>
     </aside>
@@ -624,8 +542,8 @@
       <!-- TOP BAR -->
       <div class="t-topbar">
         <div>
-          <div class="t-page-title" id="pageTitle">O‘qituvchi paneli</div>
-          <div class="t-page-sub" id="pageSub">Platforma statistikasi va boshqaruvi</div>
+          <div class="t-page-title" id="pageTitle">O‘qituvchi boshqaruv paneli</div>
+          <div class="t-page-sub" id="pageSub">Platforma monitoringi, kurslar, darslar va reyting statistikasi</div>
         </div>
         <div id="topBarActions" style="display: flex; gap: 10px; align-items: center;">
           <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;'>⬅ Orqaga</a>
@@ -639,91 +557,78 @@
         <!-- STAT STRIP (Kirgandan keyin chiqadi) -->
         <div class="stat-strip" id="statStrip" style="display: none;">
           <div class="s-tile">
-            <div class="s-tile-icon" style="background: var(--primary-subtle); color: var(--primary); font-size: 1.3rem;">👥</div>
-            <div class="s-tile-val" id="stTotal">0</div>
+            <div class="s-tile-icon" style="background: #eef2ff; color: #4f46e5;">👥</div>
+            <div class="s-tile-val" id="stTotal">210</div>
             <div class="s-tile-lbl">Jami o‘quvchilar soni</div>
           </div>
           <div class="s-tile">
-            <div class="s-tile-icon" style="background: var(--emerald-subtle); color: var(--emerald); font-size: 1.3rem;">⚡</div>
-            <div class="s-tile-val" id="stActive" style="color: var(--emerald);">0 nafar</div>
+            <div class="s-tile-icon" style="background: #ecfdf5; color: #059669;">⚡</div>
+            <div class="s-tile-val" id="stActive" style="color: #059669;">0 nafar</div>
             <div class="s-tile-lbl" id="stActiveLbl">Faol o‘quvchilar: 0%</div>
           </div>
           <div class="s-tile">
-            <div class="s-tile-icon" style="background: var(--cyan-subtle); color: var(--cyan); font-size: 1.3rem;">📚</div>
-            <div class="s-tile-val" id="stLessons" style="color: var(--cyan);">0</div>
+            <div class="s-tile-icon" style="background: #ecfeff; color: #0891b2;">📚</div>
+            <div class="s-tile-val" id="stLessons" style="color: #0891b2;">0</div>
             <div class="s-tile-lbl">Jami darslar (har birida 5 test)</div>
           </div>
           <div class="s-tile">
-            <div class="s-tile-icon" style="background: var(--purple-subtle); color: var(--purple); font-size: 1.3rem;">📊</div>
-            <div class="s-tile-val" id="stAvg" style="color: var(--purple);">0%</div>
+            <div class="s-tile-icon" style="background: #f5f3ff; color: #7c3aed;">📊</div>
+            <div class="s-tile-val" id="stAvg" style="color: #7c3aed;">0%</div>
             <div class="s-tile-lbl">O‘rtacha o‘zlashtirish</div>
           </div>
         </div>
 
         <!-- KIRISH OLDIDAGI XUSH KELIBSIZ EKRANI -->
-        <div id="secWelcome" style="text-align: center; padding: 70px 20px;">
-          <div style="font-size: 4.5rem; margin-bottom: 20px;"></div>
-          <h2 style="font-size: 2rem; margin-bottom: 12px; color: var(--text-primary);">innocode.uz Boshqaruv Markazi
+        <div id="secWelcome" style="text-align: center; padding: 60px 20px;">
+          <div style="font-size: 4rem; margin-bottom: 16px;">👨‍🏫</div>
+          <h2 style="font-size: 2rem; margin-bottom: 12px; color: var(--text-primary, #0f172a); font-weight: 900;">
+            innocode.uz O‘qituvchi Boshqaruv Markazi
           </h2>
-          <p style="color: var(--text-muted); max-width: 520px; margin: 0; padding-left: 20px; flex: 1; line-height: 1.7; font-size: 0.95rem;">
-            Yangi dars qo‘shish, o‘quvchilar reytingini ko‘rish, natijalarini bilish va darslarga test, hashteg, sarlavha qo‘shish imkonini beradi.
+          <p style="color: var(--text-muted, #64748b); max-width: 580px; margin: 0 auto 30px; line-height: 1.7; font-size: 0.95rem;">
+            Kurslar yaratish, ichiga darslar qo‘shish, o‘quvchilar reytingini diagrammalar asosida tahlil qilish va xavfsiz tizim sozlamalarini boshqarish markazi.
           </p>
-          <div class="teacher-welcome-grid">
-            <div class="card card-body" style="text-align: center; padding: 22px;">
-              <div style="font-size: 2rem; margin-bottom: 8px;"></div>
-              <div style="font-size: 0.88rem; font-weight: 800;">To‘liq nazorat</div>
-              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">100% test yechilishini
-                kuzatish</div>
-            </div>
-            <div class="card card-body" style="text-align: center; padding: 22px;">
-              <div style="font-size: 2rem; margin-bottom: 8px;"></div>
-              <div style="font-size: 0.88rem; font-weight: 800;">Dars & Test</div>
-              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">5 ta testli darslar qo‘shish
-              </div>
-            </div>
-            <div class="card card-body" style="text-align: center; padding: 22px;">
-              <div style="font-size: 2rem; margin-bottom: 8px;"></div>
-              <div style="font-size: 0.88rem; font-weight: 800;">O‘quvchilar</div>
-              <div style="font-size: 0.74rem; color: var(--text-muted); margin-top: 3px;">Reyting va o‘zlashtirish</div>
-            </div>
-          </div>
         </div>
 
         <!-- 1. UMUMIY TAHLIL / OVERVIEW BO'LIMI -->
         <div id="secOverview" style="display: none;">
-          <div class="teacher-overview-grid">
-            <div class="card card-body">
-              <h3
-                style="font-size: 1.15rem; font-weight: 800; margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-                <span></span> Ta'lim Oqimi Holati
+          <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 24px;">
+            <div class="card card-body" style="padding: 24px; border: 1.5px solid #e2e8f0; border-radius: 16px;">
+              <h3 style="font-size: 1.2rem; font-weight: 800; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                <span>🎓</span> Ta'lim Oqimi va Kurslar Nazorati
               </h3>
-              <p style="color: var(--text-muted); font-size: 0.88rem; line-height: 1.6; margin-bottom: 18px;">
-                Platforma tizimi: har bir darsda <strong>5 ta test savoli</strong> mavjud. O‘quvchi barcha 5 ta savolga
-                <strong>100% to‘g‘ri</strong> javob bermaguncha keyingi dars ochilmaydi.
+              <p style="color: var(--text-muted, #64748b); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px;">
+                Har bir kurs ichida aniq <strong>5 ta test savoli</strong>ga ega darslar mavjud. Talaba dars testini <strong>100% to‘g‘ri (5/5)</strong> yechmagunicha keyingi dars ochilmaydi.
               </p>
-              <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-                <button class="btn btn-primary btn-sm" onclick="switchSection('lessons')"> Darslarni ko‘rish</button>
-                <button class="btn btn-ghost btn-sm" onclick="switchSection('students')"> O‘quvchilarni
-                  ko‘rish</button>
-                <button class="btn btn-ghost btn-sm" onclick="openAddModal()"> Yangi dars qo‘shish</button>
+              <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <button class="btn btn-primary" onclick="openAddCourseModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
+                  ➕ Kurs qo‘shish
+                </button>
+                <button class="btn btn-ghost" onclick="openAddModal()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+                  ➕ Dars qo‘shish
+                </button>
+                <button class="btn btn-ghost" onclick="switchSection('leaderboard')" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+                  🏆 Reyting & Diagrammalar
+                </button>
               </div>
             </div>
 
-            <div class="card card-body" style="background: linear-gradient(135deg, #f8fafc, #ffffff);">
-              <h3 style="font-size: 1.05rem; font-weight: 800; margin-bottom: 12px;"> Tezkor Qoidalar</h3>
-              <ul style="padding-left: 18px; font-size: 0.82rem; color: var(--text-secondary); line-height: 1.7;">
-                <li>Savollar soni: aniq 5 ta</li>
-                <li>O‘tish sharti: 5/5 (100%)</li>
-                <li>Qulflanish: avtomatik</li>
-                <li>Sinxronizatsiya: real vaqtda</li>
+            <div class="card card-body" style="background: linear-gradient(135deg, #f8fafc, #ffffff); border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 24px;">
+              <h3 style="font-size: 1.1rem; font-weight: 800; margin-bottom: 12px; color: #1e293b;">⚡ Standart Qoidalar</h3>
+              <ul style="padding-left: 20px; font-size: 0.85rem; color: #475569; line-height: 1.8; margin: 0;">
+                <li>Savollar soni: <strong>aniq 5 ta</strong></li>
+                <li>O‘tish talabi: <strong>100% (5/5 ball)</strong></li>
+                <li>Qulflanish: <strong>avtomatik</strong></li>
+                <li>Sinxronizatsiya: <strong>barcha qurilmalarda</strong></li>
               </ul>
             </div>
           </div>
 
           <!-- Darslar ro'yxatining qisqacha ko'rinishi -->
-          <div class="card card-body">
-            <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 14px;"> Darslar va Ularning Testlari
-              Holati</h3>
+          <div class="card card-body" style="padding: 24px; border: 1.5px solid #e2e8f0; border-radius: 16px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 10px;">
+              <h3 style="font-size: 1.15rem; font-weight: 800; margin: 0;">📖 Barcha Darslar va Ularning Testlari</h3>
+              <button class="btn btn-primary btn-sm" onclick="openAddModal()">➕ Dars qo‘shish</button>
+            </div>
             <div class="tbl-wrap">
               <table class="data-table">
                 <thead>
@@ -738,8 +643,7 @@
                 </thead>
                 <tbody id="overviewLessonsBody">
                   <tr>
-                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">Yuklanmoqda...
-                    </td>
+                    <td colspan="6" style="text-align: center; color: var(--text-muted); padding: 30px;">Yuklanmoqda...</td>
                   </tr>
                 </tbody>
               </table>
@@ -749,25 +653,25 @@
 
         <!-- 2. REYTING / LEADERBOARD BO'LIMI -->
         <div id="secLeaderboard" style="display: none;">
-          <!-- ILMIY TAJRIBA VA KOMPETENTLIK STATISTIKASI (Rasmda keltirilgan 210 nafar talaba bo'yicha) -->
-          <div class="card card-body" style="margin-bottom: 24px; border: 1.5px solid #e0e7ff; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+          <!-- ILMIY TAJRIBA VA KOMPETENTLIK STATISTIKASI (210 nafar talaba bo'yicha) -->
+          <div class="card card-body" style="margin-bottom: 24px; border: 1.5px solid #e0e7ff; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); box-shadow: 0 4px 16px rgba(0,0,0,0.04); border-radius: 18px; padding: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px;">
               <div>
-                <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+                <div style="font-size: 1.3rem; font-weight: 900; color: #1e293b; display: flex; align-items: center; gap: 8px;">
                   📊 Raqamli-texnologik kompetentlikni rivojlanganlik darajasi
                 </div>
                 <div style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">
-                  Tajriba guruhi: Tajriba boshida (210 nafar talaba) va Tajriba oxirida (207 nafar talaba) qiyosiy tahlili
+                  Tajriba guruhi: Tajriba boshida (210 nafar talaba) va Tajriba oxirida (207 nafar talaba) qiyosiy dinamikasi
                 </div>
               </div>
               <div style="display: flex; gap: 8px; align-items: center;">
                 <span class="badge badge-primary" style="font-size: 0.82rem; padding: 6px 14px; font-weight: 800;">🔬 Ilmiy-amaliy monitoring</span>
-                <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()" style="font-weight: 700;">🔄 Yangilash</button>
+                <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
               </div>
             </div>
 
-            <!-- Rangli Dinamika Kartochkalari -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 22px;">
+            <!-- Rangli Dinamika Kartochkalari (Statistika) -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
               <!-- Yuqori daraja -->
               <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1.5px solid #6ee7b7; border-radius: 14px; padding: 18px; box-shadow: 0 4px 12px rgba(16,185,129,0.08);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
@@ -779,7 +683,7 @@
                   <span style="font-size: 0.95rem; font-weight: 800; color: #065f46;">nafar (19.8%)</span>
                 </div>
                 <div style="font-size: 0.78rem; color: #047857; margin-top: 6px;">
-                  Tajriba boshida: <strong>28 nafar (13.3%)</strong> bo‘lgan
+                  Tajriba boshida: <strong>28 nafar (13.3%)</strong> bo‘lgan (+13 nafar o‘sish)
                 </div>
                 <div class="progress-wrap" style="height: 6px; background: rgba(5,150,105,0.2); margin-top: 10px;">
                   <div class="progress-fill" style="width: 19.8%; background: #059669;"></div>
@@ -797,7 +701,7 @@
                   <span style="font-size: 0.95rem; font-weight: 800; color: #92400e;">nafar (37.7%)</span>
                 </div>
                 <div style="font-size: 0.78rem; color: #b45309; margin-top: 6px;">
-                  Tajriba boshida: <strong>41 nafar (19.5%)</strong> bo‘lgan
+                  Tajriba boshida: <strong>41 nafar (19.5%)</strong> bo‘lgan (+37 nafar o‘sish)
                 </div>
                 <div class="progress-wrap" style="height: 6px; background: rgba(217,119,6,0.2); margin-top: 10px;">
                   <div class="progress-fill" style="width: 37.7%; background: #d97706;"></div>
@@ -815,7 +719,7 @@
                   <span style="font-size: 0.95rem; font-weight: 800; color: #991b1b;">nafar (42.5%)</span>
                 </div>
                 <div style="font-size: 0.78rem; color: #991b1b; margin-top: 6px;">
-                  Tajriba boshida: <strong>141 nafar (67.1%)</strong> bo‘lgan (sezilarli kamaygan!)
+                  Tajriba boshida: <strong>141 nafar (67.1%)</strong> bo‘lgan (-53 nafar ijobiy kamayish!)
                 </div>
                 <div class="progress-wrap" style="height: 6px; background: rgba(220,38,38,0.2); margin-top: 10px;">
                   <div class="progress-fill" style="width: 42.5%; background: #dc2626;"></div>
@@ -841,74 +745,136 @@
               </div>
             </div>
 
+            <!-- DIAGRAMMALAR ASOSIDA REYTING VA STATISTIKA (Talaba talabi: Diagramma asosida ko'rsatsin) -->
+            <div style="margin-bottom: 24px;">
+              <div style="font-size: 1.05rem; font-weight: 800; color: #1e293b; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                📈 Ilmiy-amaliy monitoring diagrammalari
+              </div>
+
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px;">
+                <!-- 1-diagramma: Taqqoslash Bar Chart -->
+                <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm);">
+                  <div style="font-size: 0.92rem; font-weight: 800; color: #1e293b; margin-bottom: 4px;">
+                    📊 Tajriba boshida vs oxirida taqqoslovchi diagramma
+                  </div>
+                  <div style="font-size: 0.76rem; color: #64748b; margin-bottom: 12px;">
+                    Yuqori, O‘rta va Past darajadagi talabalar soni dinamikasi
+                  </div>
+                  <div style="position: relative; height: 240px; width: 100%;">
+                    <canvas id="chartComparison"></canvas>
+                  </div>
+                  <!-- Pure CSS/SVG visual indicator as reliable fallback -->
+                  <div id="chartFallback1" style="display:none; margin-top:10px;">
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🟢 Yuqori (+6.5%):</span><strong>28 ➔ 41 talaba</strong></div>
+                    <div class="progress-wrap" style="height:8px; margin-bottom:8px;"><div class="progress-fill" style="width:19.8%; background:#059669;"></div></div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🟡 O‘rta (+18.2%):</span><strong>41 ➔ 78 talaba</strong></div>
+                    <div class="progress-wrap" style="height:8px; margin-bottom:8px;"><div class="progress-fill" style="width:37.7%; background:#d97706;"></div></div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🔴 Past (-24.6%):</span><strong>141 ➔ 88 talaba</strong></div>
+                    <div class="progress-wrap" style="height:8px;"><div class="progress-fill" style="width:42.5%; background:#dc2626;"></div></div>
+                  </div>
+                </div>
+
+                <!-- 2-diagramma: Doughnut Chart (Darajalar ulushi) -->
+                <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm);">
+                  <div style="font-size: 0.92rem; font-weight: 800; color: #1e293b; margin-bottom: 4px;">
+                    🍩 Kompetentlik darajalarining foizli taqsimoti
+                  </div>
+                  <div style="font-size: 0.76rem; color: #64748b; margin-bottom: 12px;">
+                    Hozirgi yakuniy monitoring holati bo‘yicha ulushlar
+                  </div>
+                  <div style="position: relative; height: 240px; width: 100%;">
+                    <canvas id="chartDoughnut"></canvas>
+                  </div>
+                </div>
+
+                <!-- 3-diagramma: Top 10 talabalar ballari diagrammasi -->
+                <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); grid-column: 1 / -1;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
+                    <div>
+                      <div style="font-size: 0.95rem; font-weight: 800; color: #1e293b;">
+                        🏆 Top 10 Peshqadam talabalar reyting diagrammasi
+                      </div>
+                      <div style="font-size: 0.76rem; color: #64748b;">
+                        Eng yuqori ball va 100% o‘zlashtirish ko‘rsatkichiga ega bo‘lgan yetakchi talabalar
+                      </div>
+                    </div>
+                    <span class="badge badge-emerald" style="font-size: 0.75rem; font-weight: 800;">🥇 100% Sertifikat olganlar</span>
+                  </div>
+                  <div style="position: relative; height: 250px; width: 100%;">
+                    <canvas id="chartTopStudents"></canvas>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Rasmiy ilmiy tahlil jadvali (Rasmda berilgan jadvalning to'liq ko'rinishi) -->
-            <div style="margin-top: 16px;">
+            <div style="margin-top: 10px;">
               <div style="font-size: 0.92rem; font-weight: 800; margin-bottom: 10px; color: #334155;">📋 Rasmiy tadqiqot natijalari tahlili (Tajriba guruhi):</div>
-              <div class="tbl-wrap" style="border: 1.5px solid #cbd5e1; border-radius: 10px; overflow: hidden;">
-                <table class="data-table" style="margin: 0; text-align: center; width: 100%;">
+              <div class="tbl-wrap" style="border: 1.5px solid #cbd5e1; border-radius: 12px; overflow-x: auto; width: 100%;">
+                <table class="data-table" style="margin: 0; text-align: center; width: 100%; min-width: 680px; border-collapse: collapse;">
                   <thead>
                     <tr style="background: #f1f5f9; border-bottom: 2px solid #cbd5e1;">
-                      <th rowspan="2" style="vertical-align: middle; text-align: left; font-weight: 800; color: #1e293b; border-right: 1px solid #cbd5e1; width: 34%;">
+                      <th rowspan="2" style="vertical-align: middle; text-align: left; font-weight: 800; color: #1e293b; border-right: 1px solid #cbd5e1; width: 28%; padding: 12px 14px; white-space: normal; line-height: 1.35;">
                         Raqamli-texnologik kompetentlikni rivojlanganlik darajasi
                       </th>
-                      <th colspan="2" style="text-align: center; font-weight: 800; border-right: 1px solid #cbd5e1; background: #eef2ff; color: #3730a3;">
+                      <th colspan="2" style="text-align: center; font-weight: 800; border-right: 1px solid #cbd5e1; background: #eef2ff; color: #3730a3; padding: 10px; white-space: normal; line-height: 1.3;">
                         Tajriba boshida (210 nafar talaba)
                       </th>
-                      <th colspan="2" style="text-align: center; font-weight: 800; border-right: 1px solid #cbd5e1; background: #ecfdf5; color: #065f46;">
+                      <th colspan="2" style="text-align: center; font-weight: 800; border-right: 1px solid #cbd5e1; background: #ecfdf5; color: #065f46; padding: 10px; white-space: normal; line-height: 1.3;">
                         Tajriba oxirida (207 nafar talaba)
                       </th>
-                      <th rowspan="2" style="vertical-align: middle; text-align: center; font-weight: 800; color: #1e293b; background: #f8fafc;">
+                      <th rowspan="2" style="vertical-align: middle; text-align: center; font-weight: 800; color: #1e293b; background: #f8fafc; padding: 12px 14px; width: 32%; white-space: normal; line-height: 1.35;">
                         Ko‘rsatkich o‘zgarishi (Dinamika)
                       </th>
                     </tr>
                     <tr style="background: #f8fafc; border-bottom: 1.5px solid #cbd5e1; font-size: 0.8rem;">
-                      <th style="border-right: 1px solid #cbd5e1; color: #4338ca;">soni</th>
-                      <th style="border-right: 1px solid #cbd5e1; color: #4338ca;">%</th>
-                      <th style="border-right: 1px solid #cbd5e1; color: #047857;">soni</th>
-                      <th style="border-right: 1px solid #cbd5e1; color: #047857;">%</th>
+                      <th style="border-right: 1px solid #cbd5e1; color: #4338ca; width: 10%; padding: 8px;">soni</th>
+                      <th style="border-right: 1px solid #cbd5e1; color: #4338ca; width: 10%; padding: 8px;">%</th>
+                      <th style="border-right: 1px solid #cbd5e1; color: #047857; width: 10%; padding: 8px;">soni</th>
+                      <th style="border-right: 1px solid #cbd5e1; color: #047857; width: 10%; padding: 8px;">%</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr style="border-bottom: 1px solid #e2e8f0;">
-                      <td style="text-align: left; font-weight: 800; color: #047857; border-right: 1px solid #e2e8f0;">
+                      <td style="text-align: left; font-weight: 800; color: #047857; border-right: 1px solid #e2e8f0; padding: 12px 14px;">
                         <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981; margin-right: 6px;"></span>
                         Yuqori
                       </td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700;">28</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700;">13,3</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #047857; background: #f0fdf4;">41</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #047857; background: #f0fdf4;">19,8</td>
-                      <td style="font-weight: 800; color: #059669; background: #ecfdf5;">+13 nafar (+6.5%) ↗</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">28</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">13,3</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #047857; background: #f0fdf4; padding: 10px;">41</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #047857; background: #f0fdf4; padding: 10px;">19,8</td>
+                      <td style="font-weight: 800; color: #059669; background: #ecfdf5; padding: 10px 14px;">+13 nafar (+6.5%) ↗</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #e2e8f0;">
-                      <td style="text-align: left; font-weight: 800; color: #b45309; border-right: 1px solid #e2e8f0;">
+                      <td style="text-align: left; font-weight: 800; color: #b45309; border-right: 1px solid #e2e8f0; padding: 12px 14px;">
                         <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; margin-right: 6px;"></span>
                         O‘rta
                       </td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700;">41</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700;">19,5</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b45309; background: #fffdf5;">78</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b45309; background: #fffdf5;">37,7</td>
-                      <td style="font-weight: 800; color: #d97706; background: #fffbeb;">+37 nafar (+18.2%) ↗</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">41</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">19,5</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b45309; background: #fffdf5; padding: 10px;">78</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b45309; background: #fffdf5; padding: 10px;">37,7</td>
+                      <td style="font-weight: 800; color: #d97706; background: #fffbeb; padding: 10px 14px;">+37 nafar (+18.2%) ↗</td>
                     </tr>
                     <tr style="border-bottom: 1px solid #e2e8f0;">
-                      <td style="text-align: left; font-weight: 800; color: #b91c1c; border-right: 1px solid #e2e8f0;">
+                      <td style="text-align: left; font-weight: 800; color: #b91c1c; border-right: 1px solid #e2e8f0; padding: 12px 14px;">
                         <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; margin-right: 6px;"></span>
                         Past
                       </td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700;">141</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700;">67,1</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b91c1c; background: #fef2f2;">88</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b91c1c; background: #fef2f2;">42,5</td>
-                      <td style="font-weight: 800; color: #dc2626; background: #fee2e2;">-53 nafar (-24.6%) ↘ (kompetentlik oshgan)</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">141</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">67,1</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b91c1c; background: #fef2f2; padding: 10px;">88</td>
+                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b91c1c; background: #fef2f2; padding: 10px;">42,5</td>
+                      <td style="font-weight: 800; color: #dc2626; background: #fee2e2; padding: 10px 14px;">-53 nafar (-24.6%) ↘ (kompetentlik oshgan)</td>
                     </tr>
                     <tr style="background: #f8fafc; font-weight: 900; border-top: 2px solid #cbd5e1;">
-                      <td style="text-align: left; color: #0f172a; border-right: 1px solid #cbd5e1;">Jami</td>
-                      <td style="border-right: 1px solid #cbd5e1;">210</td>
-                      <td style="border-right: 1px solid #cbd5e1;">100</td>
-                      <td style="border-right: 1px solid #cbd5e1; color: #0f172a;">207</td>
-                      <td style="border-right: 1px solid #cbd5e1; color: #0f172a;">100</td>
-                      <td style="color: #4f46e5;">To‘liq tadqiqot qamrovi</td>
+                      <td style="text-align: left; color: #0f172a; border-right: 1px solid #cbd5e1; padding: 12px 14px;">Jami</td>
+                      <td style="border-right: 1px solid #cbd5e1; padding: 10px;">210</td>
+                      <td style="border-right: 1px solid #cbd5e1; padding: 10px;">100</td>
+                      <td style="border-right: 1px solid #cbd5e1; color: #0f172a; padding: 10px;">207</td>
+                      <td style="border-right: 1px solid #cbd5e1; color: #0f172a; padding: 10px;">100</td>
+                      <td style="color: #4f46e5; padding: 10px 14px;">To‘liq tadqiqot qamrovi</td>
                     </tr>
                   </tbody>
                 </table>
@@ -916,36 +882,37 @@
             </div>
           </div>
 
-          <div
-            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+          <!-- 210 NAFAR O'QUVCHILAR REYTINGI JADVALI (Login va parol olib tashlangan holda to'liq ko'rinadi) -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;">🏆 210 nafar o‘quvchilar reytingi</div>
+              <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b;">🏆 210 nafar o‘quvchilar reytingi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
-                Darslarni 100% bilan yakunlagan, testlarda eng yuqori ball to‘plagan va sertifikat olgan o‘quvchilar ro‘yxati
+                Darslarni 100% bilan yakunlagan, testlarda eng yuqori ball to‘plagan va sertifikat olgan peshqadamlar
               </div>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()">🔄 Yangilash</button>
+            <div style="display: flex; gap: 8px; align-items: center;">
+              <input type="text" class="form-input" id="lbSearch" style="max-width: 220px; padding: 8px 12px; font-size: 0.85rem;" placeholder="🔍 O‘quvchini qidirish..." oninput="filterLeaderboard()">
+              <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
+            </div>
           </div>
           <div class="tbl-wrap">
-            <table class="data-table" id="leaderboardTable">
+            <table class="data-table" id="leaderboardTable" style="width: 100%; min-width: 780px;">
               <thead>
                 <tr>
-                  <th>O‘rin</th>
-                  <th>O‘quvchi</th>
-                  <th>Login & Parol</th>
-                  <th>Darajasi</th>
+                  <th style="width: 70px;">O‘rin</th>
+                  <th>Talaba (F.I.Sh)</th>
+                  <th>Kompetentlik darajasi</th>
                   <th>Qaysi Kursda</th>
                   <th>100% Yakunlangan</th>
                   <th>O‘zlashtirish (%)</th>
                   <th>Jami Ball</th>
                   <th>Holati</th>
-                  <th>Amallar</th>
+                  <th style="text-align: center;">Natijalar</th>
                 </tr>
               </thead>
               <tbody id="lbBody">
                 <tr>
-                  <td colspan="10" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...
-                  </td>
+                  <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...</td>
                 </tr>
               </tbody>
             </table>
@@ -954,14 +921,21 @@
 
         <!-- 2.1 KURSLAR BO'LIMI -->
         <div id="secCourses" style="display: none;">
-          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;">📚 Kurslar Boshqaruvi</div>
+              <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b;">📚 Kurslar Boshqaruvi</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
-                Kurslar ro‘yxati va darslar taqsimoti
+                Barcha kurslar ro‘yxati, kurs yaratish va har bir kurs ichiga 100% testli darslar qo‘shish
               </div>
             </div>
-            <button class="btn btn-ghost btn-sm" onclick="loadCourses()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button class="btn btn-primary" onclick="openAddCourseModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);">
+                ➕ Kurs qo‘shish
+              </button>
+              <button class="btn btn-ghost btn-sm" onclick="loadCourses()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+                🔄 Yangilash
+              </button>
+            </div>
           </div>
           <div class="l-cards" id="courseCards">
             <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
@@ -970,64 +944,181 @@
 
         <!-- 3. DARSLAR BO'LIMI -->
         <div id="secLessons" style="display: none;">
-          <div
-            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;">📖 Darslar Boshqaruvi</div>
-              <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
-                Har bir darsda video, konspekt va 5 tadan test savollari
+              <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b;" id="lessonsSecTitle">📖 Darslar Boshqaruvi</div>
+              <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;" id="lessonsSecSub">
+                Har bir darsda video, konspekt va aniq 5 tadan test savollari (100% talab)
               </div>
             </div>
-            <div style="display: flex; gap: 8px;">
+            <div style="display: flex; gap: 8px; align-items: center;" id="lessonsSecActions">
               <button class="btn btn-ghost btn-sm" onclick="loadLessons()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
               <button class="btn btn-primary" onclick="openAddModal()">➕ Yangi dars qo‘shish</button>
             </div>
           </div>
+          <div id="courseFilterNotice" style="display:none; margin-bottom: 16px;"></div>
           <div class="l-cards" id="lessonCards">
-            <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...
-            </div>
+            <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
           </div>
         </div>
 
         <!-- 4. O'QUVCHILAR NAZORATI BO'LIMI -->
         <div id="secStudents" style="display: none;">
-          <div
-            style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 22px; flex-wrap: wrap; gap: 12px;">
             <div>
-              <div style="font-size: 1.25rem; font-weight: 900;">👥 O‘quvchilar nazorati</div>
+              <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b;">👥 O‘quvchilar nazorati</div>
               <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
-                Har bir o‘quvchining har bir darsdagi test ballari va faolligini nazorat qiling
+                Har bir o‘quvchining shaxsiy hisobi, test ballari, darajasi va faolligi
               </div>
             </div>
             <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
-              <input type="text" class="form-input" id="stuSearch" style="max-width: 220px;"
-                placeholder="🔍 Ism yoki login..." oninput="filterStudents()">
+              <input type="text" class="form-input" id="stuSearch" style="max-width: 220px;" placeholder="🔍 Ism yoki login..." oninput="filterStudents()">
               <button class="btn btn-primary btn-sm" onclick="forceRefreshStudents()" style="font-weight: 800; border-radius: 8px; padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px;" title="210 nafar o'quvchini yuklash / yangilash">
                 🔄 210 ta o‘quvchini yangilash
               </button>
             </div>
           </div>
           <div class="tbl-wrap">
-            <table class="data-table">
+            <table class="data-table" style="min-width: 820px;">
               <thead>
                 <tr>
                   <th>O‘quvchi</th>
-                  <th>Login & Parol</th>
+                  <th>Login (Foydalanuvchi)</th>
                   <th>Qaysi Kursda</th>
                   <th>Qaysi Darsda</th>
                   <th>Progress (%)</th>
                   <th>O‘rtacha ball</th>
                   <th>Oxirgi Faollik</th>
-                  <th>Amallar</th>
+                  <th style="text-align: center;">Amallar</th>
                 </tr>
               </thead>
               <tbody id="stuBody">
                 <tr>
-                  <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...
-                  </td>
+                  <td colspan="8" style="text-align: center; color: var(--text-muted); padding: 40px;">Yuklanmoqda...</td>
                 </tr>
               </tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- 5. SOZLAMALAR BO'LIMI (YANGI VA XAVFSIZ) -->
+        <div id="secSettings" style="display: none;">
+          <div style="margin-bottom: 24px;">
+            <div style="font-size: 1.35rem; font-weight: 900; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+              ⚙️ O‘qituvchi Boshqaruv Sozlamalari
+            </div>
+            <div style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">
+              Profilingiz xavfsizligi, shaxsiy login/parolni yangilash va o‘quvchilar hisoblari boshqaruvi
+            </div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); gap: 20px;">
+            <!-- O'qituvchi hisobi & Login/Parol o'zgartirish -->
+            <div class="card card-body" style="border: 1.5px solid #e2e8f0; border-radius: 18px; padding: 24px; box-shadow: var(--shadow-sm); background: #ffffff;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #4f46e5, #8b5cf6); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+                  🔐
+                </div>
+                <div>
+                  <h3 style="font-size: 1.1rem; font-weight: 800; color: #1e293b; margin: 0;">O‘qituvchi Xavfsizligi</h3>
+                  <div style="font-size: 0.78rem; color: #64748b;">Login va maxfiy parolingizni yangilang</div>
+                </div>
+              </div>
+
+              <form onsubmit="saveTeacherSettingsFromPanel(event)">
+                <div class="form-group">
+                  <label class="form-label">To‘liq Ism-Familiyangiz</label>
+                  <input type="text" id="panel-fullname" class="form-input" placeholder="O‘qituvchi ismi...">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">O‘qituvchi Logini (Username) *</label>
+                  <input type="text" id="panel-username" class="form-input" required placeholder="Masalan: Marufjon">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Yangi Parol</label>
+                  <input type="password" id="panel-password" class="form-input" placeholder="Yangi parol (ixtiyoriy)">
+                  <small style="font-size: 0.75rem; color: #64748b; margin-top: 4px; display: block;">Agar parolni o‘zgartirmoqchi bo‘lmasangiz, bo‘sh qoldiring.</small>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Yangi Parolni Tasdiqlang</label>
+                  <input type="password" id="panel-password-confirm" class="form-input" placeholder="Yangi parolni qayta kiriting">
+                </div>
+                <button type="submit" id="btnSavePanelSettings" class="btn btn-primary btn-block" style="padding: 12px; font-weight: 800; margin-top: 10px;">
+                  💾 Saqlash va Yangilash
+                </button>
+              </form>
+            </div>
+
+            <!-- O'quvchilar hisoblari & Login/Parollarini boshqarish -->
+            <div class="card card-body" style="border: 1.5px solid #e2e8f0; border-radius: 18px; padding: 24px; box-shadow: var(--shadow-sm); background: #ffffff;">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 18px;">
+                <div style="width: 44px; height: 44px; border-radius: 12px; background: linear-gradient(135deg, #10b981, #059669); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.4rem;">
+                  👥
+                </div>
+                <div>
+                  <h3 style="font-size: 1.1rem; font-weight: 800; color: #1e293b; margin: 0;">O‘quvchilar Login va Paroli</h3>
+                  <div style="font-size: 0.78rem; color: #64748b;">Talaba login/parolini maxfiy boshqarish</div>
+                </div>
+              </div>
+
+              <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; margin-bottom: 18px; font-size: 0.82rem; color: #475569; line-height: 1.55;">
+                🔒 Talabalarning login va parollari reyting jadvalidan olib tashlandi. Istalgan o‘quvchining hisob ma'lumotlarini ushbu bo‘lim orqali xavfsiz o‘zgartirishingiz mumkin.
+              </div>
+
+              <div class="form-group">
+                <label class="form-label">Talabani tanlang</label>
+                <select id="selStudentToEdit" class="form-input" onchange="onStudentSelectForEdit()" style="font-weight: 700;">
+                  <option value="">-- Ro‘yxatdan tanlang (210 nafar) --</option>
+                </select>
+              </div>
+
+              <div id="studentEditBox" style="display: none; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 16px; margin-top: 14px;">
+                <div class="form-group">
+                  <label class="form-label">Talaba F.I.Sh</label>
+                  <input type="text" id="ed-stu-name" class="form-input" style="font-weight: 700;">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Login (Username)</label>
+                  <input type="text" id="ed-stu-user" class="form-input">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Parol (PIN kod)</label>
+                  <input type="text" id="ed-stu-pin" class="form-input" placeholder="Yangi parol">
+                </div>
+                <button type="button" class="btn btn-emerald btn-block" onclick="saveStudentCredentials()" style="padding: 10px; font-weight: 800;">
+                  🔑 O‘quvchi Ma'lumotlarini Yangilash
+                </button>
+              </div>
+            </div>
+
+            <!-- Tizim va Imtihon standartlari -->
+            <div class="card card-body" style="border: 1.5px solid #e2e8f0; border-radius: 18px; padding: 24px; box-shadow: var(--shadow-sm); grid-column: 1 / -1; background: #ffffff;">
+              <h3 style="font-size: 1.1rem; font-weight: 800; color: #1e293b; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
+                📋 Platforma va Imtihon Qoidalari Me'yori
+              </h3>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;">
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                  <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Dars testi hajmi</div>
+                  <div style="font-size: 1.25rem; font-weight: 900; color: #4f46e5; margin-top: 4px;">Aniq 5 ta test</div>
+                  <div style="font-size: 0.76rem; color: #64748b; margin-top: 4px;">Har bir darsda 5 ta 4 variantli savol</div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                  <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">O‘tish talabi</div>
+                  <div style="font-size: 1.25rem; font-weight: 900; color: #059669; margin-top: 4px;">100% (5/5 ball)</div>
+                  <div style="font-size: 0.76rem; color: #64748b; margin-top: 4px;">Barcha 5 ta savolga to‘g‘ri javob shart</div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                  <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Sertifikatlash</div>
+                  <div style="font-size: 1.25rem; font-weight: 900; color: #d97706; margin-top: 4px;">Avtomatik beriladi</div>
+                  <div style="font-size: 0.76rem; color: #64748b; margin-top: 4px;">10 ta darsni 100% yakunlaganlarga</div>
+                </div>
+                <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px;">
+                  <div style="font-size: 0.75rem; color: #64748b; font-weight: 700; text-transform: uppercase;">Sinxronizatsiya</div>
+                  <div style="font-size: 1.25rem; font-weight: 900; color: #0891b2; margin-top: 4px;">Real vaqtda faol</div>
+                  <div style="font-size: 0.76rem; color: #64748b; margin-top: 4px;">Istalgan qurilmadan kirish imkoni</div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -1038,8 +1129,8 @@
   <!--  MODAL: YANGI DARS QO‘SHISH  -->
   <div class="modal-backdrop" id="addLessonModal">
     <div class="modal-box modal-box-lg" style="max-width: 720px; max-height: 90vh; overflow-y: auto;">
-      <button class="modal-close-btn" onclick="closeModal('addLessonModal')"></button>
-      <h2 style="font-size: 1.35rem; margin-bottom: 6px;"> Yangi dars qo‘shish</h2>
+      <button class="modal-close-btn" onclick="closeModal('addLessonModal')">✕</button>
+      <h2 style="font-size: 1.35rem; margin-bottom: 6px;">➕ Yangi dars qo‘shish</h2>
       <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 22px;">
         Dars ma'lumotlarini va 5 ta test savolini kiriting (100% o‘tish talabi avtomatik qo‘yiladi)
       </p>
@@ -1050,8 +1141,7 @@
         </div>
         <div class="form-group">
           <label class="form-label">Qisqacha Tavsif</label>
-          <input id="al-desc" type="text" class="form-input"
-            placeholder="Ushbu darsda o‘rganiladigan asosiy tushunchalar...">
+          <input id="al-desc" type="text" class="form-input" placeholder="Ushbu darsda o‘rganiladigan asosiy tushunchalar...">
         </div>
         <div class="form-group">
           <label class="form-label">YouTube Embed URL</label>
@@ -1059,8 +1149,7 @@
         </div>
         <div class="form-group">
           <label class="form-label">Dars Matni / Konspekt</label>
-          <textarea id="al-content" class="form-input" rows="4"
-            placeholder="Dars konspekti, asosiy formulalar, eslatmalar..."></textarea>
+          <textarea id="al-content" class="form-input" rows="4" placeholder="Dars konspekti, asosiy qoidalar, eslatmalar..."></textarea>
         </div>
         <div class="form-group">
           <label class="form-label">Hashteglar (vergul bilan ajrating)</label>
@@ -1073,19 +1162,16 @@
           </div>
           <div>
             <label class="form-label">Talab etiladigan ball (5 dan)</label>
-            <input id="al-min" type="number" class="form-input" value="5" min="5" max="5" readonly
-              style="background:#f1f5f9; cursor:not-allowed;" title="Talab: 100% (5/5)">
+            <input id="al-min" type="number" class="form-input" value="5" min="5" max="5" readonly style="background:#f1f5f9; cursor:not-allowed;" title="Talab: 100% (5/5)">
           </div>
         </div>
 
         <!-- 5 ta Test Savoli Quruvchisi -->
-        <div
-          style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; margin-bottom: 22px;">
+        <div style="background: #f8fafc; border: 1px solid var(--border); border-radius: var(--r-lg); padding: 20px; margin-bottom: 22px;">
           <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
             <div>
-              <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary);"> 5 ta Test Savoli</div>
-              <div style="font-size: 0.76rem; color: var(--text-muted);">Har bir savol uchun 4 ta variant kiriting va
-                to‘g‘risini belgilang</div>
+              <div style="font-size: 0.95rem; font-weight: 800; color: var(--primary);">📝 5 ta Test Savoli</div>
+              <div style="font-size: 0.76rem; color: var(--text-muted);">Har bir savol uchun 4 ta variant kiriting va to‘g‘risini belgilang</div>
             </div>
             <button type="button" class="btn btn-ghost btn-xs" onclick="addQuizRow()">+ Savol qo‘shish</button>
           </div>
@@ -1094,7 +1180,7 @@
 
         <div style="display: flex; gap: 12px; justify-content: flex-end;">
           <button type="button" class="btn btn-ghost" onclick="closeModal('addLessonModal')">Bekor qilish</button>
-          <button type="submit" class="btn btn-primary btn-lg"> Darsni Saqlash</button>
+          <button type="submit" class="btn btn-primary btn-lg">💾 Darsni Saqlash</button>
         </div>
       </form>
     </div>
@@ -1103,7 +1189,7 @@
   <!--  MODAL: TEST SAVOLLARINI KO'RISH  -->
   <div class="modal-backdrop" id="viewQuizModal">
     <div class="modal-box" style="max-width: 620px; max-height: 88vh; overflow-y: auto;">
-      <button class="modal-close-btn" onclick="closeModal('viewQuizModal')"></button>
+      <button class="modal-close-btn" onclick="closeModal('viewQuizModal')">✕</button>
       <h2 style="font-size: 1.25rem; margin-bottom: 6px;" id="vqTitle">Test Savollari</h2>
       <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 20px;" id="vqSub"></p>
       <div id="vqBody"></div>
@@ -1116,11 +1202,9 @@
   <!--  MODAL: O'QUVCHI BATAFSIL BALLARI (SCORECARD)  -->
   <div class="modal-backdrop" id="studentDetailModal">
     <div class="modal-box" style="max-width: 680px; max-height: 90vh; overflow-y: auto;">
-      <button class="modal-close-btn" onclick="closeModal('studentDetailModal')"></button>
+      <button class="modal-close-btn" onclick="closeModal('studentDetailModal')">✕</button>
       <div style="display: flex; align-items: center; gap: 14px; margin-bottom: 16px;">
-        <div
-          style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--cyan)); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; font-weight: 800;"
-          id="sdAvatar">?</div>
+        <div style="width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #4f46e5, #06b6d4); display: flex; align-items: center; justify-content: center; font-size: 1.1rem; color: #fff; font-weight: 800;" id="sdAvatar">?</div>
         <div>
           <h2 style="font-size: 1.25rem; font-weight: 800; line-height: 1.2;" id="sdName"></h2>
           <div style="font-size: 0.8rem; color: var(--text-muted);" id="sdLogin"></div>
@@ -1130,16 +1214,15 @@
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px;">
         <div class="s-tile" style="padding: 12px 16px;">
           <div style="font-size: 0.74rem; color: var(--text-muted);">100% Yakunlangan</div>
-          <div style="font-size: 1.4rem; font-weight: 800; color: var(--emerald);" id="sdCompleted"></div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: #059669;" id="sdCompleted"></div>
         </div>
         <div class="s-tile" style="padding: 12px 16px;">
           <div style="font-size: 0.74rem; color: var(--text-muted);">O‘zlashtirish foizi</div>
-          <div style="font-size: 1.4rem; font-weight: 800; color: var(--primary);" id="sdPercent"></div>
+          <div style="font-size: 1.4rem; font-weight: 800; color: #4f46e5;" id="sdPercent"></div>
         </div>
       </div>
 
-      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 10px;"> Har bir dars bo‘yicha test natijalari:
-      </h3>
+      <h3 style="font-size: 0.95rem; font-weight: 800; margin-bottom: 10px;"> Har bir dars bo‘yicha test natijalari:</h3>
       <div class="tbl-wrap" style="margin-bottom: 20px;">
         <table class="data-table">
           <thead>
@@ -1165,69 +1248,14 @@
     </div>
   </div>
 
-  <!--  SETTINGS MODAL -->
-  <div class="modal-overlay" id="settingsModal" onclick="if(event.target===this) closeModal('settingsModal')">
-    <div class="modal-box" style="max-width: 400px;">
-      <button class="modal-close-btn" onclick="closeModal('settingsModal')"></button>
-      <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 20px;"> Sozlamalar</h2>
-      <form onsubmit="saveTeacherSettings(event)">
-        <div class="form-group">
-          <label class="form-label">Yangi Login (Username)</label>
-          <input type="text" id="set-username" class="form-input" required>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Yangi Parol</label>
-          <input type="password" id="set-password" class="form-input" placeholder="O‘zgartirish uchun kiriting (majburiy emas)">
-        </div>
-        <button type="submit" id="btnSaveSettings" class="btn btn-primary btn-block">Saqlash</button>
-      </form>
-    </div>
-  </div>
-
   <div id="toast-root"></div>
   <script src="/js/utils.js"></script>
   <script>
-    let ALL_STUDENTS = [], ALL_LESSONS = [], TEACHER_USER = null;
+    let ALL_STUDENTS = [], ALL_LESSONS = [], TEACHER_USER = null, LEADERBOARD_CACHE = [];
     let quizRowCount = 0;
-
-    //  SETTINGS LOGIC 
-    function openSettingsModal() {
-      if (!TEACHER_USER) return;
-      document.getElementById('set-username').value = TEACHER_USER.username || '';
-      document.getElementById('set-password').value = '';
-      openModal('settingsModal');
-    }
-
-    async function saveTeacherSettings(e) {
-      e.preventDefault();
-      const newUsername = document.getElementById('set-username').value.trim();
-      const newPassword = document.getElementById('set-password').value.trim();
-      if (!newUsername) return;
-      
-      const btn = document.getElementById('btnSaveSettings');
-      const oldText = btn.innerText;
-      btn.disabled = true; btn.innerText = 'Saqlanmoqda...';
-
-      try {
-        const r = await fetch('/api/teacher/settings', {
-          method: 'PUT',
-          headers: Auth.getHeaders(),
-          body: JSON.stringify({ username: newUsername, password: newPassword })
-        });
-        const d = await r.json();
-        if (d.success) {
-          showToast("Sozlamalar yangilandi! Tizimga qaytadan kiring.", 'success');
-          closeModal('settingsModal');
-          setTimeout(() => doLogout(), 1500);
-        } else {
-          showToast(d.error || 'Xatolik', 'error');
-        }
-      } catch {
-        showToast('Server bilan ulanishda xatolik', 'error');
-      } finally {
-        btn.disabled = false; btn.innerText = oldText;
-      }
-    }
+    let chartComparisonInstance = null;
+    let chartDoughnutInstance = null;
+    let chartTopStudentsInstance = null;
 
     //  AUTH TEKSHIRUVI 
     window.addEventListener('DOMContentLoaded', () => {
@@ -1243,7 +1271,7 @@
       e.preventDefault();
       const btn = document.getElementById('btnTLogin');
       btn.disabled = true;
-      btn.innerText = ' Kirilmoqda...';
+      btn.innerText = 'Kirilmoqda...';
 
       try {
         const r = await fetch('/api/auth/login-teacher', {
@@ -1260,12 +1288,12 @@
         Auth.setSession(d.token, d.user);
         afterLogin(d.user);
         loadAll();
-        showToast("Xush kelibsiz, " + d.user.full_name + '!', "success");
+        showToast("Xush kelibsiz, " + (d.user.full_name || d.user.username) + '!', "success");
       } catch {
         showToast("Server bilan ulanishda xatolik", 'error');
       } finally {
         btn.disabled = false;
-        btn.innerText = 'Kirish ';
+        btn.innerText = 'Kirish ➔';
       }
     }
 
@@ -1276,7 +1304,14 @@
       document.getElementById('sideUserFooter').style.display = 'block';
       document.getElementById('statStrip').style.display = 'grid';
       document.getElementById('secWelcome').style.display = 'none';
-      document.getElementById('sideUserName').innerText = usr.full_name || 'O‘qituvchi';
+      document.getElementById('sideUserName').innerText = usr.full_name || usr.username || 'O‘qituvchi';
+      
+      // Populate settings fields
+      const pUser = document.getElementById('panel-username');
+      const pFull = document.getElementById('panel-fullname');
+      if (pUser) pUser.value = usr.username || '';
+      if (pFull) pFull.value = usr.full_name || '';
+
       switchSection('overview');
     }
 
@@ -1287,7 +1322,7 @@
 
     //  BO'LIMLARNI ALMASHTIRISH 
     function switchSection(sec) {
-      ['overview', 'leaderboard', 'courses', 'lessons', 'students'].forEach(s => {
+      ['overview', 'leaderboard', 'courses', 'lessons', 'students', 'settings'].forEach(s => {
         const el = document.getElementById('sec' + capitalize(s));
         if (el) el.style.display = (s === sec) ? 'block' : 'none';
         const navEl = document.getElementById('nav-' + s);
@@ -1295,11 +1330,12 @@
       });
 
       const titles = {
-        overview: [' Platforma Tahlili va Boshqaruvi', 'Umumiy o‘quv jarayoni va darslar statistikasi'],
-        leaderboard: [' O‘quvchilar reytingi', '100% bilan eng ko‘p dars yakunlagan peshqadamlar'],
-        courses: [' Kurslar Boshqaruvi', 'Barcha o‘quv kurslarini boshqarish'],
-        lessons: [' Darslar va Testlar Boshqaruvi', 'Darslar qo‘shish, tahrirlash va 5 ta test savollari'],
-        students: [' O‘quvchilar nazorati', 'Har bir o‘quvchining shaxsiy progressi va test ballari']
+        overview: ['📊 Platforma Tahlili va Boshqaruvi', 'Umumiy o‘quv jarayoni va darslar statistikasi'],
+        leaderboard: ['🏆 O‘quvchilar Reytingi & Diagrammalar', 'Ilmiy tajriba monitoringi, o‘zlashtirish darajalari va natijalar'],
+        courses: ['📚 Kurslar Boshqaruvi', 'Barcha o‘quv kurslarini boshqarish va yangi darslar kiritish'],
+        lessons: ['📖 Darslar va Testlar Boshqaruvi', 'Darslar qo‘shish, tahrirlash va 5 ta test savollari'],
+        students: ['👥 O‘quvchilar Nazorati', 'Har bir o‘quvchining shaxsiy progressi va test ballari'],
+        settings: ['⚙️ Tizim va Xavfsizlik Sozlamalari', 'O‘qituvchi ma\'lumotlari, login/parol va platforma standartlari']
       };
 
       if (titles[sec]) {
@@ -1308,15 +1344,27 @@
       }
 
       const actions = document.getElementById('topBarActions');
-      actions.innerHTML = '<button class="btn btn-primary btn-sm" onclick="openAddModal()"> Yangi dars qo‘shish</button>'
-        + ' <button class="btn btn-ghost btn-sm" onclick="loadAll()"> Yangilash</button>'
-        + ' <button class="btn btn-ghost btn-sm" style="color: #ef4444; border-color: #fca5a5; background: #fef2f2; font-weight: 600;" onclick="doLogout()"> Chiqish</button>';
+      actions.innerHTML = `
+        <button class="btn btn-primary btn-sm" onclick="openAddCourseModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 4px;">
+          ➕ Kurs qo‘shish
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="openAddModal()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+          ➕ Dars qo‘shish
+        </button>
+        <button class="btn btn-ghost btn-sm" onclick="loadAll()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+          🔄 Yangilash
+        </button>
+        <button class="btn btn-ghost btn-sm" style="color: #ef4444; border-color: #fca5a5; background: #fef2f2; font-weight: 700;" onclick="doLogout()">
+          Chiqish
+        </button>
+      `;
 
       if (sec === 'overview') renderOverview();
       if (sec === 'leaderboard') loadLeaderboard();
       if (sec === 'courses') { if (window.loadCourses) loadCourses(); }
       if (sec === 'lessons') loadLessons();
       if (sec === 'students') loadStudents();
+      if (sec === 'settings') populateSettingsStudentDropdown();
     }
 
     function capitalize(s) {
@@ -1337,7 +1385,7 @@
         document.getElementById('stTotal').innerText = ALL_STUDENTS.length;
         document.getElementById('stActive').innerText = (sd.stats?.active_today ?? 0) + ' nafar';
         const actLbl = document.getElementById('stActiveLbl');
-        if (actLbl) actLbl.innerHTML = `Faol o‘quvchilar: <strong style="color:var(--emerald);">${sd.stats?.active_percent ?? 0}%</strong>`;
+        if (actLbl) actLbl.innerHTML = `Faol o‘quvchilar: <strong style="color:#059669;">${sd.stats?.active_percent ?? 0}%</strong>`;
         document.getElementById('stLessons').innerText = ALL_LESSONS.length;
         document.getElementById('studentsBadge').innerText = ALL_STUDENTS.length;
         document.getElementById('lessonsBadge').innerText = ALL_LESSONS.length;
@@ -1365,90 +1413,227 @@
         const qCount = Array.isArray(l.quiz) ? l.quiz.length : 0;
         return `
           <tr>
-            <td><strong style="color:var(--primary);">${l.order_num}-dars</strong></td>
-            <td><strong style="font-size:0.92rem;">${l.title}</strong></td>
-            <td style="color:var(--text-muted);"> ${l.duration_mins || 30} daq</td>
-            <td><span class="badge badge-primary"> ${qCount} ta savol</span></td>
+            <td><strong style="color: #4f46e5;">${l.order_num}-dars</strong></td>
+            <td><strong style="font-size:0.92rem; color: #1e293b;">${l.title}</strong></td>
+            <td style="color:var(--text-muted);">⏱️ ${l.duration_mins || 30} daq</td>
+            <td><span class="badge badge-primary">📝 ${qCount} ta savol</span></td>
             <td><span class="badge badge-emerald">100% (5/5)</span></td>
             <td>
-              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})"> Testlarni ko‘rish</button>
+              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})">🔍 Testlarni ko‘rish</button>
             </td>
           </tr>
         `;
       }).join('');
     }
 
-    //  REYTING / LEADERBOARD 
+    //  REYTING & DIAGRAMMALAR (LEADERBOARD) 
     async function loadLeaderboard() {
       try {
         const r = await fetch('/api/teacher/leaderboard', { headers: Auth.getHeaders() });
         const d = await r.json();
-        const tbody = document.getElementById('lbBody');
-        if (!d.leaderboard?.length) {
-          tbody.innerHTML = `<tr><td colspan="10" style="text-align:center; color:var(--text-muted); padding:50px;">Hozircha o‘quvchilar ro‘yxatdan o‘tmagan</td></tr>`;
-          return;
-        }
-
-        tbody.innerHTML = d.leaderboard.map(s => {
-          const rowClass = s.rank <= 3 ? `rank-${s.rank}` : '';
-          const rbClass = s.rank <= 3 ? `rb-${s.rank}` : 'rb-n';
-          const medal = s.rank === 1 ? '🥇' : s.rank === 2 ? '🥈' : s.rank === 3 ? '🥉' : '';
-          const ini = (s.full_name || 'O').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-          const pct = s.progress_percent || 0;
-          const pColor = pct >= 80 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--rose)';
-          const lvlBadge = s.level === 'Yuqori' 
-            ? '<span class="badge badge-emerald" style="font-size:0.72rem; font-weight:800;">🟢 Yuqori</span>'
-            : (s.level === 'O‘rta' ? '<span class="badge badge-amber" style="font-size:0.72rem; font-weight:800;">🟡 O‘rta</span>' : '<span class="badge badge-rose" style="font-size:0.72rem; font-weight:800;">🔴 Past</span>');
-
-          const certBadge = s.has_certificate
-            ? '<span class="badge" style="background:#fef3c7; color:#b45309; border:1px solid #fde68a; font-size:0.7rem; font-weight:800;">🎓 Sertifikatli</span>'
-            : '<span style="font-size:0.75rem; color:var(--text-muted);">Jarayonda</span>';
-
-          return `<tr class="${rowClass}">
-            <td><div style="display:flex; align-items:center; gap:8px;">
-              <span class="rank-badge ${rbClass}">${medal || s.rank}</span>
-            </div></td>
-            <td><div style="display:flex; align-items:center; gap:10px;">
-              <div style="width:34px; height:34px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--cyan)); display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-weight:800; color:#fff; flex-shrink:0;">${ini}</div>
-              <div><strong style="font-size:0.92rem;">${s.full_name}</strong></div>
-            </div></td>
-            <td>
-              <div style="display:flex; flex-direction:column; gap:3px;">
-                <div style="display:flex; align-items:center; gap:6px;">
-                  <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">Login:</span>
-                  <code style="background:var(--primary-subtle); color:var(--primary); padding:2px 6px; border-radius:4px; font-size:0.8rem; font-weight:700;">${s.username}</code>
-                  <button class="btn-copy-inline" onclick="copyToClipboard('${s.username}','Login nusxalandi!')" title="Loginni nusxalash">📋</button>
-                </div>
-                <div style="display:flex; align-items:center; gap:6px;">
-                  <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">Parol:</span>
-                  <code style="background:#fef3c7; color:#b45309; padding:2px 6px; border-radius:4px; font-size:0.8rem; font-weight:700;">${s.pin_code || '1234'}</code>
-                  <button class="btn-copy-inline" onclick="copyToClipboard('${s.pin_code || '1234'}','Parol nusxalandi!')" title="Parolni nusxalash">📋</button>
-                </div>
-              </div>
-            </td>
-            <td>${lvlBadge}</td>
-            <td>
-              <span class="badge badge-primary" style="font-size:0.75rem; white-space:nowrap;">${s.course_title || 'Python Asoslari'}</span>
-            </td>
-            <td>
-              <span style="font-size:1.05rem; font-weight:900; color:${pColor};">${s.completed_count}</span>
-              <span style="color:var(--text-muted); font-size:0.8rem;">/${s.total_lessons || 10} dars</span>
-            </td>
-            <td>
-              <div style="display:flex; align-items:center; gap:8px; min-width:110px;">
-                <div class="progress-wrap" style="flex:1; height:6px;"><div class="progress-fill" style="width:${pct}%; background:${pColor};"></div></div>
-                <span style="font-size:0.82rem; font-weight:800; color:${pColor}; white-space:nowrap;">${pct}%</span>
-              </div>
-            </td>
-            <td><strong style="color:var(--primary); font-size:0.92rem;">${s.total_score || 0} ball</strong></td>
-            <td>${certBadge}</td>
-            <td>
-              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})">🔍 Natijalar</button>
-            </td>
-          </tr>`;
-        }).join('');
+        LEADERBOARD_CACHE = d.leaderboard || [];
+        renderLeaderboard(LEADERBOARD_CACHE);
+        initCharts(LEADERBOARD_CACHE, d.experiment_stats);
       } catch {
         showToast("Reytingni yuklashda xatolik", 'error');
+      }
+    }
+
+    function filterLeaderboard() {
+      const q = (document.getElementById('lbSearch')?.value || '').toLowerCase().trim();
+      const filtered = q
+        ? LEADERBOARD_CACHE.filter(s => (s.full_name || '').toLowerCase().includes(q) || (s.course_title || '').toLowerCase().includes(q))
+        : LEADERBOARD_CACHE;
+      renderLeaderboard(filtered);
+    }
+
+    function renderLeaderboard(list) {
+      const tbody = document.getElementById('lbBody');
+      if (!tbody) return;
+      if (!list.length) {
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color:var(--text-muted); padding:50px;">O‘quvchilar ro‘yxatdan o‘tmagan yoki topilmadi</td></tr>`;
+        return;
+      }
+
+      tbody.innerHTML = list.map(s => {
+        const rowClass = s.rank <= 3 ? `rank-${s.rank}` : '';
+        const rbClass = s.rank <= 3 ? `rb-${s.rank}` : 'rb-n';
+        const medal = s.rank === 1 ? '🥇' : s.rank === 2 ? '🥈' : s.rank === 3 ? '🥉' : '';
+        const ini = (s.full_name || 'O').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+        const pct = s.progress_percent || 0;
+        const pColor = pct >= 80 ? '#059669' : pct >= 40 ? '#d97706' : '#dc2626';
+        const lvlBadge = s.level === 'Yuqori' 
+          ? '<span class="badge badge-emerald" style="font-size:0.75rem; font-weight:800;">🟢 Yuqori</span>'
+          : (s.level === 'O‘rta' ? '<span class="badge badge-amber" style="font-size:0.75rem; font-weight:800;">🟡 O‘rta</span>' : '<span class="badge badge-rose" style="font-size:0.75rem; font-weight:800;">🔴 Past</span>');
+
+        const certBadge = s.has_certificate
+          ? '<span class="badge" style="background:#fef3c7; color:#b45309; border:1.5px solid #fde68a; font-size:0.75rem; font-weight:800;">🎓 100% Sertifikatli</span>'
+          : '<span style="font-size:0.75rem; color:var(--text-muted); font-weight:600;">Jarayonda</span>';
+
+        return `<tr class="${rowClass}">
+          <td>
+            <div style="display:flex; align-items:center; gap:8px;">
+              <span class="rank-badge ${rbClass}">${medal || s.rank}</span>
+            </div>
+          </td>
+          <td>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#4f46e5,#06b6d4); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; color:#fff; flex-shrink:0;">${ini}</div>
+              <div>
+                <strong style="font-size:0.92rem; color:#1e293b;">${s.full_name}</strong>
+                <div style="font-size:0.72rem; color:#64748b;">${s.registered_at ? new Date(s.registered_at).toLocaleDateString('uz-UZ') : ''}</div>
+              </div>
+            </div>
+          </td>
+          <td>${lvlBadge}</td>
+          <td>
+            <span class="badge badge-primary" style="font-size:0.76rem; white-space:nowrap;">${s.course_title || 'Python Asoslari'}</span>
+          </td>
+          <td>
+            <span style="font-size:1.05rem; font-weight:900; color:${pColor};">${s.completed_count}</span>
+            <span style="color:var(--text-muted); font-size:0.82rem;">/${s.total_lessons || 10} dars</span>
+          </td>
+          <td>
+            <div style="display:flex; align-items:center; gap:8px; min-width:120px;">
+              <div class="progress-wrap" style="flex:1; height:7px; background:#e2e8f0;">
+                <div class="progress-fill" style="width:${pct}%; background:${pColor};"></div>
+              </div>
+              <span style="font-size:0.84rem; font-weight:800; color:${pColor}; white-space:nowrap;">${pct}%</span>
+            </div>
+          </td>
+          <td><strong style="color:#4f46e5; font-size:0.92rem;">${s.total_score || 0} ball</strong></td>
+          <td>${certBadge}</td>
+          <td style="text-align: center;">
+            <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test natijalari">🔍 Natijalar</button>
+          </td>
+        </tr>`;
+      }).join('');
+    }
+
+    //  DIAGRAMMALARNI CHIZISH (CHART.JS) 
+    function initCharts(leaderboard, stats) {
+      if (typeof Chart === 'undefined') {
+        const fb = document.getElementById('chartFallback1');
+        if (fb) fb.style.display = 'block';
+        return;
+      }
+
+      // 1. Taqqoslovchi Bar Chart
+      const ctx1 = document.getElementById('chartComparison');
+      if (ctx1) {
+        if (chartComparisonInstance) chartComparisonInstance.destroy();
+        chartComparisonInstance = new Chart(ctx1, {
+          type: 'bar',
+          data: {
+            labels: ['Yuqori daraja', 'O‘rta daraja', 'Past daraja'],
+            datasets: [
+              {
+                label: 'Tajriba boshida (210 nafar)',
+                data: [28, 41, 141],
+                backgroundColor: 'rgba(99, 102, 241, 0.75)',
+                borderColor: '#4f46e5',
+                borderWidth: 1.5,
+                borderRadius: 6
+              },
+              {
+                label: 'Tajriba oxirida (207 nafar)',
+                data: [41, 78, 88],
+                backgroundColor: ['rgba(16, 185, 129, 0.85)', 'rgba(245, 158, 11, 0.85)', 'rgba(239, 68, 68, 0.85)'],
+                borderColor: ['#059669', '#d97706', '#dc2626'],
+                borderWidth: 1.5,
+                borderRadius: 6
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'top', labels: { boxWidth: 14, font: { weight: 'bold', size: 11 } } },
+              tooltip: {
+                callbacks: {
+                  label: function(c) {
+                    return ` ${c.dataset.label}: ${c.raw} nafar talaba`;
+                  }
+                }
+              }
+            },
+            scales: {
+              y: { beginAtZero: true, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Talabalar soni' } },
+              x: { grid: { display: false } }
+            }
+          }
+        });
+      }
+
+      // 2. Doughnut Chart
+      const ctx2 = document.getElementById('chartDoughnut');
+      if (ctx2) {
+        if (chartDoughnutInstance) chartDoughnutInstance.destroy();
+        chartDoughnutInstance = new Chart(ctx2, {
+          type: 'doughnut',
+          data: {
+            labels: ['Yuqori daraja (19.8%)', 'O‘rta daraja (37.7%)', 'Past daraja (42.5%)'],
+            datasets: [{
+              data: [41, 78, 88],
+              backgroundColor: ['#10b981', '#f59e0b', '#ef4444'],
+              borderWidth: 3,
+              borderColor: '#ffffff'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'bottom', labels: { boxWidth: 12, font: { weight: 'bold', size: 11 } } }
+            },
+            cutout: '62%'
+          }
+        });
+      }
+
+      // 3. Top 10 Talabalar Horizontal Bar Chart
+      const ctx3 = document.getElementById('chartTopStudents');
+      if (ctx3) {
+        if (chartTopStudentsInstance) chartTopStudentsInstance.destroy();
+        const top10 = (leaderboard || []).slice(0, 10);
+        const names = top10.map((s, i) => `${i+1}. ${s.full_name}`);
+        const scores = top10.map(s => s.total_score || 0);
+
+        chartTopStudentsInstance = new Chart(ctx3, {
+          type: 'bar',
+          data: {
+            labels: names,
+            datasets: [{
+              label: 'Jami to‘plangan ball',
+              data: scores,
+              backgroundColor: 'rgba(79, 70, 229, 0.85)',
+              borderColor: '#4f46e5',
+              borderWidth: 1,
+              borderRadius: 6
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { display: false },
+              tooltip: {
+                callbacks: {
+                  label: function(c) {
+                    const stu = top10[c.dataIndex];
+                    return ` Jami ball: ${c.raw} | O‘zlashtirish: ${stu.progress_percent}% (${stu.completed_count}/${stu.total_lessons} dars)`;
+                  }
+                }
+              }
+            },
+            scales: {
+              x: { beginAtZero: true, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Ball' } },
+              y: { grid: { display: false }, ticks: { font: { weight: 'bold', size: 11 } } }
+            }
+          }
+        });
       }
     }
 
@@ -1463,10 +1648,36 @@
       } catch { }
     }
 
-    function renderLessons(lessons) {
+    function renderLessons(lessons, courseContext = null) {
       const wrap = document.getElementById('lessonCards');
+      const notice = document.getElementById('courseFilterNotice');
+      
+      if (courseContext) {
+        if (notice) {
+          notice.style.display = 'block';
+          notice.innerHTML = `
+            <div style="background:#eef2ff; border:1.5px solid #c7d2fe; border-radius:12px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <strong style="font-size:1.05rem; color:#3730a3;">📚 "${courseContext.courseTitle}" kursi darslari</strong>
+                <span style="font-size:0.85rem; color:#4f46e5; margin-left:8px;">(${lessons.length} ta dars mavjud)</span>
+              </div>
+              <div style="display:flex; gap:8px;">
+                <button class="btn btn-primary btn-sm" onclick="openAddLessonForCourse(${courseContext.courseId}, '${courseContext.courseTitle.replace(/'/g, "\\'")}')" style="font-weight:800;">
+                  ➕ Ushbu kursga dars qo‘shish
+                </button>
+                <button class="btn btn-ghost btn-sm" onclick="switchSection('courses')" style="font-weight:700;">
+                  ⬅ Barcha kurslar
+                </button>
+              </div>
+            </div>
+          `;
+        }
+      } else {
+        if (notice) notice.style.display = 'none';
+      }
+
       if (!lessons.length) {
-        wrap.innerHTML = `<div style="color:var(--text-muted); padding:30px; grid-column:1/-1; text-align:center; font-size:1rem;"> Hozircha darslar mavjud emas</div>`;
+        wrap.innerHTML = `<div style="color:var(--text-muted); padding:40px; grid-column:1/-1; text-align:center; font-size:1rem; background:#fff; border-radius:16px; border:1px dashed #cbd5e1;">Hozircha darslar mavjud emas</div>`;
         return;
       }
 
@@ -1475,18 +1686,18 @@
         const qCount = Array.isArray(l.quiz) ? l.quiz.length : 0;
 
         return `<div class="l-card">
-          <div class="l-card-order">${l.order_num}-Dars   ${l.duration_mins || 30} daqiqa</div>
+          <div class="l-card-order">${l.order_num}-Dars • ${l.duration_mins || 30} daqiqa</div>
           <div class="l-card-title">${l.title}</div>
           <div class="l-card-desc">${l.description || 'Tavsif berilmagan'}</div>
           ${tags ? `<div class="l-card-tags">${tags}</div>` : ''}
           <div class="l-card-footer">
             <div style="display:flex; gap:6px; flex-wrap:wrap;">
-              ${l.video_url ? '<span class="badge badge-cyan"> Video</span>' : ''}
-              <span class="badge badge-primary"> ${qCount} ta test (100%)</span>
+              ${l.video_url ? '<span class="badge badge-cyan">🎬 Video</span>' : ''}
+              <span class="badge badge-primary">📝 ${qCount} ta test (100%)</span>
             </div>
             <div style="display:flex; gap:6px;">
-              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})" title="Testlarni ko‘rish"> Test</button>
-              <button class="btn btn-danger btn-xs" onclick="delLesson(${l.id})" title="O‘chirish"></button>
+              <button class="btn btn-ghost btn-xs" onclick="viewQuiz(${l.id})" title="Testlarni ko‘rish">Test</button>
+              <button class="btn btn-danger btn-xs" onclick="delLesson(${l.id})" title="O‘chirish">🗑️</button>
             </div>
           </div>
         </div>`;
@@ -1497,8 +1708,8 @@
       const l = ALL_LESSONS.find(x => x.id === lessonId);
       if (!l) return;
       const quiz = Array.isArray(l.quiz) ? l.quiz : [];
-      document.getElementById('vqTitle').innerText = l.title + '  Test Savollari';
-      document.getElementById('vqSub').innerText = `${quiz.length} ta savol  O‘tish talabi: 100% (barcha savollarga to‘g‘ri javob)`;
+      document.getElementById('vqTitle').innerText = l.title + ' • Test Savollari';
+      document.getElementById('vqSub').innerText = `${quiz.length} ta savol • O‘tish talabi: 100% (barcha 5 ta savolga to‘g‘ri javob)`;
       const letters = ['A', 'B', 'C', 'D'];
 
       document.getElementById('vqBody').innerHTML = quiz.length
@@ -1510,7 +1721,7 @@
               <div class="q-row-opts">
                 ${q.opts.map((o, oi) => `
                   <div class="${oi === q.a ? 'correct-opt' : ''}">
-                    ${letters[oi]}) ${o} ${oi === q.a ? '  (To‘g‘ri javob)' : ''}
+                    ${letters[oi]}) ${o} ${oi === q.a ? ' ✓ (To‘g‘ri javob)' : ''}
                   </div>
                 `).join('')}
               </div>
@@ -1518,7 +1729,7 @@
           </div>`).join('')
         : '<div style="color:var(--text-muted); padding:20px; text-align:center;">Test savollari mavjud emas</div>';
 
-      document.getElementById('viewQuizModal').classList.add('open');
+      openModal('viewQuizModal');
     }
 
     async function delLesson(id) {
@@ -1567,8 +1778,9 @@
         document.getElementById('stTotal').innerText = ALL_STUDENTS.length;
         document.getElementById('stActive').innerText = (d.stats?.active_today ?? 0) + ' nafar';
         const actLbl = document.getElementById('stActiveLbl');
-        if (actLbl) actLbl.innerHTML = `Faol o‘quvchilar: <strong style="color:var(--emerald);">${d.stats?.active_percent ?? 0}%</strong>`;
+        if (actLbl) actLbl.innerHTML = `Faol o‘quvchilar: <strong style="color:#059669;">${d.stats?.active_percent ?? 0}%</strong>`;
         renderStudents(ALL_STUDENTS);
+        populateSettingsStudentDropdown();
       } catch { }
     }
 
@@ -1582,31 +1794,25 @@
       tbody.innerHTML = list.map(s => {
         const ini = (s.full_name || 'O').split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
         const pct = s.progress_percent || 0;
-        const pColor = pct >= 70 ? 'var(--emerald)' : pct >= 40 ? 'var(--amber)' : 'var(--text-muted)';
+        const pColor = pct >= 70 ? '#059669' : pct >= 40 ? '#d97706' : '#64748b';
         const date = s.last_active ? new Date(s.last_active).toLocaleString('uz-UZ') : '—';
         const regDate = s.registered_at ? new Date(s.registered_at).toLocaleDateString('uz-UZ') : '—';
         const avg = s.avg_score ? s.avg_score + '%' : '0%';
 
         return `<tr>
-          <td><div style="display:flex; align-items:center; gap:10px;">
-            <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,var(--primary),var(--cyan)); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; color:#fff; flex-shrink:0;">${ini}</div>
-            <div>
-              <div style="font-weight:800; font-size:0.92rem; color:var(--text-primary);">${s.full_name}</div>
-              <div style="font-size:0.72rem; color:var(--text-muted);">${regDate} da qo‘shildi</div>
-            </div>
-          </div></td>
           <td>
-            <div style="display:flex; flex-direction:column; gap:4px;">
-              <div style="display:flex; align-items:center; gap:6px;">
-                <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">Login:</span>
-                <code style="background:var(--primary-subtle); color:var(--primary); padding:2px 7px; border-radius:5px; font-size:0.82rem; font-weight:700;">${s.username}</code>
-                <button class="btn-copy-inline" onclick="copyToClipboard('${s.username}','Login nusxalandi!')" title="Loginni nusxalash">📋</button>
+            <div style="display:flex; align-items:center; gap:10px;">
+              <div style="width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#4f46e5,#06b6d4); display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:800; color:#fff; flex-shrink:0;">${ini}</div>
+              <div>
+                <div style="font-weight:800; font-size:0.92rem; color:var(--text-primary);">${s.full_name}</div>
+                <div style="font-size:0.72rem; color:var(--text-muted);">${regDate} da qo‘shildi</div>
               </div>
-              <div style="display:flex; align-items:center; gap:6px;">
-                <span style="font-size:0.68rem; color:var(--text-muted); font-weight:700;">Parol:</span>
-                <code style="background:#fef3c7; color:#b45309; padding:2px 7px; border-radius:5px; font-size:0.82rem; font-weight:700;">${s.pin_code || '1234'}</code>
-                <button class="btn-copy-inline" onclick="copyToClipboard('${s.pin_code || '1234'}','Parol nusxalandi!')" title="Parolni nusxalash">📋</button>
-              </div>
+            </div>
+          </td>
+          <td>
+            <div style="display:flex; align-items:center; gap:6px;">
+              <code style="background:#eef2ff; color:#4f46e5; padding:3px 8px; border-radius:6px; font-size:0.84rem; font-weight:700;">@${s.username}</code>
+              <button class="btn-copy-inline" onclick="copyToClipboard('${s.username}','Login nusxalandi!')" title="Loginni nusxalash">📋</button>
             </div>
           </td>
           <td>
@@ -1633,9 +1839,10 @@
               ${s.is_active ? '<br><span class="badge badge-emerald" style="font-size:0.65rem; margin-top:2px;">🟢 Faol</span>' : ''}
             </div>
           </td>
-          <td>
-            <div style="display:flex; gap:6px;">
-              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test ballari"> Natijalar</button>
+          <td style="text-align: center;">
+            <div style="display:flex; gap:6px; justify-content:center;">
+              <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test ballari">🔍 Natijalar</button>
+              <button class="btn btn-ghost btn-xs" onclick="selectStudentForEditById(${s.id})" title="Login yoki parolini sozlamalarda tahrirlash">🔑 Parol</button>
               <button class="btn btn-ghost btn-xs" onclick="resetProg(${s.id})" title="Progressni noldan boshlash">🔄</button>
               <button class="btn btn-danger btn-xs" onclick="delStudent(${s.id})" title="O‘chirish">🗑️</button>
             </div>
@@ -1658,20 +1865,20 @@
 
         document.getElementById('sdAvatar').innerText = (d.student.full_name || 'O').slice(0, 2).toUpperCase();
         document.getElementById('sdName').innerText = d.student.full_name;
-        document.getElementById('sdLogin').innerText = `Login: @${d.student.username} | Parol: ${d.student.pin_code || '—'} | Ro‘yxatdan o‘tgan: ${new Date(d.student.registered_at).toLocaleDateString('uz-UZ')}`;
+        document.getElementById('sdLogin').innerText = `Login: @${d.student.username} | Ro‘yxatdan o‘tgan: ${new Date(d.student.registered_at).toLocaleDateString('uz-UZ')}`;
         document.getElementById('sdCompleted').innerText = `${d.progress.completed_count}/${d.progress.total_lessons} dars (100%)`;
         document.getElementById('sdPercent').innerText = `${d.progress.progress_percent}%`;
 
         const tbody = document.getElementById('sdLessonsBody');
         tbody.innerHTML = d.lessons.map(l => {
           const scoreBadge = l.score !== null
-            ? `<span class="score-chip" style="${l.score === 5 ? 'background:#dcfce7; color:#15803d;' : 'background:#fee2e2; color:#b91c1c;'}">${l.score}/5</span>`
+            ? `<span class="score-chip" style="${l.score === 5 ? 'background:#dcfce7; color:#15803d; font-weight:800; padding:2px 8px; border-radius:4px;' : 'background:#fee2e2; color:#b91c1c; font-weight:800; padding:2px 8px; border-radius:4px;'}">${l.score}/5</span>`
             : '<span style="color:var(--text-muted); font-size:0.8rem;">Yechilmagan</span>';
 
           const pctBadge = l.percent !== null ? `<strong>${l.percent}%</strong>` : '';
           const statusBadge = l.is_completed
-            ? '<span class="badge badge-emerald"> 100% Yakunlangan</span>'
-            : (l.score !== null ? '<span class="badge badge-rose"> O‘tmagan (&lt;100%)</span>' : '<span class="badge badge-amber">Kutilmoqda</span>');
+            ? '<span class="badge badge-emerald">✓ 100% Yakunlangan</span>'
+            : (l.score !== null ? '<span class="badge badge-rose">O‘tmagan (&lt;100%)</span>' : '<span class="badge badge-amber">Kutilmoqda</span>');
 
           return `
             <tr>
@@ -1712,12 +1919,128 @@
       }
     }
 
+    //  SOZLAMALAR SECTION LOGIC (XAVFSIZ VA TO'LIQ) 
+    async function saveTeacherSettingsFromPanel(e) {
+      e.preventDefault();
+      const newFullName = document.getElementById('panel-fullname').value.trim();
+      const newUsername = document.getElementById('panel-username').value.trim();
+      const newPass = document.getElementById('panel-password').value.trim();
+      const confirmPass = document.getElementById('panel-password-confirm').value.trim();
+
+      if (!newUsername) {
+        showToast("O‘qituvchi logini bo‘sh bo‘lishi mumkin emas!", "error");
+        return;
+      }
+      if (newPass && newPass !== confirmPass) {
+        showToast("Yangi parollar mos kelmadi!", "error");
+        return;
+      }
+
+      const btn = document.getElementById('btnSavePanelSettings');
+      btn.disabled = true;
+      btn.innerText = 'Saqlanmoqda...';
+
+      try {
+        const r = await fetch('/api/teacher/settings', {
+          method: 'PUT',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({
+            full_name: newFullName,
+            username: newUsername,
+            password: newPass
+          })
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("Sozlamalar muvaffaqiyatli saqlandi!", "success");
+          if (d.user) {
+            TEACHER_USER = d.user;
+            document.getElementById('sideUserName').innerText = d.user.full_name || d.user.username;
+          }
+          document.getElementById('panel-password').value = '';
+          document.getElementById('panel-password-confirm').value = '';
+        } else {
+          showToast(d.error || "Xatolik yuz berdi", "error");
+        }
+      } catch {
+        showToast("Server bilan ulanishda xatolik", "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '💾 Saqlash va Yangilash';
+      }
+    }
+
+    function populateSettingsStudentDropdown() {
+      const sel = document.getElementById('selStudentToEdit');
+      if (!sel) return;
+      sel.innerHTML = '<option value="">-- Ro‘yxatdan tanlang (210 nafar) --</option>' + 
+        ALL_STUDENTS.map(s => `<option value="${s.id}">${s.full_name} (@${s.username})</option>`).join('');
+    }
+
+    function onStudentSelectForEdit() {
+      const sel = document.getElementById('selStudentToEdit');
+      const box = document.getElementById('studentEditBox');
+      const id = parseInt(sel?.value);
+      if (!id) {
+        if (box) box.style.display = 'none';
+        return;
+      }
+      const s = ALL_STUDENTS.find(x => x.id === id);
+      if (!s) return;
+      document.getElementById('ed-stu-name').value = s.full_name || '';
+      document.getElementById('ed-stu-user').value = s.username || '';
+      document.getElementById('ed-stu-pin').value = s.pin_code || '1234';
+      if (box) box.style.display = 'block';
+    }
+
+    function selectStudentForEditById(id) {
+      switchSection('settings');
+      const sel = document.getElementById('selStudentToEdit');
+      if (sel) {
+        sel.value = id;
+        onStudentSelectForEdit();
+      }
+    }
+
+    async function saveStudentCredentials() {
+      const sel = document.getElementById('selStudentToEdit');
+      const id = parseInt(sel?.value);
+      if (!id) return;
+
+      const full_name = document.getElementById('ed-stu-name').value.trim();
+      const username = document.getElementById('ed-stu-user').value.trim();
+      const pin_code = document.getElementById('ed-stu-pin').value.trim();
+
+      if (!username) {
+        showToast("Login bo‘sh bo‘lishi mumkin emas!", "error");
+        return;
+      }
+
+      try {
+        const r = await fetch(`/api/teacher/students/${id}/credentials`, {
+          method: 'PUT',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({ full_name, username, pin_code })
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("O‘quvchi login va paroli muvaffaqiyatli yangilandi!", "success");
+          await loadStudents(true);
+        } else {
+          showToast(d.error || "Xatolik yuz berdi", "error");
+        }
+      } catch {
+        showToast("Server bilan ulanishda xatolik", "error");
+      }
+    }
+
     //  YANGI DARS VA 5 TA TEST QO'SHISH 
     function openAddModal() {
       quizRowCount = 0;
       document.getElementById('addLessonForm').reset();
       document.getElementById('quizRows').innerHTML = '';
-      // Standart 5 ta savol qatorini avtomatik chiqarish
+      const modalH2 = document.querySelector('#addLessonModal h2');
+      if (modalH2) modalH2.innerText = '➕ Yangi dars qo‘shish';
       for (let i = 0; i < 5; i++) {
         addQuizRow();
       }
@@ -1730,18 +2053,18 @@
       const letters = ['A', 'B', 'C', 'D'];
       const row = document.createElement('div');
       row.id = `qrow-${i}`;
-      row.style.cssText = 'background:#ffffff; border:1px solid var(--border); border-radius:var(--r-md); padding:16px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);';
+      row.style.cssText = 'background:#ffffff; border:1px solid #e2e8f0; border-radius:12px; padding:16px; margin-bottom:12px; box-shadow:0 1px 3px rgba(0,0,0,0.02);';
       row.innerHTML = `
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-          <span style="font-size:0.82rem; font-weight:800; color:var(--primary);">${i}-Savol</span>
-          <button type="button" class="btn btn-danger btn-xs" onclick="document.getElementById('qrow-${i}').remove()"> O‘chirish</button>
+          <span style="font-size:0.84rem; font-weight:800; color:#4f46e5;">${i}-Savol</span>
+          <button type="button" class="btn btn-danger btn-xs" onclick="document.getElementById('qrow-${i}').remove()">O‘chirish</button>
         </div>
         <input type="text" class="form-input" id="qq-${i}" placeholder="Savol matnini kiriting..." style="margin-bottom:10px;" required>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:10px;">
           ${[0, 1, 2, 3].map(oi => `<input type="text" class="form-input mini-input" id="qo-${i}-${oi}" placeholder="${letters[oi]} varianti" required>`).join('')}
         </div>
         <div style="display:flex; align-items:center; gap:10px;">
-          <span style="font-size:0.8rem; font-weight:700; color:var(--text-secondary);">To‘g‘ri javob varianti:</span>
+          <span style="font-size:0.8rem; font-weight:700; color:#475569;">To‘g‘ri javob varianti:</span>
           <select class="form-input mini-input" id="qa-${i}" style="width:auto; font-weight:700;">
             ${['A', 'B', 'C', 'D'].map((l, j) => `<option value="${j}">${l} varianti</option>`).join('')}
           </select>
@@ -1810,5 +2133,3 @@
 </body>
 
 </html>
-
-
