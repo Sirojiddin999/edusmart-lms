@@ -336,7 +336,7 @@ const COURSES_DATA = [
         order_num: 4,
         title: "Funksiyalar va Arrow Functions",
         description: "Function declaration, expression, arrow funksiyalar va scope.",
-        video_url: "https://www.youtube.com/embed/PkZNo7MFOUg",
+        video_url: "https://www.youtube.com/embed/PkZNo7MFNFg",
         duration_mins: 35,
         content_text: `📌 4-Dars: Funksiyalar, parametrlar, return, arrow functions va this bog'lanishi.`,
         quiz: [
@@ -356,7 +356,7 @@ const COURSES_DATA = [
         order_num: 5,
         title: "Massivlar (Arrays) va Array metodlari",
         description: "Massivlar, map, filter, reduce, forEach, find va slice metodlari.",
-        video_url: "https://www.youtube.com/embed/hKB-YGF14SY",
+        video_url: "https://www.youtube.com/embed/R8rmfD9Y5-c",
         duration_mins: 38,
         content_text: `📌 5-Dars: Massivlar va zamonaviy funksional metodlar.`,
         quiz: [
@@ -603,7 +603,7 @@ const COURSES_DATA = [
         order_num: 7,
         title: "Inkapsulyatsiya va Abstraksiya",
         description: "private, public, protected, Getter va Setter, abstract sinflar va interface.",
-        video_url: "https://www.youtube.com/embed/ZBalWWHYFQc",
+        video_url: "https://www.youtube.com/embed/GoXwIVyNvX0",
         duration_mins: 38,
         content_text: `📌 7-Dars: Kirish huquqlari (access modifiers), getter/setter, abstract va interfeyslar.`,
         quiz: [
@@ -643,7 +643,7 @@ const COURSES_DATA = [
         order_num: 9,
         title: "Android Studio ga kirish va XML Layout",
         description: "Android Studio muhiti, loyiha tuzilishi, XML teglari, TextView, Button, EditText.",
-        video_url: "https://www.youtube.com/embed/u-HOEUo2Dbc",
+        video_url: "https://www.youtube.com/embed/BGTx91t8q50",
         duration_mins: 45,
         content_text: `📌 9-Dars: Android ilovalar strukturasi, XML interfeys va View elementlari.`,
         quiz: [
@@ -663,7 +663,7 @@ const COURSES_DATA = [
         order_num: 10,
         title: "Android da Activity va Interaktiv dastur yaratish",
         description: "Activity hayot sikli (Lifecycle), findViewById, OnClickListener va yakuniy mobil loyiha.",
-        video_url: "https://www.youtube.com/embed/EE1-Wf12XEQ",
+        video_url: "https://www.youtube.com/embed/EExSSotojVI",
         duration_mins: 48,
         content_text: `📌 10-Dars: Activity hayot sikli, interaktiv hodisalar, Intent va kurs xulosasi.`,
         quiz: [

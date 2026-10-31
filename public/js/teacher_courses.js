@@ -63,6 +63,7 @@ async function loadCourses() {
       select.innerHTML = '<option value="">-- Kursni Tanlang --</option>' +
         ALL_COURSES.map(c => `<option value="${c.id}">${c.title}</option>`).join('');
       if (curVal) select.value = curVal;
+      else if (ALL_COURSES.length > 0) select.value = ALL_COURSES[0].id;
     }
 } catch (e) { console.error("Kurslarni yuklashda xatolik:", e); }
 }
@@ -233,11 +234,7 @@ if (originalSubmitAddLesson) {
   window.submitAddLesson = async function (e) {
     e.preventDefault();
     const courseSelect = document.getElementById('al-course');
-    const courseId = courseSelect ? courseSelect.value : null;
-    if (!courseId) {
-      showToast("Iltimos, dars qaysi kursga tegishli ekanligini tanlang!", "error");
-      return;
-    }
+    const courseId = (courseSelect && courseSelect.value) ? courseSelect.value : ((ALL_COURSES[0] && ALL_COURSES[0].id) || 1);
 
     // Modify body JSON by hooking into fetch temporarily
     const originalFetch = window.fetch;

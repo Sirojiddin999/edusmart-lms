@@ -204,5 +204,37 @@
     </div>
   </footer>
   <script src="/js/utils.js"></script>
+  <script>
+    window.addEventListener('DOMContentLoaded', async () => {
+      try {
+        const r = await fetch('/api/news');
+        if (!r.ok) return;
+        const items = await r.json();
+        if (!Array.isArray(items) || !items.length) return;
+        const grid = document.querySelector('.news-grid');
+        if (!grid) return;
+
+        grid.innerHTML = items.map(n => `
+          <a href="${n.source_url || '#'}" target="_blank" rel="noopener noreferrer" class="news-card">
+            <div class="news-img-box">
+              <span class="news-source-badge">🌐 ${n.source_name || 'innocode.uz'}</span>
+              <img src="${n.image_url || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80'}" alt="">
+              <span class="news-date">${n.date_label || 'Yangilik'}</span>
+            </div>
+            <div class="news-content">
+              <div>
+                <h2 class="news-title">${n.title}</h2>
+                <p class="news-desc">${n.description || ''}</p>
+              </div>
+              <div class="news-footer">
+                <span class="news-tag">${n.tag || 'Ta\'lim & IT'}</span>
+                <span class="news-link-btn">Manbada o‘qish (${n.source_name || 'innocode.uz'}) ↗</span>
+              </div>
+            </div>
+          </a>
+        `).join('');
+      } catch (e) {}
+    });
+  </script>
 </body>
 </html>

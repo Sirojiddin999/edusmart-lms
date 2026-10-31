@@ -516,6 +516,14 @@
             <span class="nav-icon">👥</span> O‘quvchilar
             <span class="nav-badge" id="studentsBadge">0</span>
           </button>
+          <button class="t-nav-item" id="nav-library" onclick="switchSection('library')">
+            <span class="nav-icon">📕</span> Kutubxona
+            <span class="nav-badge" id="libraryBadge">0</span>
+          </button>
+          <button class="t-nav-item" id="nav-news" onclick="switchSection('news')">
+            <span class="nav-icon">📰</span> Yangiliklar
+            <span class="nav-badge" id="newsBadge">0</span>
+          </button>
           <button class="t-nav-item" id="nav-settings" onclick="switchSection('settings')">
             <span class="nav-icon">⚙️</span> Sozlamalar
           </button>
@@ -609,6 +617,15 @@
                 <button class="btn btn-ghost" onclick="switchSection('leaderboard')" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
                   🏆 Reyting & Diagrammalar
                 </button>
+                <button class="btn btn-ghost" onclick="switchSection('library')" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+                  📕 Kutubxona
+                </button>
+                <button class="btn btn-ghost" onclick="switchSection('news')" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+                  📰 Yangiliklar
+                </button>
+                <button class="btn btn-ghost" onclick="switchSection('settings')" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+                  ⚙️ Sozlamalar
+                </button>
               </div>
             </div>
 
@@ -653,39 +670,35 @@
 
         <!-- 2. REYTING / LEADERBOARD BO'LIMI -->
         <div id="secLeaderboard" style="display: none;">
-          <!-- ILMIY TAJRIBA VA KOMPETENTLIK STATISTIKASI (210 nafar talaba bo'yicha) -->
+          <!-- O'QUVCHILAR STATISTIKASI VA DIAGRAMMALAR -->
           <div class="card card-body" style="margin-bottom: 24px; border: 1.5px solid #e0e7ff; background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%); box-shadow: 0 4px 16px rgba(0,0,0,0.04); border-radius: 18px; padding: 24px;">
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px;">
               <div>
-                <div style="font-size: 1.3rem; font-weight: 900; color: #1e293b; display: flex; align-items: center; gap: 8px;">
-                  📊 Raqamli-texnologik kompetentlikni rivojlanganlik darajasi
+                <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b; display: flex; align-items: center; gap: 8px;">
+                  📊 O‘quvchilar O‘zlashtirish Ko‘rsatkichlari
                 </div>
                 <div style="font-size: 0.85rem; color: #64748b; margin-top: 4px;">
-                  Tajriba guruhi: Tajriba boshida (210 nafar talaba) va Tajriba oxirida (207 nafar talaba) qiyosiy dinamikasi
+                  Darajalar kesimida o‘quvchilar statistikasi va diagrammalar
                 </div>
               </div>
               <div style="display: flex; gap: 8px; align-items: center;">
-                <span class="badge badge-primary" style="font-size: 0.82rem; padding: 6px 14px; font-weight: 800;">🔬 Ilmiy-amaliy monitoring</span>
                 <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
               </div>
             </div>
 
-            <!-- Rangli Dinamika Kartochkalari (Statistika) -->
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px;">
+            <!-- Rangli Statistika Kartochkalari -->
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px; margin-bottom: 24px;">
               <!-- Yuqori daraja -->
               <div style="background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 1.5px solid #6ee7b7; border-radius: 14px; padding: 18px; box-shadow: 0 4px 12px rgba(16,185,129,0.08);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                   <span style="font-size: 0.8rem; font-weight: 800; color: #065f46; text-transform: uppercase; letter-spacing: 0.5px;">🟢 Yuqori daraja</span>
-                  <span style="background: #059669; color: white; font-size: 0.75rem; font-weight: 900; padding: 2px 8px; border-radius: 20px;">+6.5% ↗</span>
+                  <span style="background: #059669; color: white; font-size: 0.75rem; font-weight: 900; padding: 2px 8px; border-radius: 20px;">19.8%</span>
                 </div>
                 <div style="display: flex; align-items: baseline; gap: 8px;">
                   <span style="font-size: 1.9rem; font-weight: 900; color: #047857;">41</span>
-                  <span style="font-size: 0.95rem; font-weight: 800; color: #065f46;">nafar (19.8%)</span>
+                  <span style="font-size: 0.95rem; font-weight: 800; color: #065f46;">nafar o‘quvchi</span>
                 </div>
-                <div style="font-size: 0.78rem; color: #047857; margin-top: 6px;">
-                  Tajriba boshida: <strong>28 nafar (13.3%)</strong> bo‘lgan (+13 nafar o‘sish)
-                </div>
-                <div class="progress-wrap" style="height: 6px; background: rgba(5,150,105,0.2); margin-top: 10px;">
+                <div class="progress-wrap" style="height: 6px; background: rgba(5,150,105,0.2); margin-top: 12px;">
                   <div class="progress-fill" style="width: 19.8%; background: #059669;"></div>
                 </div>
               </div>
@@ -694,16 +707,13 @@
               <div style="background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%); border: 1.5px solid #fcd34d; border-radius: 14px; padding: 18px; box-shadow: 0 4px 12px rgba(245,158,11,0.08);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                   <span style="font-size: 0.8rem; font-weight: 800; color: #92400e; text-transform: uppercase; letter-spacing: 0.5px;">🟡 O‘rta daraja</span>
-                  <span style="background: #d97706; color: white; font-size: 0.75rem; font-weight: 900; padding: 2px 8px; border-radius: 20px;">+18.2% ↗</span>
+                  <span style="background: #d97706; color: white; font-size: 0.75rem; font-weight: 900; padding: 2px 8px; border-radius: 20px;">37.7%</span>
                 </div>
                 <div style="display: flex; align-items: baseline; gap: 8px;">
                   <span style="font-size: 1.9rem; font-weight: 900; color: #b45309;">78</span>
-                  <span style="font-size: 0.95rem; font-weight: 800; color: #92400e;">nafar (37.7%)</span>
+                  <span style="font-size: 0.95rem; font-weight: 800; color: #92400e;">nafar o‘quvchi</span>
                 </div>
-                <div style="font-size: 0.78rem; color: #b45309; margin-top: 6px;">
-                  Tajriba boshida: <strong>41 nafar (19.5%)</strong> bo‘lgan (+37 nafar o‘sish)
-                </div>
-                <div class="progress-wrap" style="height: 6px; background: rgba(217,119,6,0.2); margin-top: 10px;">
+                <div class="progress-wrap" style="height: 6px; background: rgba(217,119,6,0.2); margin-top: 12px;">
                   <div class="progress-fill" style="width: 37.7%; background: #d97706;"></div>
                 </div>
               </div>
@@ -712,64 +722,53 @@
               <div style="background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border: 1.5px solid #fca5a5; border-radius: 14px; padding: 18px; box-shadow: 0 4px 12px rgba(239,68,68,0.08);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
                   <span style="font-size: 0.8rem; font-weight: 800; color: #991b1b; text-transform: uppercase; letter-spacing: 0.5px;">🔴 Past daraja</span>
-                  <span style="background: #dc2626; color: white; font-size: 0.75rem; font-weight: 900; padding: 2px 8px; border-radius: 20px;">-24.6% ↘</span>
+                  <span style="background: #dc2626; color: white; font-size: 0.75rem; font-weight: 900; padding: 2px 8px; border-radius: 20px;">42.5%</span>
                 </div>
                 <div style="display: flex; align-items: baseline; gap: 8px;">
                   <span style="font-size: 1.9rem; font-weight: 900; color: #b91c1c;">88</span>
-                  <span style="font-size: 0.95rem; font-weight: 800; color: #991b1b;">nafar (42.5%)</span>
+                  <span style="font-size: 0.95rem; font-weight: 800; color: #991b1b;">nafar o‘quvchi</span>
                 </div>
-                <div style="font-size: 0.78rem; color: #991b1b; margin-top: 6px;">
-                  Tajriba boshida: <strong>141 nafar (67.1%)</strong> bo‘lgan (-53 nafar ijobiy kamayish!)
-                </div>
-                <div class="progress-wrap" style="height: 6px; background: rgba(220,38,38,0.2); margin-top: 10px;">
+                <div class="progress-wrap" style="height: 6px; background: rgba(220,38,38,0.2); margin-top: 12px;">
                   <div class="progress-fill" style="width: 42.5%; background: #dc2626;"></div>
                 </div>
               </div>
 
-              <!-- Jami ishtirokchilar -->
+              <!-- Jami o'quvchilar -->
               <div style="background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%); border: 1.5px solid #93c5fd; border-radius: 14px; padding: 18px; box-shadow: 0 4px 12px rgba(59,130,246,0.08);">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                  <span style="font-size: 0.8rem; font-weight: 800; color: #1e40af; text-transform: uppercase; letter-spacing: 0.5px;">👥 Jami qamrov</span>
+                  <span style="font-size: 0.8rem; font-weight: 800; color: #1e40af; text-transform: uppercase; letter-spacing: 0.5px;">👥 Jami o‘quvchilar</span>
                   <span style="background: #2563eb; color: white; font-size: 0.75rem; font-weight: 900; padding: 2px 8px; border-radius: 20px;">100%</span>
                 </div>
                 <div style="display: flex; align-items: baseline; gap: 8px;">
                   <span style="font-size: 1.9rem; font-weight: 900; color: #1d4ed8;">210</span>
-                  <span style="font-size: 0.95rem; font-weight: 800; color: #1e40af;">nafar talaba</span>
+                  <span style="font-size: 0.95rem; font-weight: 800; color: #1e40af;">nafar o‘quvchi</span>
                 </div>
-                <div style="font-size: 0.78rem; color: #1d4ed8; margin-top: 6px;">
-                  Tajriba boshida: <strong>210</strong> / oxirida: <strong>207 nafar</strong>
-                </div>
-                <div class="progress-wrap" style="height: 6px; background: rgba(37,99,235,0.2); margin-top: 10px;">
+                <div class="progress-wrap" style="height: 6px; background: rgba(37,99,235,0.2); margin-top: 12px;">
                   <div class="progress-fill" style="width: 100%; background: #2563eb;"></div>
                 </div>
               </div>
             </div>
 
-            <!-- DIAGRAMMALAR ASOSIDA REYTING VA STATISTIKA (Talaba talabi: Diagramma asosida ko'rsatsin) -->
-            <div style="margin-bottom: 24px;">
-              <div style="font-size: 1.05rem; font-weight: 800; color: #1e293b; margin-bottom: 14px; display: flex; align-items: center; gap: 8px;">
-                📈 Ilmiy-amaliy monitoring diagrammalari
-              </div>
-
-              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 18px;">
-                <!-- 1-diagramma: Taqqoslash Bar Chart -->
+            <!-- DIAGRAMMALAR ASOSIDA REYTING VA STATISTIKA -->
+            <div>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 18px;">
+                <!-- 1-diagramma: Darajalar Bar Chart -->
                 <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm);">
                   <div style="font-size: 0.92rem; font-weight: 800; color: #1e293b; margin-bottom: 4px;">
-                    📊 Tajriba boshida vs oxirida taqqoslovchi diagramma
+                    📊 Darajalar bo‘yicha o‘quvchilar soni
                   </div>
                   <div style="font-size: 0.76rem; color: #64748b; margin-bottom: 12px;">
-                    Yuqori, O‘rta va Past darajadagi talabalar soni dinamikasi
+                    Yuqori, O‘rta va Past darajadagi o‘quvchilar taqsimoti
                   </div>
                   <div style="position: relative; height: 240px; width: 100%;">
                     <canvas id="chartComparison"></canvas>
                   </div>
-                  <!-- Pure CSS/SVG visual indicator as reliable fallback -->
                   <div id="chartFallback1" style="display:none; margin-top:10px;">
-                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🟢 Yuqori (+6.5%):</span><strong>28 ➔ 41 talaba</strong></div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🟢 Yuqori (19.8%):</span><strong>41 nafar</strong></div>
                     <div class="progress-wrap" style="height:8px; margin-bottom:8px;"><div class="progress-fill" style="width:19.8%; background:#059669;"></div></div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🟡 O‘rta (+18.2%):</span><strong>41 ➔ 78 talaba</strong></div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🟡 O‘rta (37.7%):</span><strong>78 nafar</strong></div>
                     <div class="progress-wrap" style="height:8px; margin-bottom:8px;"><div class="progress-fill" style="width:37.7%; background:#d97706;"></div></div>
-                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🔴 Past (-24.6%):</span><strong>141 ➔ 88 talaba</strong></div>
+                    <div style="display:flex; justify-content:space-between; font-size:0.75rem; margin-bottom:4px;"><span>🔴 Past (42.5%):</span><strong>88 nafar</strong></div>
                     <div class="progress-wrap" style="height:8px;"><div class="progress-fill" style="width:42.5%; background:#dc2626;"></div></div>
                   </div>
                 </div>
@@ -777,10 +776,10 @@
                 <!-- 2-diagramma: Doughnut Chart (Darajalar ulushi) -->
                 <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm);">
                   <div style="font-size: 0.92rem; font-weight: 800; color: #1e293b; margin-bottom: 4px;">
-                    🍩 Kompetentlik darajalarining foizli taqsimoti
+                    🍩 O‘zlashtirish darajalarining foizli ulushi
                   </div>
                   <div style="font-size: 0.76rem; color: #64748b; margin-bottom: 12px;">
-                    Hozirgi yakuniy monitoring holati bo‘yicha ulushlar
+                    O‘quvchilarning darajalar bo‘yicha foiz ko‘rsatkichlari
                   </div>
                   <div style="position: relative; height: 240px; width: 100%;">
                     <canvas id="chartDoughnut"></canvas>
@@ -792,10 +791,10 @@
                   <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px;">
                     <div>
                       <div style="font-size: 0.95rem; font-weight: 800; color: #1e293b;">
-                        🏆 Top 10 Peshqadam talabalar reyting diagrammasi
+                        🏆 Top 10 Peshqadam o‘quvchilar reyting diagrammasi
                       </div>
                       <div style="font-size: 0.76rem; color: #64748b;">
-                        Eng yuqori ball va 100% o‘zlashtirish ko‘rsatkichiga ega bo‘lgan yetakchi talabalar
+                        Eng yuqori ball va 100% o‘zlashtirish ko‘rsatkichiga ega bo‘lgan yetakchilar
                       </div>
                     </div>
                     <span class="badge badge-emerald" style="font-size: 0.75rem; font-weight: 800;">🥇 100% Sertifikat olganlar</span>
@@ -804,80 +803,6 @@
                     <canvas id="chartTopStudents"></canvas>
                   </div>
                 </div>
-              </div>
-            </div>
-
-            <!-- Rasmiy ilmiy tahlil jadvali (Rasmda berilgan jadvalning to'liq ko'rinishi) -->
-            <div style="margin-top: 10px;">
-              <div style="font-size: 0.92rem; font-weight: 800; margin-bottom: 10px; color: #334155;">📋 Rasmiy tadqiqot natijalari tahlili (Tajriba guruhi):</div>
-              <div class="tbl-wrap" style="border: 1.5px solid #cbd5e1; border-radius: 12px; overflow-x: auto; width: 100%;">
-                <table class="data-table" style="margin: 0; text-align: center; width: 100%; min-width: 680px; border-collapse: collapse;">
-                  <thead>
-                    <tr style="background: #f1f5f9; border-bottom: 2px solid #cbd5e1;">
-                      <th rowspan="2" style="vertical-align: middle; text-align: left; font-weight: 800; color: #1e293b; border-right: 1px solid #cbd5e1; width: 28%; padding: 12px 14px; white-space: normal; line-height: 1.35;">
-                        Raqamli-texnologik kompetentlikni rivojlanganlik darajasi
-                      </th>
-                      <th colspan="2" style="text-align: center; font-weight: 800; border-right: 1px solid #cbd5e1; background: #eef2ff; color: #3730a3; padding: 10px; white-space: normal; line-height: 1.3;">
-                        Tajriba boshida (210 nafar talaba)
-                      </th>
-                      <th colspan="2" style="text-align: center; font-weight: 800; border-right: 1px solid #cbd5e1; background: #ecfdf5; color: #065f46; padding: 10px; white-space: normal; line-height: 1.3;">
-                        Tajriba oxirida (207 nafar talaba)
-                      </th>
-                      <th rowspan="2" style="vertical-align: middle; text-align: center; font-weight: 800; color: #1e293b; background: #f8fafc; padding: 12px 14px; width: 32%; white-space: normal; line-height: 1.35;">
-                        Ko‘rsatkich o‘zgarishi (Dinamika)
-                      </th>
-                    </tr>
-                    <tr style="background: #f8fafc; border-bottom: 1.5px solid #cbd5e1; font-size: 0.8rem;">
-                      <th style="border-right: 1px solid #cbd5e1; color: #4338ca; width: 10%; padding: 8px;">soni</th>
-                      <th style="border-right: 1px solid #cbd5e1; color: #4338ca; width: 10%; padding: 8px;">%</th>
-                      <th style="border-right: 1px solid #cbd5e1; color: #047857; width: 10%; padding: 8px;">soni</th>
-                      <th style="border-right: 1px solid #cbd5e1; color: #047857; width: 10%; padding: 8px;">%</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr style="border-bottom: 1px solid #e2e8f0;">
-                      <td style="text-align: left; font-weight: 800; color: #047857; border-right: 1px solid #e2e8f0; padding: 12px 14px;">
-                        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #10b981; margin-right: 6px;"></span>
-                        Yuqori
-                      </td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">28</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">13,3</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #047857; background: #f0fdf4; padding: 10px;">41</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #047857; background: #f0fdf4; padding: 10px;">19,8</td>
-                      <td style="font-weight: 800; color: #059669; background: #ecfdf5; padding: 10px 14px;">+13 nafar (+6.5%) ↗</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #e2e8f0;">
-                      <td style="text-align: left; font-weight: 800; color: #b45309; border-right: 1px solid #e2e8f0; padding: 12px 14px;">
-                        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #f59e0b; margin-right: 6px;"></span>
-                        O‘rta
-                      </td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">41</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">19,5</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b45309; background: #fffdf5; padding: 10px;">78</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b45309; background: #fffdf5; padding: 10px;">37,7</td>
-                      <td style="font-weight: 800; color: #d97706; background: #fffbeb; padding: 10px 14px;">+37 nafar (+18.2%) ↗</td>
-                    </tr>
-                    <tr style="border-bottom: 1px solid #e2e8f0;">
-                      <td style="text-align: left; font-weight: 800; color: #b91c1c; border-right: 1px solid #e2e8f0; padding: 12px 14px;">
-                        <span style="display: inline-block; width: 10px; height: 10px; border-radius: 50%; background: #ef4444; margin-right: 6px;"></span>
-                        Past
-                      </td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">141</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 700; padding: 10px;">67,1</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b91c1c; background: #fef2f2; padding: 10px;">88</td>
-                      <td style="border-right: 1px solid #e2e8f0; font-weight: 800; color: #b91c1c; background: #fef2f2; padding: 10px;">42,5</td>
-                      <td style="font-weight: 800; color: #dc2626; background: #fee2e2; padding: 10px 14px;">-53 nafar (-24.6%) ↘ (kompetentlik oshgan)</td>
-                    </tr>
-                    <tr style="background: #f8fafc; font-weight: 900; border-top: 2px solid #cbd5e1;">
-                      <td style="text-align: left; color: #0f172a; border-right: 1px solid #cbd5e1; padding: 12px 14px;">Jami</td>
-                      <td style="border-right: 1px solid #cbd5e1; padding: 10px;">210</td>
-                      <td style="border-right: 1px solid #cbd5e1; padding: 10px;">100</td>
-                      <td style="border-right: 1px solid #cbd5e1; color: #0f172a; padding: 10px;">207</td>
-                      <td style="border-right: 1px solid #cbd5e1; color: #0f172a; padding: 10px;">100</td>
-                      <td style="color: #4f46e5; padding: 10px 14px;">To‘liq tadqiqot qamrovi</td>
-                    </tr>
-                  </tbody>
-                </table>
               </div>
             </div>
           </div>
@@ -1122,6 +1047,58 @@
           </div>
         </div>
 
+        <!-- 6. KUTUBXONA BO'LIMI -->
+        <div id="secLibrary" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b;">📕 Kutubxona Boshqaruvi</div>
+              <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
+                Ilmiy maqolalar, o‘quv qo‘llanmalar va darsliklar qo‘shish hamda o‘chirish
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+              <select id="libFilterCat" class="form-input" style="width: auto; font-weight: 700; padding: 8px 14px;" onchange="renderLibrary()">
+                <option value="all">Barcha bo‘limlar</option>
+                <option value="maqolalar">📄 Maqolalar</option>
+                <option value="qollanmalar">📕 O‘quv qo‘llanmalar</option>
+                <option value="darsliklar">📚 Darsliklar</option>
+              </select>
+              <button class="btn btn-primary" onclick="openAddLibraryModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
+                ➕ Material qo‘shish
+              </button>
+              <button class="btn btn-ghost btn-sm" onclick="loadLibrary()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+                🔄 Yangilash
+              </button>
+            </div>
+          </div>
+          <div class="l-cards" id="libraryCards">
+            <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
+          </div>
+        </div>
+
+        <!-- 7. YANGILIKLAR BO'LIMI -->
+        <div id="secNews" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+            <div>
+              <div style="font-size: 1.25rem; font-weight: 900; color: #1e293b;">📰 Yangiliklar Boshqaruvi</div>
+              <div style="font-size: 0.84rem; color: var(--text-muted); margin-top: 3px;">
+                Saytdagi yangiliklar va e'lonlarni qo‘shish hamda o‘chirish
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; align-items: center;">
+              <button class="btn btn-primary" onclick="openAddNewsModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
+                ➕ Yangilik qo‘shish
+              </button>
+              <button class="btn btn-ghost btn-sm" onclick="loadNews()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+                🔄 Yangilash
+              </button>
+            </div>
+          </div>
+          <div class="l-cards" id="newsCards">
+            <div style="color: var(--text-muted); padding: 30px; grid-column: 1/-1; text-align: center;">Yuklanmoqda...</div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -1248,10 +1225,90 @@
     </div>
   </div>
 
+  <!--  MODAL: KUTUBXONAGA MATERIAL QO‘SHISH  -->
+  <div class="modal-backdrop" id="addLibraryModal">
+    <div class="modal-box" style="max-width: 560px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeModal('addLibraryModal')">✕</button>
+      <h2 style="font-size: 1.3rem; margin-bottom: 6px;">📕 Kutubxonaga yangi material qo‘shish</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+        Ilmiy maqola, o‘quv qo‘llanma yoki darslik ma'lumotlarini kiriting
+      </p>
+      <form id="addLibraryForm" onsubmit="submitAddLibrary(event)">
+        <div class="form-group">
+          <label class="form-label">Material nomi (Sarlavha) *</label>
+          <input id="lib-title" type="text" class="form-input" placeholder="Masalan: Sun'iy intellekt asoslari" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Bo‘lim (Kategoriya) *</label>
+          <select id="lib-cat" class="form-input" style="font-weight: 700;">
+            <option value="maqolalar">📄 Ilmiy Maqola</option>
+            <option value="qollanmalar">📕 O‘quv qo‘llanma</option>
+            <option value="darsliklar">📚 Darslik</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Qisqacha tavsif (ixtiyoriy)</label>
+          <input id="lib-desc" type="text" class="form-input" placeholder="Masalan: PDF formatdagi elektron o‘quv qo‘llanma">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Fayl / Yuklab olish havolasi (Google Drive yoki URL) *</label>
+          <input id="lib-url" type="text" class="form-input" placeholder="https://drive.google.com/..." required>
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('addLibraryModal')">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">💾 Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!--  MODAL: YANGILIK QO‘SHISH  -->
+  <div class="modal-backdrop" id="addNewsModal">
+    <div class="modal-box" style="max-width: 600px; max-height: 90vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeModal('addNewsModal')">✕</button>
+      <h2 style="font-size: 1.3rem; margin-bottom: 6px;">📰 Yangi yangilik qo‘shish</h2>
+      <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 20px;">
+        Platformaning yangiliklar bo‘limiga yangi xabar yoki e'lon qo‘shing
+      </p>
+      <form id="addNewsForm" onsubmit="submitAddNews(event)">
+        <div class="form-group">
+          <label class="form-label">Yangilik sarlavhasi *</label>
+          <input id="nw-title" type="text" class="form-input" placeholder="Masalan: Xalqaro IT sertifikatlar granti e'lon qilindi" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Qisqacha matni / Tavsifi *</label>
+          <textarea id="nw-desc" class="form-input" rows="3" placeholder="Yangilik haqida batafsil ma'lumot..." required></textarea>
+        </div>
+        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div>
+            <label class="form-label">Manba nomi</label>
+            <input id="nw-source" type="text" class="form-input" placeholder="Masalan: innocode.uz yoki Spot.uz">
+          </div>
+          <div>
+            <label class="form-label">Teg / Yo‘nalish</label>
+            <input id="nw-tag" type="text" class="form-input" placeholder="Masalan: Ta'lim & IT">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Rasm URL manzili (ixtiyoriy)</label>
+          <input id="nw-img" type="text" class="form-input" placeholder="https://images.unsplash.com/...">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Asosiy manba havolasi (URL, ixtiyoriy)</label>
+          <input id="nw-url" type="text" class="form-input" placeholder="https://...">
+        </div>
+        <div style="display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px;">
+          <button type="button" class="btn btn-ghost" onclick="closeModal('addNewsModal')">Bekor qilish</button>
+          <button type="submit" class="btn btn-primary">💾 Yangilikni Saqlash</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <div id="toast-root"></div>
   <script src="/js/utils.js"></script>
   <script>
-    let ALL_STUDENTS = [], ALL_LESSONS = [], TEACHER_USER = null, LEADERBOARD_CACHE = [];
+    let ALL_STUDENTS = [], ALL_LESSONS = [], ALL_LIBRARY = [], ALL_NEWS = [], TEACHER_USER = null, LEADERBOARD_CACHE = [];
     let quizRowCount = 0;
     let chartComparisonInstance = null;
     let chartDoughnutInstance = null;
@@ -1322,7 +1379,7 @@
 
     //  BO'LIMLARNI ALMASHTIRISH 
     function switchSection(sec) {
-      ['overview', 'leaderboard', 'courses', 'lessons', 'students', 'settings'].forEach(s => {
+      ['overview', 'leaderboard', 'courses', 'lessons', 'students', 'library', 'news', 'settings'].forEach(s => {
         const el = document.getElementById('sec' + capitalize(s));
         if (el) el.style.display = (s === sec) ? 'block' : 'none';
         const navEl = document.getElementById('nav-' + s);
@@ -1331,10 +1388,12 @@
 
       const titles = {
         overview: ['📊 Platforma Tahlili va Boshqaruvi', 'Umumiy o‘quv jarayoni va darslar statistikasi'],
-        leaderboard: ['🏆 O‘quvchilar Reytingi & Diagrammalar', 'Ilmiy tajriba monitoringi, o‘zlashtirish darajalari va natijalar'],
+        leaderboard: ['🏆 O‘quvchilar Reytingi & Diagrammalar', 'O‘quvchilarning o‘zlashtirish darajalari va reyting ko‘rsatkichlari'],
         courses: ['📚 Kurslar Boshqaruvi', 'Barcha o‘quv kurslarini boshqarish va yangi darslar kiritish'],
         lessons: ['📖 Darslar va Testlar Boshqaruvi', 'Darslar qo‘shish, tahrirlash va 5 ta test savollari'],
         students: ['👥 O‘quvchilar Nazorati', 'Har bir o‘quvchining shaxsiy progressi va test ballari'],
+        library: ['📕 Kutubxona Boshqaruvi', 'Maqolalar, o‘quv qo‘llanmalar va darsliklar qo‘shish hamda o‘chirish'],
+        news: ['📰 Yangiliklar Boshqaruvi', 'Platforma yangiliklarini qo‘shish va o‘chirish'],
         settings: ['⚙️ Tizim va Xavfsizlik Sozlamalari', 'O‘qituvchi ma\'lumotlari, login/parol va platforma standartlari']
       };
 
@@ -1364,6 +1423,8 @@
       if (sec === 'courses') { if (window.loadCourses) loadCourses(); }
       if (sec === 'lessons') loadLessons();
       if (sec === 'students') loadStudents();
+      if (sec === 'library') loadLibrary();
+      if (sec === 'news') loadNews();
       if (sec === 'settings') populateSettingsStudentDropdown();
     }
 
@@ -1374,13 +1435,19 @@
     //  BARCHA MA'LUMOTLARNI YUKLASH 
     async function loadAll() {
       try {
-        const [sr, lr] = await Promise.all([
+        const [sr, lr, libr, nwr] = await Promise.all([
           fetch('/api/teacher/students', { headers: Auth.getHeaders() }),
-          fetch('/api/teacher/lessons', { headers: Auth.getHeaders() })
+          fetch('/api/teacher/lessons', { headers: Auth.getHeaders() }),
+          fetch('/api/teacher/library', { headers: Auth.getHeaders() }),
+          fetch('/api/teacher/news', { headers: Auth.getHeaders() })
         ]);
         const sd = await sr.json(), ld = await lr.json();
+        const libd = libr.ok ? await libr.json() : [];
+        const nwd = nwr.ok ? await nwr.json() : [];
         ALL_STUDENTS = sd.students || [];
         ALL_LESSONS = ld || [];
+        ALL_LIBRARY = Array.isArray(libd) ? libd : [];
+        ALL_NEWS = Array.isArray(nwd) ? nwd : [];
 
         document.getElementById('stTotal').innerText = ALL_STUDENTS.length;
         document.getElementById('stActive').innerText = (sd.stats?.active_today ?? 0) + ' nafar';
@@ -1389,6 +1456,10 @@
         document.getElementById('stLessons').innerText = ALL_LESSONS.length;
         document.getElementById('studentsBadge').innerText = ALL_STUDENTS.length;
         document.getElementById('lessonsBadge').innerText = ALL_LESSONS.length;
+        const libB = document.getElementById('libraryBadge');
+        if (libB) libB.innerText = ALL_LIBRARY.length;
+        const nwB = document.getElementById('newsBadge');
+        if (nwB) nwB.innerText = ALL_NEWS.length;
 
         const avg = sd.stats?.avg_progress !== undefined ? sd.stats.avg_progress : (ALL_STUDENTS.length
           ? Math.round(ALL_STUDENTS.reduce((a, s) => a + (s.progress_percent || 0), 0) / ALL_STUDENTS.length)
@@ -1518,7 +1589,7 @@
         return;
       }
 
-      // 1. Taqqoslovchi Bar Chart
+      // 1. Darajalar Bar Chart
       const ctx1 = document.getElementById('chartComparison');
       if (ctx1) {
         if (chartComparisonInstance) chartComparisonInstance.destroy();
@@ -1528,20 +1599,12 @@
             labels: ['Yuqori daraja', 'O‘rta daraja', 'Past daraja'],
             datasets: [
               {
-                label: 'Tajriba boshida (210 nafar)',
-                data: [28, 41, 141],
-                backgroundColor: 'rgba(99, 102, 241, 0.75)',
-                borderColor: '#4f46e5',
-                borderWidth: 1.5,
-                borderRadius: 6
-              },
-              {
-                label: 'Tajriba oxirida (207 nafar)',
+                label: 'O‘quvchilar soni',
                 data: [41, 78, 88],
                 backgroundColor: ['rgba(16, 185, 129, 0.85)', 'rgba(245, 158, 11, 0.85)', 'rgba(239, 68, 68, 0.85)'],
                 borderColor: ['#059669', '#d97706', '#dc2626'],
                 borderWidth: 1.5,
-                borderRadius: 6
+                borderRadius: 8
               }
             ]
           },
@@ -1549,17 +1612,17 @@
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
-              legend: { position: 'top', labels: { boxWidth: 14, font: { weight: 'bold', size: 11 } } },
+              legend: { display: false },
               tooltip: {
                 callbacks: {
                   label: function(c) {
-                    return ` ${c.dataset.label}: ${c.raw} nafar talaba`;
+                    return ` O‘quvchilar soni: ${c.raw} nafar`;
                   }
                 }
               }
             },
             scales: {
-              y: { beginAtZero: true, grid: { color: '#f1f5f9' }, title: { display: true, text: 'Talabalar soni' } },
+              y: { beginAtZero: true, grid: { color: '#f1f5f9' }, title: { display: true, text: 'O‘quvchilar soni' } },
               x: { grid: { display: false } }
             }
           }
@@ -1840,8 +1903,9 @@
             </div>
           </td>
           <td style="text-align: center;">
-            <div style="display:flex; gap:6px; justify-content:center;">
+            <div style="display:flex; gap:6px; justify-content:center; flex-wrap:wrap;">
               <button class="btn btn-ghost btn-xs" onclick="viewStudentDetails(${s.id})" title="Batafsil test ballari">🔍 Natijalar</button>
+              <button class="btn btn-ghost btn-xs" onclick="openStudentCertByTeacher(${s.id})" title="O‘quvchi sertifikatini ko‘rish va yuklab olish" style="color:#4f46e5; font-weight:800;">📜 Sertifikat</button>
               <button class="btn btn-ghost btn-xs" onclick="selectStudentForEditById(${s.id})" title="Login yoki parolini sozlamalarda tahrirlash">🔑 Parol</button>
               <button class="btn btn-ghost btn-xs" onclick="resetProg(${s.id})" title="Progressni noldan boshlash">🔄</button>
               <button class="btn btn-danger btn-xs" onclick="delStudent(${s.id})" title="O‘chirish">🗑️</button>
@@ -1849,6 +1913,23 @@
           </td>
         </tr>`;
       }).join('');
+    }
+
+    async function openStudentCertByTeacher(studentId) {
+      try {
+        const r = await fetch(`/api/teacher/students/${studentId}/certificate`, {
+          method: 'POST',
+          headers: Auth.getHeaders()
+        });
+        const d = await r.json();
+        if (d.cert_id) {
+          window.open(`/certificate.html?id=${encodeURIComponent(d.cert_id)}`, '_blank');
+        } else {
+          showToast(d.error || 'Sertifikatni ochishda xatolik', 'error');
+        }
+      } catch {
+        showToast('Sertifikatni yuklashda xatolik', 'error');
+      }
     }
 
     function filterStudents() {
@@ -2038,6 +2119,10 @@
     function openAddModal() {
       quizRowCount = 0;
       document.getElementById('addLessonForm').reset();
+      const courseSelect = document.getElementById('al-course');
+      if (courseSelect && typeof ALL_COURSES !== 'undefined' && ALL_COURSES.length > 0 && !courseSelect.value) {
+        courseSelect.value = ALL_COURSES[0].id;
+      }
       document.getElementById('quizRows').innerHTML = '';
       const modalH2 = document.querySelector('#addLessonModal h2');
       if (modalH2) modalH2.innerText = '➕ Yangi dars qo‘shish';
@@ -2118,6 +2203,204 @@
           closeModal('addLessonModal');
           loadLessons();
           loadAll();
+        } else {
+          showToast(d.error || 'Xatolik', 'error');
+        }
+      } catch {
+        showToast("Server bilan ulanishda xatolik", 'error');
+      }
+    }
+
+    //  KUTUBXONA BOSHQARUVI 
+    async function loadLibrary() {
+      try {
+        const r = await fetch('/api/teacher/library', { headers: Auth.getHeaders() });
+        const d = await r.json();
+        ALL_LIBRARY = Array.isArray(d) ? d : [];
+        const b = document.getElementById('libraryBadge');
+        if (b) b.innerText = ALL_LIBRARY.length;
+        renderLibrary();
+      } catch {
+        showToast("Kutubxona ma'lumotlarini yuklashda xatolik", 'error');
+      }
+    }
+
+    function renderLibrary() {
+      const wrap = document.getElementById('libraryCards');
+      if (!wrap) return;
+      const catFilter = document.getElementById('libFilterCat')?.value || 'all';
+      const list = catFilter === 'all' ? ALL_LIBRARY : ALL_LIBRARY.filter(x => x.category === catFilter);
+
+      if (!list.length) {
+        wrap.innerHTML = `<div style="color:var(--text-muted); padding:40px; grid-column:1/-1; text-align:center; background:#fff; border-radius:16px; border:1px dashed #cbd5e1;">Kutubxonada materiallar topilmadi</div>`;
+        return;
+      }
+
+      wrap.innerHTML = list.map(item => {
+        const badgeStyle = item.category === 'qollanmalar'
+          ? 'background:#ecfdf5; color:#059669;'
+          : (item.category === 'darsliklar' ? 'background:#fffbeb; color:#d97706;' : 'background:#eef2ff; color:#4f46e5;');
+
+        return `<div class="l-card" style="display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+              <span style="${badgeStyle} font-size:0.74rem; font-weight:800; padding:4px 10px; border-radius:20px; text-transform:uppercase;">
+                ${item.icon || '📄'} ${item.category_label || 'Ilmiy Maqola'}
+              </span>
+              <button class="btn btn-danger btn-xs" onclick="delLibraryItem(${item.id})" title="O‘chirish">🗑️ O‘chirish</button>
+            </div>
+            <div class="l-card-title" style="font-size:0.98rem; line-height:1.4; margin-bottom:8px;">${item.title}</div>
+            ${item.description ? `<div class="l-card-desc" style="margin-bottom:10px;">${item.description}</div>` : ''}
+          </div>
+          <div class="l-card-footer" style="margin-top:12px; padding-top:12px; border-top:1px solid #f1f5f9;">
+            <a href="${item.file_url}" target="_blank" rel="noopener noreferrer" class="btn btn-ghost btn-xs" style="font-weight:700; color:#4f46e5; text-decoration:none;">
+              📥 Ko‘rish / Yuklash ↗
+            </a>
+          </div>
+        </div>`;
+      }).join('');
+    }
+
+    function openAddLibraryModal() {
+      document.getElementById('addLibraryForm').reset();
+      openModal('addLibraryModal');
+    }
+
+    async function submitAddLibrary(e) {
+      e.preventDefault();
+      const title = document.getElementById('lib-title').value.trim();
+      const category = document.getElementById('lib-cat').value;
+      const description = document.getElementById('lib-desc').value.trim();
+      const file_url = document.getElementById('lib-url').value.trim();
+
+      try {
+        const r = await fetch('/api/teacher/library', {
+          method: 'POST',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({ title, category, description, file_url })
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("Material kutubxonaga qo‘shildi!", 'success');
+          closeModal('addLibraryModal');
+          loadLibrary();
+        } else {
+          showToast(d.error || 'Xatolik yuz berdi', 'error');
+        }
+      } catch {
+        showToast("Server bilan ulanishda xatolik", 'error');
+      }
+    }
+
+    async function delLibraryItem(id) {
+      if (!confirm("Ushbu materialni kutubxonadan o‘chirishni tasdiqlaysizmi?")) return;
+      try {
+        const r = await fetch(`/api/teacher/library/${id}`, {
+          method: 'DELETE',
+          headers: Auth.getHeaders()
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("Material o‘chirildi", 'success');
+          loadLibrary();
+        } else {
+          showToast(d.error || 'Xatolik', 'error');
+        }
+      } catch {
+        showToast("Server bilan ulanishda xatolik", 'error');
+      }
+    }
+
+    //  YANGILIKLAR BOSHQARUVI 
+    async function loadNews() {
+      try {
+        const r = await fetch('/api/teacher/news', { headers: Auth.getHeaders() });
+        const d = await r.json();
+        ALL_NEWS = Array.isArray(d) ? d : [];
+        const b = document.getElementById('newsBadge');
+        if (b) b.innerText = ALL_NEWS.length;
+        renderNews();
+      } catch {
+        showToast("Yangiliklarni yuklashda xatolik", 'error');
+      }
+    }
+
+    function renderNews() {
+      const wrap = document.getElementById('newsCards');
+      if (!wrap) return;
+      if (!ALL_NEWS.length) {
+        wrap.innerHTML = `<div style="color:var(--text-muted); padding:40px; grid-column:1/-1; text-align:center; background:#fff; border-radius:16px; border:1px dashed #cbd5e1;">Yangiliklar mavjud emas</div>`;
+        return;
+      }
+
+      wrap.innerHTML = ALL_NEWS.map(n => `
+        <div class="l-card" style="display:flex; flex-direction:column; justify-content:space-between; overflow:hidden;">
+          <div>
+            ${n.image_url ? `<div style="height:140px; margin:-20px -20px 14px -20px; overflow:hidden; background:#e2e8f0; position:relative;">
+              <img src="${n.image_url}" alt="" style="width:100%; height:100%; object-fit:cover;">
+              <span style="position:absolute; top:10px; left:10px; background:rgba(15,23,42,0.8); color:#fff; font-size:0.72rem; font-weight:800; padding:3px 10px; border-radius:14px;">🌐 ${n.source_name || 'innocode.uz'}</span>
+            </div>` : ''}
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+              <span class="badge badge-primary" style="font-size:0.72rem;">${n.tag || 'Yangilik'}</span>
+              <span style="font-size:0.74rem; color:var(--text-muted); font-weight:700;">${n.date_label || ''}</span>
+            </div>
+            <div class="l-card-title" style="font-size:1rem; line-height:1.4; margin-bottom:8px;">${n.title}</div>
+            <div class="l-card-desc" style="font-size:0.84rem; line-height:1.5;">${n.description || ''}</div>
+          </div>
+          <div class="l-card-footer" style="margin-top:14px; padding-top:12px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center;">
+            <a href="${n.source_url || '#'}" target="_blank" rel="noopener noreferrer" style="font-size:0.8rem; font-weight:800; color:#4f46e5; text-decoration:none;">
+              Manbani ko‘rish ↗
+            </a>
+            <button class="btn btn-danger btn-xs" onclick="delNewsItem(${n.id})" title="Yangilikni o‘chirish">🗑️ O‘chirish</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function openAddNewsModal() {
+      document.getElementById('addNewsForm').reset();
+      openModal('addNewsModal');
+    }
+
+    async function submitAddNews(e) {
+      e.preventDefault();
+      const title = document.getElementById('nw-title').value.trim();
+      const description = document.getElementById('nw-desc').value.trim();
+      const source_name = document.getElementById('nw-source').value.trim();
+      const tag = document.getElementById('nw-tag').value.trim();
+      const image_url = document.getElementById('nw-img').value.trim();
+      const source_url = document.getElementById('nw-url').value.trim();
+
+      try {
+        const r = await fetch('/api/teacher/news', {
+          method: 'POST',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({ title, description, source_name, tag, image_url, source_url })
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("Yangilik muvaffaqiyatli qo‘shildi!", 'success');
+          closeModal('addNewsModal');
+          loadNews();
+        } else {
+          showToast(d.error || 'Xatolik yuz berdi', 'error');
+        }
+      } catch {
+        showToast("Server bilan ulanishda xatolik", 'error');
+      }
+    }
+
+    async function delNewsItem(id) {
+      if (!confirm("Ushbu yangilikni o‘chirishni tasdiqlaysizmi?")) return;
+      try {
+        const r = await fetch(`/api/teacher/news/${id}`, {
+          method: 'DELETE',
+          headers: Auth.getHeaders()
+        });
+        const d = await r.json();
+        if (d.success) {
+          showToast("Yangilik o‘chirildi", 'success');
+          loadNews();
         } else {
           showToast(d.error || 'Xatolik', 'error');
         }

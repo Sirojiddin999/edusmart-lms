@@ -620,6 +620,9 @@
     <button class="btn btn-secondary" onclick="window.location.reload()">
       🔄 Yangilash
     </button>
+    <button class="btn btn-primary" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);" onclick="downloadCertPageImage()">
+      📥 Sertifikatni Yuklab Olish (Rasm / PNG)
+    </button>
     <button class="btn btn-primary" onclick="window.print()">
       🖨 Chop etish / PDF sifatida saqlash
     </button>
@@ -647,9 +650,38 @@
       qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(currentUrl)}&color=0f172a`;
 
       if (!certId) {
+        // Agar foydalanuvchi tizimga kirgan bo'lsa, o'z sertifikatini olish
+        try {
+          const rawUser = localStorage.getItem('edusmart_user');
+          const tok = localStorage.getItem('edusmart_token');
+          const usr = rawUser ? JSON.parse(rawUser) : null;
+          if (usr && usr.full_name) {
+            nameEl.innerText = params.get('name') || usr.full_name;
+          }
+          if (tok && usr && usr.role === 'student') {
+            const r = await fetch('/api/student/certificate', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + tok },
+              body: JSON.stringify({})
+            });
+            if (r.ok) {
+              const d = await r.json();
+              if (d.certificate) {
+                nameEl.innerText = d.certificate.student_name || usr.full_name;
+                courseEl.innerText = d.certificate.course_title || "Python Asoslari va Sun'iy Intellekt";
+                dateEl.innerText = d.certificate.issue_date || "2026-yil";
+                idEl.innerText = d.certificate.id;
+                const fullVerifyUrl = window.location.origin + `/certificate.html?id=${encodeURIComponent(d.certificate.id)}`;
+                qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(fullVerifyUrl)}&color=0f172a`;
+                return;
+              }
+            }
+          }
+        } catch (err) {}
+
         idEl.innerText = 'INNO-2026-SS7849';
-        nameEl.innerText = params.get('name') || "Savriyev Sirojiddin";
-        courseEl.innerText = params.get('course') || "Web Ilovalarni Ishlab Chiqish va Dasturlash";
+        if (params.get('name')) nameEl.innerText = params.get('name');
+        if (params.get('course')) courseEl.innerText = params.get('course');
         return;
       }
 
@@ -674,6 +706,151 @@
       idEl.innerText = certId;
       if (params.get('name')) nameEl.innerText = params.get('name');
       if (params.get('course')) courseEl.innerText = params.get('course');
+    }
+
+    function downloadCertPageImage() {
+      const studentName = document.getElementById('viewStudentName').innerText || "O‘quvchi";
+      const courseName  = document.getElementById('viewCourseName').innerText || "Dasturlash";
+      const certId      = document.getElementById('viewCertId').innerText || "INNO-2026-100001";
+      const certDate    = document.getElementById('viewIssueDate').innerText || "2026-yil";
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 1600;
+      canvas.height = 1130;
+      const ctx = canvas.getContext('2d');
+
+      const bgGrad = ctx.createRadialGradient(800, 565, 100, 800, 565, 900);
+      bgGrad.addColorStop(0, '#ffffff');
+      bgGrad.addColorStop(1, '#f8fafc');
+      ctx.fillStyle = bgGrad;
+      ctx.fillRect(0, 0, 1600, 1130);
+
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 28;
+      ctx.strokeRect(24, 24, 1552, 1082);
+
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 5;
+      ctx.strokeRect(58, 58, 1484, 1014);
+      ctx.lineWidth = 1.5;
+      ctx.strokeRect(68, 68, 1464, 994);
+
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#0f172a';
+      ctx.font = '900 54px Arial, sans-serif';
+      ctx.fillText('innocode.uz', 800, 165);
+
+      ctx.fillStyle = '#b45309';
+      ctx.font = 'bold 20px Arial, sans-serif';
+      ctx.fillText('INNOCODE IT ACADEMY & INOCODERS', 800, 200);
+
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 64px Georgia, "Times New Roman", serif';
+      ctx.fillText('MUVAFFAQIYAT SERTIFIKATI', 800, 290);
+
+      ctx.fillStyle = '#64748b';
+      ctx.font = 'italic 26px Georgia, serif';
+      ctx.fillText('Ushbu rasmiy hujjat quyidagi o‘quvchiga taqdim etiladi:', 800, 345);
+
+      ctx.fillStyle = '#b45309';
+      ctx.font = 'bold 72px Georgia, "Times New Roman", serif';
+      ctx.fillText(studentName, 800, 450);
+
+      ctx.strokeStyle = '#d97706';
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(420, 472);
+      ctx.lineTo(1180, 472);
+      ctx.stroke();
+
+      ctx.fillStyle = '#334155';
+      ctx.font = '28px Arial, sans-serif';
+      ctx.fillText('InnoCode IT Academy ta\'lim platformasidagi', 800, 540);
+
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 34px Arial, sans-serif';
+      ctx.fillText('«' + courseName + '»', 800, 592);
+
+      ctx.fillStyle = '#334155';
+      ctx.font = '27px Arial, sans-serif';
+      ctx.fillText('o‘quv dasturidagi barcha 10 ta dars va amaliy test sinovlarini', 800, 642);
+      ctx.fillText('100% (5/5) a\'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.', 800, 682);
+
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'italic bold 34px Georgia, serif';
+      ctx.fillText('M. Isomiddinov', 360, 825);
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(210, 840);
+      ctx.lineTo(510, 840);
+      ctx.stroke();
+      ctx.fillStyle = '#475569';
+      ctx.font = 'bold 20px Arial, sans-serif';
+      ctx.fillText('Ma\'rufjon Isomiddinov', 360, 872);
+      ctx.font = '18px Arial, sans-serif';
+      ctx.fillText('Bosh O‘qituvchi & Mentor', 360, 898);
+
+      const sealGrad = ctx.createRadialGradient(800, 835, 10, 800, 835, 78);
+      sealGrad.addColorStop(0, '#f59e0b');
+      sealGrad.addColorStop(1, '#b45309');
+      ctx.fillStyle = sealGrad;
+      ctx.beginPath();
+      ctx.arc(800, 835, 76, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#fde68a';
+      ctx.lineWidth = 4;
+      ctx.stroke();
+
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 16px Arial, sans-serif';
+      ctx.fillText('OFFICIAL', 800, 810);
+      ctx.font = 'bold 34px Arial, sans-serif';
+      ctx.fillText('★', 800, 845);
+      ctx.font = 'bold 15px Arial, sans-serif';
+      ctx.fillText('ACCREDITED', 800, 870);
+
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'italic bold 34px Georgia, serif';
+      ctx.fillText('S. Savriyev', 1240, 825);
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(1090, 840);
+      ctx.lineTo(1390, 840);
+      ctx.stroke();
+      ctx.fillStyle = '#475569';
+      ctx.font = 'bold 20px Arial, sans-serif';
+      ctx.fillText('Sirojiddin Savriyev', 1240, 872);
+      ctx.font = '18px Arial, sans-serif';
+      ctx.fillText('InnoCode IT Academy Direktori', 1240, 898);
+
+      ctx.fillStyle = '#f1f5f9';
+      ctx.fillRect(140, 945, 1320, 90);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(140, 945, 1320, 90);
+
+      ctx.textAlign = 'left';
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 22px Arial, sans-serif';
+      ctx.fillText('Berilgan sana: ' + certDate, 175, 985);
+      ctx.fillStyle = '#475569';
+      ctx.font = '19px Arial, sans-serif';
+      ctx.fillText('Rasmiy tekshiruv manzili: ' + window.location.origin + '/certificate.html?id=' + certId, 175, 1016);
+
+      ctx.textAlign = 'right';
+      ctx.fillStyle = '#0f172a';
+      ctx.font = 'bold 26px "Courier New", monospace';
+      ctx.fillText('ID: ' + certId, 1425, 1000);
+
+      const link = document.createElement('a');
+      const safeName = studentName.replace(/[^a-zA-Z0-9_\u0400-\u04FF-]/g, '_');
+      link.download = `Sertifikat_${safeName}_${certId}.png`;
+      link.href = canvas.toDataURL('image/png');
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
 
     function copyCertLink() {

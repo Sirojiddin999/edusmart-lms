@@ -10,6 +10,8 @@ try {
   if (cnt !== 210) {
     seed210();
   }
+  const updateUzVideos = require('./update_uz_videos');
+  updateUzVideos();
 } catch (e) {
   console.log("Seed tekshirishda xatolik:", e);
 }
@@ -22,7 +24,7 @@ app.use(cors());
 app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// â”€â”€â”€ Auth Middleware â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── Auth Middleware ───────────────────────────────────────────────────────────
 function auth(req, res, next) {
   const h = req.headers.authorization || '';
   const token = h.startsWith('Bearer ') ? h.slice(7) : null;
@@ -31,17 +33,17 @@ function auth(req, res, next) {
     req.user = jwt.verify(token, JWT_SECRET);
     next();
   } catch {
-    res.status(401).json({ error: "Yaroqsiz yoki muddati oâ€˜tgan token" });
+    res.status(401).json({ error: "Yaroqsiz yoki muddati o‘tgan token" });
   }
 }
 
 function onlyTeacher(req, res, next) {
-  if (req.user.role !== 'teacher') return res.status(403).json({ error: "Faqat oâ€˜qituvchi uchun" });
+  if (req.user.role !== 'teacher') return res.status(403).json({ error: "Faqat o‘qituvchi uchun" });
   next();
 }
 
 function onlyStudent(req, res, next) {
-  if (req.user.role !== 'student') return res.status(403).json({ error: "Faqat oâ€˜quvchi uchun" });
+  if (req.user.role !== 'student') return res.status(403).json({ error: "Faqat o‘quvchi uchun" });
   next();
 }
 
@@ -98,16 +100,16 @@ app.post('/api/auth/register-student', (req, res) => {
     const pin = (custom_pin || '').trim();
 
     if (!fname || !lname)
-      return res.status(400).json({ error: "Ism va familiya toâ€˜liq kiritilishi shart!" });
+      return res.status(400).json({ error: "Ism va familiya to‘liq kiritilishi shart!" });
 
     if (fname.length < 2)
-      return res.status(400).json({ error: "Ismingizni toâ€˜liq kiriting (kamida 2 ta harf)!" });
+      return res.status(400).json({ error: "Ismingizni to‘liq kiriting (kamida 2 ta harf)!" });
 
     // Familiya tekshiruvi: oxirgacha kiritilgan va ...yev, ...yeva (yoki ...ov, ...ova) bilan tugashi shart
     const surnameRegex = /(yev|yeva|ev|eva|ov|ova)$/i;
     if (lname.length < 4 || !surnameRegex.test(lname)) {
       return res.status(400).json({ 
-        error: "Familiyangizni toâ€˜liq kiriting! Familiya ...yev yoki ...yeva bilan tugashi shart (Masalan: Aliyev yoki Aliyeva)." 
+        error: "Familiyangizni to‘liq kiriting! Familiya ...yev yoki ...yeva bilan tugashi shart (Masalan: Aliyev yoki Aliyeva)." 
       });
     }
 
@@ -144,7 +146,8 @@ app.post('/api/auth/register-student', (req, res) => {
     const token = jwt.sign(user, JWT_SECRET, { expiresIn: '30d' });
     res.json({ 
       success: true, 
-      message: "Muvaffaqiyatli roâ€˜yxatdan oâ€˜tdingiz!", 
+      id: r.lastInsertRowid,
+      message: "Muvaffaqiyatli ro‘yxatdan o‘tdingiz!", 
       username, 
       pin_code: pin, 
       full_name, 
@@ -153,7 +156,7 @@ app.post('/api/auth/register-student', (req, res) => {
       courses
     });
   } catch (e) {
-    if (e.message?.includes('UNIQUE')) return res.status(409).json({ error: "Bu login band, qayta urinib koâ€˜ring" });
+    if (e.message?.includes('UNIQUE')) return res.status(409).json({ error: "Bu login band, qayta urinib ko‘ring" });
     res.status(500).json({ error: "Server xatosi: " + e.message });
   }
 });
@@ -176,7 +179,7 @@ app.post('/api/auth/login-student', (req, res) => {
 
     const u = db.prepare("SELECT * FROM users WHERE username=? AND role='student'").get(username?.trim());
     if (!u || !bcrypt.compareSync(pin_code, u.password_hash))
-      return res.status(401).json({ error: "Login yoki parol notoâ€˜gâ€˜ri" });
+      return res.status(401).json({ error: "Login yoki parol noto‘g‘ri" });
     
     // Agar pin_code avval yozilmagan bo'lsa, o'qituvchi ko'rishi uchun saqlab qo'yish
     if (!u.pin_code && pin_code) {
@@ -194,7 +197,7 @@ app.post('/api/auth/login-teacher', (req, res) => {
   try {
     const { username, password } = req.body;
     if (!username || !username.trim()) {
-      return res.status(400).json({ error: "Oâ€˜qituvchi logini kiritilishi shart" });
+      return res.status(400).json({ error: "O‘qituvchi logini kiritilishi shart" });
     }
     const cleanUser = username.trim().toLowerCase();
     let u = db.prepare("SELECT * FROM users WHERE LOWER(username)=? AND role='teacher'").get(cleanUser);
@@ -202,11 +205,11 @@ app.post('/api/auth/login-teacher', (req, res) => {
       u = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
     }
     if (!u) {
-      return res.status(401).json({ error: "Bunday oâ€˜qituvchi logini topilmadi" });
+      return res.status(401).json({ error: "Bunday o‘qituvchi logini topilmadi" });
     }
     const pass = (password || '').trim().toLowerCase();
     if (pass && pass !== '1111' && pass !== 'marufjon' && !bcrypt.compareSync((password || '').trim(), u.password_hash)) {
-      return res.status(401).json({ error: "Parol notoâ€˜gâ€˜ri" });
+      return res.status(401).json({ error: "Parol noto‘g‘ri" });
     }
     const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'teacher' };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
@@ -214,7 +217,7 @@ app.post('/api/auth/login-teacher', (req, res) => {
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// â”€â”€â”€ STUDENT ROUTES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+// ─── STUDENT ROUTES ────────────────────────────────────────────────────────────
 
 // Parolni o'zgartirish
 app.post('/api/student/change-password', auth, onlyStudent, (req, res) => {
@@ -222,14 +225,14 @@ app.post('/api/student/change-password', auth, onlyStudent, (req, res) => {
     const { old_pin, new_pin } = req.body;
     const u = db.prepare("SELECT * FROM users WHERE id=?").get(req.user.id);
     if (!u || !bcrypt.compareSync(old_pin, u.password_hash)) {
-      return res.status(401).json({ error: "Hozirgi parol notoâ€˜gâ€˜ri" });
+      return res.status(401).json({ error: "Hozirgi parol noto‘g‘ri" });
     }
     if (!new_pin || new_pin.trim().length < 4) {
-      return res.status(400).json({ error: "Yangi parol kamida 4 ta belgidan iborat boâ€˜lishi kerak" });
+      return res.status(400).json({ error: "Yangi parol kamida 4 ta belgidan iborat bo‘lishi kerak" });
     }
     const hash = bcrypt.hashSync(new_pin.trim(), 10);
     db.prepare("UPDATE users SET password_hash=?, pin_code=? WHERE id=?").run(hash, new_pin.trim(), req.user.id);
-    res.json({ success: true, message: "Parol muvaffaqiyatli oâ€˜zgartirildi" });
+    res.json({ success: true, message: "Parol muvaffaqiyatli o‘zgartirildi" });
   } catch (e) {
     res.status(500).json({ error: "Server xatosi" });
   }
@@ -299,15 +302,8 @@ app.get('/api/student/dashboard', auth, onlyStudent, (req, res) => {
 
     const currentCourseId = p.last_course_id || (currentLesson ? currentLesson.course_id : (courses[0] ? courses[0].id : null));
 
-    // Ochiq darslar: barcha tugallanganlar + har bir kursdagi birinchi tugallanmagan dars
-    const unlockedIds = [...completedIds];
-    courses.forEach(c => {
-      const cLessons = lessons.filter(l => l.course_id === c.id);
-      const firstInc = cLessons.find(l => !completedIds.includes(l.id));
-      if (firstInc && !unlockedIds.includes(firstInc.id)) {
-        unlockedIds.push(firstInc.id);
-      }
-    });
+    // Ochiq darslar: Barcha darslar ochiq (hech qaysi dars qulflanib yoki atkas qilib qolmaydi)
+    const unlockedIds = lessons.map(l => l.id);
 
     res.json({
       lessons: lessons.map(l => ({
@@ -480,31 +476,18 @@ app.post('/api/student/progress', auth, onlyStudent, (req, res) => {
 // Sertifikat olish yoki yuklash (O'quvchi)
 app.post('/api/student/certificate', auth, onlyStudent, (req, res) => {
   try {
-    const { course_id } = req.body;
-    if (!course_id) return res.status(400).json({ error: "course_id talab qilinadi" });
-
-    const course = db.prepare("SELECT * FROM courses WHERE id=?").get(course_id);
-    if (!course) return res.status(404).json({ error: "Kurs topilmadi" });
-
-    const courseLessons = db.prepare("SELECT id FROM lessons WHERE course_id=?").all(course_id);
-    if (!courseLessons.length) return res.status(400).json({ error: "Kursda darslar mavjud emas" });
-
     const p = getProgress(req.user.id);
-    const completedIds = jsonParse(p.completed_lesson_ids, []);
+    const courses = getAllCourses();
+    const requestedCourseId = req.body?.course_id ? parseInt(req.body.course_id) : null;
+    const courseId = requestedCourseId || p.last_course_id || (courses[0] ? courses[0].id : 1);
 
-    const allCompleted = courseLessons.every(l => completedIds.includes(l.id));
-    if (!allCompleted) {
-      const completedCount = courseLessons.filter(l => completedIds.includes(l.id)).length;
-      return res.status(400).json({
-        error: `Kurs hali toâ€˜liq yakunlanmagan. Siz ${completedCount}/${courseLessons.length} darsni topshirgansiz. Sertifikat uchun barcha darslarni 100% topshirishingiz lozim.`
-      });
-    }
+    const course = db.prepare("SELECT * FROM courses WHERE id=?").get(courseId) || courses[0] || { id: 1, title: "Python Asoslari va Sun'iy Intellekt" };
 
     const u = db.prepare("SELECT full_name FROM users WHERE id=?").get(req.user.id);
-    const studentName = u ? u.full_name : req.user.full_name;
+    const studentName = u ? u.full_name : (req.user.full_name || "O‘quvchi");
 
     // Mavjud sertifikatni tekshirish
-    let cert = db.prepare("SELECT * FROM certificates WHERE user_id=? AND course_id=?").get(req.user.id, course_id);
+    let cert = db.prepare("SELECT * FROM certificates WHERE user_id=? AND course_id=?").get(req.user.id, course.id);
     if (!cert) {
       const randCode = Math.floor(100000 + Math.random() * 900000);
       const certId = `INNO-${new Date().getFullYear()}-${randCode}`;
@@ -516,7 +499,44 @@ app.post('/api/student/certificate', auth, onlyStudent, (req, res) => {
       db.prepare(`
         INSERT INTO certificates (id, user_id, course_id, student_name, course_title, score_percent, issue_date)
         VALUES (?, ?, ?, ?, ?, ?, ?)
-      `).run(certId, req.user.id, course_id, studentName, course.title, 100, issueDate);
+      `).run(certId, req.user.id, course.id, studentName, course.title, 100, issueDate);
+
+      cert = db.prepare("SELECT * FROM certificates WHERE id=?").get(certId);
+    }
+
+    res.json({
+      success: true,
+      certificate: cert,
+      verify_url: `/certificate.html?id=${cert.id}`
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
+});
+
+// O'qituvchi tomonidan o'quvchi sertifikatini olish / yaratish
+app.post('/api/teacher/students/:id/certificate', auth, onlyTeacher, (req, res) => {
+  try {
+    const student = db.prepare("SELECT id, full_name FROM users WHERE id=? AND role='student'").get(req.params.id);
+    if (!student) return res.status(404).json({ error: "O‘quvchi topilmadi" });
+
+    const p = getProgress(student.id);
+    const courses = getAllCourses();
+    const courseId = req.body?.course_id ? parseInt(req.body.course_id) : (p.last_course_id || (courses[0] ? courses[0].id : 1));
+    const course = db.prepare("SELECT * FROM courses WHERE id=?").get(courseId) || courses[0] || { id: 1, title: "Python Asoslari va Sun'iy Intellekt" };
+
+    let cert = db.prepare("SELECT * FROM certificates WHERE user_id=? AND course_id=?").get(student.id, course.id);
+    if (!cert) {
+      const randCode = Math.floor(100000 + Math.random() * 900000);
+      const certId = `INNO-${new Date().getFullYear()}-${randCode}`;
+      const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
+      const now = new Date();
+      const issueDate = `${now.getDate()}-${months[now.getMonth()]}, ${now.getFullYear()}-yil`;
+
+      db.prepare(`
+        INSERT INTO certificates (id, user_id, course_id, student_name, course_title, score_percent, issue_date)
+        VALUES (?, ?, ?, ?, ?, ?, ?)
+      `).run(certId, student.id, course.id, student.full_name, course.title, 100, issueDate);
 
       cert = db.prepare("SELECT * FROM certificates WHERE id=?").get(certId);
     }
@@ -635,7 +655,7 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
         level = 'Yuqori';
         levelBadge = 'badge-emerald';
       } else if (curCoursePct >= 40) {
-        level = 'Oâ€˜rta';
+        level = 'O‘rta';
         levelBadge = 'badge-amber';
       }
 
@@ -703,7 +723,7 @@ app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
 app.get('/api/teacher/students/:id/details', auth, onlyTeacher, (req, res) => {
   try {
     const student = db.prepare("SELECT id, full_name, username, COALESCE(pin_code, '') as pin_code, created_at as registered_at FROM users WHERE id=? AND role='student'").get(req.params.id);
-    if (!student) return res.status(404).json({ error: "Oâ€˜quvchi topilmadi" });
+    if (!student) return res.status(404).json({ error: "O‘quvchi topilmadi" });
 
     const p = getProgress(student.id);
     const completedIds = jsonParse(p.completed_lesson_ids, []);
@@ -793,7 +813,7 @@ app.get('/api/teacher/leaderboard', auth, onlyTeacher, (req, res) => {
 
       let level = 'Past';
       if (curCoursePct >= 80) level = 'Yuqori';
-      else if (curCoursePct >= 40) level = 'Oâ€˜rta';
+      else if (curCoursePct >= 40) level = 'O‘rta';
 
       return {
         id: s.id,
@@ -907,20 +927,29 @@ app.delete('/api/teacher/courses/:id', auth, onlyTeacher, (req, res) => {
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
+function normalizeVideoEmbedUrl(rawUrl) {
+  const s = (rawUrl || '').trim();
+  if (!s) return 'https://www.youtube.com/embed/kqtD5dpn9C8';
+  const m = s.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if (m && m[1]) return `https://www.youtube.com/embed/${m[1]}`;
+  return s;
+}
+
 // Add lesson
 app.post('/api/teacher/lessons', auth, onlyTeacher, (req, res) => {
   try {
     const { title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins, course_id } = req.body;
     if (!title?.trim()) return res.status(400).json({ error: "Sarlavha majburiy" });
-    if (!course_id) return res.status(400).json({ error: "Kursni tanlash majburiy" });
+    const firstCourse = db.prepare("SELECT id FROM courses ORDER BY id ASC LIMIT 1").get();
+    const targetCourseId = parseInt(course_id) || (firstCourse ? firstCourse.id : 1);
 
-    const maxOrder = db.prepare("SELECT MAX(order_num) as m FROM lessons WHERE course_id=?").get(course_id).m || 0;
+    const maxOrder = db.prepare("SELECT MAX(order_num) as m FROM lessons WHERE course_id=?").get(targetCourseId)?.m || 0;
     const tags = Array.isArray(hashtags) ? hashtags : [];
     const quiz = Array.isArray(quiz_json) ? quiz_json : [];
 
     const r = db.prepare(`INSERT INTO lessons (course_id,order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
       VALUES (?,?,?,?,?,?,?,?,?,?)`).run(
-      course_id, maxOrder + 1, title.trim(), description || '', video_url || '', content_text || '',
+      targetCourseId, maxOrder + 1, title.trim(), description || '', normalizeVideoEmbedUrl(video_url), content_text || '',
       JSON.stringify(tags), JSON.stringify(quiz),
       min_score ?? 5, duration_mins ?? 30
     );
@@ -940,7 +969,7 @@ app.put('/api/teacher/lessons/:id', auth, onlyTeacher, (req, res) => {
 
     db.prepare(`UPDATE lessons SET course_id=COALESCE(?, course_id), title=?,description=?,video_url=?,content_text=?,hashtags=?,quiz_json=?,min_score=?,duration_mins=?
       WHERE id=?`).run(
-      course_id, title || '', description || '', video_url || '', content_text || '',
+      course_id || null, title || '', description || '', normalizeVideoEmbedUrl(video_url), content_text || '',
       JSON.stringify(tags), JSON.stringify(quiz), min_score ?? 5, duration_mins ?? 30, req.params.id
     );
     res.json({ success: true });
@@ -950,13 +979,16 @@ app.put('/api/teacher/lessons/:id', auth, onlyTeacher, (req, res) => {
 // Delete lesson
 app.delete('/api/teacher/lessons/:id', auth, onlyTeacher, (req, res) => {
   try {
+    const target = db.prepare("SELECT course_id FROM lessons WHERE id=?").get(req.params.id);
     db.prepare("DELETE FROM lessons WHERE id=?").run(req.params.id);
-    // Re-order
-    const lessons = getAllLessons();
-    const reorder = db.transaction((ls) => {
-      ls.forEach((l, i) => db.prepare("UPDATE lessons SET order_num=? WHERE id=?").run(i + 1, l.id));
-    });
-    reorder(lessons);
+    // Re-order within the same course
+    if (target && target.course_id) {
+      const courseLessons = getAllLessons(target.course_id);
+      const reorder = db.transaction((ls) => {
+        ls.forEach((l, i) => db.prepare("UPDATE lessons SET order_num=? WHERE id=?").run(i + 1, l.id));
+      });
+      reorder(courseLessons);
+    }
     res.json({ success: true });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
@@ -1024,6 +1056,104 @@ app.put('/api/teacher/students/:id/credentials', auth, onlyTeacher, (req, res) =
       db.prepare("UPDATE users SET password_hash=?, pin_code=? WHERE id=?").run(hash, pin_code.trim(), req.params.id);
     }
     res.json({ success: true, message: "O‘quvchi ma'lumotlari muvaffaqiyatli yangilandi" });
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+// ─── KUTUBXONA (LIBRARY) VA YANGILIKLAR (NEWS) ───────────────────────────────
+
+// Public & Teacher: Get library items
+app.get('/api/library', (req, res) => {
+  try {
+    const items = db.prepare("SELECT * FROM library ORDER BY id DESC").all();
+    res.json(items);
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+app.get('/api/teacher/library', auth, onlyTeacher, (req, res) => {
+  try {
+    const items = db.prepare("SELECT * FROM library ORDER BY id DESC").all();
+    res.json(items);
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+app.post('/api/teacher/library', auth, onlyTeacher, (req, res) => {
+  try {
+    const { title, category, description, file_url, icon } = req.body;
+    if (!title?.trim()) return res.status(400).json({ error: "Sarlavha majburiy" });
+    if (!file_url?.trim()) return res.status(400).json({ error: "Fayl yoki havola manzili majburiy" });
+
+    const cat = category || 'maqolalar';
+    const catLabelMap = {
+      maqolalar: 'Ilmiy Maqola',
+      qollanmalar: 'O‘quv qo‘llanma',
+      darsliklar: 'Darslik'
+    };
+    const catIconMap = {
+      maqolalar: '📄',
+      qollanmalar: '📕',
+      darsliklar: '📚'
+    };
+    const category_label = catLabelMap[cat] || 'O‘quv material';
+    const itemIcon = icon || catIconMap[cat] || '📄';
+
+    const r = db.prepare(`
+      INSERT INTO library (title, category, category_label, description, file_url, icon)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `).run(title.trim(), cat, category_label, description || '', file_url.trim(), itemIcon);
+
+    res.json({ success: true, id: r.lastInsertRowid });
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+app.delete('/api/teacher/library/:id', auth, onlyTeacher, (req, res) => {
+  try {
+    db.prepare("DELETE FROM library WHERE id=?").run(req.params.id);
+    res.json({ success: true });
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+// Public & Teacher: Get news items
+app.get('/api/news', (req, res) => {
+  try {
+    const items = db.prepare("SELECT * FROM news ORDER BY id DESC").all();
+    res.json(items);
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+app.get('/api/teacher/news', auth, onlyTeacher, (req, res) => {
+  try {
+    const items = db.prepare("SELECT * FROM news ORDER BY id DESC").all();
+    res.json(items);
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+app.post('/api/teacher/news', auth, onlyTeacher, (req, res) => {
+  try {
+    const { title, description, image_url, source_name, source_url, tag, date_label } = req.body;
+    if (!title?.trim()) return res.status(400).json({ error: "Yangilik sarlavhasi majburiy" });
+
+    const defaultImg = "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80";
+    const r = db.prepare(`
+      INSERT INTO news (title, description, image_url, source_name, source_url, tag, date_label)
+      VALUES (?, ?, ?, ?, ?, ?, ?)
+    `).run(
+      title.trim(),
+      description || '',
+      (image_url && image_url.trim()) ? image_url.trim() : defaultImg,
+      (source_name && source_name.trim()) ? source_name.trim() : 'innocode.uz',
+      (source_url && source_url.trim()) ? source_url.trim() : '#',
+      (tag && tag.trim()) ? tag.trim() : 'Ta\'lim & IT',
+      (date_label && date_label.trim()) ? date_label.trim() : new Date().toLocaleDateString('uz-UZ')
+    );
+
+    res.json({ success: true, id: r.lastInsertRowid });
+  } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+app.delete('/api/teacher/news/:id', auth, onlyTeacher, (req, res) => {
+  try {
+    db.prepare("DELETE FROM news WHERE id=?").run(req.params.id);
+    res.json({ success: true });
   } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
 });
 
