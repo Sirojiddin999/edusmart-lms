@@ -2115,35 +2115,36 @@
         const cert = c.certificate;
         const safeName = (student.full_name || '').replace(/'/g, "\\'");
         const safeCourse = (c.course_title || '').replace(/'/g, "\\'");
+        const th = getTeacherCertTheme(c.course_title);
 
         if (cert) {
           const safeCertId = (cert.id || '').replace(/'/g, "\\'");
           const safeDate = (cert.issue_date || '').replace(/'/g, "\\'");
           return `
-            <div style="background:linear-gradient(135deg, #ffffff 0%, #f8fafc 100%); border:2px solid #86efac; border-radius:16px; padding:18px 20px; box-shadow:0 4px 14px rgba(16,185,129,0.08);">
+            <div style="background:linear-gradient(135deg, #ffffff 0%, ${th.bgTint} 100%); border:2px solid ${th.innerBorder}; border-radius:16px; padding:18px 20px; box-shadow:0 4px 14px rgba(15,23,42,0.06);">
               <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap; margin-bottom:10px;">
                 <div>
-                  <span class="badge badge-emerald" style="font-size:0.72rem; font-weight:800; margin-bottom:6px;">🏆 SERTIFIKAT OLINGAN</span>
-                  <div style="font-size:1.05rem; font-weight:900; color:#0f172a;">📚 ${c.course_title}</div>
+                  <span class="badge" style="font-size:0.72rem; font-weight:800; margin-bottom:6px; background:${th.bgTint}; color:${th.headingColor}; border:1px solid ${th.innerBorder};">${th.icon} ${th.sealTop} • SERTIFIKAT OLINGAN</span>
+                  <div style="font-size:1.05rem; font-weight:900; color:#0f172a;">${th.icon} ${c.course_title}</div>
                 </div>
                 <div style="text-align:right;">
-                  <code style="background:#eef2ff; color:#4f46e5; padding:4px 10px; border-radius:8px; font-size:0.78rem; font-weight:800; border:1px solid #c7d2fe;">ID: ${cert.id}</code>
+                  <code style="background:#ffffff; color:${th.headingColor}; padding:4px 10px; border-radius:8px; font-size:0.78rem; font-weight:800; border:1px solid ${th.innerBorder};">ID: ${cert.id}</code>
                   <div style="font-size:0.73rem; color:#64748b; margin-top:4px; font-weight:600;">📅 ${cert.issue_date || 'Berilgan'}</div>
                 </div>
               </div>
 
               <div style="font-size:0.8rem; color:#475569; margin-bottom:14px; font-weight:600;">
-                O‘zlashtirish ko‘rsatkichi: <strong style="color:#059669;">${c.completed_count}/${c.total_lessons} dars (${c.progress_percent || 100}%)</strong> • Natija: <strong style="color:#059669;">100% Muvaffaqiyatli</strong>
+                O‘zlashtirish ko‘rsatkichi: <strong style="color:#059669;">${c.completed_count}/${c.total_lessons} dars (${c.progress_percent || 100}%)</strong> • Dizayn: <strong style="color:${th.headingColor};">${th.pillLabel}</strong>
               </div>
 
               <div style="display:flex; gap:8px; flex-wrap:wrap; padding-top:12px; border-top:1px solid #e2e8f0;">
-                <button class="btn btn-primary btn-sm" style="font-weight:800; background:linear-gradient(135deg,#059669,#047857); border:none;" onclick="downloadTeacherCertPNG('${safeCertId}', '${safeName}', '${safeCourse}', '${safeDate}')">
+                <button class="btn btn-primary btn-sm" style="font-weight:800; background:${th.outerBorder}; border:none;" onclick="downloadTeacherCertPNG('${safeCertId}', '${safeName}', '${safeCourse}', '${safeDate}')">
                   📥 Yuklab olish (Rasm / PNG)
                 </button>
-                <a href="/certificate.html?id=${encodeURIComponent(cert.id)}" target="_blank" class="btn btn-primary btn-sm" style="font-weight:800; text-decoration:none;">
-                  👁️ Sertifikatni ko‘rish ↗
+                <a href="/certificate.html?id=${encodeURIComponent(cert.id)}&name=${encodeURIComponent(student.full_name || '')}&course=${encodeURIComponent(c.course_title || '')}" target="_blank" class="btn btn-primary btn-sm" style="font-weight:800; text-decoration:none; background:${th.innerBorder}; border:none;">
+                  👁️ Elektron sertifikatni ko‘rish ↗
                 </a>
-                <a href="/certificate.html?id=${encodeURIComponent(cert.id)}" target="_blank" class="btn btn-ghost btn-sm" style="font-weight:700; text-decoration:none;">
+                <a href="/certificate.html?id=${encodeURIComponent(cert.id)}&name=${encodeURIComponent(student.full_name || '')}&course=${encodeURIComponent(c.course_title || '')}" target="_blank" class="btn btn-ghost btn-sm" style="font-weight:700; text-decoration:none;">
                   🖨️ Chop etish / PDF
                 </a>
               </div>
@@ -2153,18 +2154,138 @@
           return `
             <div style="background:#ffffff; border:1.5px solid #e2e8f0; border-radius:14px; padding:16px 18px; display:flex; justify-content:space-between; align-items:center; gap:12px; flex-wrap:wrap;">
               <div>
-                <div style="font-size:0.98rem; font-weight:800; color:#1e293b;">📚 ${c.course_title}</div>
+                <div style="font-size:0.98rem; font-weight:800; color:#1e293b;">${th.icon} ${c.course_title}</div>
                 <div style="font-size:0.78rem; color:#64748b; margin-top:3px;">
-                  Progress: <strong>${c.completed_count}/${c.total_lessons} dars (${c.progress_percent}%)</strong>
+                  Progress: <strong>${c.completed_count}/${c.total_lessons} dars (${c.progress_percent}%)</strong> • Maxsus dizayn: <strong>${th.pillLabel}</strong>
                 </div>
               </div>
-              <button class="btn btn-ghost btn-sm" style="font-weight:800; color:#4f46e5; border-color:#c7d2fe; background:#eef2ff;" onclick="issueCourseCertByTeacher(${student.id}, ${c.course_id})">
+              <button class="btn btn-ghost btn-sm" style="font-weight:800; color:${th.headingColor}; border-color:${th.innerBorder}; background:${th.bgTint};" onclick="issueCourseCertByTeacher(${student.id}, ${c.course_id})">
                 📜 Ushbu kursdan sertifikat ochish
               </button>
             </div>
           `;
         }
       }).join('');
+    }
+
+    function getTeacherCertTheme(courseTitle) {
+      const t = (courseTitle || '').toLowerCase();
+      if (t.includes('react') || t.includes('javascript') || t.includes('web')) {
+        return {
+          key: 'react',
+          icon: '⚛️',
+          pillLabel: "JAVASCRIPT & REACT.JS WEB YO'NALISHI",
+          watermark: 'REACT • JS • WEB • INNOCODE',
+          sealTop: 'REACT & JS',
+          outerBorder: '#091526',
+          innerBorder: '#06b6d4',
+          innerSubBorder: '#f59e0b',
+          bgTint: '#ecfeff',
+          brandAccent: '#0891b2',
+          headingColor: '#0f172a',
+          nameColor: '#0e7490',
+          sealStart: '#22d3ee',
+          sealEnd: '#0e7490'
+        };
+      }
+      if (t.includes('java') || t.includes('android')) {
+        return {
+          key: 'java',
+          icon: '🤖',
+          pillLabel: "JAVA VA ANDROID DASTURLASH YO'NALISHI",
+          watermark: 'JAVA • ANDROID • MOBILE',
+          sealTop: 'ANDROID PRO',
+          outerBorder: '#064e3b',
+          innerBorder: '#10b981',
+          innerSubBorder: '#ea580c',
+          bgTint: '#ecfdf5',
+          brandAccent: '#059669',
+          headingColor: '#064e3b',
+          nameColor: '#047857',
+          sealStart: '#34d399',
+          sealEnd: '#047857'
+        };
+      }
+      return {
+        key: 'python',
+        icon: '🐍',
+        pillLabel: "PYTHON & SUN'IY INTELLEKT YO'NALISHI",
+        watermark: 'PYTHON • AI • INNOCODE',
+        sealTop: 'PYTHON & AI',
+        outerBorder: '#1e3a8a',
+        innerBorder: '#2563eb',
+        innerSubBorder: '#eab308',
+        bgTint: '#eff6ff',
+        brandAccent: '#2563eb',
+        headingColor: '#1e3a8a',
+        nameColor: '#1d4ed8',
+        sealStart: '#3b82f6',
+        sealEnd: '#1e3a8a'
+      };
+    }
+
+    function drawTeacherCertLogoOnCanvas(ctx, themeKey, cx, cy) {
+      ctx.save();
+      if (themeKey === 'react') {
+        ctx.beginPath();
+        ctx.arc(cx, cy, 40, 0, Math.PI * 2);
+        ctx.fillStyle = '#083344';
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#22d3ee';
+        ctx.stroke();
+        [0, Math.PI / 3, (2 * Math.PI) / 3].forEach((ang, idx) => {
+          ctx.save();
+          ctx.translate(cx, cy);
+          ctx.rotate(ang);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, 25, 9.5, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = idx === 2 ? '#fbbf24' : '#22d3ee';
+          ctx.lineWidth = 2.4;
+          ctx.stroke();
+          ctx.restore();
+        });
+        ctx.beginPath();
+        ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+        ctx.fillStyle = '#22d3ee';
+        ctx.fill();
+      } else if (themeKey === 'java') {
+        ctx.beginPath();
+        ctx.arc(cx, cy, 40, 0, Math.PI * 2);
+        ctx.fillStyle = '#064e3b';
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#34d399';
+        ctx.stroke();
+        ctx.fillStyle = '#34d399';
+        ctx.beginPath();
+        ctx.arc(cx, cy - 2, 16, Math.PI, 0, false);
+        ctx.fill();
+        ctx.fillStyle = '#fb923c';
+        ctx.fillRect(cx - 13, cy + 2, 26, 14);
+        ctx.fillStyle = '#064e3b';
+        ctx.beginPath();
+        ctx.arc(cx - 6, cy - 8, 2.3, 0, Math.PI * 2);
+        ctx.arc(cx + 6, cy - 8, 2.3, 0, Math.PI * 2);
+        ctx.fill();
+      } else {
+        ctx.beginPath();
+        ctx.arc(cx, cy, 40, 0, Math.PI * 2);
+        ctx.fillStyle = '#1e3a8a';
+        ctx.fill();
+        ctx.lineWidth = 3;
+        ctx.strokeStyle = '#60a5fa';
+        ctx.stroke();
+        ctx.fillStyle = '#60a5fa';
+        ctx.fillRect(cx - 15, cy - 16, 18, 13);
+        ctx.fillStyle = '#facc15';
+        ctx.fillRect(cx - 3, cy + 2, 18, 13);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '900 13px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('PY•AI', cx, cy + 4);
+      }
+      ctx.restore();
     }
 
     async function issueCourseCertByTeacher(studentId, courseId) {
@@ -2188,6 +2309,7 @@
 
     function downloadTeacherCertPNG(certId, studentName, courseTitle, issueDate) {
       try {
+        const th = getTeacherCertTheme(courseTitle);
         const canvas = document.createElement('canvas');
         canvas.width = 1600;
         canvas.height = 1130;
@@ -2195,139 +2317,151 @@
 
         const bgGrad = ctx.createRadialGradient(800, 565, 100, 800, 565, 900);
         bgGrad.addColorStop(0, '#ffffff');
-        bgGrad.addColorStop(1, '#f8fafc');
+        bgGrad.addColorStop(1, th.bgTint);
         ctx.fillStyle = bgGrad;
         ctx.fillRect(0, 0, 1600, 1130);
 
-        ctx.strokeStyle = '#0f172a';
+        ctx.strokeStyle = th.outerBorder;
         ctx.lineWidth = 28;
         ctx.strokeRect(24, 24, 1552, 1082);
 
-        ctx.strokeStyle = '#d97706';
+        ctx.strokeStyle = th.innerBorder;
         ctx.lineWidth = 5;
-        ctx.strokeRect(58, 58, 1484, 1014);
-        ctx.lineWidth = 1.5;
+        ctx.strokeRect(56, 56, 1488, 1018);
+        ctx.strokeStyle = th.innerSubBorder;
+        ctx.lineWidth = 2;
         ctx.strokeRect(68, 68, 1464, 994);
+
+        ctx.save();
+        ctx.translate(800, 560);
+        ctx.rotate(-14 * Math.PI / 180);
+        ctx.font = '900 105px Arial, sans-serif';
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.03)';
+        ctx.textAlign = 'center';
+        ctx.fillText(th.watermark, 0, 0);
+        ctx.restore();
+
+        drawTeacherCertLogoOnCanvas(ctx, th.key, 800, 132);
 
         ctx.textAlign = 'center';
         ctx.fillStyle = '#0f172a';
-        ctx.font = '900 54px Arial, sans-serif';
-        ctx.fillText('innocode.uz', 800, 165);
+        ctx.font = '900 44px Arial, sans-serif';
+        ctx.fillText('innocode.uz', 800, 215);
 
-        ctx.fillStyle = '#b45309';
-        ctx.font = 'bold 20px Arial, sans-serif';
-        ctx.fillText('INNOCODE IT ACADEMY & INOCODERS', 800, 200);
+        ctx.fillStyle = th.brandAccent;
+        ctx.font = 'bold 18px Arial, sans-serif';
+        ctx.fillText(th.pillLabel + ' • INNOCODE IT ACADEMY', 800, 244);
 
-        ctx.fillStyle = '#0f172a';
-        ctx.font = 'bold 64px Georgia, "Times New Roman", serif';
-        ctx.fillText('MUVAFFAQIYAT SERTIFIKATI', 800, 290);
+        ctx.fillStyle = th.headingColor;
+        ctx.font = 'bold 58px Georgia, "Times New Roman", serif';
+        ctx.fillText('MUVAFFAQIYAT SERTIFIKATI', 800, 315);
 
         ctx.fillStyle = '#64748b';
-        ctx.font = 'italic 26px Georgia, serif';
-        ctx.fillText('Ushbu rasmiy sertifikat quyidagi shaxsga taqdim etiladi:', 800, 345);
+        ctx.font = 'italic 24px Georgia, serif';
+        ctx.fillText('Ushbu rasmiy sertifikat quyidagi shaxsga taqdim etiladi:', 800, 360);
 
         const fullNameUpper = (studentName || 'O‘QUVCHI').toUpperCase();
-        ctx.fillStyle = '#b45309';
-        let nameFontSize = 52;
+        ctx.fillStyle = th.nameColor;
+        let nameFontSize = 50;
         ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
-        while (ctx.measureText(fullNameUpper).width > 1220 && nameFontSize > 26) {
+        while (ctx.measureText(fullNameUpper).width > 1200 && nameFontSize > 24) {
           nameFontSize -= 2;
           ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
         }
-        ctx.fillText(fullNameUpper, 800, 445, 1240);
+        ctx.fillText(fullNameUpper, 800, 445, 1220);
 
-        const lineHalf = Math.min(620, Math.max(340, (ctx.measureText(fullNameUpper).width / 2) + 40));
-        ctx.strokeStyle = '#d97706';
-        ctx.lineWidth = 3;
+        const lineHalf = Math.min(600, Math.max(320, (ctx.measureText(fullNameUpper).width / 2) + 40));
+        ctx.strokeStyle = th.innerBorder;
+        ctx.lineWidth = 3.5;
         ctx.beginPath();
-        ctx.moveTo(800 - lineHalf, 470);
-        ctx.lineTo(800 + lineHalf, 470);
+        ctx.moveTo(800 - lineHalf, 468);
+        ctx.lineTo(800 + lineHalf, 468);
         ctx.stroke();
-
-        ctx.fillStyle = '#334155';
-        ctx.font = '28px Arial, sans-serif';
-        ctx.fillText('InnoCode IT Academy ta\'lim platformasidagi', 800, 540);
-
-        ctx.fillStyle = '#0f172a';
-        ctx.font = 'bold 34px Arial, sans-serif';
-        ctx.fillText('«' + (courseTitle || 'Dasturlash') + '»', 800, 592, 1240);
 
         ctx.fillStyle = '#334155';
         ctx.font = '27px Arial, sans-serif';
-        ctx.fillText('o‘quv dasturidagi barcha 10 ta dars va amaliy test sinovlarini', 800, 642);
-        ctx.fillText('100% (5/5) a\'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.', 800, 682);
+        ctx.fillText('InnoCode IT Academy ta\'lim platformasidagi', 800, 530);
+
+        ctx.fillStyle = th.headingColor;
+        ctx.font = 'bold 34px Arial, sans-serif';
+        ctx.fillText('«' + (courseTitle || 'Dasturlash') + '»', 800, 580, 1240);
+
+        ctx.fillStyle = '#334155';
+        ctx.font = '26px Arial, sans-serif';
+        ctx.fillText('o‘quv dasturidagi barcha 10 ta dars va amaliy test sinovlarini', 800, 630);
+        ctx.fillText('100% (5/5) a\'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.', 800, 668);
 
         ctx.fillStyle = '#0f172a';
         ctx.font = 'italic bold 34px Georgia, serif';
-        ctx.fillText('M. Isomiddinov', 360, 825);
+        ctx.fillText('M. Isomiddinov', 360, 815);
         ctx.strokeStyle = '#0f172a';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(210, 840);
-        ctx.lineTo(510, 840);
+        ctx.moveTo(210, 830);
+        ctx.lineTo(510, 830);
         ctx.stroke();
         ctx.fillStyle = '#475569';
         ctx.font = 'bold 20px Arial, sans-serif';
-        ctx.fillText('Ma\'rufjon Isomiddinov', 360, 872);
+        ctx.fillText('Ma\'rufjon Isomiddinov', 360, 862);
         ctx.font = '18px Arial, sans-serif';
-        ctx.fillText('Kurs rahbari & Bosh mentor', 360, 898);
+        ctx.fillText('Kurs rahbari & Bosh mentor', 360, 888);
 
-        const sealGrad = ctx.createRadialGradient(800, 835, 10, 800, 835, 78);
-        sealGrad.addColorStop(0, '#f59e0b');
-        sealGrad.addColorStop(1, '#b45309');
+        const sealGrad = ctx.createRadialGradient(800, 825, 10, 800, 825, 78);
+        sealGrad.addColorStop(0, th.sealStart);
+        sealGrad.addColorStop(1, th.sealEnd);
         ctx.fillStyle = sealGrad;
         ctx.beginPath();
-        ctx.arc(800, 835, 76, 0, Math.PI * 2);
+        ctx.arc(800, 825, 76, 0, Math.PI * 2);
         ctx.fill();
-        ctx.strokeStyle = '#fde68a';
+        ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 4;
         ctx.stroke();
 
         ctx.fillStyle = '#ffffff';
-        ctx.font = 'bold 16px Arial, sans-serif';
-        ctx.fillText('OFFICIAL', 800, 810);
+        ctx.font = 'bold 14px Arial, sans-serif';
+        ctx.fillText(th.sealTop, 800, 800);
         ctx.font = 'bold 34px Arial, sans-serif';
-        ctx.fillText('★', 800, 845);
-        ctx.font = 'bold 15px Arial, sans-serif';
-        ctx.fillText('ACCREDITED', 800, 870);
+        ctx.fillText('★', 800, 835);
+        ctx.font = 'bold 14px Arial, sans-serif';
+        ctx.fillText('VERIFIED', 800, 860);
 
         ctx.fillStyle = '#0f172a';
         ctx.font = 'italic bold 34px Georgia, serif';
-        ctx.fillText('S. Savriyev', 1240, 825);
+        ctx.fillText('S. Savriyev', 1240, 815);
         ctx.strokeStyle = '#0f172a';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(1090, 840);
-        ctx.lineTo(1390, 840);
+        ctx.moveTo(1090, 830);
+        ctx.lineTo(1390, 830);
         ctx.stroke();
         ctx.fillStyle = '#475569';
         ctx.font = 'bold 20px Arial, sans-serif';
-        ctx.fillText('Sirojiddin Savriyev', 1240, 872);
+        ctx.fillText('Sirojiddin Savriyev', 1240, 862);
         ctx.font = '18px Arial, sans-serif';
-        ctx.fillText('InnoCode IT Academy Direktori', 1240, 898);
+        ctx.fillText('InnoCode IT Academy Direktori', 1240, 888);
 
-        ctx.fillStyle = '#f1f5f9';
-        ctx.fillRect(140, 945, 1320, 90);
-        ctx.strokeStyle = '#cbd5e1';
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(140, 940, 1320, 92);
+        ctx.strokeStyle = th.innerBorder;
         ctx.lineWidth = 2;
-        ctx.strokeRect(140, 945, 1320, 90);
+        ctx.strokeRect(140, 940, 1320, 92);
 
         ctx.textAlign = 'left';
         ctx.fillStyle = '#0f172a';
         ctx.font = 'bold 22px Arial, sans-serif';
-        ctx.fillText('Berilgan sana: ' + (issueDate || '2026-yil'), 175, 985);
+        ctx.fillText('Berilgan sana: ' + (issueDate || '2026-yil'), 175, 980);
         ctx.fillStyle = '#475569';
         ctx.font = '19px Arial, sans-serif';
-        ctx.fillText('Rasmiy tekshiruv manzili: ' + window.location.origin + '/certificate.html?id=' + certId, 175, 1016);
+        ctx.fillText('Rasmiy tekshiruv manzili: ' + window.location.origin + '/certificate.html?id=' + certId, 175, 1012);
 
         ctx.textAlign = 'right';
-        ctx.fillStyle = '#0f172a';
+        ctx.fillStyle = th.headingColor;
         ctx.font = 'bold 26px "Courier New", monospace';
-        ctx.fillText('ID: ' + certId, 1425, 1000);
+        ctx.fillText('ID: ' + certId, 1425, 995);
 
         const link = document.createElement('a');
         const cleanFileName = (studentName || 'Oquvchi').replace(/[^a-zA-Z0-9_\u0400-\u04FF-]/g, '_');
-        link.download = `Sertifikat_${cleanFileName}_${certId}.png`;
+        link.download = `Sertifikat_${th.key.toUpperCase()}_${cleanFileName}_${certId}.png`;
         link.href = canvas.toDataURL('image/png');
         document.body.appendChild(link);
         link.click();

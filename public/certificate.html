@@ -111,19 +111,128 @@
 
     /* Certificate Luxury Borders */
     .cert-border-outer {
-      border: 6px solid #0f172a;
-      border-radius: 8px;
+      border: 7px solid #0f172a;
+      border-radius: 10px;
       padding: 8px;
       background: #fff;
+      transition: all 0.3s ease;
     }
 
     .cert-border-inner {
-      border: 2px solid #d97706;
-      border-radius: 4px;
-      padding: 36px 32px;
+      border: 2.5px solid #d97706;
+      border-radius: 6px;
+      padding: 32px 28px;
       position: relative;
       background: radial-gradient(circle at center, #ffffff 0%, #fafaf9 100%);
       text-align: center;
+      overflow: hidden;
+      transition: all 0.3s ease;
+    }
+
+    /* 3 XIL KURS SERTIFIKATI DIZAYNI (THEMES) */
+    /* 1. PYTHON & SUN'IY INTELLEKT — Royal Navy & Imperial Gold */
+    .cert-container.theme-python .cert-border-outer {
+      border-color: #1e3a8a;
+      background: linear-gradient(135deg, #eff6ff 0%, #fefce8 100%);
+    }
+    .cert-container.theme-python .cert-border-inner {
+      border-color: #eab308;
+      box-shadow: inset 0 0 0 2px rgba(37, 99, 235, 0.2);
+      background: radial-gradient(circle at 50% 30%, #ffffff 0%, #f8fafc 70%, #eff6ff 100%);
+    }
+    .cert-container.theme-python .cert-brand span { color: #2563eb; }
+    .cert-container.theme-python .cert-sub-brand { color: #b45309; }
+    .cert-container.theme-python .student-wrap { border-bottom-color: #2563eb; }
+    .cert-container.theme-python .student-name { color: #1e3a8a; }
+    .cert-container.theme-python .course-badge {
+      background: linear-gradient(135deg, #dbeafe 0%, #fef3c7 100%);
+      color: #1e3a8a;
+      border: 1.5px solid #60a5fa;
+    }
+    .cert-container.theme-python .gold-seal {
+      background: radial-gradient(circle, #2563eb 0%, #1e3a8a 100%);
+      box-shadow: 0 0 0 3px #eab308, 0 6px 16px rgba(37, 99, 235, 0.4);
+    }
+
+    /* 2. JAVASCRIPT & REACT.JS — Cyber Slate, React Cyan & JS Gold */
+    .cert-container.theme-react .cert-border-outer {
+      border-color: #091526;
+      background: linear-gradient(135deg, #ecfeff 0%, #f0f9ff 100%);
+    }
+    .cert-container.theme-react .cert-border-inner {
+      border-color: #06b6d4;
+      box-shadow: inset 0 0 0 2px rgba(245, 158, 11, 0.25);
+      background: radial-gradient(circle at 50% 30%, #ffffff 0%, #f0fdfa 70%, #e0f2fe 100%);
+    }
+    .cert-container.theme-react .cert-brand span { color: #0891b2; }
+    .cert-container.theme-react .cert-sub-brand { color: #0284c7; }
+    .cert-container.theme-react .student-wrap { border-bottom-color: #0891b2; }
+    .cert-container.theme-react .student-name { color: #0c4a6e; }
+    .cert-container.theme-react .course-badge {
+      background: linear-gradient(135deg, #cffafe 0%, #fef9c3 100%);
+      color: #0e7490;
+      border: 1.5px solid #22d3ee;
+    }
+    .cert-container.theme-react .gold-seal {
+      background: radial-gradient(circle, #06b6d4 0%, #0369a1 100%);
+      box-shadow: 0 0 0 3px #f59e0b, 0 6px 16px rgba(6, 182, 212, 0.4);
+    }
+
+    /* 3. JAVA VA ANDROID — Deep Forest Emerald & Java Warm Copper */
+    .cert-container.theme-java .cert-border-outer {
+      border-color: #064e3b;
+      background: linear-gradient(135deg, #ecfdf5 0%, #fff7ed 100%);
+    }
+    .cert-container.theme-java .cert-border-inner {
+      border-color: #10b981;
+      box-shadow: inset 0 0 0 2px rgba(234, 88, 12, 0.22);
+      background: radial-gradient(circle at 50% 30%, #ffffff 0%, #f0fdf4 70%, #ffedd5 100%);
+    }
+    .cert-container.theme-java .cert-brand span { color: #059669; }
+    .cert-container.theme-java .cert-sub-brand { color: #ea580c; }
+    .cert-container.theme-java .student-wrap { border-bottom-color: #059669; }
+    .cert-container.theme-java .student-name { color: #064e3b; }
+    .cert-container.theme-java .course-badge {
+      background: linear-gradient(135deg, #d1fae5 0%, #ffedd5 100%);
+      color: #065f46;
+      border: 1.5px solid #34d399;
+    }
+    .cert-container.theme-java .gold-seal {
+      background: radial-gradient(circle, #10b981 0%, #065f46 100%);
+      box-shadow: 0 0 0 3px #ea580c, 0 6px 16px rgba(16, 185, 129, 0.4);
+    }
+
+    /* Course Logo Emblem inside Certificate */
+    .cert-course-logo-wrap {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+    }
+
+    .cert-course-emblem {
+      width: 72px;
+      height: 72px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+
+    .cert-spec-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      padding: 4px 14px;
+      border-radius: 999px;
+      margin-bottom: 6px;
     }
 
     /* Watermark */
@@ -198,24 +307,29 @@
       letter-spacing: 0.5px;
     }
 
-    /* Student Name */
+    /* Student Name — 100% fits inside frame, never overflows */
     .student-wrap {
-      margin: 22px auto 16px;
-      display: inline-block;
-      max-width: 92%;
-      padding: 0 24px 8px;
-      border-bottom: 2px solid #d97706;
+      margin: 18px auto 16px;
+      display: block;
+      width: 92%;
+      max-width: 780px;
+      padding: 0 16px 10px;
+      border-bottom: 2.5px solid #d97706;
+      box-sizing: border-box;
+      overflow: hidden;
     }
 
     .student-name {
-      font-family: 'Cinzel', Georgia, 'Times New Roman', serif;
-      font-size: clamp(1.3rem, 2.7vw, 2.25rem);
+      font-family: 'Cinzel', Georgia, 'Times New Roman', serif !important;
+      font-size: clamp(1.15rem, 2.5vw, 2.05rem);
       font-weight: 800;
       color: #b45309;
       line-height: 1.25;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
       word-break: break-word;
-      overflow-wrap: anywhere;
-      text-shadow: 1px 1px 2px rgba(217, 119, 6, 0.15);
+      overflow-wrap: break-word;
+      max-width: 100%;
     }
 
     /* Description */
@@ -471,11 +585,12 @@
       }
 
       .student-name {
-        font-size: 2.2rem;
+        font-size: 1.2rem;
       }
 
       .student-wrap {
-        padding: 0 16px 6px;
+        width: 96%;
+        padding: 0 8px 6px;
       }
 
       .cert-meta-grid {
@@ -534,18 +649,46 @@
     <div class="verify-badge">✓ Tizimda Tasdiqlangan</div>
   </div>
 
+  <!-- 3 TA KURS SERTIFIKATI DIZAYNINI TANLASH PANELI -->
+  <div class="cert-nav" style="max-width: 960px; width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15); border-radius: 14px; padding: 12px 18px; margin-bottom: 18px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 10px;">
+    <div style="color: #e2e8f0; font-size: 0.85rem; font-weight: 700;">
+      🎨 Kurs sertifikati dizayni va logotipi:
+    </div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap;" id="themeSwitchButtons">
+      <button type="button" onclick="switchCertificateCourseTheme('Python Asoslari va Sun\'iy Intellekt')" style="padding: 7px 14px; border-radius: 8px; border: 1.5px solid #60a5fa; background: #1e3a8a; color: #fff; font-weight: 800; font-size: 0.8rem; cursor: pointer;">
+        🐍 Python & Sun'iy Intellekt
+      </button>
+      <button type="button" onclick="switchCertificateCourseTheme('JavaScript & React.js: Web Dasturlash')" style="padding: 7px 14px; border-radius: 8px; border: 1.5px solid #22d3ee; background: #0e7490; color: #fff; font-weight: 800; font-size: 0.8rem; cursor: pointer;">
+        ⚛️ JavaScript & React.js
+      </button>
+      <button type="button" onclick="switchCertificateCourseTheme('Java va Android Dasturlash')" style="padding: 7px 14px; border-radius: 8px; border: 1.5px solid #34d399; background: #065f46; color: #fff; font-weight: 800; font-size: 0.8rem; cursor: pointer;">
+        🤖 Java va Android
+      </button>
+    </div>
+  </div>
+
   <!-- Sertifikat Asosiy Karkasi -->
-  <div class="cert-container" id="certContainer">
+  <div class="cert-container theme-python" id="certContainer">
     <div class="cert-border-outer">
       <div class="cert-border-inner">
         <div class="cert-watermark"></div>
-        <div class="cert-watermark-logo">INNOCODE</div>
+        <div class="cert-watermark-logo" id="viewWatermarkLogo">PYTHON • AI</div>
 
         <div class="cert-content">
+          <!-- Kursning Maxsus Logotipi va Yo'nalish Nishoni -->
+          <div class="cert-course-logo-wrap">
+            <div class="cert-course-emblem" id="viewCourseLogoBox" style="background: linear-gradient(135deg, #1e3a8a, #2563eb); border: 2px solid #eab308;">
+              <span style="font-size: 2.2rem;">🐍</span>
+            </div>
+            <div class="cert-spec-pill" id="viewCourseSpecPill" style="background: #dbeafe; color: #1e3a8a; border: 1px solid #93c5fd;">
+              PYTHON & SUN'IY INTELLEKT YO‘NALISHI
+            </div>
+          </div>
+
           <!-- Akademiya Logotipi va Brendi -->
           <div class="cert-header">
             <div class="cert-brand">innocode<span>.uz</span></div>
-            <div class="cert-sub-brand">InnoCode IT Academy & Inocoders</div>
+            <div class="cert-sub-brand" id="viewSubBrand">InnoCode IT Academy & Inocoders</div>
           </div>
 
           <!-- Sarlavha -->
@@ -576,12 +719,12 @@
               <div class="sign-role">Bosh O'qituvchi & Mentor</div>
             </div>
 
-            <!-- Rasmiy Oltin Muhr -->
+            <!-- Rasmiy Kurs Muhri -->
             <div class="seal-box">
-              <div class="gold-seal">
-                <span class="gold-seal-text">Official</span>
+              <div class="gold-seal" id="viewGoldSeal">
+                <span class="gold-seal-text" id="viewSealTop">PYTHON & AI</span>
                 <span class="gold-seal-star">★</span>
-                <span class="gold-seal-text">Accredited<br>2026</span>
+                <span class="gold-seal-text">CERTIFIED<br>100%</span>
               </div>
             </div>
 
@@ -639,6 +782,151 @@
   </div>
 
   <script>
+    function getCertCourseTheme(courseTitle) {
+      const t = (courseTitle || '').toLowerCase();
+      if (t.includes('react') || t.includes('javascript') || t.includes('web') || t.includes('frontend')) {
+        return {
+          key: 'react',
+          className: 'theme-react',
+          watermark: 'REACT • JS',
+          specPill: '⚛️ JAVASCRIPT & REACT.JS WEB DASTURLASH YO‘NALISHI',
+          pillBg: '#cffafe',
+          pillColor: '#0e7490',
+          pillBorder: '#22d3ee',
+          subBrand: 'MODERN FRONTEND & REACT.JS ENGINEERING',
+          sealTop: 'REACT & JS',
+          logoBoxBg: 'linear-gradient(135deg, #091526 0%, #0e7490 100%)',
+          logoBoxBorder: '#22d3ee',
+          svgLogo: `<svg width="46" height="46" viewBox="0 0 64 64" fill="none">
+            <ellipse cx="32" cy="32" rx="26" ry="10" stroke="#22d3ee" stroke-width="3"/>
+            <ellipse cx="32" cy="32" rx="26" ry="10" transform="rotate(60 32 32)" stroke="#22d3ee" stroke-width="3"/>
+            <ellipse cx="32" cy="32" rx="26" ry="10" transform="rotate(120 32 32)" stroke="#f59e0b" stroke-width="3"/>
+            <circle cx="32" cy="32" r="5.5" fill="#f59e0b"/>
+          </svg>`,
+          outerColor: '#091526',
+          innerColor: '#06b6d4',
+          accentColor: '#f59e0b',
+          nameColor: '#0c4a6e',
+          sealStart: '#06b6d4',
+          sealEnd: '#0369a1',
+          bgTint: '#f0fdfa'
+        };
+      }
+      if (t.includes('java') || t.includes('android') || t.includes('mobil')) {
+        return {
+          key: 'java',
+          className: 'theme-java',
+          watermark: 'JAVA • ANDROID',
+          specPill: '🤖 JAVA VA ANDROID MOBIL DASTURLASH YO‘NALISHI',
+          pillBg: '#d1fae5',
+          pillColor: '#065f46',
+          pillBorder: '#34d399',
+          subBrand: 'ENTERPRISE JAVA & ANDROID MOBILE ENGINEERING',
+          sealTop: 'JAVA • ANDROID',
+          logoBoxBg: 'linear-gradient(135deg, #064e3b 0%, #059669 100%)',
+          logoBoxBorder: '#fb923c',
+          svgLogo: `<svg width="46" height="46" viewBox="0 0 64 64" fill="none">
+            <path d="M16 34C16 24.0589 23.1634 16 32 16C40.8366 16 48 24.0589 48 34H16Z" fill="#34d399"/>
+            <line x1="23" y1="18" x2="18" y2="10" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
+            <line x1="41" y1="18" x2="46" y2="10" stroke="#34d399" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="26" cy="26" r="2.5" fill="#064e3b"/>
+            <circle cx="38" cy="26" r="2.5" fill="#064e3b"/>
+            <rect x="18" y="37" width="28" height="15" rx="4" fill="#fb923c"/>
+            <text x="32" y="48" text-anchor="middle" fill="#fff" font-size="10" font-weight="bold" font-family="Arial">JAVA</text>
+          </svg>`,
+          outerColor: '#064e3b',
+          innerColor: '#10b981',
+          accentColor: '#ea580c',
+          nameColor: '#064e3b',
+          sealStart: '#10b981',
+          sealEnd: '#065f46',
+          bgTint: '#f0fdf4'
+        };
+      }
+      return {
+        key: 'python',
+        className: 'theme-python',
+        watermark: 'PYTHON • AI',
+        specPill: '🐍 PYTHON ASOSLARI VA SUN\'IY INTELLEKT YO‘NALISHI',
+        pillBg: '#dbeafe',
+        pillColor: '#1e3a8a',
+        pillBorder: '#60a5fa',
+        subBrand: 'PYTHON & ARTIFICIAL INTELLIGENCE SPECIALIZATION',
+        sealTop: 'PYTHON & AI',
+        logoBoxBg: 'linear-gradient(135deg, #1e3a8a 0%, #2563eb 100%)',
+        logoBoxBorder: '#eab308',
+        svgLogo: `<svg width="46" height="46" viewBox="0 0 64 64" fill="none">
+          <path d="M31 12C21 12 22 16 22 16V22H32V24H18C18 24 12 23 12 33C12 43 17 42 17 42H21V36C21 36 21 30 27 30H37C37 30 42 30 42 25V17C42 17 43 12 31 12Z" fill="#60a5fa"/>
+          <path d="M33 52C43 52 42 48 42 48V42H32V40H46C46 40 52 41 52 31C52 21 47 22 47 22H43V28C43 28 43 34 37 34H27C27 34 22 34 22 39V47C22 47 21 52 33 52Z" fill="#facc15"/>
+          <circle cx="26" cy="17" r="2" fill="#fff"/>
+          <circle cx="38" cy="47" r="2" fill="#1e3a8a"/>
+        </svg>`,
+        outerColor: '#1e3a8a',
+        innerColor: '#2563eb',
+        accentColor: '#d97706',
+        nameColor: '#1e3a8a',
+        sealStart: '#2563eb',
+        sealEnd: '#1e3a8a',
+        bgTint: '#eff6ff'
+      };
+    }
+
+    function fitStudentNameOnScreen() {
+      const nameEl = document.getElementById('viewStudentName');
+      const wrapEl = nameEl ? nameEl.parentElement : null;
+      if (!nameEl || !wrapEl) return;
+      const len = (nameEl.innerText || '').trim().length;
+      if (len > 32) {
+        nameEl.style.fontSize = 'clamp(1.05rem, 2.1vw, 1.65rem)';
+      } else if (len > 24) {
+        nameEl.style.fontSize = 'clamp(1.15rem, 2.4vw, 1.85rem)';
+      } else {
+        nameEl.style.fontSize = 'clamp(1.3rem, 2.7vw, 2.15rem)';
+      }
+    }
+
+    function applyCertCourseTheme(courseTitle) {
+      const theme = getCertCourseTheme(courseTitle);
+      const container = document.getElementById('certContainer');
+      if (container) {
+        container.classList.remove('theme-python', 'theme-react', 'theme-java');
+        container.classList.add(theme.className);
+      }
+      const wm = document.getElementById('viewWatermarkLogo');
+      if (wm) wm.innerText = theme.watermark;
+
+      const logoBox = document.getElementById('viewCourseLogoBox');
+      if (logoBox) {
+        logoBox.style.background = theme.logoBoxBg;
+        logoBox.style.border = `2.5px solid ${theme.logoBoxBorder}`;
+        logoBox.innerHTML = theme.svgLogo;
+      }
+
+      const pill = document.getElementById('viewCourseSpecPill');
+      if (pill) {
+        pill.innerText = theme.specPill;
+        pill.style.background = theme.pillBg;
+        pill.style.color = theme.pillColor;
+        pill.style.borderColor = theme.pillBorder;
+      }
+
+      const subBrand = document.getElementById('viewSubBrand');
+      if (subBrand) subBrand.innerText = theme.subBrand;
+
+      const sealTop = document.getElementById('viewSealTop');
+      if (sealTop) sealTop.innerText = theme.sealTop;
+
+      fitStudentNameOnScreen();
+    }
+
+    function switchCertificateCourseTheme(courseTitle) {
+      const courseEl = document.getElementById('viewCourseName');
+      if (courseEl) courseEl.innerText = courseTitle;
+      applyCertCourseTheme(courseTitle);
+    }
+
+    window.addEventListener('resize', fitStudentNameOnScreen);
+
     async function initCertificate() {
       const params = new URLSearchParams(window.location.search);
       const certId = params.get('id');
@@ -649,12 +937,10 @@
       const idEl = document.getElementById('viewCertId');
       const qrEl = document.getElementById('viewQrCode');
 
-      // QR linki har doim joriy to'liq URL bo'ladi
       const currentUrl = window.location.href;
       qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(currentUrl)}&color=0f172a`;
 
       if (!certId) {
-        // Agar foydalanuvchi tizimga kirgan bo'lsa, o'z sertifikatini olish
         try {
           const rawUser = localStorage.getItem('edusmart_user');
           const tok = localStorage.getItem('edusmart_token');
@@ -675,6 +961,7 @@
                 courseEl.innerText = d.certificate.course_title || "Python Asoslari va Sun'iy Intellekt";
                 dateEl.innerText = d.certificate.issue_date || "2026-yil";
                 idEl.innerText = d.certificate.id;
+                applyCertCourseTheme(courseEl.innerText);
                 const fullVerifyUrl = window.location.origin + `/certificate.html?id=${encodeURIComponent(d.certificate.id)}`;
                 qrEl.src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(fullVerifyUrl)}&color=0f172a`;
                 return;
@@ -686,6 +973,7 @@
         idEl.innerText = 'INNO-2026-SS7849';
         if (params.get('name')) nameEl.innerText = params.get('name');
         if (params.get('course')) courseEl.innerText = params.get('course');
+        applyCertCourseTheme(courseEl.innerText);
         return;
       }
 
@@ -696,9 +984,10 @@
           if (data.certificate) {
             const c = data.certificate;
             nameEl.innerText = c.student_name || "O'quvchi";
-            courseEl.innerText = c.course_title || "Dasturlash";
+            courseEl.innerText = c.course_title || "Python Asoslari va Sun'iy Intellekt";
             dateEl.innerText = c.issue_date || "2026-yil";
             idEl.innerText = c.id;
+            applyCertCourseTheme(courseEl.innerText);
             return;
           }
         }
@@ -706,17 +995,91 @@
         console.warn("API dan o'qishda xatolik:", e);
       }
 
-      // Agar serverdan topilmasa yoki offline parametrlar bo'lsa
       idEl.innerText = certId;
       if (params.get('name')) nameEl.innerText = params.get('name');
       if (params.get('course')) courseEl.innerText = params.get('course');
+      applyCertCourseTheme(courseEl.innerText);
+    }
+
+    function drawCourseLogoOnCanvas(ctx, themeKey) {
+      ctx.save();
+      if (themeKey === 'react') {
+        // React Atom & JS Badge
+        ctx.fillStyle = '#091526';
+        ctx.beginPath();
+        ctx.roundRect(756, 78, 88, 88, 20);
+        ctx.fill();
+        ctx.strokeStyle = '#22d3ee';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        [0, Math.PI / 3, (2 * Math.PI) / 3].forEach((ang, idx) => {
+          ctx.save();
+          ctx.translate(800, 122);
+          ctx.rotate(ang);
+          ctx.beginPath();
+          ctx.ellipse(0, 0, 32, 12, 0, 0, Math.PI * 2);
+          ctx.strokeStyle = idx === 2 ? '#f59e0b' : '#22d3ee';
+          ctx.lineWidth = 3;
+          ctx.stroke();
+          ctx.restore();
+        });
+        ctx.fillStyle = '#f59e0b';
+        ctx.beginPath();
+        ctx.arc(800, 122, 6, 0, Math.PI * 2);
+        ctx.fill();
+      } else if (themeKey === 'java') {
+        // Java & Android Emblem
+        ctx.fillStyle = '#064e3b';
+        ctx.beginPath();
+        ctx.roundRect(756, 78, 88, 88, 20);
+        ctx.fill();
+        ctx.strokeStyle = '#fb923c';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.fillStyle = '#34d399';
+        ctx.beginPath();
+        ctx.arc(800, 118, 22, Math.PI, 0, false);
+        ctx.fill();
+        ctx.fillStyle = '#fb923c';
+        ctx.fillRect(778, 122, 44, 24);
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 14px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('JAVA', 800, 139);
+      } else {
+        // Python & AI Emblem
+        ctx.fillStyle = '#1e3a8a';
+        ctx.beginPath();
+        ctx.roundRect(756, 78, 88, 88, 20);
+        ctx.fill();
+        ctx.strokeStyle = '#eab308';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        ctx.fillStyle = '#60a5fa';
+        ctx.beginPath();
+        ctx.arc(792, 114, 16, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#facc15';
+        ctx.beginPath();
+        ctx.arc(808, 130, 16, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 15px Arial, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('PY•AI', 800, 127);
+      }
+      ctx.restore();
     }
 
     function downloadCertPageImage() {
-      const studentName = document.getElementById('viewStudentName').innerText || "O‘quvchi";
-      const courseName  = document.getElementById('viewCourseName').innerText || "Dasturlash";
+      const studentName = (document.getElementById('viewStudentName').innerText || "O‘quvchi").toUpperCase();
+      const courseName  = document.getElementById('viewCourseName').innerText || "Python Asoslari va Sun'iy Intellekt";
       const certId      = document.getElementById('viewCertId').innerText || "INNO-2026-100001";
       const certDate    = document.getElementById('viewIssueDate').innerText || "2026-yil";
+      const theme       = getCertCourseTheme(courseName);
 
       const canvas = document.createElement('canvas');
       canvas.width = 1600;
@@ -725,66 +1088,81 @@
 
       const bgGrad = ctx.createRadialGradient(800, 565, 100, 800, 565, 900);
       bgGrad.addColorStop(0, '#ffffff');
-      bgGrad.addColorStop(1, '#f8fafc');
+      bgGrad.addColorStop(1, theme.bgTint);
       ctx.fillStyle = bgGrad;
       ctx.fillRect(0, 0, 1600, 1130);
 
-      ctx.strokeStyle = '#0f172a';
+      // Tashqi kursga xos ramka
+      ctx.strokeStyle = theme.outerColor;
       ctx.lineWidth = 28;
       ctx.strokeRect(24, 24, 1552, 1082);
 
-      ctx.strokeStyle = '#d97706';
+      // Ichki kursga xos ramka
+      ctx.strokeStyle = theme.innerColor;
       ctx.lineWidth = 5;
       ctx.strokeRect(58, 58, 1484, 1014);
-      ctx.lineWidth = 1.5;
+      ctx.strokeStyle = theme.accentColor;
+      ctx.lineWidth = 2;
       ctx.strokeRect(68, 68, 1464, 994);
+
+      // Orqa fon watermark
+      ctx.save();
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.03)';
+      ctx.font = '900 130px Georgia, serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(theme.watermark, 800, 600);
+      ctx.restore();
+
+      // Kursning maxsus logotipi
+      drawCourseLogoOnCanvas(ctx, theme.key);
 
       ctx.textAlign = 'center';
       ctx.fillStyle = '#0f172a';
-      ctx.font = '900 54px Arial, sans-serif';
-      ctx.fillText('innocode.uz', 800, 165);
+      ctx.font = '900 44px Arial, sans-serif';
+      ctx.fillText('innocode.uz', 800, 212);
 
-      ctx.fillStyle = '#b45309';
-      ctx.font = 'bold 20px Arial, sans-serif';
-      ctx.fillText('INNOCODE IT ACADEMY & INOCODERS', 800, 200);
+      ctx.fillStyle = theme.accentColor;
+      ctx.font = 'bold 18px Arial, sans-serif';
+      ctx.fillText(theme.subBrand, 800, 242);
 
       ctx.fillStyle = '#0f172a';
-      ctx.font = 'bold 64px Georgia, "Times New Roman", serif';
-      ctx.fillText('MUVAFFAQIYAT SERTIFIKATI', 800, 290);
+      ctx.font = 'bold 58px Georgia, "Times New Roman", serif';
+      ctx.fillText('MUVAFFAQIYAT SERTIFIKATI', 800, 315);
 
       ctx.fillStyle = '#64748b';
-      ctx.font = 'italic 26px Georgia, serif';
-      ctx.fillText('Ushbu rasmiy hujjat quyidagi o‘quvchiga taqdim etiladi:', 800, 345);
+      ctx.font = 'italic 25px Georgia, serif';
+      ctx.fillText('Ushbu rasmiy hujjat quyidagi o‘quvchiga taqdim etiladi:', 800, 362);
 
-      ctx.fillStyle = '#b45309';
-      let nameFontSize = 52;
+      // O'quvchi F.I.Sh (ramkadan chiqmasligi 100% kafolatlangan)
+      ctx.fillStyle = theme.nameColor;
+      let nameFontSize = 50;
       ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
-      while (ctx.measureText(studentName).width > 1220 && nameFontSize > 26) {
+      while (ctx.measureText(studentName).width > 1200 && nameFontSize > 24) {
         nameFontSize -= 2;
         ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
       }
-      ctx.fillText(studentName, 800, 445, 1240);
+      ctx.fillText(studentName, 800, 450, 1220);
 
-      const lineHalf = Math.min(620, Math.max(340, (ctx.measureText(studentName).width / 2) + 40));
-      ctx.strokeStyle = '#d97706';
+      const lineHalf = Math.min(610, Math.max(340, (ctx.measureText(studentName).width / 2) + 40));
+      ctx.strokeStyle = theme.innerColor;
       ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.moveTo(800 - lineHalf, 470);
-      ctx.lineTo(800 + lineHalf, 470);
+      ctx.moveTo(800 - lineHalf, 474);
+      ctx.lineTo(800 + lineHalf, 474);
       ctx.stroke();
 
       ctx.fillStyle = '#334155';
-      ctx.font = '28px Arial, sans-serif';
-      ctx.fillText('InnoCode IT Academy ta\'lim platformasidagi', 800, 540);
+      ctx.font = '27px Arial, sans-serif';
+      ctx.fillText('InnoCode IT Academy ta\'lim platformasidagi', 800, 538);
 
-      ctx.fillStyle = '#0f172a';
+      ctx.fillStyle = theme.outerColor;
       ctx.font = 'bold 34px Arial, sans-serif';
-      ctx.fillText('«' + courseName + '»', 800, 592);
+      ctx.fillText('«' + courseName + '»', 800, 588, 1240);
 
       ctx.fillStyle = '#334155';
-      ctx.font = '27px Arial, sans-serif';
-      ctx.fillText('o‘quv dasturidagi barcha 10 ta dars va amaliy test sinovlarini', 800, 642);
-      ctx.fillText('100% (5/5) a\'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.', 800, 682);
+      ctx.font = '26px Arial, sans-serif';
+      ctx.fillText('o‘quv dasturidagi barcha 10 ta dars va amaliy test sinovlarini', 800, 638);
+      ctx.fillText('100% (5/5) a\'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.', 800, 678);
 
       ctx.fillStyle = '#0f172a';
       ctx.font = 'italic bold 34px Georgia, serif';
@@ -802,23 +1180,23 @@
       ctx.fillText('Bosh O‘qituvchi & Mentor', 360, 898);
 
       const sealGrad = ctx.createRadialGradient(800, 835, 10, 800, 835, 78);
-      sealGrad.addColorStop(0, '#f59e0b');
-      sealGrad.addColorStop(1, '#b45309');
+      sealGrad.addColorStop(0, theme.sealStart);
+      sealGrad.addColorStop(1, theme.sealEnd);
       ctx.fillStyle = sealGrad;
       ctx.beginPath();
       ctx.arc(800, 835, 76, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = '#fde68a';
+      ctx.strokeStyle = theme.accentColor;
       ctx.lineWidth = 4;
       ctx.stroke();
 
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 16px Arial, sans-serif';
-      ctx.fillText('OFFICIAL', 800, 810);
-      ctx.font = 'bold 34px Arial, sans-serif';
-      ctx.fillText('★', 800, 845);
-      ctx.font = 'bold 15px Arial, sans-serif';
-      ctx.fillText('ACCREDITED', 800, 870);
+      ctx.font = 'bold 14px Arial, sans-serif';
+      ctx.fillText(theme.sealTop, 800, 810);
+      ctx.font = 'bold 32px Arial, sans-serif';
+      ctx.fillText('★', 800, 844);
+      ctx.font = 'bold 14px Arial, sans-serif';
+      ctx.fillText('CERTIFIED 100%', 800, 870);
 
       ctx.fillStyle = '#0f172a';
       ctx.font = 'italic bold 34px Georgia, serif';
@@ -850,13 +1228,13 @@
       ctx.fillText('Rasmiy tekshiruv manzili: ' + window.location.origin + '/certificate.html?id=' + certId, 175, 1016);
 
       ctx.textAlign = 'right';
-      ctx.fillStyle = '#0f172a';
+      ctx.fillStyle = theme.outerColor;
       ctx.font = 'bold 26px "Courier New", monospace';
       ctx.fillText('ID: ' + certId, 1425, 1000);
 
       const link = document.createElement('a');
       const safeName = studentName.replace(/[^a-zA-Z0-9_\u0400-\u04FF-]/g, '_');
-      link.download = `Sertifikat_${safeName}_${certId}.png`;
+      link.download = `Sertifikat_${theme.key.toUpperCase()}_${safeName}_${certId}.png`;
       link.href = canvas.toDataURL('image/png');
       document.body.appendChild(link);
       link.click();
