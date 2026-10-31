@@ -222,6 +222,11 @@
         <li><span style="color:#10b981; font-weight:bold;">✔</span> O‘quv kurslari, video darslar va test savollari nazorati</li>
       </ul>
 
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #f1f5f9; padding: 5px; border-radius: 12px; margin-bottom: 22px;">
+        <button type="button" id="tlTabLogin" onclick="toggleTlTab('login')" style="padding: 10px; border: none; border-radius: 9px; font-weight: 800; font-size: 0.9rem; cursor: pointer; background: #8b5cf6; color: #fff;">🔐 Kirish</button>
+        <button type="button" id="tlTabReg" onclick="toggleTlTab('reg')" style="padding: 10px; border: none; border-radius: 9px; font-weight: 800; font-size: 0.9rem; cursor: pointer; background: transparent; color: #475569;">➕ Yangi O‘qituvchi</button>
+      </div>
+
       <form id="form-teacher" onsubmit="doTeacherLogin(event)">
         <div class="form-group">
           <label class="form-label">O‘qituvchi logini *</label>
@@ -234,6 +239,26 @@
         <button type="submit" class="btn-submit">Panelga Kirish ➔</button>
       </form>
 
+      <form id="form-teacher-reg" onsubmit="doTeacherRegPage(event)" style="display: none;">
+        <div class="form-group">
+          <label class="form-label">O‘qituvchi Ism va Familiyasi *</label>
+          <input id="tr-name" type="text" class="form-input" placeholder="Masalan: Sardorbek Karimov" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Yangi O‘qituvchi Logini *</label>
+          <input id="tr-user" type="text" class="form-input" placeholder="Masalan: sardor_ustoz" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Maxfiy Parol *</label>
+          <input id="tr-pass" type="text" class="form-input" placeholder="Parol o‘ylab toping" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Yangi ochiladigan kursingiz nomi (ixtiyoriy)</label>
+          <input id="tr-course" type="text" class="form-input" placeholder="Masalan: Grafik Dizayn va Web Dasturlash">
+        </div>
+        <button type="submit" class="btn-submit" style="background: linear-gradient(135deg, #059669 0%, #047857 100%);">🚀 Login-Parol Yaratish va Kirish ➔</button>
+      </form>
+
       <div class="auth-links">
         O‘quvchimisiz? <a href="/login.html">O‘quvchi kabinetiga kirish</a> | <a href="/register.html">Ro‘yxatdan o‘tish</a>
       </div>
@@ -242,6 +267,51 @@
 
   <script src="/js/utils.js"></script>
   <script>
+    function toggleTlTab(mode) {
+      const fLogin = document.getElementById('form-teacher');
+      const fReg = document.getElementById('form-teacher-reg');
+      const bLogin = document.getElementById('tlTabLogin');
+      const bReg = document.getElementById('tlTabReg');
+      if (mode === 'reg') {
+        fLogin.style.display = 'none';
+        fReg.style.display = 'block';
+        bReg.style.background = '#059669';
+        bReg.style.color = '#fff';
+        bLogin.style.background = 'transparent';
+        bLogin.style.color = '#475569';
+      } else {
+        fLogin.style.display = 'block';
+        fReg.style.display = 'none';
+        bLogin.style.background = '#8b5cf6';
+        bLogin.style.color = '#fff';
+        bReg.style.background = 'transparent';
+        bReg.style.color = '#475569';
+      }
+    }
+
+    async function doTeacherRegPage(e) {
+      e.preventDefault();
+      const full_name = document.getElementById('tr-name').value.trim();
+      const username = document.getElementById('tr-user').value.trim();
+      const password = document.getElementById('tr-pass').value.trim();
+      const course_title = document.getElementById('tr-course').value.trim();
+      try {
+        const r = await fetch('/api/auth/register-teacher', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ full_name, username, password, course_title })
+        });
+        const data = await r.json();
+        if (data.error) {
+          alert(data.error);
+        } else {
+          Auth.setSession(data.token, data.user);
+          window.location.href = '/teacher.html';
+        }
+      } catch {
+        alert("Server bilan ulanishda xatolik yuz berdi");
+      }
+    }
     async function doTeacherLogin(e) {
       e.preventDefault();
       const username = document.getElementById('t-user').value.trim();

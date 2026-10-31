@@ -189,7 +189,7 @@ const COURSES_DATA = [
         order_num: 8,
         title: "Fayllar va Xatolar bilan ishlash (try-except)",
         description: "Fayllarni o'qish/yozish, with operatori, try-except-finally bloklari.",
-        video_url: "https://www.youtube.com/embed/jO6qQDNa2CE",
+        video_url: "https://www.youtube.com/embed/_uQrJ0TkZlc",
         duration_mins: 32,
         content_text: `📌 8-Dars Konspekti:
 1. Fayl ochish: open('fayl.txt', 'r'/'w'/'a').
@@ -243,7 +243,7 @@ const COURSES_DATA = [
         order_num: 10,
         title: "Sun'iy Intellekt va Data Science: NumPy, Pandas & ML",
         description: "Massivlar (NumPy), Ma'lumotlar tahlili (Pandas), Mashinali o'rganish tushunchalari va kurs xulosasi.",
-        video_url: "https://www.youtube.com/embed/XKHEtdqhPAI",
+        video_url: "https://www.youtube.com/embed/r-uOLxNrNk8",
         duration_mins: 45,
         content_text: `📌 10-Dars Konspekti:
 1. NumPy — yuqori unumdorlikka ega ko'p o'lchovli massivlar va chiziqli algebra kutubxonasi.

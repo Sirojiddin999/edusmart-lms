@@ -48,10 +48,13 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-async function loadCourses() {
+async function loadCourses(notify = false, btn = null) {
+  const origHtml = btn ? btn.innerHTML : '';
+  if (btn) { btn.disabled = true; btn.innerHTML = '⏳...'; }
   try {
     const r = await fetch('/api/teacher/courses', { headers: Auth.getHeaders() });
     ALL_COURSES = await r.json();
+    window.ALL_COURSES = ALL_COURSES;
     const badge = document.getElementById('coursesBadge');
     if (badge) badge.innerText = ALL_COURSES.length;
     renderCourses(ALL_COURSES);
@@ -65,7 +68,17 @@ async function loadCourses() {
       if (curVal) select.value = curVal;
       else if (ALL_COURSES.length > 0) select.value = ALL_COURSES[0].id;
     }
-} catch (e) { console.error("Kurslarni yuklashda xatolik:", e); }
+    if (notify && typeof showToast === 'function') {
+      showToast(`✅ Kurslar ro‘yxati yangilandi (${ALL_COURSES.length} ta kurs)!`, 'success');
+    }
+  } catch (e) {
+    console.error("Kurslarni yuklashda xatolik:", e);
+    if (notify && typeof showToast === 'function') {
+      showToast("Kurslarni yangilashda xatolik", 'error');
+    }
+  } finally {
+    if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
+  }
 }
 
 function renderCourses(courses) {
@@ -90,32 +103,45 @@ function renderCourses(courses) {
     <div class="l-card" style="display:flex; flex-direction:column; justify-content:space-between; border: 1.5px solid #e2e8f0; border-radius: 16px; transition: transform 0.2s, box-shadow 0.2s;">
       <div>
         <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px; gap:8px;">
-          <div class="l-card-title" style="font-size:1.15rem; font-weight:800; color:#1e293b; margin-bottom:0;">
+          <div class="l-card-title" style="font-size:1.12rem; font-weight:800; color:#1e293b; margin-bottom:0;">
             📚 ${c.title}
           </div>
-          <span class="badge badge-primary" style="font-size:0.75rem; font-weight:800; white-space:nowrap; padding:4px 10px;">
-            ${c.lessons_count || 0} ta dars
-          </span>
+          <div style="display:flex; gap:6px; flex-wrap:wrap; justify-content:flex-end;">
+            <span class="badge badge-primary" style="font-size:0.73rem; font-weight:800; white-space:nowrap; padding:3px 9px;">
+              📖 ${c.lessons_count || 0} ta dars
+            </span>
+            <span class="badge badge-emerald" style="font-size:0.73rem; font-weight:800; white-space:nowrap; padding:3px 9px;">
+              👥 ${c.students_count || 0} o‘quvchi
+            </span>
+          </div>
         </div>
-        <div class="l-card-desc" style="color:#64748b; font-size:0.88rem; line-height:1.55; margin-bottom:16px;">
+        ${c.teacher_name ? `<div style="font-size:0.76rem; font-weight:700; color:#4f46e5; margin-bottom:6px;">👨‍🏫 Kurs o‘qituvchisi: ${c.teacher_name}</div>` : ''}
+        <div class="l-card-desc" style="color:#64748b; font-size:0.86rem; line-height:1.55; margin-bottom:14px;">
           ${c.description || 'Ushbu kurs bo‘yicha qo‘shimcha ma\'lumot kiritilmagan'}
         </div>
       </div>
 
-      <div class="l-card-footer" style="padding-top:14px; border-top:1px solid #f1f5f9; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-        <button class="btn btn-primary btn-sm" onclick="openAddLessonForCourse(${c.id}, '${c.title.replace(/'/g, "\\'")}')" style="font-weight:800; display:inline-flex; align-items:center; gap:6px; box-shadow:0 2px 8px rgba(79,70,229,0.25);" title="Ushbu kurs ichiga dars qo‘shish">
-          ➕ Dars qo‘shish
-        </button>
-        <div style="display:flex; gap:6px; align-items:center;">
-          <button class="btn btn-ghost btn-sm" onclick="filterLessonsByCourse(${c.id}, '${c.title.replace(/'/g, "\\'")}')" style="font-weight:700; color:#475569;" title="Kurs darslarini ko‘rish">
-            👁️ Darslar
+      <div class="l-card-footer" style="padding-top:12px; border-top:1px solid #f1f5f9; display:flex; flex-direction:column; gap:8px;">
+        <div style="display:flex; gap:8px; flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="openAddLessonForCourse(${c.id}, '${c.title.replace(/'/g, "\\'")}')" style="flex:1; font-weight:800; display:inline-flex; align-items:center; justify-content:center; gap:5px; box-shadow:0 2px 8px rgba(79,70,229,0.22);" title="Ushbu kurs ichiga dars qo‘shish">
+            ➕ Dars qo‘shish
           </button>
-          <button class="btn btn-ghost btn-sm" onclick="editCourse(${c.id})" style="font-weight:700;" title="Kursni tahrirlash">
-            ✏️
+          <button class="btn btn-emerald btn-sm" onclick="openCreateStudentModal(${c.id}, '${c.title.replace(/'/g, "\\'")}')" style="flex:1; font-weight:800; display:inline-flex; align-items:center; justify-content:center; gap:5px;" title="Ushbu kurs uchun o‘quvchiga login va parol yaratib berish">
+            👤+ O‘quvchiga Login/Parol
           </button>
-          <button class="btn btn-danger btn-sm" onclick="delCourse(${c.id})" style="font-weight:700;" title="Kursni o‘chirish">
-            🗑️
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:6px;">
+          <button class="btn btn-ghost btn-xs" onclick="filterLessonsByCourse(${c.id}, '${c.title.replace(/'/g, "\\'")}')" style="font-weight:700; color:#475569;" title="Kurs darslarini ko‘rish">
+            👁️ Darslarni ko‘rish (${c.lessons_count || 0})
           </button>
+          <div style="display:flex; gap:6px;">
+            <button class="btn btn-ghost btn-xs" onclick="editCourse(${c.id})" style="font-weight:700;" title="Kursni tahrirlash">
+              ✏️ Tahrirlash
+            </button>
+            <button class="btn btn-danger btn-xs" onclick="delCourse(${c.id})" style="font-weight:700;" title="Kursni o‘chirish">
+              🗑️
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -7,7 +7,7 @@ const db = require('./database');
 try {
   const seed210 = require('./seed_210_students');
   const cnt = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
-  if (cnt !== 210) {
+  if (cnt < 210) {
     seed210();
   }
   const updateUzVideos = require('./update_uz_videos');
@@ -61,11 +61,38 @@ function getProgress(userId) {
   return p;
 }
 
-function getAllLessons(courseId = null) {
-  if (courseId) {
-    return db.prepare("SELECT * FROM lessons WHERE course_id=? ORDER BY order_num ASC").all(courseId);
+const updateUzVideos = require('./update_uz_videos');
+
+function ensureCleanLessonVideo(lesson) {
+  if (!lesson) return lesson;
+  const fallback = updateUzVideos.getCurriculumVideoUrl(lesson.course_id, lesson.order_num, lesson.title);
+  const fixedUrl = updateUzVideos.normalizeYouTubeEmbedUrl(lesson.video_url, fallback);
+  if (fixedUrl !== lesson.video_url && lesson.id) {
+    try {
+      db.prepare("UPDATE lessons SET video_url=? WHERE id=?").run(fixedUrl, lesson.id);
+    } catch {}
+    lesson.video_url = fixedUrl;
   }
-  return db.prepare("SELECT * FROM lessons ORDER BY course_id ASC, order_num ASC").all();
+  return lesson;
+}
+
+function getAllLessons(courseId = null) {
+  let rows;
+  if (courseId) {
+    rows = db.prepare("SELECT * FROM lessons WHERE course_id=? ORDER BY order_num ASC, id ASC").all(courseId);
+  } else {
+    rows = db.prepare("SELECT * FROM lessons ORDER BY course_id ASC, order_num ASC, id ASC").all();
+  }
+  // Bir xil (course_id, order_num) bo'yicha dublikatlarni filtrlash va video_url larni tekshirish
+  const seen = new Set();
+  const clean = [];
+  for (const r of rows) {
+    const key = `${r.course_id}_${r.order_num}`;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    clean.push(ensureCleanLessonVideo(r));
+  }
+  return clean;
 }
 
 function getAllCourses() {
@@ -161,38 +188,111 @@ app.post('/api/auth/register-student', (req, res) => {
   }
 });
 
-// Student login (agar o'qituvchi 1111 logini bilan kirsa, o'qituvchi sifatida qabul qilinadi)
+// Student login (agar o'qituvchi logini bilan kirsa ham o'qituvchi sifatida qabul qilinadi)
 app.post('/api/auth/login-student', (req, res) => {
   try {
     const { username, pin_code } = req.body;
-    const cleanUser = (username || '').trim().toLowerCase();
+    const rawUser = (username || '').trim();
+    const cleanUser = rawUser.toLowerCase();
+    const rawPin = (pin_code || '').trim();
 
-    // 1111 yoki Marufjon orqali kirilsa o'qituvchi deb tanish
-    if (cleanUser === '1111' || cleanUser === 'marufjon') {
-      const teacher = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
-      if (teacher) {
+    // 1. O'qituvchi logini bo'lsa (1111, Marufjon yoki yangi ro'yxatdan o'tgan o'qituvchi)
+    let teacher = db.prepare("SELECT * FROM users WHERE LOWER(username)=? AND role='teacher'").get(cleanUser);
+    if (!teacher && (cleanUser === '1111' || cleanUser === 'marufjon')) {
+      teacher = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
+    }
+    if (teacher) {
+      const passMatch = (cleanUser === '1111' || cleanUser === 'marufjon') ||
+        (teacher.pin_code && teacher.pin_code === rawPin) ||
+        bcrypt.compareSync(rawPin, teacher.password_hash);
+      if (passMatch) {
         const payload = { id: teacher.id, full_name: teacher.full_name, username: teacher.username, role: 'teacher' };
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
         return res.json({ success: true, token, user: payload, role: 'teacher' });
       }
     }
 
-    const u = db.prepare("SELECT * FROM users WHERE username=? AND role='student'").get(username?.trim());
-    if (!u || !bcrypt.compareSync(pin_code, u.password_hash))
+    // 2. O'quvchi logini bo'lsa (katta-kichik harflarga sezgir bo'lmagan qidiruv)
+    const u = db.prepare("SELECT * FROM users WHERE LOWER(username)=? AND role='student'").get(cleanUser);
+    const studentPassOk = u && ((u.pin_code && u.pin_code === rawPin) || bcrypt.compareSync(rawPin, u.password_hash));
+    if (!studentPassOk)
       return res.status(401).json({ error: "Login yoki parol noto‘g‘ri" });
     
     // Agar pin_code avval yozilmagan bo'lsa, o'qituvchi ko'rishi uchun saqlab qo'yish
-    if (!u.pin_code && pin_code) {
-      db.prepare("UPDATE users SET pin_code=? WHERE id=?").run(pin_code, u.id);
+    if (!u.pin_code && rawPin) {
+      db.prepare("UPDATE users SET pin_code=? WHERE id=?").run(rawPin, u.id);
     }
     db.prepare("UPDATE student_progress SET last_active=CURRENT_TIMESTAMP WHERE user_id=?").run(u.id);
-    const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'student', pin_code: u.pin_code || pin_code };
+    const prog = getProgress(u.id);
+    const payload = {
+      id: u.id,
+      full_name: u.full_name,
+      username: u.username,
+      role: 'student',
+      pin_code: u.pin_code || rawPin,
+      course_id: prog?.last_course_id || null
+    };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
     res.json({ success: true, token, user: payload, role: 'student' });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// Teacher login (Marufjon yoki 1111 logini bilan kirish)
+// Teacher register (Yangi o'qituvchi uchun login va parol yaratish + ixtiyoriy ilk kursini ochish)
+app.post('/api/auth/register-teacher', (req, res) => {
+  try {
+    const { full_name, username, password, course_title, course_description } = req.body;
+    const fname = (full_name || '').trim();
+    const uname = (username || '').trim();
+    const pass = (password || '').trim();
+
+    if (!fname || fname.length < 2) {
+      return res.status(400).json({ error: "O‘qituvchi ism va familiyasini kiriting!" });
+    }
+    if (!uname || uname.length < 2) {
+      return res.status(400).json({ error: "O‘qituvchi logini kamida 2 ta belgidan iborat bo‘lishi kerak!" });
+    }
+    if (!pass || pass.length < 3) {
+      return res.status(400).json({ error: "Parol kamida 3 ta belgidan iborat bo‘lishi kerak!" });
+    }
+
+    const exists = db.prepare("SELECT id FROM users WHERE LOWER(username)=?").get(uname.toLowerCase());
+    if (exists) {
+      return res.status(409).json({ error: "Ushbu login band! Boshqa login tanlang." });
+    }
+
+    const hash = bcrypt.hashSync(pass, 10);
+    const r = db.prepare("INSERT INTO users (role, full_name, username, password_hash, pin_code) VALUES ('teacher', ?, ?, ?, ?)")
+      .run(fname, uname, hash, pass);
+    const teacherId = r.lastInsertRowid;
+
+    let createdCourse = null;
+    if (course_title && course_title.trim().length > 1) {
+      const cr = db.prepare("INSERT INTO courses (title, description, teacher_id, teacher_name) VALUES (?, ?, ?, ?)")
+        .run(course_title.trim(), (course_description || '').trim(), teacherId, fname);
+      createdCourse = {
+        id: cr.lastInsertRowid,
+        title: course_title.trim(),
+        description: (course_description || '').trim(),
+        teacher_id: teacherId,
+        teacher_name: fname
+      };
+    }
+
+    const payload = { id: teacherId, full_name: fname, username: uname, role: 'teacher' };
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
+    res.json({
+      success: true,
+      message: "Yangi o‘qituvchi hisobi muvaffaqiyatli yaratildi!",
+      token,
+      user: payload,
+      created_course: createdCourse
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
+});
+
+// Teacher login (Barcha ro'yxatdan o'tgan o'qituvchilar hamda Marufjon / 1111 logini bilan kirish)
 app.post('/api/auth/login-teacher', (req, res) => {
   try {
     const { username, password } = req.body;
@@ -200,19 +300,26 @@ app.post('/api/auth/login-teacher', (req, res) => {
       return res.status(400).json({ error: "O‘qituvchi logini kiritilishi shart" });
     }
     const cleanUser = username.trim().toLowerCase();
+    const rawPass = (password || '').trim();
+    const cleanPass = rawPass.toLowerCase();
+
     let u = db.prepare("SELECT * FROM users WHERE LOWER(username)=? AND role='teacher'").get(cleanUser);
     if (!u && (cleanUser === '1111' || cleanUser === 'marufjon' || cleanUser === 'admin' || cleanUser.includes('maruf'))) {
-      u = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
+      u = db.prepare("SELECT * FROM users WHERE role='teacher' ORDER BY id ASC LIMIT 1").get();
     }
     if (!u) {
-      return res.status(401).json({ error: "Bunday o‘qituvchi logini topilmadi" });
+      return res.status(401).json({ error: "Bunday o‘qituvchi logini topilmadi. Yangi o‘qituvchi bo‘lsangiz, ro‘yxatdan o‘ting!" });
     }
-    const pass = (password || '').trim().toLowerCase();
-    if (pass && pass !== '1111' && pass !== 'marufjon' && !bcrypt.compareSync((password || '').trim(), u.password_hash)) {
+
+    const isDefaultBypass = (cleanUser === '1111' || cleanUser === 'marufjon') && (cleanPass === '1111' || cleanPass === 'marufjon');
+    const isPinMatch = u.pin_code && u.pin_code === rawPass;
+    const isHashMatch = rawPass && bcrypt.compareSync(rawPass, u.password_hash);
+
+    if (!isDefaultBypass && !isPinMatch && !isHashMatch) {
       return res.status(401).json({ error: "Parol noto‘g‘ri" });
     }
     const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'teacher' };
-    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
+    const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '30d' });
     res.json({ success: true, token, user: payload });
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
@@ -355,8 +462,9 @@ app.post('/api/student/select-course', auth, onlyStudent, (req, res) => {
 // Get single lesson (va joriy holatni serverda darhol saqlash)
 app.get('/api/student/lessons/:id', auth, onlyStudent, (req, res) => {
   try {
-    const lesson = db.prepare("SELECT * FROM lessons WHERE id=?").get(req.params.id);
+    let lesson = db.prepare("SELECT * FROM lessons WHERE id=?").get(req.params.id);
     if (!lesson) return res.status(404).json({ error: "Dars topilmadi" });
+    lesson = ensureCleanLessonVideo(lesson);
 
     // Foydalanuvchi qaysi darsni ochsa, serverda oxirgi holat sifatida saqlanadi
     db.prepare("UPDATE student_progress SET last_lesson_id=?, last_course_id=?, last_active=CURRENT_TIMESTAMP WHERE user_id=?")
@@ -634,15 +742,26 @@ app.get('/api/public/certificate/:id', (req, res) => {
 
 // â”€â”€â”€ TEACHER ROUTES â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
 
-// Force refresh 210 students endpoint
+// Force refresh students & courses endpoint (preserves newly added students and courses)
 app.all('/api/teacher/refresh-students', auth, onlyTeacher, (req, res) => {
   try {
-    const runSeed210 = require('./seed_210_students.js');
-    runSeed210();
+    let count = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
+    if (count < 210) {
+      const runSeed210 = require('./seed_210_students.js');
+      runSeed210();
+    }
     const updateVideos = require('./update_uz_videos.js');
     updateVideos();
-    const count = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
-    res.json({ success: true, count, message: `${count} nafar talaba bazaga muvaffaqiyatli yangilandi!` });
+    count = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
+    const coursesCount = db.prepare("SELECT COUNT(*) as c FROM courses").get().c;
+    const lessonsCount = db.prepare("SELECT COUNT(*) as c FROM lessons").get().c;
+    res.json({
+      success: true,
+      count,
+      courses_count: coursesCount,
+      lessons_count: lessonsCount,
+      message: `${count} nafar o‘quvchi, ${coursesCount} ta kurs va ${lessonsCount} ta dars yangilandi!`
+    });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
@@ -652,7 +771,7 @@ app.all('/api/teacher/refresh-students', auth, onlyTeacher, (req, res) => {
 app.get('/api/teacher/students', auth, onlyTeacher, (req, res) => {
   try {
     let studentCount = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
-    if (studentCount !== 210) {
+    if (studentCount < 210) {
       try {
         const runSeed210 = require('./seed_210_students.js');
         runSeed210();
@@ -836,7 +955,7 @@ app.get('/api/teacher/students/:id/details', auth, onlyTeacher, (req, res) => {
 app.get('/api/teacher/leaderboard', auth, onlyTeacher, (req, res) => {
   try {
     let studentCount = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
-    if (studentCount !== 210) {
+    if (studentCount < 210) {
       try {
         const runSeed210 = require('./seed_210_students.js');
         runSeed210();
@@ -964,9 +1083,11 @@ app.get('/api/teacher/courses', auth, onlyTeacher, (req, res) => {
   try {
     const courses = getAllCourses();
     const lessons = getAllLessons();
+    const progRows = db.prepare("SELECT last_course_id FROM student_progress").all();
     const coursesWithLessons = courses.map(c => ({
       ...c,
-      lessons_count: lessons.filter(l => l.course_id === c.id).length
+      lessons_count: lessons.filter(l => l.course_id === c.id).length,
+      students_count: progRows.filter(p => p.last_course_id === c.id).length
     }));
     res.json(coursesWithLessons);
   } catch { res.status(500).json({ error: "Server xatosi" }); }
@@ -977,9 +1098,96 @@ app.post('/api/teacher/courses', auth, onlyTeacher, (req, res) => {
   try {
     const { title, description } = req.body;
     if (!title?.trim()) return res.status(400).json({ error: "Sarlavha majburiy" });
-    const r = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)").run(title.trim(), description || '');
-    res.json({ success: true, id: r.lastInsertRowid });
+    const teacherName = req.user.full_name || req.user.username || 'O‘qituvchi';
+    const r = db.prepare("INSERT INTO courses (title, description, teacher_id, teacher_name) VALUES (?, ?, ?, ?)")
+      .run(title.trim(), description || '', req.user.id, teacherName);
+    res.json({ success: true, id: r.lastInsertRowid, title: title.trim() });
   } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }
+});
+
+// Get students of a specific course (with login & password for the teacher)
+app.get('/api/teacher/courses/:id/students', auth, onlyTeacher, (req, res) => {
+  try {
+    const courseId = parseInt(req.params.id);
+    const course = db.prepare("SELECT * FROM courses WHERE id=?").get(courseId);
+    if (!course) return res.status(404).json({ error: "Kurs topilmadi" });
+
+    const students = db.prepare(`
+      SELECT u.id, u.full_name, u.username, COALESCE(u.pin_code, '1234') as pin_code,
+             u.created_at, p.last_course_id, p.completed_lesson_ids
+      FROM users u
+      INNER JOIN student_progress p ON u.id = p.user_id
+      WHERE u.role = 'student' AND p.last_course_id = ?
+      ORDER BY u.id DESC
+    `).all(courseId);
+
+    res.json({ success: true, course, students });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
+});
+
+// O'qituvchi tomonidan yangi o'quvchi uchun login va parol yaratish hamda tanlangan kursga biriktirish
+app.post('/api/teacher/students', auth, onlyTeacher, (req, res) => {
+  try {
+    const { full_name, username, pin_code, course_id } = req.body;
+    const fname = (full_name || '').trim();
+    const uname = (username || '').trim();
+    const pin = (pin_code || '').trim();
+    const targetCourseId = parseInt(course_id) || 1;
+
+    if (!fname || fname.length < 2) {
+      return res.status(400).json({ error: "O‘quvchi ism va familiyasini kiriting!" });
+    }
+    if (!uname || uname.length < 2) {
+      return res.status(400).json({ error: "O‘quvchi logini kamida 2 ta belgidan iborat bo‘lishi kerak!" });
+    }
+    if (!pin || pin.length < 2) {
+      return res.status(400).json({ error: "O‘quvchi parolini kiriting!" });
+    }
+
+    const exist = db.prepare("SELECT id FROM users WHERE LOWER(username)=?").get(uname.toLowerCase());
+    if (exist) {
+      return res.status(409).json({ error: "Bu login band! Boshqa login kiriting." });
+    }
+
+    const course = db.prepare("SELECT * FROM courses WHERE id=?").get(targetCourseId) || db.prepare("SELECT * FROM courses ORDER BY id ASC LIMIT 1").get();
+    const finalCourseId = course ? course.id : 1;
+    const firstLesson = db.prepare("SELECT id FROM lessons WHERE course_id=? ORDER BY order_num ASC LIMIT 1").get(finalCourseId);
+
+    const hash = bcrypt.hashSync(pin, 10);
+    const r = db.prepare("INSERT INTO users (role, full_name, username, password_hash, pin_code) VALUES ('student', ?, ?, ?, ?)")
+      .run(fname, uname, hash, pin);
+    const studentId = r.lastInsertRowid;
+
+    db.prepare("INSERT INTO student_progress (user_id, last_lesson_id, last_course_id, completed_lesson_ids, scores_json) VALUES (?, ?, ?, '[]', '{}')")
+      .run(studentId, firstLesson ? firstLesson.id : null, finalCourseId);
+
+    res.json({
+      success: true,
+      message: "O‘quvchi uchun login va parol yaratildi hamda kursga biriktirildi!",
+      student: {
+        id: studentId,
+        full_name: fname,
+        username: uname,
+        pin_code: pin,
+        course_id: finalCourseId,
+        course_title: course ? course.title : "Kurs"
+      }
+    });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
+});
+
+// Get all teachers & create teacher from panel
+app.get('/api/teacher/teachers', auth, onlyTeacher, (req, res) => {
+  try {
+    const teachers = db.prepare("SELECT id, full_name, username, COALESCE(pin_code, '') as pin_code, created_at FROM users WHERE role='teacher' ORDER BY id ASC").all();
+    res.json({ success: true, teachers });
+  } catch (e) {
+    res.status(500).json({ error: "Server xatosi: " + e.message });
+  }
 });
 
 // Update course
@@ -1001,12 +1209,9 @@ app.delete('/api/teacher/courses/:id', auth, onlyTeacher, (req, res) => {
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-function normalizeVideoEmbedUrl(rawUrl) {
-  const s = (rawUrl || '').trim();
-  if (!s) return 'https://www.youtube.com/embed/kqtD5dpn9C8';
-  const m = s.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
-  if (m && m[1]) return `https://www.youtube.com/embed/${m[1]}`;
-  return s;
+function normalizeVideoEmbedUrl(rawUrl, courseId = 1, orderNum = 1, title = '') {
+  const fallback = updateUzVideos.getCurriculumVideoUrl(courseId, orderNum, title);
+  return updateUzVideos.normalizeYouTubeEmbedUrl(rawUrl, fallback);
 }
 
 // Add lesson
@@ -1023,7 +1228,7 @@ app.post('/api/teacher/lessons', auth, onlyTeacher, (req, res) => {
 
     const r = db.prepare(`INSERT INTO lessons (course_id,order_num,title,description,video_url,content_text,hashtags,quiz_json,min_score,duration_mins)
       VALUES (?,?,?,?,?,?,?,?,?,?)`).run(
-      targetCourseId, maxOrder + 1, title.trim(), description || '', normalizeVideoEmbedUrl(video_url), content_text || '',
+      targetCourseId, maxOrder + 1, title.trim(), description || '', normalizeVideoEmbedUrl(video_url, targetCourseId, maxOrder + 1, title), content_text || '',
       JSON.stringify(tags), JSON.stringify(quiz),
       min_score ?? 5, duration_mins ?? 30
     );
@@ -1043,7 +1248,7 @@ app.put('/api/teacher/lessons/:id', auth, onlyTeacher, (req, res) => {
 
     db.prepare(`UPDATE lessons SET course_id=COALESCE(?, course_id), title=?,description=?,video_url=?,content_text=?,hashtags=?,quiz_json=?,min_score=?,duration_mins=?
       WHERE id=?`).run(
-      course_id || null, title || '', description || '', normalizeVideoEmbedUrl(video_url), content_text || '',
+      course_id || null, title || '', description || '', normalizeVideoEmbedUrl(video_url, course_id || 1, 1, title), content_text || '',
       JSON.stringify(tags), JSON.stringify(quiz), min_score ?? 5, duration_mins ?? 30, req.params.id
     );
     res.json({ success: true });
@@ -1113,12 +1318,12 @@ app.put('/api/teacher/settings', auth, onlyTeacher, (req, res) => {
 // Update student credentials by teacher (from settings)
 app.put('/api/teacher/students/:id/credentials', auth, onlyTeacher, (req, res) => {
   try {
-    const { username, pin_code, full_name } = req.body;
+    const { username, pin_code, full_name, course_id } = req.body;
     const student = db.prepare("SELECT id FROM users WHERE id=? AND role='student'").get(req.params.id);
     if (!student) return res.status(404).json({ error: "O‘quvchi topilmadi" });
 
     if (username && username.trim()) {
-      const exist = db.prepare("SELECT id FROM users WHERE username=? AND id!=?").get(username.trim(), req.params.id);
+      const exist = db.prepare("SELECT id FROM users WHERE LOWER(username)=? AND id!=?").get(username.trim().toLowerCase(), req.params.id);
       if (exist) return res.status(409).json({ error: "Bu login band" });
       db.prepare("UPDATE users SET username=? WHERE id=?").run(username.trim(), req.params.id);
     }
@@ -1128,6 +1333,13 @@ app.put('/api/teacher/students/:id/credentials', auth, onlyTeacher, (req, res) =
     if (pin_code && pin_code.trim()) {
       const hash = bcrypt.hashSync(pin_code.trim(), 10);
       db.prepare("UPDATE users SET password_hash=?, pin_code=? WHERE id=?").run(hash, pin_code.trim(), req.params.id);
+    }
+    if (course_id) {
+      const cid = parseInt(course_id);
+      getProgress(req.params.id);
+      const firstLesson = db.prepare("SELECT id FROM lessons WHERE course_id=? ORDER BY order_num ASC LIMIT 1").get(cid);
+      db.prepare("UPDATE student_progress SET last_course_id=?, last_lesson_id=COALESCE(?, last_lesson_id) WHERE user_id=?")
+        .run(cid, firstLesson ? firstLesson.id : null, req.params.id);
     }
     res.json({ success: true, message: "O‘quvchi ma'lumotlari muvaffaqiyatli yangilandi" });
   } catch (e) { res.status(500).json({ error: "Server xatosi: " + e.message }); }

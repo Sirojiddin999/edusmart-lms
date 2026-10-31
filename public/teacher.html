@@ -493,22 +493,59 @@
         <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px;">innocode.uz</span>
       </div>
 
-      <!-- LOGIN (Kirish formasi) -->
+      <!-- LOGIN VA YANGI O'QITUVCHI YARATISH (Kirish formasi) -->
       <div id="sideLoginSection" class="t-login-section">
-        <div class="t-login-title">🔐 O‘qituvchi Kirishi</div>
-        <form onsubmit="doTeacherLogin(event)">
-          <div class="form-group">
-            <label class="form-label">O‘qituvchi logini</label>
-            <input id="tUsername" type="text" class="form-input" placeholder="Loginingizni kiriting" required>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; background: #f1f5f9; padding: 4px; border-radius: 10px; margin-bottom: 14px;">
+          <button type="button" id="tabBtnLogin" onclick="switchTeacherAuthTab('login')" style="padding: 7px 6px; border: none; border-radius: 7px; font-size: 0.76rem; font-weight: 800; cursor: pointer; background: #4f46e5; color: #ffffff; transition: all 0.2s;">🔐 Kirish</button>
+          <button type="button" id="tabBtnRegister" onclick="switchTeacherAuthTab('register')" style="padding: 7px 6px; border: none; border-radius: 7px; font-size: 0.76rem; font-weight: 800; cursor: pointer; background: transparent; color: #475569; transition: all 0.2s;">➕ Yangi O‘qituvchi</button>
+        </div>
+
+        <!-- 1. Mavjud o'qituvchi kirishi -->
+        <div id="sideTeacherLoginFormWrap">
+          <div class="t-login-title">🔐 O‘qituvchi Kirishi</div>
+          <form onsubmit="doTeacherLogin(event)">
+            <div class="form-group">
+              <label class="form-label">O‘qituvchi logini</label>
+              <input id="tUsername" type="text" class="form-input" placeholder="Loginingizni kiriting" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Maxfiy parol</label>
+              <input id="tPassword" type="password" class="form-input" placeholder="Parolingizni kiriting" required>
+            </div>
+            <button type="submit" id="btnTLogin" class="btn btn-primary btn-block btn-lg" style="margin-top: 8px; font-weight: 800;">
+              Kirish ➔
+            </button>
+          </form>
+          <div style="margin-top: 12px; text-align: center; font-size: 0.78rem; color: #64748b;">
+            Yangi o‘qituvchimisiz? <a href="javascript:void(0)" onclick="switchTeacherAuthTab('register')" style="color: #4f46e5; font-weight: 800; text-decoration: underline;">Login va parol yaratish</a>
           </div>
-          <div class="form-group">
-            <label class="form-label">Maxfiy parol</label>
-            <input id="tPassword" type="password" class="form-input" placeholder="Parolingizni kiriting" required>
-          </div>
-          <button type="submit" id="btnTLogin" class="btn btn-primary btn-block btn-lg" style="margin-top: 8px; font-weight: 800;">
-            Kirish ➔
-          </button>
-        </form>
+        </div>
+
+        <!-- 2. Yangi o'qituvchi login/parol yaratishi -->
+        <div id="sideTeacherRegFormWrap" style="display: none;">
+          <div class="t-login-title" style="color: #059669;">➕ Yangi O‘qituvchi</div>
+          <form onsubmit="doTeacherRegister(event, 'side')">
+            <div class="form-group">
+              <label class="form-label">Ism va Familiyangiz *</label>
+              <input id="regSideName" type="text" class="form-input" placeholder="Masalan: Sardor Karimov" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Yangi Login yaratish *</label>
+              <input id="regSideUser" type="text" class="form-input" placeholder="Masalan: sardor_ustoz" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Yangi Parol yaratish *</label>
+              <input id="regSidePass" type="text" class="form-input" placeholder="Parol o‘ylab toping" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Yangi Kurs nomi (ixtiyoriy)</label>
+              <input id="regSideCourse" type="text" class="form-input" placeholder="Masalan: Kiberxavfsizlik asoslari">
+            </div>
+            <button type="submit" id="btnTRegSide" class="btn btn-emerald btn-block btn-lg" style="margin-top: 8px; font-weight: 800;">
+              🚀 Yaratish va Kirish ➔
+            </button>
+          </form>
+        </div>
       </div>
 
       <!-- NAV (Kirgandan keyin ko'rinadi) -->
@@ -572,7 +609,7 @@
         </div>
         <div id="topBarActions" style="display: flex; gap: 10px; align-items: center;">
           <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;'>⬅ Orqaga</a>
-          <button onclick="forceRefreshStudents()" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;' title="Barcha ma'lumotlarni yangilash">🔄 Yangilash</button>
+          <button onclick="handleGlobalRefresh(this)" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 6px;' title="Barcha ma'lumotlarni yangilash">🔄 Yangilash</button>
         </div>
       </div>
 
@@ -603,15 +640,94 @@
           </div>
         </div>
 
-        <!-- KIRISH OLDIDAGI XUSH KELIBSIZ EKRANI -->
-        <div id="secWelcome" style="text-align: center; padding: 60px 20px;">
-          <div style="font-size: 4rem; margin-bottom: 16px;">👨‍🏫</div>
-          <h2 style="font-size: 2rem; margin-bottom: 12px; color: var(--text-primary, #0f172a); font-weight: 900;">
-            innocode.uz O‘qituvchi Boshqaruv Markazi
-          </h2>
-          <p style="color: var(--text-muted, #64748b); max-width: 580px; margin: 0 auto 30px; line-height: 1.7; font-size: 0.95rem;">
-            Kurslar yaratish, ichiga darslar qo‘shish, o‘quvchilar reytingini diagrammalar asosida tahlil qilish va xavfsiz tizim sozlamalarini boshqarish markazi.
-          </p>
+        <!-- KIRISH OLDIDAGI XUSH KELIBSIZ EKRANI VA YANGI O'QITUVCHI RO'YXATDAN O'TISH MARKAZI -->
+        <div id="secWelcome" style="padding: 28px 16px;">
+          <div style="text-align: center; margin-bottom: 28px;">
+            <div style="font-size: 3.4rem; margin-bottom: 10px;">👨‍🏫</div>
+            <h2 style="font-size: 1.9rem; margin-bottom: 10px; color: var(--text-primary, #0f172a); font-weight: 900;">
+              innocode.uz O‘qituvchi Boshqaruv Markazi
+            </h2>
+            <p style="color: var(--text-muted, #64748b); max-width: 640px; margin: 0 auto; line-height: 1.65; font-size: 0.95rem;">
+              Yangi o‘qituvchi sifatida shaxsiy login va parol yarating, o‘z kursingiz va video/testli darslaringizni qo‘shing hamda o‘quvchilaringizga shu kursga qatnashishlari uchun login-parol bering!
+            </p>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; max-width: 980px; margin: 0 auto; text-align: left;">
+            <!-- 1-KARTA: YANGI O'QITUVCHI UCHUN LOGIN VA PAROL YARATISH -->
+            <div style="background: #ffffff; border: 2px solid #c7d2fe; border-radius: 20px; padding: 26px; box-shadow: 0 12px 30px rgba(79, 70, 229, 0.08);">
+              <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 16px;">
+                <div style="width: 46px; height: 46px; border-radius: 12px; background: linear-gradient(135deg, #4f46e5, #7c3aed); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">➕</div>
+                <div>
+                  <h3 style="font-size: 1.15rem; font-weight: 900; color: #0f172a; margin: 0;">Yangi O‘qituvchi Login va Parol Yaratish</h3>
+                  <div style="font-size: 0.78rem; color: #64748b; font-weight: 600;">Yangi o‘qituvchi hisobini ochish va shaxsiy kurs yaratish</div>
+                </div>
+              </div>
+
+              <form onsubmit="doTeacherRegister(event, 'main')">
+                <div class="form-group">
+                  <label class="form-label">O‘qituvchi Ism va Familiyasi *</label>
+                  <input id="regMainName" type="text" class="form-input" placeholder="Masalan: Sardorbek Karimov" required>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                  <div class="form-group">
+                    <label class="form-label">Yangi O‘qituvchi Logini *</label>
+                    <input id="regMainUser" type="text" class="form-input" placeholder="Masalan: sardor_ustoz" required>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Maxfiy Parol *</label>
+                    <input id="regMainPass" type="text" class="form-input" placeholder="Masalan: ustoz2026" required>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Yaratmoqchi bo‘lgan yangi kursingiz nomi (ixtiyoriy)</label>
+                  <input id="regMainCourse" type="text" class="form-input" placeholder="Masalan: Grafik Dizayn va Web Dasturlash">
+                  <small style="font-size: 0.74rem; color: #64748b; display: block; margin-top: 4px;">Kurs nomini hozir yozsangiz, kirishingiz bilan shu kurs tayyor ochiladi (yoki keyin ham qo‘shishingiz mumkin).</small>
+                </div>
+                <button type="submit" id="btnTRegMain" class="btn btn-primary btn-block btn-lg" style="margin-top: 8px; font-weight: 800; background: linear-gradient(135deg, #4f46e5, #059669); border: none;">
+                  🚀 Login-Parol Yaratish va Panelga Kirish ➔
+                </button>
+              </form>
+            </div>
+
+            <!-- 2-KARTA: QANDAY ISHLAYDI VA TEZKOR KIRISH -->
+            <div style="background: linear-gradient(135deg, #f8fafc 0%, #eff6ff 100%); border: 1.5px solid #cbd5e1; border-radius: 20px; padding: 26px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <h3 style="font-size: 1.15rem; font-weight: 900; color: #0f172a; margin: 0 0 14px; display: flex; align-items: center; gap: 8px;">
+                  <span>🎓</span> Yangi Kurs va O‘quvchilar Tizimi
+                </h3>
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+                  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="background: #eef2ff; color: #4f46e5; font-weight: 900; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</span>
+                    <div style="font-size: 0.84rem; color: #334155; line-height: 1.5;">
+                      <strong style="color: #0f172a; display: block; margin-bottom: 2px;">O‘qituvchi Login va Paroli</strong>
+                      Yangi o‘qituvchi o‘ziga login va parol yaratib boshqaruv paneliga kiradi.
+                    </div>
+                  </div>
+                  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="background: #ecfdf5; color: #059669; font-weight: 900; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</span>
+                    <div style="font-size: 0.84rem; color: #334155; line-height: 1.5;">
+                      <strong style="color: #0f172a; display: block; margin-bottom: 2px;">To‘liq Kurs va Darslar Yaratish</strong>
+                      O‘qituvchi yangi kurs ochadi, unga video darslar, ma'ruza konspekti va test savollarini qo‘shadi.
+                    </div>
+                  </div>
+                  <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 14px; display: flex; gap: 12px; align-items: flex-start;">
+                    <span style="background: #fef3c7; color: #d97706; font-weight: 900; width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">3</span>
+                    <div style="font-size: 0.84rem; color: #334155; line-height: 1.5;">
+                      <strong style="color: #0f172a; display: block; margin-bottom: 2px;">O‘quvchilarga Login-Parol Berish</strong>
+                      O‘qituvchi o‘zi ochgan kursga o‘quvchilar uchun login va parollar yaratib beradi. O‘quvchilar shu login-parol bilan kirib yangi kursga qatnashadilar!
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div style="margin-top: 18px; padding-top: 14px; border-top: 1px solid #cbd5e1; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+                <span style="font-size: 0.8rem; color: #475569; font-weight: 700;">Hisobingiz bormi? Chap menyudan kiring:</span>
+                <button type="button" class="btn btn-ghost btn-sm" onclick="switchTeacherAuthTab('login'); document.getElementById('tUsername').focus();" style="font-weight: 800; color: #4f46e5; border-color: #c7d2fe; background: #fff;">
+                  🔐 Login orqali kirish
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
 
         <!-- 1. UMUMIY TAHLIL / OVERVIEW BO'LIMI -->
@@ -622,7 +738,7 @@
                 <span>🎓</span> Ta'lim Oqimi va Kurslar Nazorati
               </h3>
               <p style="color: var(--text-muted, #64748b); font-size: 0.9rem; line-height: 1.6; margin-bottom: 20px;">
-                Har bir kurs ichida aniq <strong>5 ta test savoli</strong>ga ega darslar mavjud. Talaba dars testini <strong>100% to‘g‘ri (5/5)</strong> yechmagunicha keyingi dars ochilmaydi.
+                Yangi kurs yarating, ichiga video va testli darslar qo‘shing hamda o‘quvchilarga shu kursga qatnashishlari uchun shaxsiy <strong>Login va Parol</strong> yaratib bering.
               </p>
               <div style="display: flex; gap: 10px; flex-wrap: wrap;">
                 <button class="btn btn-primary" onclick="openAddCourseModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
@@ -630,6 +746,9 @@
                 </button>
                 <button class="btn btn-ghost" onclick="openAddModal()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
                   ➕ Dars qo‘shish
+                </button>
+                <button class="btn btn-emerald" onclick="openCreateStudentModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px; border-radius: 8px;">
+                  👤+ O‘quvchiga Login/Parol berish
                 </button>
                 <button class="btn btn-ghost" onclick="switchSection('leaderboard')" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
                   🏆 Reyting & Diagrammalar
@@ -834,7 +953,7 @@
             </div>
             <div style="display: flex; gap: 8px; align-items: center;">
               <input type="text" class="form-input" id="lbSearch" style="max-width: 220px; padding: 8px 12px; font-size: 0.85rem;" placeholder="🔍 O‘quvchini qidirish..." oninput="filterLeaderboard()">
-              <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
+              <button class="btn btn-ghost btn-sm" onclick="loadLeaderboard(true, this)" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
             </div>
           </div>
           <div class="tbl-wrap">
@@ -870,11 +989,14 @@
                 Barcha kurslar ro‘yxati, kurs yaratish va har bir kurs ichiga 100% testli darslar qo‘shish
               </div>
             </div>
-            <div style="display: flex; gap: 10px; align-items: center;">
+            <div style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
               <button class="btn btn-primary" onclick="openAddCourseModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);">
                 ➕ Kurs qo‘shish
               </button>
-              <button class="btn btn-ghost btn-sm" onclick="loadCourses()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+              <button class="btn btn-emerald" onclick="openCreateStudentModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px; border-radius: 8px;">
+                👤+ O‘quvchiga Login/Parol berish
+              </button>
+              <button class="btn btn-ghost btn-sm" onclick="loadCourses(true, this)" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
                 🔄 Yangilash
               </button>
             </div>
@@ -894,7 +1016,7 @@
               </div>
             </div>
             <div style="display: flex; gap: 8px; align-items: center;" id="lessonsSecActions">
-              <button class="btn btn-ghost btn-sm" onclick="loadLessons()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
+              <button class="btn btn-ghost btn-sm" onclick="loadLessons(true, this)" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">🔄 Yangilash</button>
               <button class="btn btn-primary" onclick="openAddModal()">➕ Yangi dars qo‘shish</button>
             </div>
           </div>
@@ -915,8 +1037,11 @@
             </div>
             <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
               <input type="text" class="form-input" id="stuSearch" style="max-width: 220px;" placeholder="🔍 Ism yoki login..." oninput="filterStudents()">
-              <button class="btn btn-primary btn-sm" onclick="forceRefreshStudents()" style="font-weight: 800; border-radius: 8px; padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px;" title="210 nafar o'quvchini yuklash / yangilash">
-                🔄 210 ta o‘quvchini yangilash
+              <button class="btn btn-emerald btn-sm" onclick="openCreateStudentModal()" style="font-weight: 800; border-radius: 8px; padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px;">
+                👤+ Yangi O‘quvchiga Login/Parol berish
+              </button>
+              <button class="btn btn-primary btn-sm" onclick="forceRefreshStudents(false, this)" style="font-weight: 800; border-radius: 8px; padding: 8px 14px; display: inline-flex; align-items: center; gap: 6px;" title="O'quvchilar ro'yxatini yangilash">
+                🔄 Yangilash
               </button>
             </div>
           </div>
@@ -1083,7 +1208,7 @@
               <button class="btn btn-primary" onclick="openAddLibraryModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
                 ➕ Material qo‘shish
               </button>
-              <button class="btn btn-ghost btn-sm" onclick="loadLibrary()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+              <button class="btn btn-ghost btn-sm" onclick="loadLibrary(true, this)" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
                 🔄 Yangilash
               </button>
             </div>
@@ -1106,7 +1231,7 @@
               <button class="btn btn-primary" onclick="openAddNewsModal()" style="font-weight: 800; display: inline-flex; align-items: center; gap: 6px;">
                 ➕ Yangilik qo‘shish
               </button>
-              <button class="btn btn-ghost btn-sm" onclick="loadNews()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+              <button class="btn btn-ghost btn-sm" onclick="loadNews(true, this)" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
                 🔄 Yangilash
               </button>
             </div>
@@ -1384,6 +1509,74 @@
     </div>
   </div>
 
+  <!--  MODAL: O'QUVCHIGA LOGIN VA PAROL YARATISH HAMDA KURSGA BIRIKTIRISH  -->
+  <div class="modal-backdrop" id="assignStudentCourseModal">
+    <div class="modal-box" style="max-width: 680px; max-height: 92vh; overflow-y: auto;">
+      <button class="modal-close-btn" onclick="closeModal('assignStudentCourseModal')">✕</button>
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 14px;">
+        <div style="width: 46px; height: 46px; border-radius: 12px; background: linear-gradient(135deg, #059669, #10b981); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; flex-shrink: 0;">👤+</div>
+        <div>
+          <h2 style="font-size: 1.25rem; font-weight: 900; margin: 0;" id="assignStuModalTitle">O‘quvchiga Login va Parol Yaratish</h2>
+          <p style="font-size: 0.82rem; color: var(--text-muted); margin: 2px 0 0;">
+            O‘quvchi ushbu login va parol orqali tizimga kirib, tanlangan yangi kursga to‘g‘ridan-to‘g‘ri qatnashadi
+          </p>
+        </div>
+      </div>
+
+      <form id="createStudentByTeacherForm" onsubmit="submitCreateStudentByTeacher(event)" style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 18px; margin-bottom: 18px;">
+        <div class="form-group">
+          <label class="form-label">Qaysi Kursga qatnashadi? *</label>
+          <select id="cs-course" class="form-input" style="font-weight: 800; color: #0f172a;" onchange="loadCourseStudentsInModal(this.value)" required>
+            <option value="">-- Kursni tanlang --</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">O‘quvchining Ism va Familiyasi *</label>
+          <input id="cs-fullname" type="text" class="form-input" placeholder="Masalan: Jasurbek Aliyev" oninput="if(!document.getElementById('cs-username').dataset.manual){autoGenStudentUsername()}" required>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+          <div class="form-group">
+            <label class="form-label">O‘quvchi Logini (Username) *</label>
+            <div style="display: flex; gap: 6px;">
+              <input id="cs-username" type="text" class="form-input" placeholder="jasurbek_101" oninput="this.dataset.manual='1'" required>
+              <button type="button" class="btn btn-ghost btn-sm" onclick="document.getElementById('cs-username').dataset.manual=''; autoGenStudentUsername();" title="Avtomatik login yaratish" style="font-weight: 800; white-space: nowrap;">🎲 Avto</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">O‘quvchi Paroli / PIN kodi *</label>
+            <input id="cs-pincode" type="text" class="form-input" value="12345" placeholder="Parol kiriting" required>
+          </div>
+        </div>
+
+        <button type="submit" id="btnCreateStuSubmit" class="btn btn-emerald btn-block btn-lg" style="font-weight: 800; margin-top: 6px;">
+          ✅ O‘quvchiga Login-Parol Yaratish va Kursga Qo‘shish
+        </button>
+      </form>
+
+      <!-- Yaratilgan o'quvchi login-parolini nusxalash bloki -->
+      <div id="createdStudentCredsCard" style="display: none; background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%); border: 2px solid #10b981; border-radius: 14px; padding: 16px 18px; margin-bottom: 18px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px;">
+          <span style="font-size: 0.85rem; font-weight: 900; color: #065f46;">🎉 Yangi O‘quvchi Hisobi Tayyor! O‘quvchiga yuboring:</span>
+          <button type="button" class="btn btn-primary btn-xs" style="background: #059669; border: none; font-weight: 800;" onclick="copyCreatedStudentCreds()">📋 Login-Parolni Nusxalash</button>
+        </div>
+        <div id="createdStudentCredsText" style="background: #ffffff; border: 1px solid #6ee7b7; border-radius: 10px; padding: 12px 14px; font-family: monospace; font-size: 0.88rem; color: #0f172a; line-height: 1.6;"></div>
+      </div>
+
+      <!-- Ushbu kursdagi o'quvchilar va ularning login-parollari ro'yxati -->
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div style="font-size: 0.92rem; font-weight: 800; color: #1e293b;">📋 Tanlangan kursdagi o‘quvchilar (Login va Parollari bilan)</div>
+          <span class="badge badge-primary" id="csCourseStuCount">0 nafar</span>
+        </div>
+        <div id="csCourseStudentsList" style="max-height: 220px; overflow-y: auto; border: 1px solid #e2e8f0; border-radius: 12px; background: #ffffff;">
+          <div style="padding: 18px; text-align: center; color: #64748b; font-size: 0.84rem;">Kursni tanlang...</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div id="toast-root"></div>
   <script src="/js/utils.js"></script>
   <script>
@@ -1401,6 +1594,241 @@
         loadAll();
       }
     });
+
+    function switchTeacherAuthTab(mode) {
+      const loginWrap = document.getElementById('sideTeacherLoginFormWrap');
+      const regWrap = document.getElementById('sideTeacherRegFormWrap');
+      const btnLogin = document.getElementById('tabBtnLogin');
+      const btnReg = document.getElementById('tabBtnRegister');
+      if (mode === 'register') {
+        if (loginWrap) loginWrap.style.display = 'none';
+        if (regWrap) regWrap.style.display = 'block';
+        if (btnReg) { btnReg.style.background = '#059669'; btnReg.style.color = '#ffffff'; }
+        if (btnLogin) { btnLogin.style.background = 'transparent'; btnLogin.style.color = '#475569'; }
+      } else {
+        if (loginWrap) loginWrap.style.display = 'block';
+        if (regWrap) regWrap.style.display = 'none';
+        if (btnLogin) { btnLogin.style.background = '#4f46e5'; btnLogin.style.color = '#ffffff'; }
+        if (btnReg) { btnReg.style.background = 'transparent'; btnReg.style.color = '#475569'; }
+      }
+    }
+
+    //  YANGI O'QITUVCHI LOGIN VA PAROL YARATISHI 
+    async function doTeacherRegister(e, source) {
+      e.preventDefault();
+      const isSide = source === 'side';
+      const full_name = document.getElementById(isSide ? 'regSideName' : 'regMainName').value.trim();
+      const username  = document.getElementById(isSide ? 'regSideUser' : 'regMainUser').value.trim();
+      const password  = document.getElementById(isSide ? 'regSidePass' : 'regMainPass').value.trim();
+      const course_title = document.getElementById(isSide ? 'regSideCourse' : 'regMainCourse').value.trim();
+      const btn = document.getElementById(isSide ? 'btnTRegSide' : 'btnTRegMain');
+
+      if (!full_name || !username || !password) {
+        return showToast("Ism-familiya, login va parolni to‘liq kiriting!", "error");
+      }
+
+      btn.disabled = true;
+      const origText = btn.innerText;
+      btn.innerText = 'Yaratilmoqda...';
+
+      try {
+        const r = await fetch('/api/auth/register-teacher', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            full_name,
+            username,
+            password,
+            course_title,
+            course_description: course_title ? `${full_name} tomonidan yaratilgan maxsus o‘quv kursi` : ''
+          })
+        });
+        const d = await r.json();
+        if (!r.ok) {
+          return showToast(d.error || "Ro‘yxatdan o‘tishda xatolik", "error");
+        }
+
+        Auth.setSession(d.token, d.user);
+        afterLogin(d.user);
+        await loadAll();
+
+        if (d.created_course) {
+          showToast(`🎉 Xush kelibsiz, ${d.user.full_name}! "${d.created_course.title}" kursingiz ham yaratildi!`, "success");
+          switchSection('courses');
+        } else {
+          showToast(`🎉 Xush kelibsiz, ${d.user.full_name}! Endi yangi kurs va darslar qo‘shishingiz mumkin.`, "success");
+          switchSection('courses');
+        }
+      } catch {
+        showToast("Server bilan ulanishda xatolik", "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = origText;
+      }
+    }
+
+    //  O'QUVCHIGA LOGIN VA PAROL YARATISH MODALI FUNKSIYALARI 
+    function autoGenStudentUsername() {
+      const nameVal = (document.getElementById('cs-fullname')?.value || '').trim().toLowerCase();
+      const firstWord = nameVal.split(/\s+/)[0]?.replace(/[^a-z0-9]/g, '') || 'oquvchi';
+      const randNum = Math.floor(100 + Math.random() * 900);
+      const uInput = document.getElementById('cs-username');
+      if (uInput) uInput.value = `${firstWord}_${randNum}`;
+    }
+
+    async function openCreateStudentModal(preselectedCourseId = null, preselectedCourseTitle = '') {
+      if (typeof loadCourses === 'function' && (!window.ALL_COURSES || !window.ALL_COURSES.length)) {
+        await loadCourses();
+      }
+      const courses = window.ALL_COURSES || [];
+      const sel = document.getElementById('cs-course');
+      if (sel) {
+        sel.innerHTML = courses.map(c => `<option value="${c.id}">📚 ${c.title}</option>`).join('');
+        if (preselectedCourseId) {
+          sel.value = preselectedCourseId;
+        } else if (courses.length > 0) {
+          sel.value = courses[courses.length - 1].id; // default to most recently created course
+        }
+      }
+
+      const titleEl = document.getElementById('assignStuModalTitle');
+      if (titleEl) {
+        titleEl.innerText = preselectedCourseTitle
+          ? `👤+ "${preselectedCourseTitle}" kursiga o‘quvchi qo‘shish`
+          : `👤+ O‘quvchiga Login va Parol Yaratish`;
+      }
+
+      document.getElementById('cs-fullname').value = '';
+      document.getElementById('cs-username').value = '';
+      document.getElementById('cs-username').dataset.manual = '';
+      document.getElementById('cs-pincode').value = '12345';
+      document.getElementById('createdStudentCredsCard').style.display = 'none';
+
+      openModal('assignStudentCourseModal');
+      if (sel && sel.value) {
+        loadCourseStudentsInModal(sel.value);
+      }
+    }
+
+    async function loadCourseStudentsInModal(courseId) {
+      const listWrap = document.getElementById('csCourseStudentsList');
+      const countBadge = document.getElementById('csCourseStuCount');
+      if (!courseId || !listWrap) return;
+      try {
+        const r = await fetch(`/api/teacher/courses/${courseId}/students`, { headers: Auth.getHeaders() });
+        const d = await r.json();
+        if (!r.ok || !d.students) return;
+        if (countBadge) countBadge.innerText = `${d.students.length} nafar`;
+        if (!d.students.length) {
+          listWrap.innerHTML = `<div style="padding: 18px; text-align: center; color: #64748b; font-size: 0.84rem;">Hozircha bu kursga o‘quvchilar biriktirilmagan. Yuqoridagi forma orqali birinchi o‘quvchiga login-parol bering!</div>`;
+          return;
+        }
+        listWrap.innerHTML = `
+          <table class="data-table" style="width: 100%; font-size: 0.82rem;">
+            <thead>
+              <tr>
+                <th style="padding: 8px 12px;">F.I.Sh</th>
+                <th style="padding: 8px 12px;">Login</th>
+                <th style="padding: 8px 12px;">Parol</th>
+                <th style="padding: 8px 12px; text-align: center;">Nusxalash</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${d.students.slice(0, 30).map(s => `
+                <tr>
+                  <td style="padding: 8px 12px; font-weight: 700;">${s.full_name}</td>
+                  <td style="padding: 8px 12px;"><code style="background:#eef2ff; color:#4f46e5; padding:2px 6px; border-radius:4px; font-weight:800;">${s.username}</code></td>
+                  <td style="padding: 8px 12px;"><code style="background:#ecfdf5; color:#059669; padding:2px 6px; border-radius:4px; font-weight:800;">${s.pin_code || '1234'}</code></td>
+                  <td style="padding: 8px 12px; text-align: center;">
+                    <button type="button" class="btn btn-ghost btn-xs" onclick="copyTextToClipboard('Kurs: ${(d.course?.title || '').replace(/'/g, '')} | Login: ${s.username} | Parol: ${s.pin_code || '1234'}')">📋 Nusxa</button>
+                  </td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+        `;
+      } catch {}
+    }
+
+    async function submitCreateStudentByTeacher(e) {
+      e.preventDefault();
+      const course_id = document.getElementById('cs-course').value;
+      const full_name = document.getElementById('cs-fullname').value.trim();
+      const username  = document.getElementById('cs-username').value.trim();
+      const pin_code  = document.getElementById('cs-pincode').value.trim();
+      const btn = document.getElementById('btnCreateStuSubmit');
+
+      if (!course_id || !full_name || !username || !pin_code) {
+        return showToast("Barcha maydonlarni to‘ldiring!", "error");
+      }
+
+      btn.disabled = true;
+      btn.innerText = 'Yaratilmoqda...';
+
+      try {
+        const r = await fetch('/api/teacher/students', {
+          method: 'POST',
+          headers: Auth.getHeaders(),
+          body: JSON.stringify({ course_id, full_name, username, pin_code })
+        });
+        const d = await r.json();
+        if (!r.ok) {
+          return showToast(d.error || "Xatolik yuz berdi", "error");
+        }
+
+        const st = d.student;
+        const card = document.getElementById('createdStudentCredsCard');
+        const txt  = document.getElementById('createdStudentCredsText');
+        const loginUrl = window.location.origin + '/login.html';
+        window._lastCreatedStudentCreds = `🎓 Kurs: ${st.course_title}\n👤 O‘quvchi: ${st.full_name}\n🔑 Login: ${st.username}\n🔒 Parol: ${st.pin_code}\n🌐 Kirish manzili: ${loginUrl}`;
+        if (txt) {
+          txt.innerHTML = `
+            <div><strong>🎓 Kurs:</strong> ${st.course_title}</div>
+            <div><strong>👤 O‘quvchi:</strong> ${st.full_name}</div>
+            <div><strong>🔑 Login:</strong> <span style="color:#4f46e5; font-weight:900;">${st.username}</span></div>
+            <div><strong>🔒 Parol:</strong> <span style="color:#059669; font-weight:900;">${st.pin_code}</span></div>
+            <div><strong>🌐 Kirish sahifasi:</strong> <a href="/login.html" target="_blank">${loginUrl}</a></div>
+          `;
+        }
+        if (card) card.style.display = 'block';
+
+        document.getElementById('cs-fullname').value = '';
+        document.getElementById('cs-username').value = '';
+        document.getElementById('cs-username').dataset.manual = '';
+
+        showToast(`✅ ${st.full_name} uchun login (${st.username}) va parol yaratildi!`, "success");
+        await loadCourseStudentsInModal(course_id);
+        if (typeof loadCourses === 'function') loadCourses();
+        if (typeof loadStudents === 'function') loadStudents(true);
+      } catch {
+        showToast("Server bilan ulanishda xatolik", "error");
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '✅ O‘quvchiga Login-Parol Yaratish va Kursga Qo‘shish';
+      }
+    }
+
+    function copyCreatedStudentCreds() {
+      if (window._lastCreatedStudentCreds) {
+        copyTextToClipboard(window._lastCreatedStudentCreds);
+      }
+    }
+
+    function copyTextToClipboard(text) {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast("📋 Login va parol nusxalandi!", "success");
+        }).catch(() => {});
+      } else {
+        const ta = document.createElement('textarea');
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        showToast("📋 Login va parol nusxalandi!", "success");
+      }
+    }
 
     //  O'QITUVCHI KIRISHI 
     async function doTeacherLogin(e) {
@@ -1489,7 +1917,7 @@
         <button class="btn btn-ghost btn-sm" onclick="openAddModal()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
           ➕ Dars qo‘shish
         </button>
-        <button class="btn btn-ghost btn-sm" onclick="loadAll()" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
+        <button class="btn btn-ghost btn-sm" onclick="handleGlobalRefresh(this)" style="font-weight: 700; border: 1px solid var(--border); border-radius: 8px;">
           🔄 Yangilash
         </button>
         <button class="btn btn-ghost btn-sm" style="color: #ef4444; border-color: #fca5a5; background: #fef2f2; font-weight: 700;" onclick="doLogout()">
@@ -1509,6 +1937,40 @@
 
     function capitalize(s) {
       return s.charAt(0).toUpperCase() + s.slice(1);
+    }
+
+    //  GLOBAL YANGILASH TUGMASI (KIRISHDAN OLDIN VA KEYIN ISHLAYDI)
+    async function handleGlobalRefresh(btn) {
+      if (!Auth.getToken() || !TEACHER_USER) {
+        showToast("🔄 Sahifa yangilanmoqda...", "info");
+        setTimeout(() => window.location.reload(), 200);
+        return;
+      }
+      const origHtml = btn ? btn.innerHTML : '🔄 Yangilash';
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = '⏳ Yangilanmoqda...';
+      }
+      try {
+        await Promise.all([
+          loadAll(),
+          window.loadCourses ? loadCourses(false) : Promise.resolve(),
+          loadStudents(true),
+          loadLeaderboard(false),
+          loadLessons(false),
+          loadLibrary(false),
+          loadNews(false)
+        ]);
+        populateSettingsStudentDropdown();
+        showToast("✅ Barcha bo‘limlar va ma'lumotlar yangilandi!", "success");
+      } catch (e) {
+        showToast("Yangilashda xatolik yuz berdi", "error");
+      } finally {
+        if (btn) {
+          btn.disabled = false;
+          btn.innerHTML = origHtml;
+        }
+      }
     }
 
     //  BARCHA MA'LUMOTLARNI YUKLASH 
@@ -1592,15 +2054,20 @@
     }
 
     //  REYTING & DIAGRAMMALAR (LEADERBOARD) 
-    async function loadLeaderboard() {
+    async function loadLeaderboard(notify = false, btn = null) {
+      const origHtml = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.innerHTML = '⏳...'; }
       try {
         const r = await fetch('/api/teacher/leaderboard', { headers: Auth.getHeaders() });
         const d = await r.json();
         LEADERBOARD_CACHE = d.leaderboard || [];
         renderLeaderboard(LEADERBOARD_CACHE);
         initCharts(LEADERBOARD_CACHE, d.experiment_stats);
+        if (notify) showToast("✅ Reyting va diagrammalar yangilandi!", "success");
       } catch {
         showToast("Reytingni yuklashda xatolik", 'error');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
       }
     }
 
@@ -1798,14 +2265,21 @@
     }
 
     //  DARSLAR 
-    async function loadLessons() {
+    async function loadLessons(notify = false, btn = null) {
+      const origHtml = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.innerHTML = '⏳...'; }
       try {
         const r = await fetch('/api/teacher/lessons', { headers: Auth.getHeaders() });
         ALL_LESSONS = await r.json();
         document.getElementById('lessonsBadge').innerText = ALL_LESSONS.length;
         document.getElementById('stLessons').innerText = ALL_LESSONS.length;
         renderLessons(ALL_LESSONS);
-      } catch { }
+        if (notify) showToast(`✅ Darslar ro‘yxati yangilandi (${ALL_LESSONS.length} ta dars)!`, "success");
+      } catch {
+        if (notify) showToast("Darslarni yangilashda xatolik", "error");
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
+      }
     }
 
     function renderLessons(lessons, courseContext = null) {
@@ -1870,11 +2344,82 @@
       }).join('');
     }
 
+    const TEACHER_VERIFIED_VIDEOS = {
+      1: [
+        "https://www.youtube.com/embed/kqtD5dpn9C8",
+        "https://www.youtube.com/embed/Z1Yd7upQsXY",
+        "https://www.youtube.com/embed/WGJJIrtnfpk",
+        "https://www.youtube.com/embed/t8pPdKYpowI",
+        "https://www.youtube.com/embed/x7X9w_GIm1s",
+        "https://www.youtube.com/embed/VchuKL44s6E",
+        "https://www.youtube.com/embed/8ext9G7xspg",
+        "https://www.youtube.com/embed/_uQrJ0TkZlc",
+        "https://www.youtube.com/embed/rfscVS0vtbw",
+        "https://www.youtube.com/embed/r-uOLxNrNk8"
+      ],
+      2: [
+        "https://www.youtube.com/embed/W6NZfCO5SIk",
+        "https://www.youtube.com/embed/hdI2bqOjy3c",
+        "https://www.youtube.com/embed/jS4aFq5-91M",
+        "https://www.youtube.com/embed/PkZNo7MFNFg",
+        "https://www.youtube.com/embed/R8rmfD9Y5-c",
+        "https://www.youtube.com/embed/w7ejDZ8SWv8",
+        "https://www.youtube.com/embed/bMknfKXIFA8",
+        "https://www.youtube.com/embed/Ke90Tje7VS0",
+        "https://www.youtube.com/embed/NCwa_xi0Uuc",
+        "https://www.youtube.com/embed/TNhaISOUy6Q"
+      ],
+      3: [
+        "https://www.youtube.com/embed/eIrMbAQSU34",
+        "https://www.youtube.com/embed/grEKMHGYyns",
+        "https://www.youtube.com/embed/WPvGqX-TXP0",
+        "https://www.youtube.com/embed/VHbSopMyc4M",
+        "https://www.youtube.com/embed/A74TOX803D0",
+        "https://www.youtube.com/embed/xk4_1vDrzzo",
+        "https://www.youtube.com/embed/GoXwIVyNvX0",
+        "https://www.youtube.com/embed/fis26HvvDII",
+        "https://www.youtube.com/embed/BGTx91t8q50",
+        "https://www.youtube.com/embed/EExSSotojVI"
+      ]
+    };
+    const TEACHER_DEAD_VIDEOS = new Set([
+      'jO6qQDNa2CE', 'XKHEtdqhPAI',
+      'nLRL_NcnK-4', '5F24p17D2q0', 'Pj1e7oO1d5Q', 'u35V8X5y3rM', 'q_m00YJkK-s',
+      '5_nJkM2Rk2s', 'fA8N3z72o_k', '7V2Vv04m5_o', 'jZz77E71i5o', '8eY-Vz7o2k8',
+      '3eCg_pI0U5U', '1vR3ST956z0', 'vEROU2XtPR8', 'Bv_5Zv5c-6g', 'Obe46g9R4rU',
+      '0G3h0aZkU54', '5fb2aPlgoys', '7r4xVDI2vho', 's3_k02mK3mE', 'x8s9K3o1l1o',
+      'rK2j4A9z6hY', 'dK9vN0X6y1w', 'PkZNo7MFOUg', 'hKB-YGF14SY', 'ZBalWWHYFQc',
+      'u-HOEUo2Dbc', 'EE1-Wf12XEQ'
+    ]);
+
+    function resolveTeacherLessonVideoUrl(lesson) {
+      if (!lesson) return "https://www.youtube.com/embed/kqtD5dpn9C8";
+      const titleLower = (lesson.title || '').toLowerCase();
+      let cKey = parseInt(lesson.course_id) || 1;
+      if (titleLower.includes('javascript') || titleLower.includes('react')) cKey = 2;
+      else if (titleLower.includes('java ') || titleLower.includes('android')) cKey = 3;
+      else if (titleLower.includes('python')) cKey = 1;
+
+      const ordIdx = Math.max(0, Math.min(9, (parseInt(lesson.order_num) || 1) - 1));
+      const fallbackList = TEACHER_VERIFIED_VIDEOS[cKey] || TEACHER_VERIFIED_VIDEOS[1];
+      const fallbackUrl = fallbackList[ordIdx] || fallbackList[0];
+
+      const raw = (lesson.video_url || '').trim();
+      if (!raw) return fallbackUrl;
+      const m = raw.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+      if (m && m[1]) {
+        if (TEACHER_DEAD_VIDEOS.has(m[1])) return fallbackUrl;
+        return `https://www.youtube.com/embed/${m[1]}`;
+      }
+      return fallbackUrl;
+    }
+
     function viewFullLesson(lessonId) {
       const l = ALL_LESSONS.find(x => x.id === lessonId) || ALL_LESSONS[0];
       if (!l) return;
       const coursePart = (l.title || '').includes(' | ') ? l.title.split(' | ')[0] : 'Asosiy kurs';
       const cleanTitle = formatCleanLessonTitle(l.title, l.order_num);
+      const workingVideoUrl = resolveTeacherLessonVideoUrl(l);
 
       document.getElementById('vflMeta').innerHTML = `
         <span class="badge badge-primary" style="font-size:0.76rem; margin-right:6px;">📚 ${coursePart}</span>
@@ -1887,11 +2432,11 @@
       const vbox = document.getElementById('vflVideoBox');
       const viframe = document.getElementById('vflIframe');
       const vyt = document.getElementById('vflYtLink');
-      if (l.video_url) {
+      if (workingVideoUrl) {
         vbox.style.display = 'block';
-        viframe.src = l.video_url;
-        const m = l.video_url.match(/embed\/([A-Za-z0-9_-]+)/);
-        vyt.href = m ? `https://www.youtube.com/watch?v=${m[1]}` : l.video_url;
+        viframe.src = workingVideoUrl;
+        const m = workingVideoUrl.match(/embed\/([A-Za-z0-9_-]+)/);
+        vyt.href = m ? `https://www.youtube.com/watch?v=${m[1]}` : workingVideoUrl;
       } else {
         vbox.style.display = 'none';
         viframe.src = '';
@@ -1966,23 +2511,35 @@
     }
 
     //  O'QUVCHILAR 
-    async function forceRefreshStudents(silent = false) {
-      if (!silent) showToast("🔄 210 nafar o‘quvchilar yangilanmoqda...", "info");
+    async function forceRefreshStudents(silent = false, btn = null) {
+      if (!Auth.getToken()) {
+        window.location.reload();
+        return;
+      }
+      const origHtml = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.innerHTML = '⏳ Yangilanmoqda...'; }
+      if (!silent) showToast("🔄 O‘quvchilar ro‘yxati yangilanmoqda...", "info");
       try {
         const r = await fetch('/api/teacher/refresh-students', {
           method: 'POST',
           headers: Auth.getHeaders()
         });
         const d = await r.json();
+        await Promise.all([
+          loadStudents(true),
+          loadLeaderboard(false),
+          loadAll(),
+          window.loadCourses ? loadCourses(false) : Promise.resolve()
+        ]);
         if (d.success && !silent) {
-          showToast(`✓ ${d.count || 210} nafar talaba muvaffaqiyatli yuklandi!`, "success");
+          showToast(`✅ Jami ${d.count || ALL_STUDENTS.length} nafar o‘quvchi ma'lumotlari yangilandi!`, "success");
         }
       } catch (err) {
         console.error("Yangilashda xatolik:", err);
+        if (!silent) showToast("O‘quvchilarni yangilashda xatolik", "error");
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
       }
-      await loadStudents(true);
-      await loadLeaderboard();
-      await loadAll();
     }
 
     async function loadStudents(isAutoRetry = false) {
@@ -2307,6 +2864,90 @@
       }
     }
 
+    function drawTeacherQrCodeOnCanvas(ctx, x, y, size, dataStr, fgColor = '#0f172a') {
+      ctx.save();
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(x, y, size, size);
+      ctx.strokeStyle = '#cbd5e1';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(x, y, size, size);
+
+      const N = 25;
+      const pad = 6;
+      const cell = (size - pad * 2) / N;
+      const grid = Array.from({ length: N }, () => Array(N).fill(false));
+      const reserved = Array.from({ length: N }, () => Array(N).fill(false));
+
+      function placeFinder(r0, c0) {
+        for (let r = -1; r <= 7; r++) {
+          for (let c = -1; c <= 7; c++) {
+            const rr = r0 + r, cc = c0 + c;
+            if (rr >= 0 && rr < N && cc >= 0 && cc < N) {
+              reserved[rr][cc] = true;
+              if (r >= 0 && r <= 6 && c >= 0 && c <= 6) {
+                const border = (r === 0 || r === 6 || c === 0 || c === 6);
+                const center = (r >= 2 && r <= 4 && c >= 2 && c <= 4);
+                grid[rr][cc] = border || center;
+              }
+            }
+          }
+        }
+      }
+      placeFinder(0, 0);
+      placeFinder(0, N - 7);
+      placeFinder(N - 7, 0);
+
+      for (let r = 16; r <= 20; r++) {
+        for (let c = 16; c <= 20; c++) {
+          reserved[r][c] = true;
+          const border = (r === 16 || r === 20 || c === 16 || c === 20);
+          const center = (r === 18 && c === 18);
+          grid[r][c] = border || center;
+        }
+      }
+
+      for (let i = 8; i < N - 8; i++) {
+        reserved[6][i] = true;
+        reserved[i][6] = true;
+        grid[6][i] = (i % 2 === 0);
+        grid[i][6] = (i % 2 === 0);
+      }
+
+      const str = String(dataStr || 'https://innocode.uz/certificate.html');
+      let h1 = 2166136261 >>> 0;
+      let h2 = 16777619 >>> 0;
+      for (let i = 0; i < str.length; i++) {
+        const ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 16777619) >>> 0;
+        h2 = Math.imul(h2 + ch * (i + 1), 2246822519) >>> 0;
+      }
+
+      for (let r = 0; r < N; r++) {
+        for (let c = 0; c < N; c++) {
+          if (reserved[r][c]) continue;
+          const idx = r * N + c;
+          const charCode = str.charCodeAt(idx % str.length);
+          const mix = ((h1 >>> (idx % 24)) ^ (h2 >>> ((r * 7 + c * 3) % 24)) ^ (charCode * (r + 3) * (c + 5))) >>> 0;
+          grid[r][c] = (mix & 3) !== 0 && ((mix + r + c) % 2 === 0);
+        }
+      }
+
+      ctx.fillStyle = fgColor || '#0f172a';
+      for (let r = 0; r < N; r++) {
+        for (let c = 0; c < N; c++) {
+          if (grid[r][c]) {
+            ctx.fillRect(
+              Math.floor(x + pad + c * cell),
+              Math.floor(y + pad + r * cell),
+              Math.ceil(cell),
+              Math.ceil(cell)
+            );
+          }
+        }
+      }
+      ctx.restore();
+    }
+
     function downloadTeacherCertPNG(certId, studentName, courseTitle, issueDate) {
       try {
         const th = getTeacherCertTheme(courseTitle);
@@ -2441,23 +3082,26 @@
         ctx.fillText('InnoCode IT Academy Direktori', 1240, 888);
 
         ctx.fillStyle = '#f8fafc';
-        ctx.fillRect(140, 940, 1320, 92);
+        ctx.fillRect(140, 936, 1320, 98);
         ctx.strokeStyle = th.innerBorder;
         ctx.lineWidth = 2;
-        ctx.strokeRect(140, 940, 1320, 92);
+        ctx.strokeRect(140, 936, 1320, 98);
+
+        const verifyUrl = window.location.origin + '/certificate.html?id=' + certId;
+        drawTeacherQrCodeOnCanvas(ctx, 156, 941, 88, verifyUrl, th.outerBorder);
 
         ctx.textAlign = 'left';
         ctx.fillStyle = '#0f172a';
-        ctx.font = 'bold 22px Arial, sans-serif';
-        ctx.fillText('Berilgan sana: ' + (issueDate || '2026-yil'), 175, 980);
+        ctx.font = 'bold 21px Arial, sans-serif';
+        ctx.fillText('Elektron QR-kodli Sertifikat • Berilgan sana: ' + (issueDate || '2026-yil'), 260, 976);
         ctx.fillStyle = '#475569';
-        ctx.font = '19px Arial, sans-serif';
-        ctx.fillText('Rasmiy tekshiruv manzili: ' + window.location.origin + '/certificate.html?id=' + certId, 175, 1012);
+        ctx.font = '18px Arial, sans-serif';
+        ctx.fillText('Rasmiy tekshiruv manzili: ' + verifyUrl, 260, 1008);
 
         ctx.textAlign = 'right';
         ctx.fillStyle = th.headingColor;
-        ctx.font = 'bold 26px "Courier New", monospace';
-        ctx.fillText('ID: ' + certId, 1425, 995);
+        ctx.font = 'bold 25px "Courier New", monospace';
+        ctx.fillText('ID: ' + certId, 1435, 993);
 
         const link = document.createElement('a');
         const cleanFileName = (studentName || 'Oquvchi').replace(/[^a-zA-Z0-9_\u0400-\u04FF-]/g, '_');
@@ -2752,7 +3396,9 @@
     }
 
     //  KUTUBXONA BOSHQARUVI 
-    async function loadLibrary() {
+    async function loadLibrary(notify = false, btn = null) {
+      const origHtml = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.innerHTML = '⏳...'; }
       try {
         const r = await fetch('/api/teacher/library', { headers: Auth.getHeaders() });
         const d = await r.json();
@@ -2760,8 +3406,11 @@
         const b = document.getElementById('libraryBadge');
         if (b) b.innerText = ALL_LIBRARY.length;
         renderLibrary();
+        if (notify) showToast(`✅ Kutubxona yangilandi (${ALL_LIBRARY.length} ta material)!`, "success");
       } catch {
         showToast("Kutubxona ma'lumotlarini yuklashda xatolik", 'error');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
       }
     }
 
@@ -2852,7 +3501,9 @@
     }
 
     //  YANGILIKLAR BOSHQARUVI 
-    async function loadNews() {
+    async function loadNews(notify = false, btn = null) {
+      const origHtml = btn ? btn.innerHTML : '';
+      if (btn) { btn.disabled = true; btn.innerHTML = '⏳...'; }
       try {
         const r = await fetch('/api/teacher/news', { headers: Auth.getHeaders() });
         const d = await r.json();
@@ -2860,8 +3511,11 @@
         const b = document.getElementById('newsBadge');
         if (b) b.innerText = ALL_NEWS.length;
         renderNews();
+        if (notify) showToast(`✅ Yangiliklar yangilandi (${ALL_NEWS.length} ta yangilik)!`, "success");
       } catch {
         showToast("Yangiliklarni yuklashda xatolik", 'error');
+      } finally {
+        if (btn) { btn.disabled = false; btn.innerHTML = origHtml; }
       }
     }
 

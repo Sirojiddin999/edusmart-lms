@@ -31,9 +31,9 @@ function generateUsername(fullName, index) {
 function runSeed() {
   console.log("Ma'lumotlar bazasini tozalash va yangilash boshlandi...");
 
-  // 1. O'qituvchi Marufjon hisobini yaratish / yangilash
+  // 1. O'qituvchi Marufjon hisobini yaratish / yangilash (boshqa yangi o'qituvchilarga tegmasdan)
   const marufjonHash = bcrypt.hashSync('Marufjon', 10);
-  const existingTeacher = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
+  const existingTeacher = db.prepare("SELECT id FROM users WHERE role='teacher' AND (LOWER(username)='marufjon' OR LOWER(username)='1111') LIMIT 1").get();
   if (existingTeacher) {
     db.prepare(`
       UPDATE users 
@@ -47,17 +47,7 @@ function runSeed() {
     `).run(marufjonHash);
   }
 
-  // 2. Kurslarni faqat 3 ta qilib sozlash
-  const allCourses = db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
-  if (allCourses.length > 3) {
-    // 3 tadan ko'p bo'lsa, ortiqcha kurslarni va ularning darslarini tozalash
-    for (let i = 3; i < allCourses.length; i++) {
-      db.prepare("DELETE FROM lessons WHERE course_id=?").run(allCourses[i].id);
-      db.prepare("DELETE FROM courses WHERE id=?").run(allCourses[i].id);
-    }
-  }
-
-  // Kurslar yetarli bo'lmasa yoki darslar kam bo'lsa curriculum dan to'ldirish
+  // 2. Kurslar yetarli bo'lmasa curriculum dan to'ldirish (o'qituvchilar yaratgan yangi kurslarni o'chirmaslik!)
   const currentCourses = db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
   if (currentCourses.length === 0) {
     const insertCourse = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");

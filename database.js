@@ -94,19 +94,25 @@ try {
 try {
   db.exec(`ALTER TABLE student_progress ADD COLUMN last_course_id INTEGER REFERENCES courses(id);`);
 } catch(e) {}
+try {
+  db.exec(`ALTER TABLE courses ADD COLUMN teacher_id INTEGER;`);
+} catch(e) {}
+try {
+  db.exec(`ALTER TABLE courses ADD COLUMN teacher_name TEXT DEFAULT '';`);
+} catch(e) {}
 
 const COURSES_DATA = require('./curriculum.js');
 
 // ─── Seed & Sync ──────────────────────────────────────────────────────────────
 function seed() {
   const teacherHash = bcrypt.hashSync('1111', 10);
-  const teacherExists = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
+  const teacherExists = db.prepare("SELECT id FROM users WHERE role='teacher' AND (LOWER(username)='1111' OR LOWER(username)='marufjon') LIMIT 1").get();
   if (!teacherExists) {
-    db.prepare("INSERT INTO users (role, full_name, username, password_hash, pin_code) VALUES (?,?,?,?,?)")
-      .run('teacher', "O‘qituvchi", '1111', teacherHash, '1111');
-  } else {
-    db.prepare("UPDATE users SET full_name=?, username=?, password_hash=?, pin_code=? WHERE id=?")
-      .run("O‘qituvchi", '1111', teacherHash, '1111', teacherExists.id);
+    const anyTeacher = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
+    if (!anyTeacher) {
+      db.prepare("INSERT INTO users (role, full_name, username, password_hash, pin_code) VALUES (?,?,?,?,?)")
+        .run('teacher', "Ma‘rufjon Isomiddinov", 'Marufjon', bcrypt.hashSync('Marufjon', 10), 'Marufjon');
+    }
   }
 
   // Mavjud kurslar va darslar sonini tekshirish
@@ -182,8 +188,8 @@ function seed() {
   // 210 nafar talaba va o'qituvchi Marufjonni ta'minlash
   try {
     const studentCount = db.prepare("SELECT COUNT(*) as c FROM users WHERE role='student'").get().c;
-    if (studentCount !== 210) {
-      console.log(`Bazadagi talabalar soni (${studentCount}) 210 ta emas. 210 nafar talabalar shakllantirilmoqda...`);
+    if (studentCount < 210) {
+      console.log(`Bazadagi talabalar soni (${studentCount}) 210 tadan kam. 210 nafar talabalar shakllantirilmoqda...`);
       const runSeed210 = require('./seed_210_students.js');
       runSeed210();
     }
