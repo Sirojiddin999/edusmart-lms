@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ro‘yxatdan o‘tish | innocode.uz</title>
+  <title>Ro‘yxatdan o‘tish | cyber-uz</title>
+  <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body {
@@ -49,7 +50,7 @@
       left: 0;
       right: 0;
       height: 6px;
-      background: linear-gradient(90deg, #4f46e5, #0ea5e9);
+      background: linear-gradient(90deg, #059669, #0ea5e9);
     }
     
     .auth-icon-wrap {
@@ -61,8 +62,8 @@
       justify-content: center;
       font-size: 2.2rem;
       margin-bottom: 20px;
-      background: #eef2ff;
-      color: #4f46e5;
+      background: #ecfdf5;
+      color: #059669;
     }
     
     .auth-title {
@@ -104,9 +105,9 @@
     
     .form-input:focus {
       outline: none;
-      border-color: #4f46e5;
+      border-color: #059669;
       background: white;
-      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.12);
+      box-shadow: 0 0 0 4px rgba(5, 150, 105, 0.12);
     }
     
     .btn-submit {
@@ -117,15 +118,15 @@
       font-weight: 800;
       font-size: 1.05rem;
       cursor: pointer;
-      background: #4f46e5;
+      background: #059669;
       color: white;
-      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.35);
+      box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
       transition: all 0.25s;
       margin-top: 10px;
     }
     
     .btn-submit:hover {
-      background: #4338ca;
+      background: #047857;
       transform: translateY(-2px);
     }
     
@@ -139,7 +140,7 @@
     }
     
     .auth-links a {
-      color: #4f46e5;
+      color: #059669;
       font-weight: 700;
       text-decoration: none;
     }
@@ -170,8 +171,8 @@
     <div class='container'>
       <div class='navbar-inner' style='display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 15px;'>
         <a href='/' class='brand' style='display: flex; align-items: center; text-decoration: none;'>
-          <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 50px; object-fit: contain; mix-blend-mode: multiply;">
-          <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">innocode.uz</span>
+          <img src="/img/logo.svg" alt="cyber-uz logo" style="height: 50px; object-fit: contain;">
+          <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">cyber-uz</span>
         </a>
         <ul class='nav-links' style='display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 0.85rem;'>
           <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
@@ -184,7 +185,7 @@
           <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
           <button onclick="window.location.reload()" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 10px; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer;' title="Sahifani yangilash">🔄 Yangilash</button>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
-          <a href='/teacher-login.html' class='btn' style='background: #f8fafc; border: 1px solid #cbd5e1; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
+          <a href='/teacher-login.html' class='btn' style='background: #f8fafc; border: 1px solid #cbd5e1; color: #0f766e; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
         </div>
       </div>
     </div>
@@ -216,16 +217,16 @@
         <div class="form-group">
           <label class="form-label">Qaysi kursni o‘rganmoqchisiz? *</label>
           <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
-            <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #4f46e5; background: #f5f3ff; border-radius: 10px; cursor: pointer;">
-              <input type="radio" name="regCourse" value="1" checked style="accent-color: #4f46e5; width: 17px; height: 17px;">
+            <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #059669; background: #f0fdfa; border-radius: 10px; cursor: pointer;">
+              <input type="radio" name="regCourse" value="1" checked style="accent-color: #059669; width: 17px; height: 17px;">
               <span style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">🐍 Python Asoslari va Sun'iy Intellekt</span>
             </label>
             <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #e2e8f0; background: #ffffff; border-radius: 10px; cursor: pointer;">
-              <input type="radio" name="regCourse" value="2" style="accent-color: #4f46e5; width: 17px; height: 17px;">
+              <input type="radio" name="regCourse" value="2" style="accent-color: #059669; width: 17px; height: 17px;">
               <span style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">⚛️ JavaScript & React.js</span>
             </label>
             <label style="display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1.5px solid #e2e8f0; background: #ffffff; border-radius: 10px; cursor: pointer;">
-              <input type="radio" name="regCourse" value="3" style="accent-color: #4f46e5; width: 17px; height: 17px;">
+              <input type="radio" name="regCourse" value="3" style="accent-color: #059669; width: 17px; height: 17px;">
               <span style="font-size: 0.9rem; font-weight: 700; color: #1e293b;">☕ Java va Android Dasturlash</span>
             </label>
           </div>
@@ -237,7 +238,7 @@
       <div class="auth-links">
         Allaqachon hisobingiz bormi? <a href="/login.html">Kabinetga kirish</a>
         <div style="margin-top: 10px;">
-          O‘qituvchimisiz? <a href="/teacher-login.html" style="color: #6d28d9;">O‘qituvchi paneli ↗</a>
+          O‘qituvchimisiz? <a href="/teacher-login.html" style="color: #0f766e;">O‘qituvchi paneli ↗</a>
         </div>
       </div>
     </div>
@@ -303,8 +304,8 @@
         const check = document.getElementById('mCheck-' + cid);
         if (card && check) {
           if (cid === id) {
-            card.style.borderColor = '#4f46e5';
-            card.style.background = '#f5f3ff';
+            card.style.borderColor = '#059669';
+            card.style.background = '#f0fdfa';
             check.style.display = 'block';
           } else {
             card.style.borderColor = '#e2e8f0';
@@ -351,7 +352,7 @@
         <div style="margin-bottom:10px;">
           <div style="font-size:0.72rem; font-weight:800; color:#64748b; text-transform:uppercase; letter-spacing:0.5px;">Sizning Loginingiz:</div>
           <div style="display:flex; justify-content:space-between; align-items:center; margin-top:4px;">
-            <code id="resUser" style="font-size:1.1rem; font-weight:900; color:#4f46e5; background:#eef2ff; padding:4px 10px; border-radius:8px; border:1px solid #c7d2fe;"></code>
+            <code id="resUser" style="font-size:1.1rem; font-weight:900; color:#059669; background:#ecfdf5; padding:4px 10px; border-radius:8px; border:1px solid #a7f3d0;"></code>
             <button class="btn btn-ghost btn-xs" onclick="copyCredentials('user')" style="font-size:0.78rem; font-weight:800; border:1px solid #cbd5e1; padding:5px 10px; border-radius:8px; cursor:pointer; background:white;">📋 Nusxalash</button>
           </div>
         </div>
@@ -373,7 +374,7 @@
         
         <div style="display: flex; flex-direction: column; gap: 8px;">
           <!-- Kurs 1: Python -->
-          <div onclick="selectModalCourse(1)" id="mCourseCard-1" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:2px solid #4f46e5; background:#f5f3ff; border-radius:12px; cursor:pointer; transition:all 0.2s;">
+          <div onclick="selectModalCourse(1)" id="mCourseCard-1" style="display:flex; align-items:center; justify-content:space-between; padding:10px 12px; border:2px solid #059669; background:#f0fdfa; border-radius:12px; cursor:pointer; transition:all 0.2s;">
             <div style="display:flex; align-items:center; gap:10px;">
               <span style="font-size:1.6rem;">🐍</span>
               <div>
@@ -381,7 +382,7 @@
                 <div style="font-size:0.73rem; color:#64748b;">10 ta dars • AI & Data Science asoslari</div>
               </div>
             </div>
-            <span id="mCheck-1" style="color:#4f46e5; font-weight:900; font-size:1.1rem;">✓</span>
+            <span id="mCheck-1" style="color:#059669; font-weight:900; font-size:1.1rem;">✓</span>
           </div>
 
           <!-- Kurs 2: JavaScript -->
@@ -393,7 +394,7 @@
                 <div style="font-size:0.73rem; color:#64748b;">10 ta dars • Zamonaviy Frontend & Web</div>
               </div>
             </div>
-            <span id="mCheck-2" style="color:#4f46e5; font-weight:900; font-size:1.1rem; display:none;">✓</span>
+            <span id="mCheck-2" style="color:#059669; font-weight:900; font-size:1.1rem; display:none;">✓</span>
           </div>
 
           <!-- Kurs 3: Java -->
@@ -405,7 +406,7 @@
                 <div style="font-size:0.73rem; color:#64748b;">10 ta dars • Mobil ilovalar & Backend</div>
               </div>
             </div>
-            <span id="mCheck-3" style="color:#4f46e5; font-weight:900; font-size:1.1rem; display:none;">✓</span>
+            <span id="mCheck-3" style="color:#059669; font-weight:900; font-size:1.1rem; display:none;">✓</span>
           </div>
         </div>
         <div style="font-size:0.74rem; color:#64748b; margin-top:6px;">

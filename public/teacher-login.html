@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O‘qituvchi kirish | innocode.uz</title>
+  <title>O‘qituvchi kirish | cyber-uz</title>
+  <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body {
@@ -49,7 +50,7 @@
       left: 0;
       right: 0;
       height: 6px;
-      background: linear-gradient(90deg, #8b5cf6, #f59e0b);
+      background: linear-gradient(90deg, #14b8a6, #f59e0b);
     }
     
     .auth-icon-wrap {
@@ -61,8 +62,8 @@
       justify-content: center;
       font-size: 2.2rem;
       margin-bottom: 20px;
-      background: #f5f3ff;
-      color: #8b5cf6;
+      background: #f0fdfa;
+      color: #14b8a6;
     }
     
     .auth-title {
@@ -124,7 +125,7 @@
     
     .form-input:focus {
       outline: none;
-      border-color: #8b5cf6;
+      border-color: #14b8a6;
       background: white;
       box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
     }
@@ -137,7 +138,7 @@
       font-weight: 800;
       font-size: 1.05rem;
       cursor: pointer;
-      background: linear-gradient(135deg, #8b5cf6 0%, #6d28d9 100%);
+      background: linear-gradient(135deg, #14b8a6 0%, #0f766e 100%);
       color: white;
       box-shadow: 0 4px 14px rgba(109, 40, 217, 0.35);
       transition: all 0.25s;
@@ -158,7 +159,7 @@
     }
     
     .auth-links a {
-      color: #4f46e5;
+      color: #059669;
       font-weight: 700;
       text-decoration: none;
     }
@@ -189,8 +190,8 @@
     <div class='container'>
       <div class='navbar-inner' style='display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 15px;'>
         <a href='/' class='brand' style='display: flex; align-items: center; text-decoration: none;'>
-          <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 50px; object-fit: contain; mix-blend-mode: multiply;">
-          <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">innocode.uz</span>
+          <img src="/img/logo.svg" alt="cyber-uz logo" style="height: 50px; object-fit: contain;">
+          <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">cyber-uz</span>
         </a>
         <ul class='nav-links' style='display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 0.85rem;'>
           <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
@@ -203,7 +204,7 @@
           <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
           <button onclick="window.location.reload()" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 10px; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer;' title="Sahifani yangilash">🔄 Yangilash</button>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
-          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
+          <a href='/register.html' class='btn' style='background: #059669; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
         </div>
       </div>
     </div>
@@ -223,7 +224,7 @@
       </ul>
 
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; background: #f1f5f9; padding: 5px; border-radius: 12px; margin-bottom: 22px;">
-        <button type="button" id="tlTabLogin" onclick="toggleTlTab('login')" style="padding: 10px; border: none; border-radius: 9px; font-weight: 800; font-size: 0.9rem; cursor: pointer; background: #8b5cf6; color: #fff;">🔐 Kirish</button>
+        <button type="button" id="tlTabLogin" onclick="toggleTlTab('login')" style="padding: 10px; border: none; border-radius: 9px; font-weight: 800; font-size: 0.9rem; cursor: pointer; background: #14b8a6; color: #fff;">🔐 Kirish</button>
         <button type="button" id="tlTabReg" onclick="toggleTlTab('reg')" style="padding: 10px; border: none; border-radius: 9px; font-weight: 800; font-size: 0.9rem; cursor: pointer; background: transparent; color: #475569;">➕ Yangi O‘qituvchi</button>
       </div>
 
@@ -282,7 +283,7 @@
       } else {
         fLogin.style.display = 'block';
         fReg.style.display = 'none';
-        bLogin.style.background = '#8b5cf6';
+        bLogin.style.background = '#14b8a6';
         bLogin.style.color = '#fff';
         bReg.style.background = 'transparent';
         bReg.style.color = '#475569';

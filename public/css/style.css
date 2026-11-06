@@ -13,18 +13,18 @@
   --bg-input: #ffffff;
 
   /* Accent System (Vibrant & Crisp) */
-  --primary: #4f46e5;
-  --primary-dark: #4338ca;
-  --primary-glow: rgba(79, 70, 229, 0.2);
-  --primary-subtle: #eef2ff;
+  --primary: #059669;
+  --primary-dark: #047857;
+  --primary-glow: rgba(5, 150, 105, 0.2);
+  --primary-subtle: #ecfdf5;
 
   --cyan: #0284c7;
   --cyan-glow: rgba(2, 132, 199, 0.2);
   --cyan-subtle: #f0f9ff;
 
-  --purple: #7c3aed;
-  --purple-glow: rgba(124, 58, 237, 0.2);
-  --purple-subtle: #f5f3ff;
+  --purple: #0d9488;
+  --purple-glow: rgba(13, 148, 136, 0.2);
+  --purple-subtle: #f0fdfa;
 
   --emerald: #059669;
   --emerald-glow: rgba(5, 150, 105, 0.2);
@@ -45,7 +45,7 @@
   /* Borders (Subtle & Clean) */
   --border: #e2e8f0;
   --border-hover: #cbd5e1;
-  --border-primary: rgba(79, 70, 229, 0.35);
+  --border-primary: rgba(5, 150, 105, 0.35);
 
   /* Radius */
   --r-xs: 6px;
@@ -60,7 +60,7 @@
   --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.06), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
   --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -4px rgba(0, 0, 0, 0.03);
   --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
-  --shadow-primary: 0 4px 14px rgba(79, 70, 229, 0.25);
+  --shadow-primary: 0 4px 14px rgba(5, 150, 105, 0.25);
   --shadow-cyan: 0 4px 14px rgba(2, 132, 199, 0.2);
 }
 
@@ -111,7 +111,7 @@ body::before {
   height: 600px;
   top: -150px;
   left: -80px;
-  background: radial-gradient(circle, rgba(79, 70, 229, 0.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(5, 150, 105, 0.07) 0%, transparent 70%);
   animation-delay: 0s;
 }
 .glow-orb-2 {
@@ -128,7 +128,7 @@ body::before {
   top: 45%;
   left: 50%;
   transform: translateX(-50%);
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.05) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(13, 148, 136, 0.05) 0%, transparent 70%);
   animation-delay: -3.5s;
 }
 
@@ -206,7 +206,7 @@ h1, h2, h3, h4, h5, h6 {
   align-items: center;
   justify-content: center;
   font-size: 1.25rem;
-  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.25);
   flex-shrink: 0;
   position: relative;
 }
@@ -225,7 +225,7 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 1.35rem;
   font-weight: 800;
   letter-spacing: -0.5px;
-  background: linear-gradient(135deg, #1e1b4b 0%, #4338ca 60%, #0284c7 100%);
+  background: linear-gradient(135deg, #1e1b4b 0%, #047857 60%, #0284c7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -280,12 +280,12 @@ h1, h2, h3, h4, h5, h6 {
 .btn-primary {
   background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
   color: #fff;
-  border-color: rgba(79, 70, 229, 0.5);
-  box-shadow: 0 4px 14px rgba(79, 70, 229, 0.25);
+  border-color: rgba(5, 150, 105, 0.5);
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.25);
 }
 .btn-primary:hover {
   transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(79, 70, 229, 0.35);
+  box-shadow: 0 6px 20px rgba(5, 150, 105, 0.35);
   color: #fff;
 }
 .btn-primary:active { transform: translateY(0); }
@@ -412,7 +412,7 @@ h1, h2, h3, h4, h5, h6 {
 .form-input:focus {
   border-color: var(--primary);
   background: #ffffff;
-  box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+  box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.15);
 }
 
 .form-input::placeholder { color: var(--text-disabled); }
@@ -466,10 +466,10 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   letter-spacing: 0.5px;
 }
 
-.badge-primary  { background: var(--primary-subtle); color: var(--primary); border: 1px solid rgba(79, 70, 229, 0.25); }
+.badge-primary  { background: var(--primary-subtle); color: var(--primary); border: 1px solid rgba(5, 150, 105, 0.25); }
 .badge-cyan     { background: var(--cyan-subtle); color: var(--cyan); border: 1px solid rgba(2, 132, 199, 0.25); }
 .badge-emerald  { background: var(--emerald-subtle); color: var(--emerald); border: 1px solid rgba(5, 150, 105, 0.25); }
-.badge-purple   { background: var(--purple-subtle); color: var(--purple); border: 1px solid rgba(124, 58, 237, 0.25); }
+.badge-purple   { background: var(--purple-subtle); color: var(--purple); border: 1px solid rgba(13, 148, 136, 0.25); }
 .badge-amber    { background: var(--amber-subtle); color: var(--amber); border: 1px solid rgba(217, 119, 6, 0.25); }
 .badge-rose     { background: var(--rose-subtle); color: var(--rose); border: 1px solid rgba(225, 29, 72, 0.25); }
 
@@ -644,7 +644,7 @@ textarea.form-input { resize: vertical; min-height: 90px; }
   background: var(--primary-subtle);
   padding: 4px 12px;
   border-radius: var(--r-xs);
-  border: 1px solid rgba(79, 70, 229, 0.2);
+  border: 1px solid rgba(5, 150, 105, 0.2);
   letter-spacing: 0.5px;
 }
 
@@ -772,7 +772,7 @@ textarea.form-input { resize: vertical; min-height: 90px; }
 
 .lesson-nav-item.active {
   background: var(--primary-subtle);
-  border-color: rgba(79, 70, 229, 0.35);
+  border-color: rgba(5, 150, 105, 0.35);
   color: var(--primary);
 }
 
@@ -798,7 +798,7 @@ textarea.form-input { resize: vertical; min-height: 90px; }
 }
 
 .dot-pending  { background: #f1f5f9; color: var(--text-muted); border: 1px solid var(--border); }
-.dot-active   { background: var(--primary); color: #fff; box-shadow: 0 0 10px rgba(79, 70, 229, 0.4); }
+.dot-active   { background: var(--primary); color: #fff; box-shadow: 0 0 10px rgba(5, 150, 105, 0.4); }
 .dot-done     { background: var(--emerald); color: #fff; box-shadow: 0 0 10px rgba(5, 150, 105, 0.35); }
 
 /* Quiz options */

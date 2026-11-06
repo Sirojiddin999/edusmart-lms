@@ -147,7 +147,7 @@ function runSeed() {
         lastLessonId = pythonLessons[pythonLessons.length - 1]?.id || pythonLessons[0]?.id;
 
         // Sertifikat berilgan!
-        const certId = `INNO-2026-${100000 + idx * 7 + 13}`;
+        const certId = `CYB-2026-${100000 + idx * 7 + 13}`;
         insertCert.run(certId, studentId, pythonCourse.id, fullName, pythonCourse.title, certDate);
 
       } else if (idx < 41 + 78) {

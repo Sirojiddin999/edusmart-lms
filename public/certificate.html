@@ -4,7 +4,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Elektron Sertifikatni Tasdiqlash — InnoCode IT Academy</title>
+  <title>Elektron Sertifikatni Tasdiqlash — Cyber-UZ Academy</title>
+  <script src="/js/theme.js"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
@@ -12,7 +13,7 @@
     rel="stylesheet">
   <style>
     :root {
-      --primary: #4f46e5;
+      --primary: #059669;
       --navy: #0f172a;
       --gold: #d97706;
       --gold-light: #fef3c7;
@@ -278,7 +279,7 @@
     }
 
     .cert-brand span {
-      color: #4f46e5;
+      color: #059669;
     }
 
     .cert-sub-brand {
@@ -514,14 +515,14 @@
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #4f46e5, #4338ca);
+      background: linear-gradient(135deg, #059669, #047857);
       color: #ffffff;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);
+      box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);
     }
 
     .btn-primary:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.45);
+      box-shadow: 0 6px 16px rgba(5, 150, 105, 0.45);
     }
 
     .btn-secondary {
@@ -634,7 +635,7 @@
       </a>
     </div>
     <div style="display: flex; gap: 8px; align-items: center;">
-      <a href="/student.html" class="btn" style="background: linear-gradient(135deg, #4f46e5, #4338ca); color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(79, 70, 229, 0.35);">
+      <a href="/student.html" class="btn" style="background: linear-gradient(135deg, #059669, #047857); color: #fff; padding: 8px 16px; border-radius: 8px; font-weight: 700; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; font-size: 0.88rem; box-shadow: 0 4px 12px rgba(5, 150, 105, 0.35);">
         🎓 O'quvchi Kabineti
       </a>
     </div>
@@ -644,7 +645,7 @@
   <div class="verify-banner" id="verifyBanner">
     <div class="verify-left">
       <div class="live-dot"></div>
-      <span>Haqiqiy Rasmiy Elektron Sertifikat (innocode.uz / Inocoders.uz)</span>
+      <span>Haqiqiy Rasmiy Elektron Sertifikat (cyber-uz / Inocoders.uz)</span>
     </div>
     <div class="verify-badge">✓ Tizimda Tasdiqlangan</div>
   </div>
@@ -687,8 +688,8 @@
 
           <!-- Akademiya Logotipi va Brendi -->
           <div class="cert-header">
-            <div class="cert-brand">innocode<span>.uz</span></div>
-            <div class="cert-sub-brand" id="viewSubBrand">InnoCode IT Academy & Inocoders</div>
+            <div class="cert-brand">cyber<span>-uz</span></div>
+            <div class="cert-sub-brand" id="viewSubBrand">Cyber-UZ Academy & Cyber Team</div>
           </div>
 
           <!-- Sarlavha -->
@@ -702,7 +703,7 @@
 
           <!-- Sertifikat Matni -->
           <p class="cert-body-text">
-            InnoCode IT Academy ta'lim platformasidagi
+            Cyber-UZ Academy ta'lim platformasidagi
             <span class="course-badge" id="viewCourseName">Python Asoslari va Sun'iy Intellekt</span>
             o'quv dasturining barcha <strong>10 ta darsini</strong> hamda har bir dars bo'yicha
             amaliy test sinovlarini <strong>100% (5/5) a'lo bahoga</strong> topshirib,
@@ -733,7 +734,7 @@
               <div class="sign-draw">S. Savriyev</div>
               <div class="sign-line"></div>
               <div class="sign-name">Sirojiddin Savriyev</div>
-              <div class="sign-role">InnoCode IT Academy Direktori</div>
+              <div class="sign-role">Cyber-UZ Academy Direktori</div>
             </div>
           </div>
 
@@ -750,7 +751,7 @@
             <div>
               <span style="font-size: 0.72rem; color: #64748b; display: block; margin-bottom: 4px;">Sertifikat Seriya
                 Raqami:</span>
-              <span class="cert-id-tag" id="viewCertId">INNO-2026-XXXXXX</span>
+              <span class="cert-id-tag" id="viewCertId">CYB-2026-XXXXXX</span>
             </div>
           </div>
 
@@ -980,7 +981,7 @@
           }
         } catch (err) {}
 
-        idEl.innerText = 'INNO-2026-SS7849';
+        idEl.innerText = 'CYB-2026-SS7849';
         if (params.get('name')) nameEl.innerText = params.get('name');
         if (params.get('course')) courseEl.innerText = params.get('course');
         applyCertCourseTheme(courseEl.innerText);
@@ -1150,7 +1151,7 @@
           grid[i][6] = (i % 2 === 0);
         }
 
-        const str = String(dataStr || 'https://innocode.uz/certificate.html');
+        const str = String(dataStr || 'https://cyber-uz/certificate.html');
         let h1 = 2166136261 >>> 0;
         let h2 = 16777619 >>> 0;
         for (let i = 0; i < str.length; i++) {
@@ -1189,7 +1190,7 @@
     function downloadCertPageImage() {
       const studentName = (document.getElementById('viewStudentName').innerText || "O‘quvchi").toUpperCase();
       const courseName  = document.getElementById('viewCourseName').innerText || "Python Asoslari va Sun'iy Intellekt";
-      const certId      = document.getElementById('viewCertId').innerText || "INNO-2026-100001";
+      const certId      = document.getElementById('viewCertId').innerText || "CYB-2026-100001";
       const certDate    = document.getElementById('viewIssueDate').innerText || "2026-yil";
       const theme       = getCertCourseTheme(courseName);
 
@@ -1231,7 +1232,7 @@
       ctx.textAlign = 'center';
       ctx.fillStyle = '#0f172a';
       ctx.font = '900 44px Arial, sans-serif';
-      ctx.fillText('innocode.uz', 800, 212);
+      ctx.fillText('cyber-uz', 800, 212);
 
       ctx.fillStyle = theme.accentColor;
       ctx.font = 'bold 18px Arial, sans-serif';
@@ -1265,7 +1266,7 @@
 
       ctx.fillStyle = '#334155';
       ctx.font = '27px Arial, sans-serif';
-      ctx.fillText('InnoCode IT Academy ta\'lim platformasidagi', 800, 538);
+      ctx.fillText('Cyber-UZ Academy ta\'lim platformasidagi', 800, 538);
 
       ctx.fillStyle = theme.outerColor;
       ctx.font = 'bold 34px Arial, sans-serif';
@@ -1323,7 +1324,7 @@
       ctx.font = 'bold 20px Arial, sans-serif';
       ctx.fillText('Sirojiddin Savriyev', 1240, 872);
       ctx.font = '18px Arial, sans-serif';
-      ctx.fillText('InnoCode IT Academy Direktori', 1240, 898);
+      ctx.fillText('Cyber-UZ Academy Direktori', 1240, 898);
 
       ctx.fillStyle = '#f1f5f9';
       ctx.fillRect(140, 938, 1320, 98);

@@ -115,7 +115,7 @@ function renderCourses(courses) {
             </span>
           </div>
         </div>
-        ${c.teacher_name ? `<div style="font-size:0.76rem; font-weight:700; color:#4f46e5; margin-bottom:6px;">👨‍🏫 Kurs o‘qituvchisi: ${c.teacher_name}</div>` : ''}
+        ${c.teacher_name ? `<div style="font-size:0.76rem; font-weight:700; color:#059669; margin-bottom:6px;">👨‍🏫 Kurs o‘qituvchisi: ${c.teacher_name}</div>` : ''}
         <div class="l-card-desc" style="color:#64748b; font-size:0.86rem; line-height:1.55; margin-bottom:14px;">
           ${c.description || 'Ushbu kurs bo‘yicha qo‘shimcha ma\'lumot kiritilmagan'}
         </div>
@@ -123,7 +123,7 @@ function renderCourses(courses) {
 
       <div class="l-card-footer" style="padding-top:12px; border-top:1px solid #f1f5f9; display:flex; flex-direction:column; gap:8px;">
         <div style="display:flex; gap:8px; flex-wrap:wrap;">
-          <button class="btn btn-primary btn-sm" onclick="openAddLessonForCourse(${c.id}, '${c.title.replace(/'/g, "\\'")}')" style="flex:1; font-weight:800; display:inline-flex; align-items:center; justify-content:center; gap:5px; box-shadow:0 2px 8px rgba(79,70,229,0.22);" title="Ushbu kurs ichiga dars qo‘shish">
+          <button class="btn btn-primary btn-sm" onclick="openAddLessonForCourse(${c.id}, '${c.title.replace(/'/g, "\\'")}')" style="flex:1; font-weight:800; display:inline-flex; align-items:center; justify-content:center; gap:5px; box-shadow:0 2px 8px rgba(5,150,105,0.22);" title="Ushbu kurs ichiga dars qo‘shish">
             ➕ Dars qo‘shish
           </button>
           <button class="btn btn-emerald btn-sm" onclick="openCreateStudentModal(${c.id}, '${c.title.replace(/'/g, "\\'")}')" style="flex:1; font-weight:800; display:inline-flex; align-items:center; justify-content:center; gap:5px;" title="Ushbu kurs uchun o‘quvchiga login va parol yaratib berish">

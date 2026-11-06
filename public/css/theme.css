@@ -1,0 +1,205 @@
+/* cyber-uz — Kiberxavfsizlik mavzusi: Oq (kun) va Qora (tun) rejimlar */
+
+:root {
+  --primary: #059669;
+  --primary-dark: #047857;
+  --primary-glow: rgba(5, 150, 105, 0.22);
+  --primary-subtle: #ecfdf5;
+  --border-primary: rgba(5, 150, 105, 0.38);
+  --shadow-primary: 0 4px 14px rgba(5, 150, 105, 0.28);
+  --cyber-accent: #059669;
+  --cyber-accent-2: #0891b2;
+}
+
+/* ───────── QORA REJIM (tun) ───────── */
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-base: #04070a;
+  --bg-surface: #0a0f14;
+  --bg-card: #0c1218;
+  --bg-card-solid: #0c1218;
+  --bg-elevated: #111922;
+  --bg-input: #0a0f14;
+
+  --primary: #22e58a;
+  --primary-dark: #10b981;
+  --primary-glow: rgba(34, 229, 138, 0.25);
+  --primary-subtle: rgba(34, 229, 138, 0.1);
+  --border-primary: rgba(34, 229, 138, 0.4);
+  --shadow-primary: 0 4px 18px rgba(34, 229, 138, 0.25);
+
+  --cyan: #22d3ee;
+  --cyan-subtle: rgba(34, 211, 238, 0.1);
+  --purple: #2dd4bf;
+  --purple-subtle: rgba(45, 212, 191, 0.1);
+  --emerald: #34d399;
+  --emerald-subtle: rgba(52, 211, 153, 0.1);
+  --amber: #fbbf24;
+  --amber-subtle: rgba(251, 191, 36, 0.1);
+  --rose: #fb7185;
+  --rose-subtle: rgba(251, 113, 133, 0.1);
+
+  --text-primary: #e8f1ee;
+  --text-secondary: #b5c4be;
+  --text-muted: #7f918a;
+  --text-disabled: #55655f;
+
+  --border: #1b2630;
+  --border-hover: #2a3a46;
+
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+  --shadow-md: 0 4px 10px -1px rgba(0, 0, 0, 0.6);
+  --shadow-lg: 0 10px 20px -3px rgba(0, 0, 0, 0.65);
+  --shadow-xl: 0 20px 30px -5px rgba(0, 0, 0, 0.7);
+  --cyber-accent: #22e58a;
+  --cyber-accent-2: #22d3ee;
+}
+
+html[data-theme="dark"] body {
+  background: var(--bg-base);
+  color: var(--text-primary);
+}
+
+html[data-theme="dark"] body::before {
+  background-image:
+    linear-gradient(rgba(34, 229, 138, 0.06) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 229, 138, 0.06) 1px, transparent 1px);
+}
+
+/* Hardcoded (inline) oq fonlar va to'q matnlar — sertifikat bloklari bundan mustasno */
+html[data-theme="dark"] [style*="background: #fff"]:not(#certModal *):not(#certModal):not(#certContainer *):not(#certContainer),
+html[data-theme="dark"] [style*="background:#fff"]:not(#certModal *):not(#certModal):not(#certContainer *):not(#certContainer),
+html[data-theme="dark"] [style*="background: white"]:not(#certModal *):not(#certModal):not(#certContainer *):not(#certContainer),
+html[data-theme="dark"] [style*="background:white"]:not(#certModal *):not(#certModal):not(#certContainer *):not(#certContainer),
+html[data-theme="dark"] [style*="background: rgba(255,255,255"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="background: #f8fafc"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="background:#f8fafc"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="background: #f1f5f9"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="background:#f1f5f9"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="background: #f0fdf4"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="background: #ecfdf5"]:not(#certModal *):not(#certContainer *) {
+  background: var(--bg-card) !important;
+  border-color: var(--border) !important;
+}
+
+html[data-theme="dark"] [style*="color: #0f172a"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="color:#0f172a"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="color: #1e293b"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="color:#1e293b"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="color: #334155"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="color:#334155"]:not(#certModal *):not(#certContainer *) {
+  color: var(--text-primary) !important;
+}
+
+html[data-theme="dark"] [style*="color: #475569"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="color:#475569"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="color: #64748b"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="color:#64748b"]:not(#certModal *):not(#certContainer *) {
+  color: var(--text-muted) !important;
+}
+
+html[data-theme="dark"] [style*="border: 1px solid #e2e8f0"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="border:1px solid #e2e8f0"]:not(#certModal *):not(#certContainer *),
+html[data-theme="dark"] [style*="border: 1.5px solid #e2e8f0"]:not(#certModal *):not(#certContainer *) {
+  border-color: var(--border) !important;
+}
+
+html[data-theme="dark"] input,
+html[data-theme="dark"] select,
+html[data-theme="dark"] textarea {
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border-color: var(--border);
+}
+html[data-theme="dark"] input::placeholder,
+html[data-theme="dark"] textarea::placeholder { color: var(--text-disabled); }
+
+html[data-theme="dark"] table,
+html[data-theme="dark"] th,
+html[data-theme="dark"] td { border-color: var(--border); }
+html[data-theme="dark"] th { background: var(--bg-elevated); color: var(--text-secondary); }
+
+/* Sertifikat elementlari doim oq fonli bo'lib qoladi */
+#certModal, #certContainer { color-scheme: light; }
+
+/* ───────── BOSH SAHIFA / SAHIFA SARLAVHALARI (kiber gradient) ───────── */
+.page-header,
+.hero,
+.hero-section {
+  background: linear-gradient(135deg, #04100d 0%, #064e3b 55%, #0e7490 100%) !important;
+  position: relative;
+  overflow: hidden;
+}
+.page-header::after,
+.hero::after,
+.hero-section::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(34, 229, 138, 0.09) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(34, 229, 138, 0.09) 1px, transparent 1px);
+  background-size: 36px 36px;
+  pointer-events: none;
+}
+.page-header > *, .hero > *, .hero-section > * { position: relative; z-index: 1; }
+
+html[data-theme="dark"] .navbar {
+  background: rgba(4, 7, 10, 0.88) !important;
+  border-bottom: 1px solid var(--border);
+}
+html[data-theme="dark"] .navbar .nav-links a { color: var(--text-secondary) !important; }
+html[data-theme="dark"] .navbar .nav-links a:hover { color: var(--primary) !important; }
+html[data-theme="dark"] footer { background: #020405 !important; border-top: 1px solid var(--border); }
+
+/* ───────── KUN / TUN TUGMASI (burchakda: quyosh va oy) ───────── */
+.cyber-theme-toggle {
+  position: fixed;
+  left: 18px;
+  bottom: 18px;
+  z-index: 2147483000;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border-radius: 999px;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.22);
+  font-family: 'Inter', sans-serif;
+}
+html[data-theme="dark"] .cyber-theme-toggle {
+  background: #0a0f14;
+  border-color: #22e58a;
+  box-shadow: 0 0 0 1px rgba(34, 229, 138, 0.25), 0 6px 26px rgba(34, 229, 138, 0.28);
+}
+.cyber-theme-toggle button {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  font-size: 1.15rem;
+  line-height: 1;
+  background: transparent;
+  color: #64748b;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform .2s, background .2s, box-shadow .2s;
+}
+.cyber-theme-toggle button:hover { transform: scale(1.1); }
+.cyber-theme-toggle button.active.sun {
+  background: linear-gradient(135deg, #fde047, #f59e0b);
+  box-shadow: 0 0 14px rgba(245, 158, 11, 0.7);
+}
+.cyber-theme-toggle button.active.moon {
+  background: linear-gradient(135deg, #1e293b, #0f172a);
+  box-shadow: 0 0 14px rgba(34, 229, 138, 0.55);
+}
+@media print { .cyber-theme-toggle { display: none !important; } }
+@media (max-width: 600px) {
+  .cyber-theme-toggle { left: 10px; bottom: 10px; }
+  .cyber-theme-toggle button { width: 34px; height: 34px; }
+}
+

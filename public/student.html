@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O‘quvchi kabineti | innocode.uz</title>
+  <title>O‘quvchi kabineti | cyber-uz</title>
+  <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     /*  STUDENT LAYOUT  */
@@ -29,7 +30,7 @@
       background: linear-gradient(135deg, var(--primary), var(--cyan));
       display: flex; align-items: center; justify-content: center;
       font-size: 0.78rem; font-weight: 800; color: #fff; flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(79,70,229,0.3);
+      box-shadow: 0 2px 6px rgba(5,150,105,0.3);
     }
     .u-name  { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
     .u-login { font-size: 0.72rem; color: var(--text-muted); font-family: monospace; }
@@ -89,14 +90,14 @@
       background: transparent; border-radius: 10px 0 0 10px; transition: 0.2s;
     }
     .lni:hover:not(.locked) {
-      background: #f5f3ff; border-color: rgba(79,70,229,0.3); color: var(--text-primary);
+      background: #f0fdfa; border-color: rgba(5,150,105,0.3); color: var(--text-primary);
       transform: translateX(3px);
-      box-shadow: 0 2px 8px rgba(79,70,229,0.07);
+      box-shadow: 0 2px 8px rgba(5,150,105,0.07);
     }
     .lni.active {
-      background: linear-gradient(135deg, #ede9fe 0%, #eef2ff 100%);
-      border-color: rgba(79, 70, 229, 0.45); color: var(--primary);
-      box-shadow: 0 3px 12px rgba(79, 70, 229, 0.12);
+      background: linear-gradient(135deg, #ccfbf1 0%, #ecfdf5 100%);
+      border-color: rgba(5, 150, 105, 0.45); color: var(--primary);
+      box-shadow: 0 3px 12px rgba(5, 150, 105, 0.12);
     }
     .lni.active::before { background: var(--primary); }
     .lni.done {
@@ -119,15 +120,15 @@
     .dot-p { background: #f1f5f9; color: #64748b; border: 2px solid #cbd5e1; }
     .dot-a {
       background: var(--primary); color: #fff;
-      box-shadow: 0 0 0 3px rgba(79,70,229,0.2), 0 0 12px rgba(79,70,229,0.4);
+      box-shadow: 0 0 0 3px rgba(5,150,105,0.2), 0 0 12px rgba(5,150,105,0.4);
       animation: pulse-active 2s infinite;
     }
     .dot-d { background: var(--emerald); color: #fff; box-shadow: 0 0 10px rgba(5,150,105,0.35); font-size: 1rem; }
     .dot-l { background: #e2e8f0; color: #94a3b8; border: 2px solid #cbd5e1; font-size: 1rem; }
 
     @keyframes pulse-active {
-      0%, 100% { box-shadow: 0 0 0 3px rgba(79,70,229,0.2), 0 0 12px rgba(79,70,229,0.4); }
-      50% { box-shadow: 0 0 0 6px rgba(79,70,229,0.1), 0 0 20px rgba(79,70,229,0.5); }
+      0%, 100% { box-shadow: 0 0 0 3px rgba(5,150,105,0.2), 0 0 12px rgba(5,150,105,0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(5,150,105,0.1), 0 0 20px rgba(5,150,105,0.5); }
     }
 
     .lni-info { flex: 1; overflow: hidden; min-width: 0; }
@@ -179,7 +180,7 @@
     /* Tags */
     .tag {
       display: inline-flex; align-items: center; padding: 3px 11px;
-      background: var(--primary-subtle); border: 1px solid rgba(79, 70, 229, 0.2);
+      background: var(--primary-subtle); border: 1px solid rgba(5, 150, 105, 0.2);
       border-radius: var(--r-full); font-size: 0.74rem; color: var(--primary); font-weight: 600;
     }
 
@@ -341,8 +342,8 @@
     <!-- HEADER -->
     <header class="s-header">
       <a href="/" class="brand" style="text-decoration: none; display: flex; align-items: center;">
-        <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 70px; object-fit: contain; mix-blend-mode: multiply;">
-        <span style="font-size: 1.3rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 8px;">innocode.uz</span>
+        <img src="/img/logo.svg" alt="cyber-uz logo" style="height: 70px; object-fit: contain;">
+        <span style="font-size: 1.3rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 8px;">cyber-uz</span>
       </a>
       <div class="s-header-actions" style="display: flex; align-items: center; gap: 10px;">
         <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class="btn btn-ghost btn-sm" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
@@ -437,8 +438,8 @@
           <div id="interactiveLessonPlayer" style="display: none; position: absolute; inset: 0; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #0f172a 100%); color: #fff; flex-direction: column; justify-content: space-between; padding: 24px 28px; box-sizing: border-box; overflow: hidden;">
             <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 12px;">
               <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="background: #4f46e5; color: #fff; font-weight: 900; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;" id="ilpBadge">1-DARS</span>
-                <span style="font-size: 0.85rem; color: #cbd5e1; font-weight: 700;" id="ilpCourse">innocode.uz Video Dars</span>
+                <span style="background: #059669; color: #fff; font-weight: 900; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;" id="ilpBadge">1-DARS</span>
+                <span style="font-size: 0.85rem; color: #cbd5e1; font-weight: 700;" id="ilpCourse">cyber-uz Video Dars</span>
               </div>
               <span style="font-size: 0.76rem; color: #38bdf8; font-weight: 700;" id="ilpSlideIndicator">Slayd 1 / 4</span>
             </div>
@@ -462,7 +463,7 @@
         <div id="videoDirectBar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: -12px; margin-bottom: 18px; padding: 10px 14px; background: #f8fafc; border: 1px solid var(--border); border-radius: 10px;">
           <span style="font-size: 0.82rem; color: #475569; font-weight: 600;">📹 Video dars rejimi:</span>
           <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-            <button type="button" id="btnModeYt" onclick="switchVideoMode('youtube')" class="btn btn-xs" style="background: #4f46e5; color: #fff; font-weight: 800; padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer;">📺 YouTube Pleer</button>
+            <button type="button" id="btnModeYt" onclick="switchVideoMode('youtube')" class="btn btn-xs" style="background: #059669; color: #fff; font-weight: 800; padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer;">📺 YouTube Pleer</button>
             <button type="button" id="btnModeIlp" onclick="switchVideoMode('interactive')" class="btn btn-xs" style="background: #0f172a; color: #fff; font-weight: 800; padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer;">🎬 Ichki Video-Slayd Dars</button>
             <a id="ytDirectLink" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="btn btn-xs" style="background: #ef4444; color: #fff; font-weight: 800; padding: 6px 14px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">▶ YouTube-da ochish ↗</a>
           </div>
@@ -531,7 +532,7 @@
           <span class="badge badge-emerald" id="certCardStatusBadge" style="font-size: 0.85rem; padding: 6px 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">✓ Rasmiy Elektron Sertifikat</span>
           <h2 style="font-size: 1.85rem; font-weight: 900; color: #065f46; margin: 14px 0 8px;">Rasmiy QR-kodli Sertifikat</h2>
           <p style="font-size: 1.05rem; color: #047857; max-width: 620px; margin: 0 auto 24px; line-height: 1.6;">
-            InnoCode IT Academy tomonidan tasdiqlangan rasmiy elektron QR-kodli sertifikatingizni ko‘rishingiz, rasm (PNG) yoki PDF shaklida yuklab olishingiz mumkin!
+            Cyber-UZ Academy tomonidan tasdiqlangan rasmiy elektron QR-kodli sertifikatingizni ko‘rishingiz, rasm (PNG) yoki PDF shaklida yuklab olishingiz mumkin!
           </p>
           <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
             <button onclick="generateCertificate()" class="btn btn-lg" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; border: none; font-weight: 800; padding: 14px 28px; border-radius: 12px; box-shadow: 0 6px 20px rgba(5,150,105,0.4); font-size: 1.05rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
@@ -656,9 +657,9 @@
         const btn = document.getElementById('qcBtn-' + cid);
         if (btn) {
           if (cid === courseId) {
-            btn.style.background = '#4f46e5';
+            btn.style.background = '#059669';
             btn.style.color = '#ffffff';
-            btn.style.borderColor = '#4338ca';
+            btn.style.borderColor = '#047857';
           } else {
             btn.style.background = '#ffffff';
             btn.style.color = '#334155';
@@ -810,7 +811,7 @@
         } else if (score !== undefined && score !== null) {
           rightBadge = `<span class="score-chip" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5;">${score}/5</span>`;
         } else {
-          rightBadge = `<span class="score-chip" style="background:#eef2ff;color:#4f46e5;border-color:#c7d2fe;">▶ Ochiq</span>`;
+          rightBadge = `<span class="score-chip" style="background:#ecfdf5;color:#059669;border-color:#a7f3d0;">▶ Ochiq</span>`;
         }
 
         // Status matni
@@ -952,7 +953,7 @@
       if (!ilpSlides.length) return;
       const s = ilpSlides[ilpIdx] || ilpSlides[0];
       document.getElementById('ilpBadge').innerText = `${CUR?.order_num || 1}-DARS`;
-      document.getElementById('ilpCourse').innerText = window._currentCourseName || 'innocode.uz Video Dars';
+      document.getElementById('ilpCourse').innerText = window._currentCourseName || 'cyber-uz Video Dars';
       document.getElementById('ilpSlideIndicator').innerText = `Slayd ${ilpIdx + 1} / ${ilpSlides.length}`;
       document.getElementById('ilpTitle').innerText = s.heading;
       document.getElementById('ilpBody').innerText = s.body;
@@ -980,7 +981,7 @@
       if (mode === 'interactive') {
         if (vi) vi.style.display = 'none';
         if (ilp) ilp.style.display = 'flex';
-        if (btnIlp) btnIlp.style.background = '#4f46e5';
+        if (btnIlp) btnIlp.style.background = '#059669';
         if (btnYt) btnYt.style.background = '#64748b';
         renderIlpSlide();
         if (ilpTimer) clearInterval(ilpTimer);
@@ -999,7 +1000,7 @@
           vi.style.display = 'block';
           if (CUR) vi.src = resolveWorkingVideoUrl(CUR);
         }
-        if (btnYt) btnYt.style.background = '#4f46e5';
+        if (btnYt) btnYt.style.background = '#059669';
         if (btnIlp) btnIlp.style.background = '#0f172a';
       }
     }
@@ -1413,7 +1414,7 @@
       </div>
       
       <div id="certInnerBox" style="border: 2.5px solid #2563eb; padding: 28px 26px; border-radius: 6px; position: relative; overflow: hidden; background: radial-gradient(circle at center, #ffffff 0%, #eff6ff 100%);">
-        <div id="certWatermark" style="position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); font-size: 4.5rem; font-weight: 900; color: rgba(37, 99, 235, 0.04); pointer-events: none; user-select: none; white-space: nowrap;">PYTHON • AI • INNOCODE</div>
+        <div id="certWatermark" style="position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); font-size: 4.5rem; font-weight: 900; color: rgba(37, 99, 235, 0.04); pointer-events: none; user-select: none; white-space: nowrap;">PYTHON • AI • CYBER-UZ</div>
         <div style="position: relative; z-index: 1;">
           <!-- Maxsus kurs logotipi va nishoni -->
           <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; margin-bottom: 10px;">
@@ -1422,8 +1423,8 @@
           </div>
 
           <div style="text-align: center; margin-bottom: 8px;">
-            <span style="font-size: 2rem; font-weight: 900; color: #0f172a; font-family: sans-serif; letter-spacing: -0.5px;">innocode<span id="certBrandDot" style="color: #2563eb;">.uz</span></span>
-            <div id="certAcademySub" style="font-size: 0.74rem; font-weight: 800; color: #1d4ed8; letter-spacing: 2px; text-transform: uppercase;">InnoCode IT Academy & Inocoders</div>
+            <span style="font-size: 2rem; font-weight: 900; color: #0f172a; font-family: sans-serif; letter-spacing: -0.5px;">cyber<span id="certBrandDot" style="color: #2563eb;">-uz</span></span>
+            <div id="certAcademySub" style="font-size: 0.74rem; font-weight: 800; color: #1d4ed8; letter-spacing: 2px; text-transform: uppercase;">Cyber-UZ Academy & Cyber Team</div>
           </div>
           <h1 id="certMainHeading" style="font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.5rem, 3vw, 2.35rem); color: #1e3a8a; margin-top: 2px; letter-spacing: 3px; font-weight: 900;">MUVAFFAQIYAT SERTIFIKATI</h1>
           <p style="font-size: 0.98rem; color: #64748b; margin-top: 6px; font-style: italic;">Ushbu rasmiy sertifikat quyidagi shaxsga taqdim etiladi:</p>
@@ -1433,7 +1434,7 @@
           </div>
           
           <p style="font-size: 1.05rem; color: #334155; line-height: 1.65; max-width: 620px; margin: 0 auto;">
-            InnoCode IT Academy ning
+            Cyber-UZ Academy ning
             <b id="certCourseName" style="color: #1e3a8a; background: #dbeafe; border: 1px solid #93c5fd; padding: 2px 10px; border-radius: 6px;">Dasturlash</b>
             o‘quv dasturidagi barcha <b>10 ta dars</b> va amaliy testlarni
             <b>100% (5/5)</b> a'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.
@@ -1471,7 +1472,7 @@
             </div>
             <div>
               <div style="font-size: 0.7rem; color: #64748b; margin-bottom: 3px;">Sertifikat ID:</div>
-              <div id="certIdBadge" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #0f172a; background: #fff; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 6px;">INNO-2026-XXXXXX</div>
+              <div id="certIdBadge" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #0f172a; background: #fff; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 6px;">CYB-2026-XXXXXX</div>
             </div>
           </div>
 
@@ -1481,7 +1482,7 @@
       <div class="cert-print cert-extra-btns" style="margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
         <button class="btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;" onclick="downloadCertificateFile()">📥 Sertifikatni Yuklab Olish (Rasm / PNG)</button>
         <button class="btn" style="background: #0f172a; color: white; padding: 12px 24px; font-size: 0.95rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;" onclick="window.print()">🖨 Chop etish (PDF saqlash)</button>
-        <button class="btn" id="btnOpenElectronic" style="background: #4f46e5; color: white; padding: 12px 24px; font-size: 0.95rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🌐 Elektron variantini ochish</button>
+        <button class="btn" id="btnOpenElectronic" style="background: #059669; color: white; padding: 12px 24px; font-size: 0.95rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🌐 Elektron variantini ochish</button>
       </div>
     </div>
   </div>
@@ -1514,7 +1515,7 @@
       const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
       const now = new Date();
       return {
-        id: 'INNO-' + now.getFullYear() + '-' + (100000 + ((usr.id || 77) * 8191 + courseId * 131) % 900000),
+        id: 'CYB-' + now.getFullYear() + '-' + (100000 + ((usr.id || 77) * 8191 + courseId * 131) % 900000),
         student_name: usr.full_name || "O‘quvchi",
         course_title: courseName,
         issue_date: `${now.getDate()}-${months[now.getMonth()]}, ${now.getFullYear()}-yil`
@@ -1527,7 +1528,7 @@
         return {
           key: 'react',
           pillText: "⚛️ JAVASCRIPT & REACT.JS WEB YO'NALISHI",
-          watermark: 'REACT • JS • WEB • INNOCODE',
+          watermark: 'REACT • JS • WEB • CYBER-UZ',
           sealTop: 'REACT & JS',
           outerBorder: '#091526',
           innerBorder: '#06b6d4',
@@ -1584,7 +1585,7 @@
       return {
         key: 'python',
         pillText: "🐍 PYTHON & SUN'IY INTELLEKT YO'NALISHI",
-        watermark: 'PYTHON • AI • INNOCODE',
+        watermark: 'PYTHON • AI • CYBER-UZ',
         sealTop: 'PYTHON & AI',
         outerBorder: '#1e3a8a',
         innerBorder: '#2563eb',
@@ -1701,7 +1702,7 @@
         }
 
         // Hash bits from dataStr
-        const str = String(dataStr || 'https://innocode.uz/certificate.html');
+        const str = String(dataStr || 'https://cyber-uz/certificate.html');
         let h1 = 2166136261 >>> 0;
         let h2 = 16777619 >>> 0;
         for (let i = 0; i < str.length; i++) {
@@ -1896,7 +1897,7 @@
     function downloadCertificateFile() {
       const studentName = (document.getElementById('certStudentName').innerText || "O‘QUVCHI").toUpperCase();
       const courseName  = document.getElementById('certCourseName').innerText || "Dasturlash";
-      const certId      = document.getElementById('certIdBadge').innerText || "INNO-2026-100001";
+      const certId      = document.getElementById('certIdBadge').innerText || "CYB-2026-100001";
       const certDate    = document.getElementById('certDate').innerText || "2026-yil";
       const th          = getStudentCertTheme(courseName);
 
@@ -1941,11 +1942,11 @@
       ctx.textAlign = 'center';
       ctx.fillStyle = '#0f172a';
       ctx.font = '900 44px Arial, sans-serif';
-      ctx.fillText('innocode.uz', 800, 215);
+      ctx.fillText('cyber-uz', 800, 215);
 
       ctx.fillStyle = th.brandAccent;
       ctx.font = 'bold 18px Arial, sans-serif';
-      ctx.fillText(th.pillText.replace(/^[^\s]+\s/, '') + ' • INNOCODE IT ACADEMY', 800, 244);
+      ctx.fillText(th.pillText.replace(/^[^\s]+\s/, '') + ' • CYBER-UZ ACADEMY', 800, 244);
 
       // 6. Asosiy sarlavha
       ctx.fillStyle = th.headingColor;
@@ -1977,7 +1978,7 @@
       // 8. Kurs matni
       ctx.fillStyle = '#334155';
       ctx.font = '27px Arial, sans-serif';
-      ctx.fillText('InnoCode IT Academy ta\'lim platformasidagi', 800, 530);
+      ctx.fillText('Cyber-UZ Academy ta\'lim platformasidagi', 800, 530);
 
       ctx.fillStyle = th.headingColor;
       ctx.font = 'bold 34px Arial, sans-serif';
@@ -2036,7 +2037,7 @@
       ctx.font = 'bold 20px Arial, sans-serif';
       ctx.fillText('Sirojiddin Savriyev', 1240, 862);
       ctx.font = '18px Arial, sans-serif';
-      ctx.fillText('InnoCode IT Academy Direktori', 1240, 888);
+      ctx.fillText('Cyber-UZ Academy Direktori', 1240, 888);
 
       // 10. Pastki QR-Kod, ID va Sana bloki
       ctx.fillStyle = '#f8fafc';

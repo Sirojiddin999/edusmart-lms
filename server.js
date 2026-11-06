@@ -585,7 +585,7 @@ function ensureStudentCourseCertificate(userId, studentName, course) {
   let cert = db.prepare("SELECT * FROM certificates WHERE user_id=? AND course_id=?").get(userId, course.id);
   if (!cert) {
     const randCode = Math.floor(100000 + Math.random() * 900000);
-    const certId = `INNO-${new Date().getFullYear()}-${randCode}`;
+    const certId = `CYB-${new Date().getFullYear()}-${randCode}`;
     const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
     const now = new Date();
     const issueDate = `${now.getDate()}-${months[now.getMonth()]}, ${now.getFullYear()}-yil`;
@@ -1426,7 +1426,7 @@ app.post('/api/teacher/news', auth, onlyTeacher, (req, res) => {
       title.trim(),
       description || '',
       (image_url && image_url.trim()) ? image_url.trim() : defaultImg,
-      (source_name && source_name.trim()) ? source_name.trim() : 'innocode.uz',
+      (source_name && source_name.trim()) ? source_name.trim() : 'cyber-uz',
       (source_url && source_url.trim()) ? source_url.trim() : '#',
       (tag && tag.trim()) ? tag.trim() : 'Ta\'lim & IT',
       (date_label && date_label.trim()) ? date_label.trim() : new Date().toLocaleDateString('uz-UZ')

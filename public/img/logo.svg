@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120" role="img" aria-label="cyber-uz logo">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#22e58a"/>
+      <stop offset="1" stop-color="#06b6d4"/>
+    </linearGradient>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b1a16"/>
+      <stop offset="1" stop-color="#04100d"/>
+    </linearGradient>
+  </defs>
+  <path d="M60 6 L104 22 V58 C104 84 86 102 60 114 C34 102 16 84 16 58 V22 Z" fill="url(#bg)" stroke="url(#g)" stroke-width="5" stroke-linejoin="round"/>
+  <path d="M60 16 L94 28 V57 C94 77 80 92 60 102 C40 92 26 77 26 57 V28 Z" fill="none" stroke="url(#g)" stroke-opacity=".35" stroke-width="1.5"/>
+  <rect x="42" y="52" width="36" height="28" rx="5" fill="url(#g)"/>
+  <path d="M48 52 V44 C48 37 53 33 60 33 C67 33 72 37 72 44 V52" fill="none" stroke="url(#g)" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="60" cy="64" r="4.5" fill="#04100d"/>
+  <rect x="58" y="65" width="4" height="9" rx="2" fill="#04100d"/>
+  <g stroke="url(#g)" stroke-width="2" stroke-linecap="round" opacity=".8">
+    <path d="M16 70 H6"/><path d="M104 70 H114"/>
+    <circle cx="5" cy="70" r="2" fill="#22e58a" stroke="none"/><circle cx="115" cy="70" r="2" fill="#06b6d4" stroke="none"/>
+  </g>
+</svg>
+

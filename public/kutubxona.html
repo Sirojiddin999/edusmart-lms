@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Kutubxona | innocode.uz</title>
+  <title>Kutubxona | cyber-uz</title>
+  <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
@@ -19,7 +20,7 @@
       transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); display: flex; align-items: center; gap: 8px;
     }
     .tab-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0,0,0,0.1); color: var(--primary); }
-    .tab-btn.active { background: var(--primary); color: white; transform: scale(1.05); box-shadow: 0 15px 35px rgba(79, 70, 229, 0.3); }
+    .tab-btn.active { background: var(--primary); color: white; transform: scale(1.05); box-shadow: 0 15px 35px rgba(5, 150, 105, 0.3); }
     
     /* Tab Content Grid */
     .tab-content { display: none; animation: fadeIn 0.4s ease-out forwards; margin-bottom: 80px; }
@@ -33,7 +34,7 @@
     .book-title { font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 10px; line-height: 1.4; flex: 1; }
     .book-category { font-size: 0.75rem; color: var(--primary); font-weight: 800; background: var(--primary-subtle); padding: 4px 12px; border-radius: 20px; display: inline-block; margin-bottom: 15px; text-transform: uppercase; letter-spacing: 0.5px; }
     .btn-download { display: inline-block; width: 100%; padding: 12px; background: #f1f5f9; color: var(--text-secondary); text-decoration: none; font-weight: 700; border-radius: 12px; transition: all 0.2s; text-align: center; margin-top: auto; border: 1px solid transparent; }
-    .btn-download:hover { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(79, 70, 229, 0.2); }
+    .btn-download:hover { background: var(--primary); color: white; box-shadow: 0 5px 15px rgba(5, 150, 105, 0.2); }
 
     @media (max-width: 768px) {
       .page-header { padding: 40px 14px 60px; }
@@ -52,8 +53,8 @@
     <div class='container'>
       <div class='navbar-inner' style='display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 15px;'>
         <a href='/' class='brand' style='display: flex; align-items: center; text-decoration: none;'>
-          <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 50px; object-fit: contain; mix-blend-mode: multiply;">
-          <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">innocode.uz</span>
+          <img src="/img/logo.svg" alt="cyber-uz logo" style="height: 50px; object-fit: contain;">
+          <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">cyber-uz</span>
         </a>
         <ul class='nav-links' style='display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 0.85rem;'>
           <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
@@ -68,8 +69,8 @@
           <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
           <button onclick="window.location.reload()" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 10px; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer;' title="Sahifani yangilash">🔄 Yangilash</button>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
-          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
-          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
+          <a href='/register.html' class='btn' style='background: #059669; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
+          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #0f766e; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
         </div>
       </div>
     </div>
@@ -297,10 +298,10 @@
   <!-- Footer -->
   <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
     <div class="container" style="text-align: center;">
-      <h2 style="margin-bottom: 15px; font-size: 1.8rem; font-weight: 900;">innocode.uz</h2>
+      <h2 style="margin-bottom: 15px; font-size: 1.8rem; font-weight: 900;">cyber-uz</h2>
       <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 40px; line-height: 1.6;">Zamonaviy o‘quv platformasi orqali bilim olishni va kasb o‘rganishni yangi bosqichga olib chiqing.</p>
       <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.95rem; font-weight: 600; letter-spacing: 0.5px;">
-         2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
+         2024 cyber-uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
       </div>
     </div>
   </footer>

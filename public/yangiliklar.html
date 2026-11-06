@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ta'lim va IT Yangiliklari | innocode.uz</title>
+  <title>Ta'lim va IT Yangiliklari | cyber-uz</title>
+  <script src="/js/theme.js"></script>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     body { font-family: 'Inter', sans-serif; background: #f8fafc; color: var(--text-primary); margin: 0; }
-    .page-header { background: linear-gradient(135deg, #3730a3 0%, #4f46e5 50%, #06b6d4 100%); padding: 65px 0 95px; text-align: center; color: #ffffff !important; }
+    .page-header { background: linear-gradient(135deg, #064e3b 0%, #059669 50%, #06b6d4 100%); padding: 65px 0 95px; text-align: center; color: #ffffff !important; }
     .page-header h1, .page-title { font-size: 2.8rem; font-weight: 900; margin-bottom: 15px; letter-spacing: -0.5px; color: #ffffff !important; text-shadow: 0 2px 12px rgba(0,0,0,0.15); }
     .page-subtitle { font-size: 1.15rem; opacity: 0.95; max-width: 680px; margin: 0 auto; line-height: 1.6; color: #ffffff !important; }
     
     .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 32px; margin-top: -55px; margin-bottom: 80px; position: relative; z-index: 10; }
     .news-card { background: white; border-radius: 22px; box-shadow: 0 10px 40px rgba(0,0,0,0.07); border: 1px solid var(--border); overflow: hidden; transition: transform 0.3s, box-shadow 0.3s; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
-    .news-card:hover { transform: translateY(-7px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); border-color: #c7d2fe; }
+    .news-card:hover { transform: translateY(-7px); box-shadow: 0 20px 50px rgba(0,0,0,0.12); border-color: #a7f3d0; }
     
     .news-img-box { height: 220px; width: 100%; position: relative; overflow: hidden; background: #e2e8f0; }
     .news-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; display: block; }
@@ -27,8 +28,8 @@
     .news-desc { color: var(--text-secondary); font-size: 0.95rem; line-height: 1.6; margin-bottom: 22px; flex-grow: 1; }
     
     .news-footer { display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f1f5f9; padding-top: 16px; }
-    .news-link-btn { color: #4f46e5; font-weight: 800; font-size: 0.92rem; display: flex; align-items: center; gap: 6px; }
-    .news-tag { font-size: 0.78rem; font-weight: 700; background: #eef2ff; color: #4338ca; padding: 4px 10px; border-radius: 6px; }
+    .news-link-btn { color: #059669; font-weight: 800; font-size: 0.92rem; display: flex; align-items: center; gap: 6px; }
+    .news-tag { font-size: 0.78rem; font-weight: 700; background: #ecfdf5; color: #047857; padding: 4px 10px; border-radius: 6px; }
 
     @media (max-width: 768px) {
       .page-header { padding: 45px 16px 65px; }
@@ -45,8 +46,8 @@
     <div class='container'>
       <div class='navbar-inner' style='display: flex; justify-content: space-between; align-items: center; flex-wrap: nowrap; gap: 15px;'>
         <a href='/' class='brand' style='display: flex; align-items: center; text-decoration: none;'>
-          <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 50px; object-fit: contain; mix-blend-mode: multiply;">
-          <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">innocode.uz</span>
+          <img src="/img/logo.svg" alt="cyber-uz logo" style="height: 50px; object-fit: contain;">
+          <span style="font-size: 1.2rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 5px;">cyber-uz</span>
         </a>
         <ul class='nav-links' style='display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; flex: 1; justify-content: center; align-items: center; flex-wrap: nowrap; white-space: nowrap; font-size: 0.85rem;'>
           <li><a href='/' style='text-decoration:none; color:var(--text-secondary); font-weight:600; transition: color 0.3s;'>Bosh sahifa</a></li>
@@ -61,8 +62,8 @@
           <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class='btn' style='background: #f1f5f9; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; display: flex; align-items: center; gap: 6px; font-size: 0.82rem; cursor: pointer;'>⬅ Orqaga</a>
           <button onclick="window.location.reload()" class='btn' style='background: #f8fafc; border: 1px solid #e2e8f0; color: #475569; padding: 6px 10px; border-radius: 8px; font-weight: 700; font-size: 0.82rem; cursor: pointer;' title="Sahifani yangilash">🔄 Yangilash</button>
           <a href='/login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #334155; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Kabinetga kirish</a>
-          <a href='/register.html' class='btn' style='background: #5a5ce6; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
-          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #6d28d9; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
+          <a href='/register.html' class='btn' style='background: #059669; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>Ro‘yxatdan o‘tish</a>
+          <a href='/teacher-login.html' class='btn' style='background: white; border: 1px solid #e2e8f0; color: #0f766e; padding: 6px 12px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 0.82rem;'>👨‍🏫 O‘qituvchi</a>
         </div>
       </div>
     </div>
@@ -196,10 +197,10 @@
   <!-- Footer -->
   <footer style="background: #0f172a; color: #f8fafc; padding: 50px 0 30px;">
     <div class="container" style="text-align: center;">
-      <h2 style="margin-bottom: 12px; font-size: 1.8rem; font-weight: 900; letter-spacing: -0.5px;">innocode.uz</h2>
+      <h2 style="margin-bottom: 12px; font-size: 1.8rem; font-weight: 900; letter-spacing: -0.5px;">cyber-uz</h2>
       <p style="color: #94a3b8; max-width: 500px; margin: 0 auto 30px; line-height: 1.6;">Zamonaviy o‘quv platformasi orqali bilim olishni va kasb o‘rganishni yangi bosqichga olib chiqing.</p>
       <div style="border-top: 1px solid #1e293b; padding-top: 25px; color: #64748b; font-size: 0.95rem; font-weight: 600;">
-        © 2024 innocode.uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
+        © 2024 cyber-uz | ATT 610 - 24 gurux talabalari bilan birgalikda yaratilgan
       </div>
     </div>
   </footer>
@@ -217,7 +218,7 @@
         grid.innerHTML = items.map(n => `
           <a href="${n.source_url || '#'}" target="_blank" rel="noopener noreferrer" class="news-card">
             <div class="news-img-box">
-              <span class="news-source-badge">🌐 ${n.source_name || 'innocode.uz'}</span>
+              <span class="news-source-badge">🌐 ${n.source_name || 'cyber-uz'}</span>
               <img src="${n.image_url || 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80'}" alt="">
               <span class="news-date">${n.date_label || 'Yangilik'}</span>
             </div>
@@ -228,7 +229,7 @@
               </div>
               <div class="news-footer">
                 <span class="news-tag">${n.tag || 'Ta\'lim & IT'}</span>
-                <span class="news-link-btn">Manbada o‘qish (${n.source_name || 'innocode.uz'}) ↗</span>
+                <span class="news-link-btn">Manbada o‘qish (${n.source_name || 'cyber-uz'}) ↗</span>
               </div>
             </div>
           </a>
