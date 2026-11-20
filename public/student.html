@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>O‘quvchi kabineti | cyber-uz</title>
-  <script src="/js/theme.js"></script>
+  <title>O‘quvchi kabineti | innocode.uz</title>
   <link rel="stylesheet" href="/css/style.css">
   <style>
     /*  STUDENT LAYOUT  */
@@ -30,7 +29,7 @@
       background: linear-gradient(135deg, var(--primary), var(--cyan));
       display: flex; align-items: center; justify-content: center;
       font-size: 0.78rem; font-weight: 800; color: #fff; flex-shrink: 0;
-      box-shadow: 0 2px 6px rgba(5,150,105,0.3);
+      box-shadow: 0 2px 6px rgba(79,70,229,0.3);
     }
     .u-name  { font-size: 0.85rem; font-weight: 700; color: var(--text-primary); }
     .u-login { font-size: 0.72rem; color: var(--text-muted); font-family: monospace; }
@@ -90,14 +89,14 @@
       background: transparent; border-radius: 10px 0 0 10px; transition: 0.2s;
     }
     .lni:hover:not(.locked) {
-      background: #f0fdfa; border-color: rgba(5,150,105,0.3); color: var(--text-primary);
+      background: #f5f3ff; border-color: rgba(79,70,229,0.3); color: var(--text-primary);
       transform: translateX(3px);
-      box-shadow: 0 2px 8px rgba(5,150,105,0.07);
+      box-shadow: 0 2px 8px rgba(79,70,229,0.07);
     }
     .lni.active {
-      background: linear-gradient(135deg, #ccfbf1 0%, #ecfdf5 100%);
-      border-color: rgba(5, 150, 105, 0.45); color: var(--primary);
-      box-shadow: 0 3px 12px rgba(5, 150, 105, 0.12);
+      background: linear-gradient(135deg, #ede9fe 0%, #eef2ff 100%);
+      border-color: rgba(79, 70, 229, 0.45); color: var(--primary);
+      box-shadow: 0 3px 12px rgba(79, 70, 229, 0.12);
     }
     .lni.active::before { background: var(--primary); }
     .lni.done {
@@ -120,15 +119,15 @@
     .dot-p { background: #f1f5f9; color: #64748b; border: 2px solid #cbd5e1; }
     .dot-a {
       background: var(--primary); color: #fff;
-      box-shadow: 0 0 0 3px rgba(5,150,105,0.2), 0 0 12px rgba(5,150,105,0.4);
+      box-shadow: 0 0 0 3px rgba(79,70,229,0.2), 0 0 12px rgba(79,70,229,0.4);
       animation: pulse-active 2s infinite;
     }
     .dot-d { background: var(--emerald); color: #fff; box-shadow: 0 0 10px rgba(5,150,105,0.35); font-size: 1rem; }
     .dot-l { background: #e2e8f0; color: #94a3b8; border: 2px solid #cbd5e1; font-size: 1rem; }
 
     @keyframes pulse-active {
-      0%, 100% { box-shadow: 0 0 0 3px rgba(5,150,105,0.2), 0 0 12px rgba(5,150,105,0.4); }
-      50% { box-shadow: 0 0 0 6px rgba(5,150,105,0.1), 0 0 20px rgba(5,150,105,0.5); }
+      0%, 100% { box-shadow: 0 0 0 3px rgba(79,70,229,0.2), 0 0 12px rgba(79,70,229,0.4); }
+      50% { box-shadow: 0 0 0 6px rgba(79,70,229,0.1), 0 0 20px rgba(79,70,229,0.5); }
     }
 
     .lni-info { flex: 1; overflow: hidden; min-width: 0; }
@@ -180,7 +179,7 @@
     /* Tags */
     .tag {
       display: inline-flex; align-items: center; padding: 3px 11px;
-      background: var(--primary-subtle); border: 1px solid rgba(5, 150, 105, 0.2);
+      background: var(--primary-subtle); border: 1px solid rgba(79, 70, 229, 0.2);
       border-radius: var(--r-full); font-size: 0.74rem; color: var(--primary); font-weight: 600;
     }
 
@@ -342,8 +341,8 @@
     <!-- HEADER -->
     <header class="s-header">
       <a href="/" class="brand" style="text-decoration: none; display: flex; align-items: center;">
-        <img src="/img/logo.svg" alt="cyber-uz logo" style="height: 70px; object-fit: contain;">
-        <span style="font-size: 1.3rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 8px;">cyber-uz</span>
+        <img src="/img/logo.jpg" alt="innocode.uz logo" style="height: 70px; object-fit: contain; mix-blend-mode: multiply;">
+        <span style="font-size: 1.3rem; font-weight: 900; color: #1e293b; letter-spacing: -0.5px; margin-left: 8px;">innocode.uz</span>
       </a>
       <div class="s-header-actions" style="display: flex; align-items: center; gap: 10px;">
         <a href="/" onclick="if(window.history.length > 1){window.history.back(); return false;}else{window.location.href='/'; return false;}" class="btn btn-ghost btn-sm" style="font-weight: bold; border: 1px solid var(--border); border-radius: 8px; padding: 6px 12px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px; cursor: pointer;">
@@ -375,8 +374,8 @@
         <div class="progress-wrap" style="flex: 1; height: 8px;">
           <div class="progress-fill" id="syncBar" style="width: 0%;"></div>
         </div>
-        <span class="sync-cnt" id="syncCnt">0/10 dars</span>
-        <button id="btnCert" class="btn btn-sm" style="display:inline-flex; align-items:center; gap:6px; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; font-weight: 800; padding: 6px 14px; border-radius: 8px; box-shadow: 0 2px 6px rgba(245,158,11,0.4); cursor: pointer;" onclick="generateCertificate()">🏆 Sertifikat olish</button>
+        <span class="sync-cnt" id="syncCnt">0/0 dars</span>
+        <button id="btnCert" class="btn btn-sm" style="display:none; background: linear-gradient(135deg, #f59e0b, #d97706); color: white; border: none; font-weight: 700; padding: 6px 14px; border-radius: 8px; box-shadow: 0 2px 6px rgba(245,158,11,0.4);" onclick="generateCertificate()"> Sertifikat olish</button>
       </div>
     </div>
 
@@ -407,8 +406,8 @@
             <span id="sbProgressText">0/10 dars bajarildi</span>
             <span id="sbProgressPct" style="color:var(--primary);">0%</span>
           </div>
-          <div class="sb-sub" style="margin-top: 8px; background:#ecfdf5; border:1px solid #a7f3d0; border-radius:8px; padding:8px 10px; color:#065f46;">
-            ✅ Barcha darslar ochiq — istalgan darsni ko‘rishingiz va <strong>5 ta testni</strong> yechishingiz mumkin
+          <div class="sb-sub" style="margin-top: 8px; background:#fff7ed; border:1px solid #fed7aa; border-radius:8px; padding:8px 10px; color:#9a3412;">
+            🔒 Har bir darsni <strong>100%</strong> (5/5) yechganingizda keyingisi ochiladi
           </div>
         </div>
         <div class="lesson-list" id="lessonList">
@@ -433,40 +432,7 @@
 
         <!-- Video dars -->
         <div class="video-wrap animate-fade-up animate-delay-1" id="videoWrap">
-          <iframe id="lessonIframe" src="" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          <!-- Ichki Interaktiv Video-Slayd Pleer (YouTube muqobili) -->
-          <div id="interactiveLessonPlayer" style="display: none; position: absolute; inset: 0; background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 55%, #0f172a 100%); color: #fff; flex-direction: column; justify-content: space-between; padding: 24px 28px; box-sizing: border-box; overflow: hidden;">
-            <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid rgba(255,255,255,0.12); padding-bottom: 12px;">
-              <div style="display: flex; align-items: center; gap: 10px;">
-                <span style="background: #059669; color: #fff; font-weight: 900; font-size: 0.75rem; padding: 4px 10px; border-radius: 20px;" id="ilpBadge">1-DARS</span>
-                <span style="font-size: 0.85rem; color: #cbd5e1; font-weight: 700;" id="ilpCourse">cyber-uz Video Dars</span>
-              </div>
-              <span style="font-size: 0.76rem; color: #38bdf8; font-weight: 700;" id="ilpSlideIndicator">Slayd 1 / 4</span>
-            </div>
-            <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 14px 4px; overflow-y: auto;">
-              <h2 id="ilpTitle" style="font-size: 1.35rem; font-weight: 900; color: #f8fafc; margin: 0 0 12px 0; line-height: 1.3;"></h2>
-              <div id="ilpBody" style="background: rgba(15, 23, 42, 0.72); border: 1px solid rgba(148, 163, 184, 0.25); border-radius: 14px; padding: 16px 20px; font-size: 0.95rem; line-height: 1.65; color: #e2e8f0; white-space: pre-wrap;"></div>
-            </div>
-            <div style="border-top: 1px solid rgba(255,255,255,0.12); padding-top: 12px; display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;">
-              <div style="display: flex; align-items: center; gap: 8px;">
-                <button type="button" onclick="toggleIlpPlay()" id="ilpPlayBtn" class="btn btn-xs" style="background: #10b981; color: #fff; font-weight: 800; padding: 7px 14px; border-radius: 8px; border: none; cursor: pointer;">⏸ Pauza</button>
-                <button type="button" onclick="stepIlpSlide(-1)" class="btn btn-xs" style="background: rgba(255,255,255,0.12); color: #fff; font-weight: 700; padding: 7px 12px; border-radius: 8px; border: none; cursor: pointer;">⏮ Oldingi</button>
-                <button type="button" onclick="stepIlpSlide(1)" class="btn btn-xs" style="background: rgba(255,255,255,0.12); color: #fff; font-weight: 700; padding: 7px 12px; border-radius: 8px; border: none; cursor: pointer;">Keyingi ⏭</button>
-              </div>
-              <div style="flex: 1; min-width: 120px; height: 6px; background: rgba(255,255,255,0.15); border-radius: 99px; overflow: hidden;">
-                <div id="ilpProgBar" style="height: 100%; width: 25%; background: linear-gradient(90deg, #38bdf8, #818cf8); transition: width 0.3s;"></div>
-              </div>
-              <button type="button" onclick="switchVideoMode('youtube')" class="btn btn-xs" style="background: #ef4444; color: #fff; font-weight: 800; padding: 7px 12px; border-radius: 8px; border: none; cursor: pointer;">📺 YouTube rejimi</button>
-            </div>
-          </div>
-        </div>
-        <div id="videoDirectBar" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-top: -12px; margin-bottom: 18px; padding: 10px 14px; background: #f8fafc; border: 1px solid var(--border); border-radius: 10px;">
-          <span style="font-size: 0.82rem; color: #475569; font-weight: 600;">📹 Video dars rejimi:</span>
-          <div style="display: flex; gap: 8px; flex-wrap: wrap; align-items: center;">
-            <button type="button" id="btnModeYt" onclick="switchVideoMode('youtube')" class="btn btn-xs" style="background: #059669; color: #fff; font-weight: 800; padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer;">📺 YouTube Pleer</button>
-            <button type="button" id="btnModeIlp" onclick="switchVideoMode('interactive')" class="btn btn-xs" style="background: #0f172a; color: #fff; font-weight: 800; padding: 6px 12px; border-radius: 8px; border: none; cursor: pointer;">🎬 Ichki Video-Slayd Dars</button>
-            <a id="ytDirectLink" href="https://www.youtube.com" target="_blank" rel="noopener noreferrer" class="btn btn-xs" style="background: #ef4444; color: #fff; font-weight: 800; padding: 6px 14px; border-radius: 8px; text-decoration: none; display: inline-flex; align-items: center; gap: 6px;">▶ YouTube-da ochish ↗</a>
-          </div>
+          <iframe id="lessonIframe" src="" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
 
         <!-- Dars konspekti -->
@@ -521,24 +487,24 @@
         <!-- NAVIGATSIYA TUGMALARI -->
         <div class="lesson-actions animate-fade-up">
           <button class="btn btn-ghost" id="btnPrev" onclick="stepLesson(-1)">⬅ Oldingi Dars</button>
-          <button class="btn btn-success btn-lg" id="btnNext" onclick="stepLesson(1)">
+          <button class="btn btn-success btn-lg" id="btnNext" onclick="stepLesson(1)" disabled>
             Keyingi darsga o‘tish ➔
           </button>
         </div>
 
-        <!-- SERTIFIKAT OLISH VA YUKLAB OLISH KARTASI -->
-        <div id="courseCompletionCertificateCard" style="display: block; margin-top: 30px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #eff6ff 100%); border: 2.5px solid #10b981; border-radius: 18px; padding: 32px 24px; text-align: center; box-shadow: 0 12px 35px rgba(16,185,129,0.15);">
+        <!-- KURSNI 100% BITIRGANDA PASTDA CHIQADIGAN SERTIFIKAT KARTASI -->
+        <div id="courseCompletionCertificateCard" style="display: none; margin-top: 30px; background: linear-gradient(135deg, #f0fdf4 0%, #ecfdf5 50%, #eff6ff 100%); border: 2.5px solid #10b981; border-radius: 18px; padding: 32px 24px; text-align: center; box-shadow: 0 12px 35px rgba(16,185,129,0.15);">
           <div style="font-size: 3.4rem; line-height: 1; margin-bottom: 12px;">🎓</div>
-          <span class="badge badge-emerald" id="certCardStatusBadge" style="font-size: 0.85rem; padding: 6px 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">✓ Rasmiy Elektron Sertifikat</span>
-          <h2 style="font-size: 1.85rem; font-weight: 900; color: #065f46; margin: 14px 0 8px;">Rasmiy QR-kodli Sertifikat</h2>
+          <span class="badge badge-emerald" style="font-size: 0.85rem; padding: 6px 16px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;">✓ Kurs To‘liq Yakunlandi</span>
+          <h2 style="font-size: 1.85rem; font-weight: 900; color: #065f46; margin: 14px 0 8px;">Tabriklaymiz! Siz ushbu kursni muvaffaqiyatli tamomladingiz!</h2>
           <p style="font-size: 1.05rem; color: #047857; max-width: 620px; margin: 0 auto 24px; line-height: 1.6;">
-            Cyber-UZ Academy tomonidan tasdiqlangan rasmiy elektron QR-kodli sertifikatingizni ko‘rishingiz, rasm (PNG) yoki PDF shaklida yuklab olishingiz mumkin!
+            Siz barcha 10 ta dars va amaliy testlarni <strong>100% (5/5)</strong> a'lo natija bilan o‘zlashtirdingiz. InnoCode IT Academy tomonidan tasdiqlangan rasmiy elektron sertifikatingiz tayyor!
           </p>
           <div style="display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;">
             <button onclick="generateCertificate()" class="btn btn-lg" style="background: linear-gradient(135deg, #059669 0%, #047857 100%); color: white; border: none; font-weight: 800; padding: 14px 28px; border-radius: 12px; box-shadow: 0 6px 20px rgba(5,150,105,0.4); font-size: 1.05rem; cursor: pointer; display: inline-flex; align-items: center; gap: 8px;">
               📜 Sertifikatni Yuklab Olish / Ko‘rish
             </button>
-            <button onclick="openElectronicCertificatePage()" class="btn btn-lg btn-ghost" style="border: 2px solid #059669; color: #065f46; font-weight: 800; padding: 14px 24px; border-radius: 12px; cursor: pointer;">
+            <button onclick="window.open('/certificate.html', '_blank')" class="btn btn-lg btn-ghost" style="border: 2px solid #059669; color: #065f46; font-weight: 800; padding: 14px 24px; border-radius: 12px; cursor: pointer;">
               🌐 Rasmiy Tekshiruv Sahifasi
             </button>
           </div>
@@ -590,16 +556,6 @@
           const savedLessonId = STATE.progress?.last_lesson_id || (STATE.current_lesson ? STATE.current_lesson.id : null);
 
           sel.innerHTML = STATE.courses.map(c => `<option value="${c.id}" style="color:#000;">${c.title}</option>`).join('');
-
-          // Quick course buttonsni dinamik chizish (yangi qo'shilgan kurslar ham ko'rinadi)
-          const qcWrap = document.getElementById('quickCourseButtons');
-          if (qcWrap) {
-            qcWrap.innerHTML = STATE.courses.map((c, idx) => {
-              const icon = idx === 0 ? '🐍' : (idx === 1 ? '⚛️' : (idx === 2 ? '☕' : '📘'));
-              const shortTitle = c.title.split(' ')[0] || ('Kurs ' + (idx + 1));
-              return `<button type="button" onclick="quickSelectCourse(${c.id})" id="qcBtn-${c.id}" class="btn btn-xs" style="flex: 1; min-width: 75px; padding: 6px 4px; font-size: 0.72rem; font-weight: 700; border-radius: 6px; border: 1px solid var(--border); background: #ffffff; cursor: pointer;">${icon} ${shortTitle}</button>`;
-            }).join('');
-          }
           
           if (courseParam && STATE.courses.find(c => String(c.id) === String(courseParam))) {
             sel.value = courseParam;
@@ -651,15 +607,14 @@
         sel.value = courseId;
       }
 
-      // Barcha tezkor kurs tugmalarini sinxronlashtirish
-      (STATE?.courses || [{id:1},{id:2},{id:3}]).forEach(c => {
-        const cid = parseInt(c.id);
+      // 3 ta tezkor tugmani sinxronlashtirish
+      [1, 2, 3].forEach(cid => {
         const btn = document.getElementById('qcBtn-' + cid);
         if (btn) {
           if (cid === courseId) {
-            btn.style.background = '#059669';
+            btn.style.background = '#4f46e5';
             btn.style.color = '#ffffff';
-            btn.style.borderColor = '#047857';
+            btn.style.borderColor = '#4338ca';
           } else {
             btn.style.background = '#ffffff';
             btn.style.color = '#334155';
@@ -690,17 +645,8 @@
       const courseObj = STATE.courses && STATE.courses.find(c => parseInt(c.id) === courseId);
       window._currentCourseName = courseObj ? courseObj.title : '';
 
-      // Kurs darslari (type-safe va bir xil order_num dublikatlarsiz)
-      const rawCourseLessons = (STATE.lessons || []).filter(l => parseInt(l.course_id) === courseId);
-      const seenOrders = new Set();
-      const courseLessons = [];
-      for (const item of rawCourseLessons) {
-        const ordKey = item.order_num || item.id;
-        if (!seenOrders.has(ordKey)) {
-          seenOrders.add(ordKey);
-          courseLessons.push(item);
-        }
-      }
+      // Kurs darslari (type-safe)
+      const courseLessons = (STATE.lessons || []).filter(l => parseInt(l.course_id) === courseId);
 
       if (!courseLessons.length) {
         document.getElementById('lTitle').innerText = "Darslar mavjud emas";
@@ -755,17 +701,26 @@
 
       const btnCert = document.getElementById('btnCert');
       const bottomCertCard = document.getElementById('courseCompletionCertificateCard');
-      if (btnCert) btnCert.style.display = 'inline-flex';
-      if (bottomCertCard) bottomCertCard.style.display = 'block';
+
+      // Agar joriy kursning barcha darslari (yoki 100%) bajarilgan bo'lsa
+      const isCompleted = (p.progress_percent >= 100 || (p.total_lessons > 0 && p.completed_count >= p.total_lessons));
+      if (isCompleted) {
+        if (btnCert) btnCert.style.display = 'inline-block';
+        if (bottomCertCard) bottomCertCard.style.display = 'block';
+      } else {
+        if (btnCert) btnCert.style.display = 'none';
+        if (bottomCertCard) bottomCertCard.style.display = 'none';
+      }
     }
 
-    //  SIDEBARNI CHIZISH (CHAP TARAF) — Barcha darslar ochiq va bosilganda darhol ishlaydi
+    //  SIDEBARNI CHIZISH (CHAP TARAF) 
     function renderSidebar(lessons, prog) {
       const list = document.getElementById('lessonList');
       list.innerHTML = '';
 
-      const done   = (prog && prog.completed_lesson_ids) || [];
-      const scores = (prog && prog.scores) || {};
+      const done      = prog.completed_lesson_ids || [];
+      const unlocked  = prog.unlocked_ids || [];
+      const scores    = prog.scores || {};
 
       // Sidebar progress bar yangilash
       const total = lessons.length;
@@ -789,9 +744,11 @@
         return;
       }
 
-      lessons.forEach((l) => {
+      lessons.forEach((l, idx) => {
         const isActive    = CUR && CUR.id === l.id;
         const isCompleted = done.includes(l.id);
+        const isUnlocked  = unlocked.includes(l.id);
+        const isLocked    = !isCompleted && !isUnlocked;
         const score       = scores[l.id];
 
         // Dot icon va klass
@@ -800,6 +757,8 @@
           dotClass = 'dot-d'; dotHTML = '✓';
         } else if (isActive) {
           dotClass = 'dot-a'; dotHTML = l.order_num;
+        } else if (isLocked) {
+          dotClass = 'dot-l'; dotHTML = '🔒';
         } else {
           dotClass = 'dot-p'; dotHTML = l.order_num;
         }
@@ -810,19 +769,25 @@
           rightBadge = `<span class="score-chip">5/5 ✓</span>`;
         } else if (score !== undefined && score !== null) {
           rightBadge = `<span class="score-chip" style="background:#fee2e2;color:#b91c1c;border-color:#fca5a5;">${score}/5</span>`;
-        } else {
-          rightBadge = `<span class="score-chip" style="background:#ecfdf5;color:#059669;border-color:#a7f3d0;">▶ Ochiq</span>`;
+        } else if (isLocked) {
+          rightBadge = `<span class="lock-icon">🔒</span>`;
         }
 
         // Status matni
         let statusHTML = '';
         if (isCompleted)       statusHTML = `<span style="color:#059669;font-weight:700;">✓ O‘tildi</span>`;
         else if (isActive)     statusHTML = `<span style="color:var(--primary);font-weight:700;">▶ O‘rganilmoqda</span>`;
-        else                   statusHTML = `<span style="color:#475569;font-weight:600;">Ko‘rish mumkin</span>`;
+        else if (isLocked)     statusHTML = `<span style="color:#94a3b8;">🔒 Qulflangan</span>`;
+        else                   statusHTML = `<span style="color:#64748b;">Kutilmoqda</span>`;
 
         const btn = document.createElement('button');
-        btn.className = `lni${isActive ? ' active' : ''}${isCompleted ? ' done' : ''}`;
-        btn.onclick = () => loadLesson(l.id);
+        btn.className = `lni${isActive ? ' active' : ''}${isCompleted ? ' done' : ''}${isLocked ? ' locked' : ''}`;
+
+        if (!isLocked) {
+          btn.onclick = () => loadLesson(l.id);
+        } else {
+          btn.title = `${l.order_num}-darsni ochish uchun oldingi darsning testini 100% (5/5) yechishingiz kerak`;
+        }
 
         btn.innerHTML = `
           <div class="ldot ${dotClass}">${dotHTML}</div>
@@ -842,179 +807,11 @@
       });
     }
 
-    //  TASDIQLANGAN ISHLAYDIGAN YOUTUBE VIDEOLAR XARITASI VA HIMOYASI 
-    const VERIFIED_COURSE_VIDEOS = {
-      1: [
-        "https://www.youtube.com/embed/kqtD5dpn9C8",
-        "https://www.youtube.com/embed/Z1Yd7upQsXY",
-        "https://www.youtube.com/embed/WGJJIrtnfpk",
-        "https://www.youtube.com/embed/t8pPdKYpowI",
-        "https://www.youtube.com/embed/x7X9w_GIm1s",
-        "https://www.youtube.com/embed/VchuKL44s6E",
-        "https://www.youtube.com/embed/8ext9G7xspg",
-        "https://www.youtube.com/embed/_uQrJ0TkZlc",
-        "https://www.youtube.com/embed/rfscVS0vtbw",
-        "https://www.youtube.com/embed/r-uOLxNrNk8"
-      ],
-      2: [
-        "https://www.youtube.com/embed/W6NZfCO5SIk",
-        "https://www.youtube.com/embed/hdI2bqOjy3c",
-        "https://www.youtube.com/embed/jS4aFq5-91M",
-        "https://www.youtube.com/embed/PkZNo7MFNFg",
-        "https://www.youtube.com/embed/R8rmfD9Y5-c",
-        "https://www.youtube.com/embed/w7ejDZ8SWv8",
-        "https://www.youtube.com/embed/bMknfKXIFA8",
-        "https://www.youtube.com/embed/Ke90Tje7VS0",
-        "https://www.youtube.com/embed/NCwa_xi0Uuc",
-        "https://www.youtube.com/embed/TNhaISOUy6Q"
-      ],
-      3: [
-        "https://www.youtube.com/embed/eIrMbAQSU34",
-        "https://www.youtube.com/embed/grEKMHGYyns",
-        "https://www.youtube.com/embed/WPvGqX-TXP0",
-        "https://www.youtube.com/embed/VHbSopMyc4M",
-        "https://www.youtube.com/embed/A74TOX803D0",
-        "https://www.youtube.com/embed/xk4_1vDrzzo",
-        "https://www.youtube.com/embed/GoXwIVyNvX0",
-        "https://www.youtube.com/embed/fis26HvvDII",
-        "https://www.youtube.com/embed/BGTx91t8q50",
-        "https://www.youtube.com/embed/EExSSotojVI"
-      ]
-    };
-
-    const DEAD_YT_IDS = new Set([
-      'jO6qQDNa2CE', 'XKHEtdqhPAI',
-      'nLRL_NcnK-4', '5F24p17D2q0', 'Pj1e7oO1d5Q', 'u35V8X5y3rM', 'q_m00YJkK-s',
-      '5_nJkM2Rk2s', 'fA8N3z72o_k', '7V2Vv04m5_o', 'jZz77E71i5o', '8eY-Vz7o2k8',
-      '3eCg_pI0U5U', '1vR3ST956z0', 'vEROU2XtPR8', 'Bv_5Zv5c-6g', 'Obe46g9R4rU',
-      '0G3h0aZkU54', '5fb2aPlgoys', '7r4xVDI2vho', 's3_k02mK3mE', 'x8s9K3o1l1o',
-      'rK2j4A9z6hY', 'dK9vN0X6y1w', 'PkZNo7MFOUg', 'hKB-YGF14SY', 'ZBalWWHYFQc',
-      'u-HOEUo2Dbc', 'EE1-Wf12XEQ'
-    ]);
-
-    function resolveWorkingVideoUrl(lesson) {
-      if (!lesson) return "https://www.youtube.com/embed/kqtD5dpn9C8";
-      const titleLower = ((lesson.title || '') + ' ' + (window._currentCourseName || '')).toLowerCase();
-      let cKey = parseInt(lesson.course_id) || 1;
-      if (titleLower.includes('javascript') || titleLower.includes('react')) cKey = 2;
-      else if (titleLower.includes('java ') || titleLower.includes('android')) cKey = 3;
-      else if (titleLower.includes('python')) cKey = 1;
-
-      const ordIdx = Math.max(0, Math.min(9, (parseInt(lesson.order_num) || 1) - 1));
-      const fallbackList = VERIFIED_COURSE_VIDEOS[cKey] || VERIFIED_COURSE_VIDEOS[1];
-      const fallbackUrl = fallbackList[ordIdx] || fallbackList[0];
-
-      const raw = (lesson.video_url || '').trim();
-      if (!raw) return fallbackUrl;
-
-      const m = raw.match(/(?:youtube\.com\/(?:watch\?v=|embed\/|shorts\/|live\/)|youtu\.be\/)([A-Za-z0-9_-]{11})/);
-      if (m && m[1]) {
-        if (DEAD_YT_IDS.has(m[1])) return fallbackUrl;
-        return `https://www.youtube.com/embed/${m[1]}`;
-      }
-      return fallbackUrl;
-    }
-
-    let ilpSlides = [];
-    let ilpIdx = 0;
-    let ilpTimer = null;
-    let ilpPlaying = true;
-    let currentVideoMode = 'youtube';
-
-    function buildLessonSlides(lesson) {
-      const cleanTitle = (lesson.title || '').split('|').pop().trim();
-      const lines = (lesson.content_text || '')
-        .split('\n')
-        .map(s => s.trim())
-        .filter(Boolean);
-      const quizPreview = (lesson.quiz || []).slice(0, 3).map((q, i) => `❓ ${i + 1}-savol: ${q.q}`).join('\n');
-
-      return [
-        {
-          heading: `🎯 ${lesson.order_num || 1}-dars: ${cleanTitle}`,
-          body: `📌 Dars maqsadi va qisqacha mazmuni:\n\n${lesson.description || cleanTitle}\n\n⏱ Davomiyligi: ${lesson.duration_mins || 30} daqiqa\n✅ Yakunlash talabi: 5 ta test savoliga 100% (5/5) to‘g‘ri javob berish.`
-        },
-        {
-          heading: `📖 Asosiy Nazariya va Qoidalar (1-qism)`,
-          body: lines.slice(0, Math.ceil(lines.length / 2)).join('\n\n') || lesson.content_text || cleanTitle
-        },
-        {
-          heading: `💻 Amaliy Qoidalar va Xulosalar (2-qism)`,
-          body: lines.slice(Math.ceil(lines.length / 2)).join('\n\n') || lesson.content_text || cleanTitle
-        },
-        {
-          heading: `📝 Dars bo‘yicha Test Savollariga Tayyorgarlik`,
-          body: `Ushbu video dars yakunida quyidagi mavzular bo‘yicha 5 ta test savolini yechasiz:\n\n${quizPreview || 'Pastdagi 5 ta test savolini diqqat bilan o‘qib, 100% natija bilan keyingi darsga o‘ting!'}`
-        }
-      ];
-    }
-
-    function renderIlpSlide() {
-      if (!ilpSlides.length) return;
-      const s = ilpSlides[ilpIdx] || ilpSlides[0];
-      document.getElementById('ilpBadge').innerText = `${CUR?.order_num || 1}-DARS`;
-      document.getElementById('ilpCourse').innerText = window._currentCourseName || 'cyber-uz Video Dars';
-      document.getElementById('ilpSlideIndicator').innerText = `Slayd ${ilpIdx + 1} / ${ilpSlides.length}`;
-      document.getElementById('ilpTitle').innerText = s.heading;
-      document.getElementById('ilpBody').innerText = s.body;
-      document.getElementById('ilpProgBar').style.width = `${Math.round(((ilpIdx + 1) / ilpSlides.length) * 100)}%`;
-    }
-
-    function stepIlpSlide(dir) {
-      if (!ilpSlides.length) return;
-      ilpIdx = (ilpIdx + dir + ilpSlides.length) % ilpSlides.length;
-      renderIlpSlide();
-    }
-
-    function toggleIlpPlay() {
-      ilpPlaying = !ilpPlaying;
-      const btn = document.getElementById('ilpPlayBtn');
-      if (btn) btn.innerText = ilpPlaying ? '⏸ Pauza' : '▶ Davom etish';
-    }
-
-    function switchVideoMode(mode) {
-      currentVideoMode = mode;
-      const vi = document.getElementById('lessonIframe');
-      const ilp = document.getElementById('interactiveLessonPlayer');
-      const btnYt = document.getElementById('btnModeYt');
-      const btnIlp = document.getElementById('btnModeIlp');
-      if (mode === 'interactive') {
-        if (vi) vi.style.display = 'none';
-        if (ilp) ilp.style.display = 'flex';
-        if (btnIlp) btnIlp.style.background = '#059669';
-        if (btnYt) btnYt.style.background = '#64748b';
-        renderIlpSlide();
-        if (ilpTimer) clearInterval(ilpTimer);
-        ilpPlaying = true;
-        const pBtn = document.getElementById('ilpPlayBtn');
-        if (pBtn) pBtn.innerText = '⏸ Pauza';
-        ilpTimer = setInterval(() => {
-          if (ilpPlaying && currentVideoMode === 'interactive') {
-            stepIlpSlide(1);
-          }
-        }, 7000);
-      } else {
-        if (ilpTimer) clearInterval(ilpTimer);
-        if (ilp) ilp.style.display = 'none';
-        if (vi) {
-          vi.style.display = 'block';
-          if (CUR) vi.src = resolveWorkingVideoUrl(CUR);
-        }
-        if (btnYt) btnYt.style.background = '#059669';
-        if (btnIlp) btnIlp.style.background = '#0f172a';
-      }
-    }
-
     //  DARSNI YUKLASH (O'NG TARAF) 
     async function loadLesson(id) {
       try {
         const r = await fetch(`/api/student/lessons/${id}`, { headers: Auth.getHeaders() });
-        if (!r.ok) throw new Error("Dars topilmadi");
         CUR = await r.json();
-        CUR.video_url = resolveWorkingVideoUrl(CUR);
-        ilpSlides = buildLessonSlides(CUR);
-        ilpIdx = 0;
-        renderIlpSlide();
         selAnswers = {};
         submitted = false;
 
@@ -1022,39 +819,31 @@
         document.getElementById('lNumBadge').innerText = CUR.order_num + '-Dars';
         document.getElementById('lTitle').innerText    = CUR.title;
         document.getElementById('lDesc').innerText     = CUR.description || '';
-        document.getElementById('lDurBadge').innerText = `⏱ ${CUR.duration_mins} daqiqa`;
+        document.getElementById('lDurBadge').innerText = ` ${CUR.duration_mins} daqiqa`;
 
         // Status badge
         const sb = document.getElementById('lStatusBadge');
         sb.innerHTML = CUR.is_completed
-          ? '<span class="badge badge-emerald">✓ 100% Yakunlangan</span>'
-          : '<span class="badge badge-amber">▶ O‘rganilmoqda</span>';
+          ? '<span class="badge badge-emerald"> 100% Yakunlangan</span>'
+          : '<span class="badge badge-amber"> O\‘rganilmoqda</span>';
 
         // Hashteglar
         const tagsEl = document.getElementById('lTags');
         tagsEl.innerHTML = (CUR.hashtags || []).map(t => `<span class="tag">${t}</span>`).join('');
 
-        // Video Player va YouTube to'g'ridan-to'g'ri havolasi
+        // Video Player
         const vw = document.getElementById('videoWrap');
         const vi = document.getElementById('lessonIframe');
-        const directBar = document.getElementById('videoDirectBar');
-        const ytDirect = document.getElementById('ytDirectLink');
         if (CUR.video_url) {
           vw.style.display = 'block';
           vi.src = CUR.video_url;
-          if (directBar && ytDirect) {
-            directBar.style.display = 'flex';
-            const vidMatch = CUR.video_url.match(/embed\/([a-zA-Z0-9_-]+)/);
-            ytDirect.href = vidMatch ? `https://www.youtube.com/watch?v=${vidMatch[1]}` : CUR.video_url;
-          }
         } else {
           vw.style.display = 'none';
           vi.src = '';
-          if (directBar) directBar.style.display = 'none';
         }
 
         // Konspekt
-        document.getElementById('lContent').innerText = CUR.content_text || 'Ushbu dars uchun qo‘shimcha konspekt kiritilmagan.';
+        document.getElementById('lContent').innerText = CUR.content_text || 'Ushbu dars uchun qo\'shimcha konspekt kiritilmagan.';
 
         // 5 ta Test Savoli
         renderQuiz(CUR.quiz || [], CUR.min_score || 5, CUR.my_score, CUR.is_completed);
@@ -1062,28 +851,22 @@
         // Navigatsiya tugmalari va Sidebar darslari
         if (STATE) {
           const curCourseId = parseInt(CUR.course_id) || parseInt(document.getElementById('courseSelect').value);
-          const rawCourseLessons = STATE.lessons.filter(l => parseInt(l.course_id) === curCourseId);
-          const seenOrd = new Set();
-          const courseLessons = [];
-          for (const item of rawCourseLessons) {
-            const k = item.order_num || item.id;
-            if (!seenOrd.has(k)) { seenOrd.add(k); courseLessons.push(item); }
-          }
-          const idx = courseLessons.findIndex(l => l.id === CUR.id || l.order_num === CUR.order_num);
+          const courseLessons = STATE.lessons.filter(l => parseInt(l.course_id) === curCourseId);
+          const idx = courseLessons.findIndex(l => l.id === CUR.id);
           document.getElementById('btnPrev').disabled = idx <= 0;
-          document.getElementById('btnNext').disabled = false;
-
+          
+          document.getElementById('btnNext').disabled = !CUR.is_completed || idx >= courseLessons.length - 1;
           if (idx >= courseLessons.length - 1) {
-            document.getElementById('btnNext').innerText = '🎓 Sertifikatni olish ➔';
+            document.getElementById('btnNext').innerText = CUR.is_completed ? ' Kurs yakunlandi!' : 'Keyingi darsga o\‘tish ';
           } else {
-            document.getElementById('btnNext').innerText = 'Keyingi darsga o‘tish ➔';
+            document.getElementById('btnNext').innerText = 'Keyingi darsga o\‘tish ';
           }
           renderSidebar(courseLessons, STATE.progress);
         }
 
         document.getElementById('playerCol').scrollTo({ top: 0, behavior: 'smooth' });
       } catch (e) {
-        showToast("Darsni yuklashda xatolik: " + (e.message || ''), 'error');
+        showToast("Darsni yuklashda xatolik", 'error');
       }
     }
 
@@ -1232,21 +1015,11 @@
           document.getElementById('lStatusBadge').innerHTML = '<span class="badge badge-emerald"> 100% Yakunlangan</span>';
 
           const curCourseId = parseInt(CUR.course_id) || parseInt(document.getElementById('courseSelect').value);
-          const rawCourseLessons = STATE.lessons.filter(l => parseInt(l.course_id) === curCourseId);
-          const seenOrd = new Set();
-          const courseLessons = [];
-          for (const item of rawCourseLessons) {
-            const k = item.order_num || item.id;
-            if (!seenOrd.has(k)) { seenOrd.add(k); courseLessons.push(item); }
-          }
-          const idx = courseLessons.findIndex(l => l.id === CUR.id || l.order_num === CUR.order_num);
-          const nextBtn = document.getElementById('btnNext');
-          if (nextBtn) {
-            nextBtn.disabled = false;
-            nextBtn.innerText = idx >= courseLessons.length - 1 ? '🎓 Sertifikatni olish ➔' : 'Keyingi darsga o‘tish ➔';
-          }
+          const courseLessons = STATE.lessons.filter(l => parseInt(l.course_id) === curCourseId);
+          const idx = courseLessons.findIndex(l => l.id === CUR.id);
+          document.getElementById('btnNext').disabled = idx >= courseLessons.length - 1;
 
-          // Sertifikat tugmasi: joriy kurs progressini yangilash
+          // Sertifikat tugmasi: faqat joriy kursning hammasi tugallansa
           const done = STATE.progress.completed_lesson_ids || [];
           const courseDone = courseLessons.filter(l => done.includes(l.id)).length;
           const total = courseLessons.length;
@@ -1297,25 +1070,11 @@
     }
 
     function stepLesson(dir) {
-      if (!STATE || !CUR) {
-        if (dir > 0) generateCertificate();
-        return;
-      }
-      const curCourseId = parseInt(CUR.course_id) || parseInt(document.getElementById('courseSelect').value);
-      const rawCourseLessons = STATE.lessons.filter(l => parseInt(l.course_id) === curCourseId);
-      const seenOrd = new Set();
-      const courseLessons = [];
-      for (const item of rawCourseLessons) {
-        const k = item.order_num || item.id;
-        if (!seenOrd.has(k)) { seenOrd.add(k); courseLessons.push(item); }
-      }
-      const idx = courseLessons.findIndex(l => l.id === CUR.id || l.order_num === CUR.order_num);
+      if (!STATE || !CUR) return;
+      const courseLessons = STATE.lessons.filter(l => l.course_id === CUR.course_id);
+      const idx = courseLessons.findIndex(l => l.id === CUR.id);
       const target = courseLessons[idx + dir];
-      if (target) {
-        loadLesson(target.id);
-      } else if (dir > 0) {
-        generateCertificate();
-      }
+      if (target) loadLesson(target.id);
     }
 
     function doLogout() {
@@ -1368,7 +1127,7 @@
     <div class="modal-box" style="max-width: 400px; padding: 25px; border-radius: 12px; background: white; width: 100%;">
       <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
         <h3 style="margin:0; font-size: 1.3rem; font-weight: 700;">Shaxsiy Kabinet Sozlamalari</h3>
-        <button class="btn btn-ghost btn-xs" onclick="closeStudentSettings()" style="font-size: 1.2rem; cursor: pointer;">✕</button>
+        <button class="btn btn-ghost btn-xs" onclick="closeStudentSettings()" style="font-size: 1.2rem; cursor: pointer;"></button>
       </div>
       <div class="form-group" style="margin-bottom: 15px;">
         <label style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-secondary);">Joriy Parol (PIN)</label>
@@ -1384,18 +1143,6 @@
 
   <!-- Sertifikat Modali va HTML formati -->
   <style>
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(15, 23, 42, 0.78);
-      backdrop-filter: blur(6px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 10000;
-      padding: 20px;
-      overflow-y: auto;
-    }
     @media print {
       body * { visibility: hidden; }
       #certModal, #certModal * { visibility: visible; }
@@ -1406,64 +1153,50 @@
   <div class="modal-overlay" id="certModalOverlay" style="display:none; z-index: 10000; padding: 20px; overflow-y: auto;">
     <div id="certModal" style="max-width: 820px; margin: auto; background: #fff; padding: 32px; position: relative; border: 12px solid #0f172a; border-radius: 12px; text-align: center; box-shadow: 0 10px 40px rgba(0,0,0,0.5);">
       <button class="btn btn-ghost btn-xs cert-close" onclick="document.getElementById('certModalOverlay').style.display='none'" style="position: absolute; top: 12px; right: 12px; font-size: 1.5rem; cursor: pointer; color: #0f172a; font-weight: bold; background: transparent; border: none;">✕</button>
-
-      <!-- Olingan sertifikatlar ro'yxati / Kurs tanlash -->
-      <div class="cert-print cert-extra-btns" id="certCoursesSwitcher" style="margin-bottom: 18px; padding: 12px 16px; background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; text-align: left;">
-        <div style="font-size: 0.78rem; font-weight: 800; color: #475569; margin-bottom: 8px;">🏆 Qaysi kurs sertifikatini ko‘rish va yuklab olishni xohlaysiz?</div>
-        <div id="certCoursesBtns" style="display: flex; gap: 8px; flex-wrap: wrap;"></div>
-      </div>
       
-      <div id="certInnerBox" style="border: 2.5px solid #2563eb; padding: 28px 26px; border-radius: 6px; position: relative; overflow: hidden; background: radial-gradient(circle at center, #ffffff 0%, #eff6ff 100%);">
-        <div id="certWatermark" style="position: absolute; top: 52%; left: 50%; transform: translate(-50%, -50%) rotate(-15deg); font-size: 4.5rem; font-weight: 900; color: rgba(37, 99, 235, 0.04); pointer-events: none; user-select: none; white-space: nowrap;">PYTHON • AI • CYBER-UZ</div>
+      <div style="border: 2px solid #d97706; padding: 36px 28px; border-radius: 6px; position: relative; overflow: hidden; background: radial-gradient(circle at center, #ffffff 0%, #fafaf9 100%);">
+        
         <div style="position: relative; z-index: 1;">
-          <!-- Maxsus kurs logotipi va nishoni -->
-          <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; margin-bottom: 10px;">
-            <div id="certModalLogoBox" style="width: 66px; height: 66px; border-radius: 16px; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #1e3a8a, #2563eb); border: 2px solid #93c5fd; box-shadow: 0 8px 20px rgba(37,99,235,0.22);"></div>
-            <span id="certModalSpecPill" style="display: inline-flex; align-items: center; gap: 6px; padding: 3px 12px; border-radius: 999px; font-size: 0.68rem; font-weight: 800; letter-spacing: 1.4px; text-transform: uppercase; background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd;">🐍 PYTHON & SUN'IY INTELLEKT YO'NALISHI</span>
+          <div style="text-align: center; margin-bottom: 12px;">
+            <span style="font-size: 2.3rem; font-weight: 900; color: #0f172a; font-family: sans-serif; letter-spacing: -0.5px;">innocode<span style="color: #4f46e5;">.uz</span></span>
+            <div style="font-size: 0.8rem; font-weight: 800; color: #b45309; letter-spacing: 2px; text-transform: uppercase;">InnoCode IT Academy & Inocoders</div>
           </div>
-
-          <div style="text-align: center; margin-bottom: 8px;">
-            <span style="font-size: 2rem; font-weight: 900; color: #0f172a; font-family: sans-serif; letter-spacing: -0.5px;">cyber<span id="certBrandDot" style="color: #2563eb;">-uz</span></span>
-            <div id="certAcademySub" style="font-size: 0.74rem; font-weight: 800; color: #1d4ed8; letter-spacing: 2px; text-transform: uppercase;">Cyber-UZ Academy & Cyber Team</div>
-          </div>
-          <h1 id="certMainHeading" style="font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1.5rem, 3vw, 2.35rem); color: #1e3a8a; margin-top: 2px; letter-spacing: 3px; font-weight: 900;">MUVAFFAQIYAT SERTIFIKATI</h1>
-          <p style="font-size: 0.98rem; color: #64748b; margin-top: 6px; font-style: italic;">Ushbu rasmiy sertifikat quyidagi shaxsga taqdim etiladi:</p>
+          <h1 style="font-family: 'Times New Roman', serif; font-size: 2.6rem; color: #0f172a; margin-top: 4px; letter-spacing: 4px;">MUVAFFAQIYAT SERTIFIKATI</h1>
+          <p style="font-size: 1.05rem; color: #64748b; margin-top: 10px; font-style: italic;">Ushbu rasmiy sertifikat quyidagi shaxsga taqdim etiladi:</p>
           
-          <div style="width: 94%; max-width: 720px; margin: 14px auto; padding: 0 10px 8px; border-bottom: 2.5px solid #2563eb; overflow: hidden;" id="certStudentWrap">
-            <h2 id="certStudentName" style="font-family: Georgia, 'Times New Roman', serif !important; font-size: clamp(1.1rem, 2.3vw, 1.85rem); font-weight: 900; color: #1e3a8a; margin: 0; line-height: 1.25; text-transform: uppercase; letter-spacing: 1px; word-break: break-word;">O‘QUVCHI ISMI</h2>
-          </div>
+          <h2 id="certStudentName" style="font-family: 'Brush Script MT', cursive, serif; font-size: 3.6rem; color: #b45309; margin: 18px 0; border-bottom: 2px solid #d97706; display: inline-block; padding: 0 35px; line-height: 1.2;">O‘quvchi ismi</h2>
           
-          <p style="font-size: 1.05rem; color: #334155; line-height: 1.65; max-width: 620px; margin: 0 auto;">
-            Cyber-UZ Academy ning
-            <b id="certCourseName" style="color: #1e3a8a; background: #dbeafe; border: 1px solid #93c5fd; padding: 2px 10px; border-radius: 6px;">Dasturlash</b>
+          <p style="font-size: 1.15rem; color: #334155; line-height: 1.65; max-width: 620px; margin: 0 auto;">
+            InnoCode IT Academy ning
+            <b id="certCourseName" style="color: #0f172a; background: #fef3c7; padding: 2px 8px; border-radius: 4px;">Dasturlash</b>
             o‘quv dasturidagi barcha <b>10 ta dars</b> va amaliy testlarni
             <b>100% (5/5)</b> a'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.
           </p>
 
-          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 28px; text-align: left; gap: 15px; flex-wrap: wrap;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-top: 36px; text-align: left; gap: 15px; flex-wrap: wrap;">
             <div style="width: 180px; text-align: center;">
-              <p style="border-bottom: 1px solid #0f172a; margin: 0 0 5px 0; padding-bottom: 5px; font-weight: bold; font-family: Georgia, serif; font-style: italic; font-size: 1.35rem; text-align: center; color: #0f172a;">M. Isomiddinov</p>
-              <p style="margin: 0; font-size: 0.74rem; color: #64748b; text-align: center;">Kurs rahbari:<br><b>Ma'rufjon Isomiddinov</b></p>
+              <p style="border-bottom: 1px solid #0f172a; margin: 0 0 5px 0; padding-bottom: 5px; font-weight: bold; font-family: 'Brush Script MT', cursive, serif; font-size: 1.5rem; text-align: center; color: #0f172a;">M. Isomiddinov</p>
+              <p style="margin: 0; font-size: 0.76rem; color: #64748b; text-align: center;">Kurs rahbari:<br><b>Ma'rufjon Isomiddinov</b></p>
             </div>
             
             <div style="width: 130px; text-align: center;">
-              <div id="certModalSeal" style="width: 82px; height: 82px; background: radial-gradient(circle, #3b82f6 0%, #1d4ed8 65%, #1e3a8a 100%); border-radius: 50%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; border: 3px solid #fff; box-shadow: 0 0 0 2px #2563eb, 0 4px 12px rgba(37,99,235,0.35);">
-                <span id="certModalSealTop" style="font-size: 0.5rem; letter-spacing: 0.5px;">PYTHON & AI</span>
-                <span style="font-size: 1.05rem; line-height: 1;">★</span>
-                <span style="font-size: 0.5rem;">VERIFIED</span>
+              <div style="width: 78px; height: 78px; background: radial-gradient(circle, #f59e0b 0%, #b45309 100%); border-radius: 50%; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-weight: bold; border: 3px solid #fff; box-shadow: 0 0 0 2px #d97706, 0 4px 10px rgba(217,119,6,0.35);">
+                <span style="font-size: 0.52rem; letter-spacing: 0.5px;">OFFICIAL</span>
+                <span style="font-size: 1rem; line-height: 1;">★</span>
+                <span style="font-size: 0.52rem;">ACCREDITED</span>
               </div>
             </div>
 
             <div style="width: 180px; text-align: center;">
-              <p style="border-bottom: 1px solid #0f172a; margin: 0 0 5px 0; padding-bottom: 5px; font-weight: bold; font-family: Georgia, serif; font-style: italic; font-size: 1.35rem; text-align: center; color: #0f172a;">S. Savriyev</p>
-              <p style="margin: 0; font-size: 0.74rem; color: #64748b; text-align: center;">Akademiya Direktori:<br><b>Sirojiddin Savriyev</b></p>
+              <p style="border-bottom: 1px solid #0f172a; margin: 0 0 5px 0; padding-bottom: 5px; font-weight: bold; font-family: 'Brush Script MT', cursive, serif; font-size: 1.5rem; text-align: center; color: #0f172a;">S. Savriyev</p>
+              <p style="margin: 0; font-size: 0.76rem; color: #64748b; text-align: center;">Akademiya Direktori:<br><b>Sirojiddin Savriyev</b></p>
             </div>
           </div>
 
           <!-- Pastki qism: QR Kod va Seriya raqami -->
           <div style="margin-top: 30px; padding: 14px 18px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; text-align: left;">
             <div style="display: flex; align-items: center; gap: 12px;">
-              <img id="certQrImg" crossorigin="anonymous" src="" alt="QR Kod" style="width: 74px; height: 74px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; padding: 2px;">
+              <img id="certQrImg" src="" alt="QR Kod" style="width: 74px; height: 74px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; padding: 2px;">
               <div style="font-size: 0.76rem; color: #475569; line-height: 1.4;">
                 <strong style="color: #0f172a; font-size: 0.8rem;">Elektron Sertifikat QR-Kodi</strong>
                 Telefon kamerasi bilan skaner qilinganda elektron nusxasi ochiladi.<br>
@@ -1472,7 +1205,7 @@
             </div>
             <div>
               <div style="font-size: 0.7rem; color: #64748b; margin-bottom: 3px;">Sertifikat ID:</div>
-              <div id="certIdBadge" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #0f172a; background: #fff; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 6px;">CYB-2026-XXXXXX</div>
+              <div id="certIdBadge" style="font-family: monospace; font-size: 0.9rem; font-weight: 800; color: #0f172a; background: #fff; border: 1px solid #cbd5e1; padding: 4px 10px; border-radius: 6px;">INNO-2026-XXXXXX</div>
             </div>
           </div>
 
@@ -1480,596 +1213,59 @@
       </div>
       
       <div class="cert-print cert-extra-btns" style="margin-top: 24px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
-        <button class="btn" style="background: #10b981; color: white; padding: 12px 24px; font-size: 0.95rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;" onclick="downloadCertificateFile()">📥 Sertifikatni Yuklab Olish (Rasm / PNG)</button>
         <button class="btn" style="background: #0f172a; color: white; padding: 12px 24px; font-size: 0.95rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;" onclick="window.print()">🖨 Chop etish (PDF saqlash)</button>
-        <button class="btn" id="btnOpenElectronic" style="background: #059669; color: white; padding: 12px 24px; font-size: 0.95rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🌐 Elektron variantini ochish</button>
+        <button class="btn" id="btnOpenElectronic" style="background: #4f46e5; color: white; padding: 12px 24px; font-size: 0.95rem; border-radius: 8px; border: none; cursor: pointer; font-weight: bold;">🌐 Elektron variantini ochish</button>
       </div>
     </div>
   </div>
 
   <script>
-    async function ensureCertificateData(specificCourseId = null) {
-      const selEl = document.getElementById('courseSelect');
-      const courseId = specificCourseId || (selEl && parseInt(selEl.value)) || (CUR && parseInt(CUR.course_id)) || 1;
-      const courseName = (STATE?.courses?.find(c => parseInt(c.id) === courseId)?.title) || window._currentCourseName || 'Python Asoslari va Sun\'iy Intellekt';
-      const usr = Auth.getUser() || {};
+    async function generateCertificate() {
+      const courseId = parseInt(document.getElementById('courseSelect').value);
+      if (!courseId) {
+        showToast("Kurs tanlanmagan", "error");
+        return;
+      }
 
+      const courseName = window._currentCourseName || 'Dasturlash';
+      const usr = Auth.getUser();
+
+      document.getElementById('certStudentName').innerText = usr.full_name || "O‘quvchi";
+      document.getElementById('certCourseName').innerText = courseName;
+
+      // Serverdan sertifikatni olish / yaratish
       try {
         const res = await fetch('/api/student/certificate', {
           method: 'POST',
           headers: Auth.getHeaders(),
           body: JSON.stringify({ course_id: courseId })
         });
-        if (res.ok) {
-          const data = await res.json();
-          if (data.courses) {
-            renderStudentCertCourseButtons(data.courses, courseId);
+
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          showToast(err.error || "Sertifikat olishda xatolik", "error");
+          return;
+        }
+
+        const data = await res.json();
+        if (data.success && data.certificate) {
+          const c = data.certificate;
+          document.getElementById('certIdBadge').innerText = c.id;
+          document.getElementById('certDate').innerText = c.issue_date;
+
+          const verifyUrl = window.location.origin + `/certificate.html?id=${c.id}`;
+          document.getElementById('certQrImg').src = `https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(verifyUrl)}&color=0f172a`;
+
+          const openBtn = document.getElementById('btnOpenElectronic');
+          if (openBtn) {
+            openBtn.onclick = () => window.open(verifyUrl, '_blank');
           }
-          if (data.success && data.certificate) {
-            return data.certificate;
-          }
+
+          document.getElementById('certModalOverlay').style.display = 'flex';
         }
-      } catch (e) {}
-
-      // Offline / fallback sertifikat obyekti
-      const months = ['yanvar','fevral','mart','aprel','may','iyun','iyul','avgust','sentabr','oktabr','noyabr','dekabr'];
-      const now = new Date();
-      return {
-        id: 'CYB-' + now.getFullYear() + '-' + (100000 + ((usr.id || 77) * 8191 + courseId * 131) % 900000),
-        student_name: usr.full_name || "O‘quvchi",
-        course_title: courseName,
-        issue_date: `${now.getDate()}-${months[now.getMonth()]}, ${now.getFullYear()}-yil`
-      };
-    }
-
-    function getStudentCertTheme(courseTitle) {
-      const t = (courseTitle || '').toLowerCase();
-      if (t.includes('react') || t.includes('javascript') || t.includes('web')) {
-        return {
-          key: 'react',
-          pillText: "⚛️ JAVASCRIPT & REACT.JS WEB YO'NALISHI",
-          watermark: 'REACT • JS • WEB • CYBER-UZ',
-          sealTop: 'REACT & JS',
-          outerBorder: '#091526',
-          innerBorder: '#06b6d4',
-          innerSubBorder: '#f59e0b',
-          bgTint: '#ecfeff',
-          brandAccent: '#0891b2',
-          headingColor: '#0f172a',
-          nameColor: '#0e7490',
-          courseBg: '#cffafe',
-          courseText: '#155e75',
-          courseBorder: '#67e8f9',
-          logoBg: 'linear-gradient(135deg, #083344, #06b6d4)',
-          logoBorder: '#67e8f9',
-          sealStart: '#22d3ee',
-          sealEnd: '#0e7490',
-          svgLogo: `<svg width="42" height="42" viewBox="0 0 64 64" fill="none">
-            <circle cx="32" cy="32" r="5.5" fill="#22d3ee"/>
-            <ellipse cx="32" cy="32" rx="24" ry="9.5" stroke="#22d3ee" stroke-width="2.6"/>
-            <ellipse cx="32" cy="32" rx="24" ry="9.5" transform="rotate(60 32 32)" stroke="#38bdf8" stroke-width="2.6"/>
-            <ellipse cx="32" cy="32" rx="24" ry="9.5" transform="rotate(120 32 32)" stroke="#fbbf24" stroke-width="2.6"/>
-          </svg>`
-        };
+      } catch (e) {
+        showToast("Server bilan bog‘lanishda xatolik", "error");
       }
-      if (t.includes('java') || t.includes('android')) {
-        return {
-          key: 'java',
-          pillText: "🤖 JAVA VA ANDROID DASTURLASH YO'NALISHI",
-          watermark: 'JAVA • ANDROID • MOBILE',
-          sealTop: 'ANDROID PRO',
-          outerBorder: '#064e3b',
-          innerBorder: '#10b981',
-          innerSubBorder: '#ea580c',
-          bgTint: '#ecfdf5',
-          brandAccent: '#059669',
-          headingColor: '#064e3b',
-          nameColor: '#047857',
-          courseBg: '#d1fae5',
-          courseText: '#065f46',
-          courseBorder: '#6ee7b7',
-          logoBg: 'linear-gradient(135deg, #064e3b, #10b981)',
-          logoBorder: '#6ee7b7',
-          sealStart: '#34d399',
-          sealEnd: '#047857',
-          svgLogo: `<svg width="42" height="42" viewBox="0 0 64 64" fill="none">
-            <path d="M18 32C18 24.268 24.268 18 32 18C39.732 18 46 24.268 46 32V36H18V32Z" fill="#34d399"/>
-            <line x1="23" y1="19" x2="18" y2="12" stroke="#6ee7b7" stroke-width="3" stroke-linecap="round"/>
-            <line x1="41" y1="19" x2="46" y2="12" stroke="#6ee7b7" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="26" cy="27" r="2.3" fill="#064e3b"/>
-            <circle cx="38" cy="27" r="2.3" fill="#064e3b"/>
-            <rect x="20" y="38" width="24" height="14" rx="4" fill="#fb923c"/>
-          </svg>`
-        };
-      }
-      return {
-        key: 'python',
-        pillText: "🐍 PYTHON & SUN'IY INTELLEKT YO'NALISHI",
-        watermark: 'PYTHON • AI • CYBER-UZ',
-        sealTop: 'PYTHON & AI',
-        outerBorder: '#1e3a8a',
-        innerBorder: '#2563eb',
-        innerSubBorder: '#eab308',
-        bgTint: '#eff6ff',
-        brandAccent: '#2563eb',
-        headingColor: '#1e3a8a',
-        nameColor: '#1d4ed8',
-        courseBg: '#dbeafe',
-        courseText: '#1e3a8a',
-        courseBorder: '#93c5fd',
-        logoBg: 'linear-gradient(135deg, #1e3a8a, #2563eb)',
-        logoBorder: '#93c5fd',
-        sealStart: '#3b82f6',
-        sealEnd: '#1e3a8a',
-        svgLogo: `<svg width="42" height="42" viewBox="0 0 64 64" fill="none">
-          <path d="M31.5 10C22.5 10 20 14 20 19V25H32V27H16C11 27 8 31 8 38.5C8 46 11 50 16 50H21V43C21 38 25 34 30 34H42C46 34 49 31 49 26.5V19C49 13.5 44.5 10 31.5 10Z" fill="#60a5fa"/>
-          <path d="M32.5 54C41.5 54 44 50 44 45V39H32V37H48C53 37 56 33 56 25.5C56 18 53 14 48 14H43V21C43 26 39 30 34 30H22C18 30 15 33 15 37.5V45C15 50.5 19.5 54 32.5 54Z" fill="#facc15"/>
-        </svg>`
-      };
-    }
-
-    function renderStudentCertCourseButtons(courses, activeCourseId) {
-      const wrap = document.getElementById('certCoursesBtns');
-      if (!wrap || !Array.isArray(courses)) return;
-      wrap.innerHTML = courses.map(c => {
-        const isActive = parseInt(c.course_id) === parseInt(activeCourseId);
-        const th = getStudentCertTheme(c.course_title);
-        const icon = th.key === 'react' ? '⚛️' : (th.key === 'java' ? '🤖' : '🐍');
-        return `<button type="button" onclick="generateCertificate(${c.course_id})" style="padding: 7px 14px; border-radius: 8px; font-size: 0.8rem; font-weight: 800; cursor: pointer; border: 1.5px solid ${isActive ? th.innerBorder : '#cbd5e1'}; background: ${isActive ? th.outerBorder : '#ffffff'}; color: ${isActive ? '#ffffff' : '#1e293b'}; transition: all 0.2s;">
-          ${icon} ${c.course_title} (${c.completed_count}/${c.total_lessons})
-        </button>`;
-      }).join('');
-    }
-
-    function createQrDataUrl(dataStr, fgColor = '#0f172a') {
-      const c = document.createElement('canvas');
-      c.width = 180;
-      c.height = 180;
-      const qctx = c.getContext('2d');
-      drawCertQrCodeOnCanvas(qctx, 0, 0, 180, dataStr, null, fgColor);
-      return c.toDataURL('image/png');
-    }
-
-    function drawCertQrCodeOnCanvas(ctx, x, y, size, dataStr, qrImgEl, fgColor = '#0f172a') {
-      ctx.save();
-      // Oq QR-karta foni va chegarasi
-      ctx.fillStyle = '#ffffff';
-      ctx.fillRect(x, y, size, size);
-      ctx.strokeStyle = '#cbd5e1';
-      ctx.lineWidth = 2;
-      ctx.strokeRect(x, y, size, size);
-
-      // Agar onlayn QR rasm CORS bilan tayyor bo'lsa, uni chizishga urinib ko'ramiz
-      let drawnFromImg = false;
-      if (qrImgEl && qrImgEl.complete && qrImgEl.naturalWidth > 0) {
-        try {
-          const testCanvas = document.createElement('canvas');
-          testCanvas.width = 16;
-          testCanvas.height = 16;
-          const tCtx = testCanvas.getContext('2d');
-          tCtx.drawImage(qrImgEl, 0, 0, 16, 16);
-          testCanvas.toDataURL('image/png');
-          ctx.drawImage(qrImgEl, x + 5, y + 5, size - 10, size - 10);
-          drawnFromImg = true;
-        } catch (err) {
-          drawnFromImg = false;
-        }
-      }
-
-      if (!drawnFromImg) {
-        // Har doim 100% ishlaydigan yuqori aniqlikdagi Canvas QR-kod generatori (25x25)
-        const N = 25;
-        const pad = 6;
-        const cell = (size - pad * 2) / N;
-        const grid = Array.from({ length: N }, () => Array(N).fill(false));
-        const reserved = Array.from({ length: N }, () => Array(N).fill(false));
-
-        function placeFinder(r0, c0) {
-          for (let r = -1; r <= 7; r++) {
-            for (let c = -1; c <= 7; c++) {
-              const rr = r0 + r, cc = c0 + c;
-              if (rr >= 0 && rr < N && cc >= 0 && cc < N) {
-                reserved[rr][cc] = true;
-                if (r >= 0 && r <= 6 && c >= 0 && c <= 6) {
-                  const border = (r === 0 || r === 6 || c === 0 || c === 6);
-                  const center = (r >= 2 && r <= 4 && c >= 2 && c <= 4);
-                  grid[rr][cc] = border || center;
-                }
-              }
-            }
-          }
-        }
-        placeFinder(0, 0);
-        placeFinder(0, N - 7);
-        placeFinder(N - 7, 0);
-
-        // Alignment pattern (5x5 at 16,16)
-        for (let r = 16; r <= 20; r++) {
-          for (let c = 16; c <= 20; c++) {
-            reserved[r][c] = true;
-            const border = (r === 16 || r === 20 || c === 16 || c === 20);
-            const center = (r === 18 && c === 18);
-            grid[r][c] = border || center;
-          }
-        }
-
-        // Timing patterns
-        for (let i = 8; i < N - 8; i++) {
-          reserved[6][i] = true;
-          reserved[i][6] = true;
-          grid[6][i] = (i % 2 === 0);
-          grid[i][6] = (i % 2 === 0);
-        }
-
-        // Hash bits from dataStr
-        const str = String(dataStr || 'https://cyber-uz/certificate.html');
-        let h1 = 2166136261 >>> 0;
-        let h2 = 16777619 >>> 0;
-        for (let i = 0; i < str.length; i++) {
-          const ch = str.charCodeAt(i);
-          h1 = Math.imul(h1 ^ ch, 16777619) >>> 0;
-          h2 = Math.imul(h2 + ch * (i + 1), 2246822519) >>> 0;
-        }
-
-        for (let r = 0; r < N; r++) {
-          for (let c = 0; c < N; c++) {
-            if (reserved[r][c]) continue;
-            const idx = r * N + c;
-            const charCode = str.charCodeAt(idx % str.length);
-            const mix = ((h1 >>> (idx % 24)) ^ (h2 >>> ((r * 7 + c * 3) % 24)) ^ (charCode * (r + 3) * (c + 5))) >>> 0;
-            grid[r][c] = (mix & 3) !== 0 && ((mix + r + c) % 2 === 0);
-          }
-        }
-
-        ctx.fillStyle = fgColor || '#0f172a';
-        for (let r = 0; r < N; r++) {
-          for (let c = 0; c < N; c++) {
-            if (grid[r][c]) {
-              ctx.fillRect(
-                Math.floor(x + pad + c * cell),
-                Math.floor(y + pad + r * cell),
-                Math.ceil(cell),
-                Math.ceil(cell)
-              );
-            }
-          }
-        }
-      }
-      ctx.restore();
-    }
-
-    async function generateCertificate(specificCourseId = null) {
-      const overlayEl = document.getElementById('certModalOverlay');
-      if (overlayEl) {
-        overlayEl.style.display = 'flex';
-        overlayEl.scrollTop = 0;
-      }
-
-      const c = await ensureCertificateData(specificCourseId);
-      const th = getStudentCertTheme(c.course_title);
-      const fullNameUpper = (c.student_name || "O‘QUVCHI").toUpperCase();
-      const nameEl = document.getElementById('certStudentName');
-      nameEl.innerText = fullNameUpper;
-      nameEl.style.color = th.nameColor;
-      if (fullNameUpper.length > 32) {
-        nameEl.style.fontSize = 'clamp(0.95rem, 2vw, 1.45rem)';
-      } else if (fullNameUpper.length > 24) {
-        nameEl.style.fontSize = 'clamp(1.05rem, 2.2vw, 1.7rem)';
-      } else {
-        nameEl.style.fontSize = 'clamp(1.2rem, 2.5vw, 1.95rem)';
-      }
-
-      const courseEl = document.getElementById('certCourseName');
-      courseEl.innerText = c.course_title || "Dasturlash";
-      courseEl.style.background = th.courseBg;
-      courseEl.style.color = th.courseText;
-      courseEl.style.borderColor = th.courseBorder;
-
-      document.getElementById('certModal').style.borderColor = th.outerBorder;
-      const innerBox = document.getElementById('certInnerBox');
-      if (innerBox) {
-        innerBox.style.borderColor = th.innerBorder;
-        innerBox.style.background = `radial-gradient(circle at center, #ffffff 0%, ${th.bgTint} 100%)`;
-      }
-      const wm = document.getElementById('certWatermark');
-      if (wm) wm.innerText = th.watermark;
-      const logoBox = document.getElementById('certModalLogoBox');
-      if (logoBox) {
-        logoBox.style.background = th.logoBg;
-        logoBox.style.borderColor = th.logoBorder;
-        logoBox.innerHTML = th.svgLogo;
-      }
-      const pill = document.getElementById('certModalSpecPill');
-      if (pill) {
-        pill.innerText = th.pillText;
-        pill.style.background = th.courseBg;
-        pill.style.color = th.courseText;
-        pill.style.borderColor = th.courseBorder;
-      }
-      const dot = document.getElementById('certBrandDot');
-      if (dot) dot.style.color = th.brandAccent;
-      const sub = document.getElementById('certAcademySub');
-      if (sub) sub.style.color = th.brandAccent;
-      const h1 = document.getElementById('certMainHeading');
-      if (h1) h1.style.color = th.headingColor;
-      const wrap = document.getElementById('certStudentWrap');
-      if (wrap) wrap.style.borderBottomColor = th.innerBorder;
-      const seal = document.getElementById('certModalSeal');
-      if (seal) {
-        seal.style.background = `radial-gradient(circle, ${th.sealStart} 0%, ${th.sealEnd} 100%)`;
-        seal.style.boxShadow = `0 0 0 2px ${th.innerBorder}, 0 4px 12px rgba(0,0,0,0.22)`;
-      }
-      const sealTop = document.getElementById('certModalSealTop');
-      if (sealTop) sealTop.innerText = th.sealTop;
-
-      document.getElementById('certIdBadge').innerText = c.id;
-      document.getElementById('certDate').innerText = c.issue_date;
-
-      const verifyUrl = window.location.origin + `/certificate.html?id=${encodeURIComponent(c.id)}&name=${encodeURIComponent(c.student_name)}&course=${encodeURIComponent(c.course_title)}`;
-      const qrImg = document.getElementById('certQrImg');
-      if (qrImg) {
-        const fallbackQrDataUrl = createQrDataUrl(verifyUrl, th.outerBorder);
-        qrImg.onerror = () => { qrImg.onerror = null; qrImg.src = fallbackQrDataUrl; };
-        qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(verifyUrl)}&color=0f172a`;
-      }
-
-      const openBtn = document.getElementById('btnOpenElectronic');
-      if (openBtn) {
-        openBtn.onclick = () => window.open(verifyUrl, '_blank');
-      }
-
-      if (overlayEl) {
-        overlayEl.style.display = 'flex';
-      }
-      showToast("🎓 Sertifikat oynasi ochildi!", "success");
-    }
-
-    async function openElectronicCertificatePage() {
-      const c = await ensureCertificateData();
-      const verifyUrl = `/certificate.html?id=${encodeURIComponent(c.id)}&name=${encodeURIComponent(c.student_name)}&course=${encodeURIComponent(c.course_title)}`;
-      window.open(verifyUrl, '_blank');
-    }
-
-    function drawStudentCourseLogoOnCanvas(ctx, themeKey, cx, cy) {
-      ctx.save();
-      if (themeKey === 'react') {
-        ctx.beginPath();
-        ctx.arc(cx, cy, 40, 0, Math.PI * 2);
-        ctx.fillStyle = '#083344';
-        ctx.fill();
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = '#22d3ee';
-        ctx.stroke();
-        [0, Math.PI / 3, (2 * Math.PI) / 3].forEach((ang, idx) => {
-          ctx.save();
-          ctx.translate(cx, cy);
-          ctx.rotate(ang);
-          ctx.beginPath();
-          ctx.ellipse(0, 0, 25, 9.5, 0, 0, Math.PI * 2);
-          ctx.strokeStyle = idx === 2 ? '#fbbf24' : '#22d3ee';
-          ctx.lineWidth = 2.4;
-          ctx.stroke();
-          ctx.restore();
-        });
-        ctx.beginPath();
-        ctx.arc(cx, cy, 5, 0, Math.PI * 2);
-        ctx.fillStyle = '#22d3ee';
-        ctx.fill();
-      } else if (themeKey === 'java') {
-        ctx.beginPath();
-        ctx.arc(cx, cy, 40, 0, Math.PI * 2);
-        ctx.fillStyle = '#064e3b';
-        ctx.fill();
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = '#34d399';
-        ctx.stroke();
-        ctx.fillStyle = '#34d399';
-        ctx.beginPath();
-        ctx.arc(cx, cy - 2, 16, Math.PI, 0, false);
-        ctx.fill();
-        ctx.fillStyle = '#fb923c';
-        ctx.fillRect(cx - 13, cy + 2, 26, 14);
-        ctx.fillStyle = '#064e3b';
-        ctx.beginPath();
-        ctx.arc(cx - 6, cy - 8, 2.3, 0, Math.PI * 2);
-        ctx.arc(cx + 6, cy - 8, 2.3, 0, Math.PI * 2);
-        ctx.fill();
-      } else {
-        ctx.beginPath();
-        ctx.arc(cx, cy, 40, 0, Math.PI * 2);
-        ctx.fillStyle = '#1e3a8a';
-        ctx.fill();
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = '#60a5fa';
-        ctx.stroke();
-        ctx.fillStyle = '#60a5fa';
-        ctx.fillRect(cx - 15, cy - 16, 18, 13);
-        ctx.fillStyle = '#facc15';
-        ctx.fillRect(cx - 3, cy + 2, 18, 13);
-        ctx.fillStyle = '#ffffff';
-        ctx.font = '900 13px Arial, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText('PY•AI', cx, cy + 4);
-      }
-      ctx.restore();
-    }
-
-    function downloadCertificateFile() {
-      const studentName = (document.getElementById('certStudentName').innerText || "O‘QUVCHI").toUpperCase();
-      const courseName  = document.getElementById('certCourseName').innerText || "Dasturlash";
-      const certId      = document.getElementById('certIdBadge').innerText || "CYB-2026-100001";
-      const certDate    = document.getElementById('certDate').innerText || "2026-yil";
-      const th          = getStudentCertTheme(courseName);
-
-      const canvas = document.createElement('canvas');
-      canvas.width = 1600;
-      canvas.height = 1130;
-      const ctx = canvas.getContext('2d');
-
-      // 1. Kursga mos yorqin fon
-      const bgGrad = ctx.createRadialGradient(800, 565, 100, 800, 565, 900);
-      bgGrad.addColorStop(0, '#ffffff');
-      bgGrad.addColorStop(1, th.bgTint);
-      ctx.fillStyle = bgGrad;
-      ctx.fillRect(0, 0, 1600, 1130);
-
-      // 2. Tashqi ramka (kurs rangi)
-      ctx.strokeStyle = th.outerBorder;
-      ctx.lineWidth = 28;
-      ctx.strokeRect(24, 24, 1552, 1082);
-
-      // 3. Ichki ikki qavatli ramka
-      ctx.strokeStyle = th.innerBorder;
-      ctx.lineWidth = 5;
-      ctx.strokeRect(56, 56, 1488, 1018);
-      ctx.strokeStyle = th.innerSubBorder;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(68, 68, 1464, 994);
-
-      // 4. Watermark
-      ctx.save();
-      ctx.translate(800, 560);
-      ctx.rotate(-14 * Math.PI / 180);
-      ctx.font = '900 105px Arial, sans-serif';
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.03)';
-      ctx.textAlign = 'center';
-      ctx.fillText(th.watermark, 0, 0);
-      ctx.restore();
-
-      // 5. Kurs logotipi (yuqori markazda)
-      drawStudentCourseLogoOnCanvas(ctx, th.key, 800, 132);
-
-      ctx.textAlign = 'center';
-      ctx.fillStyle = '#0f172a';
-      ctx.font = '900 44px Arial, sans-serif';
-      ctx.fillText('cyber-uz', 800, 215);
-
-      ctx.fillStyle = th.brandAccent;
-      ctx.font = 'bold 18px Arial, sans-serif';
-      ctx.fillText(th.pillText.replace(/^[^\s]+\s/, '') + ' • CYBER-UZ ACADEMY', 800, 244);
-
-      // 6. Asosiy sarlavha
-      ctx.fillStyle = th.headingColor;
-      ctx.font = 'bold 58px Georgia, "Times New Roman", serif';
-      ctx.fillText('MUVAFFAQIYAT SERTIFIKATI', 800, 315);
-
-      ctx.fillStyle = '#64748b';
-      ctx.font = 'italic 24px Georgia, serif';
-      ctx.fillText('Ushbu rasmiy sertifikat quyidagi shaxsga taqdim etiladi:', 800, 360);
-
-      // 7. O'quvchi F.I.Sh (ramkadan chiqmasligi uchun avtomatik o'lcham)
-      ctx.fillStyle = th.nameColor;
-      let nameFontSize = 50;
-      ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
-      while (ctx.measureText(studentName).width > 1200 && nameFontSize > 24) {
-        nameFontSize -= 2;
-        ctx.font = `bold ${nameFontSize}px Georgia, "Times New Roman", serif`;
-      }
-      ctx.fillText(studentName, 800, 445, 1220);
-
-      const lineHalf = Math.min(600, Math.max(320, (ctx.measureText(studentName).width / 2) + 40));
-      ctx.strokeStyle = th.innerBorder;
-      ctx.lineWidth = 3.5;
-      ctx.beginPath();
-      ctx.moveTo(800 - lineHalf, 468);
-      ctx.lineTo(800 + lineHalf, 468);
-      ctx.stroke();
-
-      // 8. Kurs matni
-      ctx.fillStyle = '#334155';
-      ctx.font = '27px Arial, sans-serif';
-      ctx.fillText('Cyber-UZ Academy ta\'lim platformasidagi', 800, 530);
-
-      ctx.fillStyle = th.headingColor;
-      ctx.font = 'bold 34px Arial, sans-serif';
-      ctx.fillText('«' + courseName + '»', 800, 580, 1240);
-
-      ctx.fillStyle = '#334155';
-      ctx.font = '26px Arial, sans-serif';
-      ctx.fillText('o‘quv dasturidagi barcha 10 ta dars va amaliy test sinovlarini', 800, 630);
-      ctx.fillText('100% (5/5) a\'lo natija bilan muvaffaqiyatli tamomlaganligi tasdiqlanadi.', 800, 668);
-
-      // 9. Imzolar va Maxsus Kurs Muhri
-      ctx.fillStyle = '#0f172a';
-      ctx.font = 'italic bold 34px Georgia, serif';
-      ctx.fillText('M. Isomiddinov', 360, 815);
-      ctx.strokeStyle = '#0f172a';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(210, 830);
-      ctx.lineTo(510, 830);
-      ctx.stroke();
-      ctx.fillStyle = '#475569';
-      ctx.font = 'bold 20px Arial, sans-serif';
-      ctx.fillText('Ma\'rufjon Isomiddinov', 360, 862);
-      ctx.font = '18px Arial, sans-serif';
-      ctx.fillText('Kurs rahbari & Bosh mentor', 360, 888);
-
-      const sealGrad = ctx.createRadialGradient(800, 825, 10, 800, 825, 78);
-      sealGrad.addColorStop(0, th.sealStart);
-      sealGrad.addColorStop(1, th.sealEnd);
-      ctx.fillStyle = sealGrad;
-      ctx.beginPath();
-      ctx.arc(800, 825, 76, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.strokeStyle = '#ffffff';
-      ctx.lineWidth = 4;
-      ctx.stroke();
-
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 14px Arial, sans-serif';
-      ctx.fillText(th.sealTop, 800, 800);
-      ctx.font = 'bold 34px Arial, sans-serif';
-      ctx.fillText('★', 800, 835);
-      ctx.font = 'bold 14px Arial, sans-serif';
-      ctx.fillText('VERIFIED', 800, 860);
-
-      ctx.fillStyle = '#0f172a';
-      ctx.font = 'italic bold 34px Georgia, serif';
-      ctx.fillText('S. Savriyev', 1240, 815);
-      ctx.strokeStyle = '#0f172a';
-      ctx.lineWidth = 2;
-      ctx.beginPath();
-      ctx.moveTo(1090, 830);
-      ctx.lineTo(1390, 830);
-      ctx.stroke();
-      ctx.fillStyle = '#475569';
-      ctx.font = 'bold 20px Arial, sans-serif';
-      ctx.fillText('Sirojiddin Savriyev', 1240, 862);
-      ctx.font = '18px Arial, sans-serif';
-      ctx.fillText('Cyber-UZ Academy Direktori', 1240, 888);
-
-      // 10. Pastki QR-Kod, ID va Sana bloki
-      ctx.fillStyle = '#f8fafc';
-      ctx.fillRect(140, 936, 1320, 98);
-      ctx.strokeStyle = th.innerBorder;
-      ctx.lineWidth = 2;
-      ctx.strokeRect(140, 936, 1320, 98);
-
-      const verifyUrl = window.location.origin + '/certificate.html?id=' + certId;
-      drawCertQrCodeOnCanvas(ctx, 156, 941, 88, verifyUrl, document.getElementById('certQrImg'), th.outerBorder);
-
-      ctx.textAlign = 'left';
-      ctx.fillStyle = '#0f172a';
-      ctx.font = 'bold 21px Arial, sans-serif';
-      ctx.fillText('Elektron QR-kodli Sertifikat • Berilgan sana: ' + certDate, 260, 976);
-      ctx.fillStyle = '#475569';
-      ctx.font = '18px Arial, sans-serif';
-      ctx.fillText('Rasmiy tekshiruv manzili: ' + verifyUrl, 260, 1008);
-
-      ctx.textAlign = 'right';
-      ctx.fillStyle = th.headingColor;
-      ctx.font = 'bold 25px "Courier New", monospace';
-      ctx.fillText('ID: ' + certId, 1435, 993);
-
-      const link = document.createElement('a');
-      const safeName = studentName.replace(/[^a-zA-Z0-9_\u0400-\u04FF-]/g, '_');
-      link.download = `Sertifikat_${th.key.toUpperCase()}_${safeName}_${certId}.png`;
-      link.href = canvas.toDataURL('image/png');
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-      showToast("📥 Sertifikat muvaffaqiyatli yuklab olindi!", "success");
     }
   </script>
 </body>

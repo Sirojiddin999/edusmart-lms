@@ -31,9 +31,9 @@ function generateUsername(fullName, index) {
 function runSeed() {
   console.log("Ma'lumotlar bazasini tozalash va yangilash boshlandi...");
 
-  // 1. O'qituvchi Marufjon hisobini yaratish / yangilash (boshqa yangi o'qituvchilarga tegmasdan)
+  // 1. O'qituvchi Marufjon hisobini yaratish / yangilash
   const marufjonHash = bcrypt.hashSync('Marufjon', 10);
-  const existingTeacher = db.prepare("SELECT id FROM users WHERE role='teacher' AND (LOWER(username)='marufjon' OR LOWER(username)='1111') LIMIT 1").get();
+  const existingTeacher = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
   if (existingTeacher) {
     db.prepare(`
       UPDATE users 
@@ -47,15 +47,25 @@ function runSeed() {
     `).run(marufjonHash);
   }
 
-  // 2. Kurslar va darslar mavjudligini kafolatlash
-  let coursesList = db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
-  const insertCourse = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
-  const insertLesson = db.prepare(`
-    INSERT INTO lessons (course_id, order_num, title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins)
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-  `);
+  // 2. Kurslarni faqat 3 ta qilib sozlash
+  const allCourses = db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
+  if (allCourses.length > 3) {
+    // 3 tadan ko'p bo'lsa, ortiqcha kurslarni va ularning darslarini tozalash
+    for (let i = 3; i < allCourses.length; i++) {
+      db.prepare("DELETE FROM lessons WHERE course_id=?").run(allCourses[i].id);
+      db.prepare("DELETE FROM courses WHERE id=?").run(allCourses[i].id);
+    }
+  }
 
-  if (coursesList.length === 0) {
+  // Kurslar yetarli bo'lmasa yoki darslar kam bo'lsa curriculum dan to'ldirish
+  const currentCourses = db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
+  if (currentCourses.length === 0) {
+    const insertCourse = db.prepare("INSERT INTO courses (title, description) VALUES (?, ?)");
+    const insertLesson = db.prepare(`
+      INSERT INTO lessons (course_id, order_num, title, description, video_url, content_text, hashtags, quiz_json, min_score, duration_mins)
+      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    `);
+
     db.transaction(() => {
       for (const c of COURSES_DATA.slice(0, 3)) {
         const cr = insertCourse.run(c.title, c.description);
@@ -76,31 +86,12 @@ function runSeed() {
         }
       }
     })();
-    coursesList = db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
   }
 
+  // 1-kurs darslari (Python kursi)
+  const coursesList = db.prepare("SELECT * FROM courses ORDER BY id ASC").all();
   const pythonCourse = coursesList[0];
-  let pythonLessons = db.prepare("SELECT id, order_num FROM lessons WHERE course_id=? ORDER BY order_num ASC").all(pythonCourse.id);
-  if (pythonLessons.length === 0) {
-    const cData = COURSES_DATA[0] || { lessons: [] };
-    db.transaction(() => {
-      for (const l of cData.lessons) {
-        insertLesson.run(
-          pythonCourse.id,
-          l.order_num,
-          l.title,
-          l.description,
-          l.video_url,
-          l.content_text,
-          JSON.stringify(["#dasturlash", "#ta'lim", "#dars" + l.order_num]),
-          JSON.stringify((l.quiz || []).slice(0, 5)),
-          5,
-          l.duration_mins || 30
-        );
-      }
-    })();
-    pythonLessons = db.prepare("SELECT id, order_num FROM lessons WHERE course_id=? ORDER BY order_num ASC").all(pythonCourse.id);
-  }
+  const pythonLessons = db.prepare("SELECT id, order_num FROM lessons WHERE course_id=? ORDER BY order_num ASC").all(pythonCourse.id);
 
   console.log(`Kurslar soni: ${coursesList.length}, 1-kurs darslari soni: ${pythonLessons.length}`);
 
@@ -166,7 +157,7 @@ function runSeed() {
         lastLessonId = pythonLessons[pythonLessons.length - 1]?.id || pythonLessons[0]?.id;
 
         // Sertifikat berilgan!
-        const certId = `CYB-2026-${100000 + idx * 7 + 13}`;
+        const certId = `INNO-2026-${100000 + idx * 7 + 13}`;
         insertCert.run(certId, studentId, pythonCourse.id, fullName, pythonCourse.title, certDate);
 
       } else if (idx < 41 + 78) {
