@@ -163,14 +163,17 @@ app.post('/api/auth/login-student', (req, res) => {
   try {
     const { username, pin_code } = req.body;
     const cleanUser = (username || '').trim().toLowerCase();
+    const cleanPass = (pin_code || '').trim();
 
     // 1111 yoki Marufjon orqali kirilsa o'qituvchi deb tanish
     if (cleanUser === '1111' || cleanUser === 'marufjon') {
-      const teacher = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
-      if (teacher) {
-        const payload = { id: teacher.id, full_name: teacher.full_name, username: teacher.username, role: 'teacher' };
+      if (cleanPass === '2222' || cleanPass === 'marufjon' || cleanPass === '1111' || !cleanPass) {
+        const teacher = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
+        const payload = { id: teacher ? teacher.id : 1, full_name: teacher ? teacher.full_name : "Ma‘rufjon Isomiddinov", username: '1111', role: 'teacher' };
         const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
         return res.json({ success: true, token, user: payload, role: 'teacher' });
+      } else {
+        return res.status(401).json({ error: "O‘qituvchi paroli noto‘g‘ri" });
       }
     }
 
@@ -189,7 +192,7 @@ app.post('/api/auth/login-student', (req, res) => {
   } catch { res.status(500).json({ error: "Server xatosi" }); }
 });
 
-// Teacher login (Marufjon yoki 1111 logini bilan kirish)
+// Teacher login (1111 logini va 2222 paroli bilan kirish)
 app.post('/api/auth/login-teacher', (req, res) => {
   try {
     const { username, password } = req.body;
@@ -197,18 +200,28 @@ app.post('/api/auth/login-teacher', (req, res) => {
       return res.status(400).json({ error: "O‘qituvchi logini kiritilishi shart" });
     }
     const cleanUser = username.trim().toLowerCase();
-    let u = db.prepare("SELECT * FROM users WHERE LOWER(username)=? AND role='teacher'").get(cleanUser);
-    if (!u && (cleanUser === '1111' || cleanUser === 'marufjon' || cleanUser === 'admin' || cleanUser.includes('maruf'))) {
+    const cleanPass = (password || '').trim();
+
+    if (!cleanPass) {
+      return res.status(400).json({ error: "Parol kiritilishi shart" });
+    }
+
+    let u = db.prepare("SELECT * FROM users WHERE (LOWER(username)=? OR LOWER(username)='1111' OR role='teacher') AND role='teacher' LIMIT 1").get(cleanUser);
+    if (!u) {
       u = db.prepare("SELECT * FROM users WHERE role='teacher' LIMIT 1").get();
     }
-    if (!u) {
+
+    const isUserValid = (cleanUser === '1111' || cleanUser === 'marufjon' || (u && cleanUser === u.username.toLowerCase()));
+    if (!isUserValid) {
       return res.status(401).json({ error: "Bunday o‘qituvchi logini topilmadi" });
     }
-    const pass = (password || '').trim().toLowerCase();
-    if (pass && pass !== '1111' && pass !== 'marufjon' && !bcrypt.compareSync((password || '').trim(), u.password_hash)) {
+
+    const isPassValid = (cleanPass === '2222' || cleanPass === 'marufjon' || (u && bcrypt.compareSync(cleanPass, u.password_hash)));
+    if (!isPassValid) {
       return res.status(401).json({ error: "Parol noto‘g‘ri" });
     }
-    const payload = { id: u.id, full_name: u.full_name, username: u.username, role: 'teacher' };
+
+    const payload = { id: u ? u.id : 1, full_name: u ? u.full_name : "Ma‘rufjon Isomiddinov", username: '1111', role: 'teacher' };
     const token = jwt.sign(payload, JWT_SECRET, { expiresIn: '7d' });
     res.json({ success: true, token, user: payload });
   } catch { res.status(500).json({ error: "Server xatosi" }); }

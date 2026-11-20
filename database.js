@@ -76,14 +76,14 @@ const COURSES_DATA = require('./curriculum.js');
 
 // ─── Seed & Sync ──────────────────────────────────────────────────────────────
 function seed() {
-  const teacherHash = bcrypt.hashSync('1111', 10);
+  const teacherHash = bcrypt.hashSync('2222', 10);
   const teacherExists = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
   if (!teacherExists) {
     db.prepare("INSERT INTO users (role, full_name, username, password_hash, pin_code) VALUES (?,?,?,?,?)")
-      .run('teacher', "O‘qituvchi", '1111', teacherHash, '1111');
+      .run('teacher', "Ma‘rufjon Isomiddinov", '1111', teacherHash, '2222');
   } else {
     db.prepare("UPDATE users SET full_name=?, username=?, password_hash=?, pin_code=? WHERE id=?")
-      .run("O‘qituvchi", '1111', teacherHash, '1111', teacherExists.id);
+      .run("Ma‘rufjon Isomiddinov", '1111', teacherHash, '2222', teacherExists.id);
   }
 
   // Mavjud kurslar va darslar sonini tekshirish

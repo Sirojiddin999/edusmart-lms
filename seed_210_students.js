@@ -31,20 +31,20 @@ function generateUsername(fullName, index) {
 function runSeed() {
   console.log("Ma'lumotlar bazasini tozalash va yangilash boshlandi...");
 
-  // 1. O'qituvchi Marufjon hisobini yaratish / yangilash
-  const marufjonHash = bcrypt.hashSync('Marufjon', 10);
+  // 1. O'qituvchi 1111 hisobini yaratish / yangilash (parol: 2222)
+  const teacherHash = bcrypt.hashSync('2222', 10);
   const existingTeacher = db.prepare("SELECT id FROM users WHERE role='teacher' LIMIT 1").get();
   if (existingTeacher) {
     db.prepare(`
       UPDATE users 
-      SET full_name='Ma‘rufjon Isomiddinov', username='Marufjon', password_hash=?, pin_code='Marufjon'
+      SET full_name='Ma‘rufjon Isomiddinov', username='1111', password_hash=?, pin_code='2222'
       WHERE id=?
-    `).run(marufjonHash, existingTeacher.id);
+    `).run(teacherHash, existingTeacher.id);
   } else {
     db.prepare(`
       INSERT INTO users (role, full_name, username, password_hash, pin_code)
-      VALUES ('teacher', 'Ma‘rufjon Isomiddinov', 'Marufjon', ?, 'Marufjon')
-    `).run(marufjonHash);
+      VALUES ('teacher', 'Ma‘rufjon Isomiddinov', '1111', ?, '2222')
+    `).run(teacherHash);
   }
 
   // 2. Kurslarni faqat 3 ta qilib sozlash
